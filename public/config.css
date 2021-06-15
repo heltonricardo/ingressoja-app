@@ -1,0 +1,9 @@
+:root {
+  --laranja-claro: #fd7800;
+  --laranja-escuro: #e65a00;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  background-color: orange;
+}

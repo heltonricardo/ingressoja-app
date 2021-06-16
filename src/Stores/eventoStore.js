@@ -11,7 +11,7 @@ const store = writable([
   },
   {
     id: 2,
-    titulo: "Festa das Pombas",
+    titulo: "Festa das Pombinhas",
     descricao: "Uma festa muito doida!",
     cidade: "Jaboticabal",
     uf: "SP",
@@ -19,7 +19,7 @@ const store = writable([
   },
   {
     id: 3,
-    titulo: "Festa dos Gansos",
+    titulo: "Festa dos Quero-quero",
     descricao: "Uma festa muito lunática!",
     cidade: "Pato Branco",
     uf: "PR",

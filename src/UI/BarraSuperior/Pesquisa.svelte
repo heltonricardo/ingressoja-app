@@ -17,7 +17,7 @@
     font-size: 1.5rem;
     margin-right: 1rem;
     outline: none;
-    background-color: #eee;
+    background-color: var(--verde2);
   }
 </style>
 

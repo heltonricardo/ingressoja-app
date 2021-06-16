@@ -1,9 +1,13 @@
 :root {
-  --laranja-claro: #fd7800;
-  --laranja-escuro: #e65a00;
+  --roxo1: rgb(189, 88, 172);
+  --roxo2: rgb(107, 34, 132);
+  --verde1: rgb(210, 231, 116);
+  --verde2: rgb(180, 210, 71);
+  --verde3: rgb(128, 194, 78);
+  --cinza1: rgb(245, 245, 245);
 }
 
 body {
-  font-family: "Lato", sans-serif;
-  background-color: orange;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--cinza1);
 }

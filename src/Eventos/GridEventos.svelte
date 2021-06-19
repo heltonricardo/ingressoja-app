@@ -5,14 +5,16 @@
 
 <style>
   .corpo {
-    margin: 1.5rem auto;
-    width: 50%;
+    width: 90%;
+    margin: 0 auto;
   }
-
+  
   .conteudo {
     margin: 0 auto;
-    width: 80%;
-    display: block;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
   }
 </style>

@@ -3,13 +3,13 @@
 </script>
 
 <style>
-  .conteudo {
-    display: ruby;
+  #conteudo {
+    display: flex;
     margin-right: 1rem;
   }
 </style>
 
-<div class="conteudo">
+<div id="conteudo">
   <Botao>Cadastre-se</Botao>
   <Botao>Entrar</Botao>
 </div>

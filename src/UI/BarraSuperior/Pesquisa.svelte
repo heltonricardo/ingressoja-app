@@ -1,15 +1,15 @@
 <script>
-  import Botao from "../Botao.svelte";
+  import Icone from "../Icone.svelte";
 </script>
 
 <style>
-  .conteudo {
+  #conteudo {
     display: flex;
     height: inherit;
     align-items: center;
   }
 
-  .entrada {
+  #entrada {
     border-radius: 5px;
     height: 3rem;
     width: 30rem;
@@ -18,10 +18,12 @@
     margin-right: 1rem;
     outline: none;
     background-color: var(--verde2);
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 </style>
 
-<div class="conteudo">
-  <input class="entrada" type="text" placeholder="Encontre um evento..." />
-  <Botao>Procurar</Botao>
+<div id="conteudo">
+  <input id="entrada" type="search" placeholder="Procure um evento..." />
+  <Icone icon="search" />
 </div>

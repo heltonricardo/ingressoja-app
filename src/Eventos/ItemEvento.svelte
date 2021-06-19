@@ -1,64 +1,145 @@
 <script>
+  import Botao from "../UI/Botao.svelte";
+
   export let evento;
+
+  let dataInicio = new Date(evento.inicio);
+  let dia = ("0" + dataInicio.getDate()).toString().slice(-2);
+  let mes = dataInicio.toLocaleString("pt-BR", { month: "long" });
 </script>
 
 <style>
-  .card {
-    margin: 2rem auto;
-    width: 100%;
-    height: 20rem;
-    background-color: #eee;
+  #card {
+    margin: 2rem 2rem;
+    width: 40%;
+    min-width: 40rem;
+    height: 25rem;
+
     display: flex;
+    box-sizing: border-box;
 
-    padding: 1rem;
-
+    background-color: var(--cinza1);
     border: 0.125rem solid black;
-    border-radius: 10px;
+    border-radius: 5px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+    transition: 0.2s;
   }
 
-  .principal {
+  #card:hover {
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    transform: scale(1.05);
+    transition: 0.2s;
+  }
+
+  #principal {
+    box-sizing: border-box;
+    padding: 0.5rem;
     justify-content: space-between;
-    width: 75%;
     display: flex;
     align-items: center;
-    display: block;
-    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    height: 100%;
   }
 
-  .titulo {
-    font-size: 2rem;
-    height: 15%;
-    width: 100%;
-    margin-right: 1rem;
+  #titulo {
+    display: flex;
+    font-size: 1.5rem;
+    height: 2rem;
+    margin-bottom: 0.5rem;
+    align-self: flex-start;
+    align-items: center;
   }
 
-  .imagem {
-    height: 85%;
+  #imagem {
     width: 100%;
-    margin-right: 1rem;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  #imagem img {
+    width: inherit;
+    height: inherit;
     border-radius: 5px;
   }
 
-  .detalhes {
-    width: 25%;
-    border: none;
+  #detalhes {
     border-left: 5px dotted;
+    width: 25%;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
   }
 
-  .local {
+  #local {
     font-size: 1.25rem;
     color: #777;
     text-align: center;
   }
+
+  #data {
+    width: 100%;
+    height: 13rem;
+  }
+
+  #dia {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--roxo2);
+    font-size: 80pt;
+    height: 9rem;
+  }
+
+  #mes {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    height: 4rem;
+    font-size: 18pt;
+  }
 </style>
 
-<div class="card">
-  <div class="principal">
-    <h1 class="titulo">{evento.titulo}</h1>
-    <img class="imagem" src={evento.img} alt="" />
+<div id="card">
+  <div id="principal">
+    <div id="titulo">
+      <h1>{evento.nome}</h1>
+    </div>
+
+    <div id="imagem">
+      <img src={evento.imagemURL} alt={evento.titulo} />
+    </div>
   </div>
-  <div class="detalhes">
-    <p class="local">{evento.cidade}-{evento.uf}</p>
+
+  <div id="detalhes">
+    <div id="local">
+      {#if evento.url}
+        <p>On-line</p>
+      {:else}
+        <p>{evento.cidade}-{evento.uf}</p>
+      {/if}
+    </div>
+
+    <div id="data">
+      <div id="dia">
+        <p>{dia}</p>
+      </div>
+
+      <div id="mes">
+        <p>{mes}</p>
+      </div>
+    </div>
+
+    <div id="botao">
+      <Botao>Ver mais</Botao>
+    </div>
   </div>
 </div>

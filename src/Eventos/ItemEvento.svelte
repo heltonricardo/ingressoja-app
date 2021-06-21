@@ -1,11 +1,12 @@
 <script>
+  import { capitalizar } from "../utils/formatador";
   import Botao from "../UI/Botao.svelte";
 
   export let evento;
 
   let dataInicio = new Date(evento.inicio);
   let dia = ("0" + dataInicio.getDate()).toString().slice(-2);
-  let mes = dataInicio.toLocaleString("pt-BR", { month: "long" });
+  let mes = capitalizar(dataInicio.toLocaleString("pt-BR", { month: "long" }));
 </script>
 
 <style>

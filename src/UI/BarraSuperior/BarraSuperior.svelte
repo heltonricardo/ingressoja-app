@@ -27,9 +27,9 @@
 
 <div class="barra" class:um-item={modo === ENUM_MODO.CADLOGIN}>
   {#if modo === ENUM_MODO.NORMAL}
-    <Titulo />
+    <Titulo on:voltar />
     <Pesquisa />
-    <Opcoes />
+    <Opcoes on:cadastrese />
   {:else if modo === ENUM_MODO.CADLOGIN}
     <Titulo />
   {/if}

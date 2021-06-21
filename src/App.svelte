@@ -2,17 +2,15 @@
   import { ENUM_MODO } from "./UI/BarraSuperior/enums";
   import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
   import GridEventos from "./Eventos//GridEventos.svelte";
-  import Teste from "./Teste.svelte";
   import Cadastro from "./Cadastro/Cadastro.svelte";
 
-  let modo = ENUM_MODO.CADLOGIN;
+  let modo = ENUM_MODO.NORMAL;
 </script>
 
-<!-- <Teste /> -->
+<BarraSuperior {modo} on:cadastrese={() => (modo = ENUM_MODO.CADLOGIN)} />
 
-<BarraSuperior {modo} />
 {#if modo === ENUM_MODO.NORMAL}
   <GridEventos />
 {:else if modo === ENUM_MODO.CADLOGIN}
-  <Cadastro />
+  <Cadastro on:voltar={() => (modo = ENUM_MODO.NORMAL)} />
 {/if}

@@ -1,5 +1,8 @@
 <script>
-  import Botao from "../Botao.svelte";
+  import { createEventDispatcher } from "svelte";
+import Botao from "../Botao.svelte";
+
+  const dispatch = createEventDispatcher();
 </script>
 
 <style>
@@ -10,6 +13,6 @@
 </style>
 
 <div id="conteudo">
-  <Botao>Cadastre-se</Botao>
+  <Botao on:click={() => dispatch("cadastrese")}>Cadastre-se</Botao>
   <Botao>Entrar</Botao>
 </div>

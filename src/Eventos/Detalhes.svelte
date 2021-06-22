@@ -15,8 +15,6 @@
   const { data: dataTermino, horario: horarioTermino } = extrairDataHora(
     evento.termino
   );
-  console.log(evento.inicio)
-  console.log(evento.termino)
 </script>
 
 <style>
@@ -52,7 +50,7 @@
 
 <div id="corpo">
   <img id="imagem" src={evento.imagemURL} alt={evento.nome} />
-  
+
   <h1 id="nome">{evento.nome}</h1>
 
   <div id="detalhes">
@@ -60,17 +58,17 @@
       {#if evento.online}
         Evento On-line
       {:else}
-        {evento.bairro}, {evento.cidade}-{evento.uf} • {evento.pais}
+        Local: {evento.bairro}, {evento.cidade}-{evento.uf} • {evento.pais}
       {/if}
     </span>
 
     <span id="data-hora-inicio">
-      {dataInicio} • {horarioInicio}
+      Início: {dataInicio} • {horarioInicio}
     </span>
-    
-        <span id="data-hora-termino">
-          {dataTermino} • {horarioTermino}
-        </span>
+
+    <span id="data-hora-termino">
+      Término: {dataTermino} • {horarioTermino}
+    </span>
   </div>
 
   <span id="descricao">{evento.descricao}</span>

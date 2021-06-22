@@ -6,7 +6,7 @@
   import Login from "./Login/Login.svelte";
   import Detalhes from "./Eventos/Detalhes.svelte";
 
-  let modo = MODO.DETALHES;
+  let modo = MODO.CADASTRO;
   // let modo = MODO.NORMAL;
   let id = null;
 

@@ -12,8 +12,20 @@
 
 <style>
   #corpo {
-    width: 50%;
+    width: 30rem;
     margin: 2rem auto;
+  }
+
+  #opcoes {
+    margin: 3rem auto;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #botoes {
+    margin: 3rem auto;
+    display: flex;
+    justify-content: center;
   }
 </style>
 
@@ -28,6 +40,7 @@
       />
       Quero comprar ingressos!
     </label>
+
     <label>
       <input
         name="tipoCadastro"
@@ -45,6 +58,8 @@
     <Organizadora />
   {/if}
 
-  <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
-  <Botao>Finalizar</Botao>
+  <div id="botoes">
+    <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
+    <Botao>Finalizar</Botao>
+  </div>
 </div>

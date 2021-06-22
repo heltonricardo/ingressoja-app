@@ -1,11 +1,22 @@
 <script>
-  import eventoStore from "../Stores/eventoStore";
   import { createEventDispatcher } from "svelte";
+  import eventoStore from "../Stores/eventoStore";
   import Botao from "../UI/Botao.svelte";
+  import { extrairDataHora } from "../utils/manipulaDataHora";
+
   const dispatch = createEventDispatcher();
 
   export let id = 1;
-  let evento = $eventoStore.find((e) => e.id === id);
+
+  const evento = $eventoStore.find((e) => e.id === id);
+  const { data: dataInicio, horario: horarioInicio } = extrairDataHora(
+    evento.inicio
+  );
+  const { data: dataTermino, horario: horarioTermino } = extrairDataHora(
+    evento.termino
+  );
+  console.log(evento.inicio)
+  console.log(evento.termino)
 </script>
 
 <style>
@@ -23,27 +34,44 @@
   }
 
   #nome {
-    margin: 0.5rem 0;
+    margin: 1rem 0;
     font-size: 30pt;
   }
 
-  #descricao {
+  #detalhes {
+    display: flex;
+    flex-direction: column;
     margin: 3rem 0;
+    gap: 1rem;
+  }
+
+  #descricao {
+    margin: 2rem 0;
   }
 </style>
 
 <div id="corpo">
   <img id="imagem" src={evento.imagemURL} alt={evento.nome} />
-
+  
   <h1 id="nome">{evento.nome}</h1>
 
-  {#if evento.online}
-    <span>Evento On-line</span>
-  {:else}
-    <span id="local"
-      >{evento.bairro}, {evento.cidade}-{evento.uf} • {evento.pais}</span
-    >
-  {/if}
+  <div id="detalhes">
+    <span id="local">
+      {#if evento.online}
+        Evento On-line
+      {:else}
+        {evento.bairro}, {evento.cidade}-{evento.uf} • {evento.pais}
+      {/if}
+    </span>
+
+    <span id="data-hora-inicio">
+      {dataInicio} • {horarioInicio}
+    </span>
+    
+        <span id="data-hora-termino">
+          {dataTermino} • {horarioTermino}
+        </span>
+  </div>
 
   <span id="descricao">{evento.descricao}</span>
 

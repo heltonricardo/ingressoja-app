@@ -1,15 +1,13 @@
 <script>
-  import { capitalizar } from "../utils/formatador";
-  import Botao from "../UI/Botao.svelte";
   import { createEventDispatcher } from "svelte";
+  import { extrairDataHora } from "../utils/manipulaDataHora";
+  import Botao from "../UI/Botao.svelte";
 
   const dispatch = createEventDispatcher();
 
   export let evento;
 
-  let dataInicio = new Date(evento.inicio);
-  let dia = ("0" + dataInicio.getDate()).toString().slice(-2);
-  let mes = capitalizar(dataInicio.toLocaleString("pt-BR", { month: "long" }));
+  const {dia, mes} = extrairDataHora(evento.inicio)
 </script>
 
 <style>

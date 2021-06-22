@@ -8,6 +8,8 @@
     margin: 0.3rem;
     display: flex;
 
+    cursor: pointer;
+
     font-family: inherit;
     font-size: 1.3rem;
 

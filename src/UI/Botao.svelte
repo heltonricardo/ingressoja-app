@@ -7,6 +7,8 @@
     width: max-content;
     height: 3rem;
 
+    cursor: pointer;
+
     font-family: inherit;
     font-size: 1.3rem;
 

@@ -5,6 +5,7 @@
     align-items: center;
     text-decoration: none;
     color: var(--roxo2);
+    cursor: pointer;
   }
 
   .nome {

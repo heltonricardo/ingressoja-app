@@ -25,7 +25,7 @@
 
 </style>
 
-<a class="content" href="/">
+<div class="content" on:click>
   <h1 class="nome">IngressoJá!</h1>
   <img class="logo" src="./assets/ticket.png" alt="Ticket" />
-</a>
+</div>

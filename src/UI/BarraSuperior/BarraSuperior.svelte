@@ -1,8 +1,11 @@
 <script>
-  import { ENUM_MODO } from "./enums";
+  import ENUM_MODO from "./ENUM_MODO";
   import Pesquisa from "./Pesquisa.svelte";
   import Titulo from "./Titulo.svelte";
   import Opcoes from "./Opcoes.svelte";
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
 
   export let modo = ENUM_MODO.NORMAL;
 </script>
@@ -25,12 +28,10 @@
   }
 </style>
 
-<div class="barra" class:um-item={modo === ENUM_MODO.CADLOGIN}>
+<div class="barra" class:um-item={modo !== ENUM_MODO.NORMAL}>
+  <Titulo on:click={() => dispatch("voltar")} />
   {#if modo === ENUM_MODO.NORMAL}
-    <Titulo on:voltar />
     <Pesquisa />
-    <Opcoes on:cadastrese />
-  {:else if modo === ENUM_MODO.CADLOGIN}
-    <Titulo />
+    <Opcoes on:cadastrese on:entrar />
   {/if}
 </div>

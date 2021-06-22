@@ -14,5 +14,5 @@ import Botao from "../Botao.svelte";
 
 <div id="conteudo">
   <Botao on:click={() => dispatch("cadastrese")}>Cadastre-se</Botao>
-  <Botao>Entrar</Botao>
+  <Botao on:click={() => dispatch("entrar")}>Entrar</Botao>
 </div>

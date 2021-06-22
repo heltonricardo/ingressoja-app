@@ -10,6 +10,7 @@ const store = writable([
     ativo: true,
     inicio: "2021-01-13T15:00:00.000+00:00",
     terminio: "2021-06-04T16:00:00.000+00:00",
+    online: false,
     url: "",
     logradouro: "Rua Dorival de Carvalho",
     numero: "13",
@@ -18,7 +19,6 @@ const store = writable([
     uf: "MG",
     pais: "Brasil",
     cep: "12345-678",
-    organizadora: null,
     tiposDeIngresso: [],
   },
   {
@@ -30,6 +30,7 @@ const store = writable([
     ativo: true,
     inicio: "2021-03-18T15:00:00.000+00:00",
     terminio: "2021-06-04T16:00:00.000+00:00",
+    online: false,
     url: "",
     logradouro: "Rua Dorival de Carvalho",
     numero: "13",
@@ -38,7 +39,6 @@ const store = writable([
     uf: "SP",
     pais: "Brasil",
     cep: "12345-678",
-    organizadora: null,
     tiposDeIngresso: [],
   },
 
@@ -51,7 +51,8 @@ const store = writable([
     ativo: true,
     inicio: "2021-09-07T15:00:00.000+00:00",
     terminio: "2021-06-04T16:00:00.000+00:00",
-    url: "www.minhaspomba.ru",
+    online: true,
+    url: "www.minhaspomba.pru",
     logradouro: "",
     numero: "",
     bairro: "",
@@ -59,7 +60,6 @@ const store = writable([
     uf: "",
     pais: "",
     cep: "",
-    organizadora: null,
     tiposDeIngresso: [],
   },
   {
@@ -71,6 +71,7 @@ const store = writable([
     ativo: true,
     inicio: "2021-12-25T15:00:00.000+00:00",
     terminio: "2021-06-04T16:00:00.000+00:00",
+    online: false,
     url: "",
     logradouro: "Rua Dorival de Carvalho",
     numero: "13",
@@ -79,7 +80,6 @@ const store = writable([
     uf: "AC",
     pais: "Brasil",
     cep: "12345-678",
-    organizadora: null,
     tiposDeIngresso: [],
   },
   {
@@ -91,6 +91,7 @@ const store = writable([
     ativo: true,
     inicio: "2021-06-04T15:00:00.000+00:00",
     terminio: "2021-06-04T16:00:00.000+00:00",
+    online: false,
     url: "",
     logradouro: "Rua Dorival de Carvalho",
     numero: "13",
@@ -99,7 +100,6 @@ const store = writable([
     uf: "MG",
     pais: "Brasil",
     cep: "12345-678",
-    organizadora: null,
     tiposDeIngresso: [],
   },
   {
@@ -111,6 +111,7 @@ const store = writable([
     ativo: true,
     inicio: "2021-06-04T15:00:00.000+00:00",
     terminio: "2021-06-04T16:00:00.000+00:00",
+    online: false,
     url: "",
     logradouro: "Rua Dorival de Carvalho",
     numero: "13",
@@ -119,7 +120,6 @@ const store = writable([
     uf: "RJ",
     pais: "Brasil",
     cep: "12345-678",
-    organizadora: null,
     tiposDeIngresso: [],
   },
   {
@@ -131,6 +131,7 @@ const store = writable([
     ativo: true,
     inicio: "2021-06-04T15:00:00.000+00:00",
     terminio: "2021-06-04T16:00:00.000+00:00",
+    online: false,
     url: "",
     logradouro: "Rua Dorival de Carvalho",
     numero: "13",
@@ -139,13 +140,12 @@ const store = writable([
     uf: "XY",
     pais: "Brasil",
     cep: "12345-678",
-    organizadora: null,
     tiposDeIngresso: [],
   },
 ]);
 
-const eventos = {
+const eventoStore = {
   subscribe: store.subscribe,
 };
 
-export default eventos;
+export default eventoStore;

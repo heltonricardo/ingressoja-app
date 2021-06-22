@@ -2,12 +2,12 @@
   import { createEventDispatcher } from "svelte";
   import Botao from "../UI/Botao.svelte";
   import Comprador from "./Comprador.svelte";
-  import ENUM_TIPOCADASTRO from "./ENUM_TIPOCADASTRO";
+  import TIPOCADASTRO from "./TIPOCADASTRO";
   import Organizadora from "./Organizadora.svelte";
 
   const dispatch = createEventDispatcher();
 
-  let tipoCadastro = ENUM_TIPOCADASTRO.COMPRADOR;
+  let tipoCadastro = TIPOCADASTRO.COMPRADOR;
 </script>
 
 <style>
@@ -23,7 +23,7 @@
       <input
         name="tipoCadastro"
         type="radio"
-        value={ENUM_TIPOCADASTRO.COMPRADOR}
+        value={TIPOCADASTRO.COMPRADOR}
         bind:group={tipoCadastro}
       />
       Quero comprar ingressos!
@@ -32,16 +32,16 @@
       <input
         name="tipoCadastro"
         type="radio"
-        value={ENUM_TIPOCADASTRO.ORGANIZADORA}
+        value={TIPOCADASTRO.ORGANIZADORA}
         bind:group={tipoCadastro}
       />
       Quero vender ingressos!
     </label>
   </div>
 
-  {#if tipoCadastro === ENUM_TIPOCADASTRO.COMPRADOR}
+  {#if tipoCadastro === TIPOCADASTRO.COMPRADOR}
     <Comprador />
-  {:else if tipoCadastro === ENUM_TIPOCADASTRO.ORGANIZADORA}
+  {:else if tipoCadastro === TIPOCADASTRO.ORGANIZADORA}
     <Organizadora />
   {/if}
 

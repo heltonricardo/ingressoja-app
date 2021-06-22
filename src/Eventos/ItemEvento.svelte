@@ -1,6 +1,9 @@
 <script>
   import { capitalizar } from "../utils/formatador";
   import Botao from "../UI/Botao.svelte";
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
 
   export let evento;
 
@@ -133,14 +136,13 @@
       <div id="dia">
         <p>{dia}</p>
       </div>
-
       <div id="mes">
         <p>{mes}</p>
       </div>
     </div>
 
     <div id="botao">
-      <Botao>Ver mais</Botao>
+      <Botao on:click={() => dispatch("vermais", evento.id)}>Ver mais</Botao>
     </div>
   </div>
 </div>

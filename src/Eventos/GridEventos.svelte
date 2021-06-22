@@ -8,7 +8,7 @@
     width: 90%;
     margin: 0 auto;
   }
-  
+
   .conteudo {
     margin: 0 auto;
     width: 100%;
@@ -22,7 +22,7 @@
 <div class="corpo">
   <div class="conteudo">
     {#each $eventoStore as evento (evento.id)}
-      <ItemEvento {evento} />
+      <ItemEvento {evento} on:vermais />
     {/each}
   </div>
 </div>

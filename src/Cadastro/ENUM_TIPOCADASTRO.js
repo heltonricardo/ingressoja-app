@@ -1,7 +1,0 @@
-const ENUM_TIPOCADASTRO = Object.freeze({
-  COMPRADOR: 1,
-  ORGANIZADORA: 2,
-  ADMINISTRADOR: 3,
-});
-
-export default ENUM_TIPOCADASTRO;

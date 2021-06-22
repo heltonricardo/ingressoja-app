@@ -1,5 +1,5 @@
 <script>
-  import ENUM_MODO from "./ENUM_MODO";
+  import MODO from "./MODO";
   import Pesquisa from "./Pesquisa.svelte";
   import Titulo from "./Titulo.svelte";
   import Opcoes from "./Opcoes.svelte";
@@ -7,7 +7,7 @@
 
   const dispatch = createEventDispatcher();
 
-  export let modo = ENUM_MODO.NORMAL;
+  export let modo = MODO.NORMAL;
 </script>
 
 <style>
@@ -28,9 +28,9 @@
   }
 </style>
 
-<div class="barra" class:um-item={modo !== ENUM_MODO.NORMAL}>
+<div class="barra" class:um-item={modo !== MODO.NORMAL}>
   <Titulo on:click={() => dispatch("voltar")} />
-  {#if modo === ENUM_MODO.NORMAL}
+  {#if modo === MODO.NORMAL}
     <Pesquisa />
     <Opcoes on:cadastrese on:entrar />
   {/if}

@@ -1,11 +1,11 @@
 <script>
-  export let controlType = null;
   export let id;
   export let label;
-  export let rows = null;
   export let value = "";
-  export let type = "text";
+  export let rows = null;
   export let valid = true;
+  export let type = "text";
+  export let controlType = null;
   export let validityMessage = "";
 
   let touched = false;

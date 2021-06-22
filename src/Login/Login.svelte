@@ -8,15 +8,27 @@
 
 <style>
   #corpo {
-    width: 50%;
+    width: 30rem;
     margin: 2rem auto;
+  }
+
+  
+  #botoes {
+    margin: 3rem auto;
+    display: flex;
+    justify-content: center;
   }
 </style>
 
 <div id="corpo">
-  <Entrada id="email" label="E-mail" />
-  <Entrada id="senha" label="Senha" type="password" />
+  <div id="campos">
+    <Entrada id="email" label="E-mail" />
+    <Entrada id="senha" label="Senha" type="password" />
 
-  <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
-  <Botao>Finalizar</Botao>
+  </div>
+
+  <div id="botoes">
+    <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
+    <Botao>Finalizar</Botao>
+  </div>
 </div>

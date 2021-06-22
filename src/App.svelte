@@ -35,6 +35,5 @@
 {:else if modo === MODO.LOGIN}
   <Login on:voltar={modoNormal} />
 {:else if modo === MODO.DETALHES}
-  <Detalhes on:voltar={modoNormal} />
-  <!-- <Detalhes {id} on:voltar={modoNormal} /> -->
+  <Detalhes {id} on:voltar={modoNormal} />
 {/if}

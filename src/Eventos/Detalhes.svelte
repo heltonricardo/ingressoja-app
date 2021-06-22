@@ -19,7 +19,7 @@
 
 <style>
   #corpo {
-    width: 50%;
+    width: 40%;
     margin: 2rem auto;
     display: flex;
     flex-direction: column;

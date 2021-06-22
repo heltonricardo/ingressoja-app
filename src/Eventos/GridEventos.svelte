@@ -6,7 +6,7 @@
 <style>
   .corpo {
     width: 90%;
-    margin: 0 auto;
+    margin: 2rem auto;
   }
 
   .conteudo {

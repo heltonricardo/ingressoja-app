@@ -1,3 +1,7 @@
-export function capitalizar(s) {
-  return s && s[0].toUpperCase() + s.slice(1);
+export function capitalizar(str) {
+  return str && str[0].toUpperCase() + str.slice(1);
+}
+
+export function ZeroEsquerda(num, qnt) {
+  return ("0".repeat(qnt - 1) + num).toString().slice(-qnt);
 }

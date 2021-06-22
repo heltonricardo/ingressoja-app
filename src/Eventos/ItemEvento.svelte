@@ -141,7 +141,7 @@
       </div>
     </div>
 
-    <div id="botao">
+    <div>
       <Botao on:click={() => dispatch("vermais", evento.id)}>Ver mais</Botao>
     </div>
   </div>

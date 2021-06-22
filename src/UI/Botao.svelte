@@ -4,13 +4,14 @@
     margin: 0.3rem;
     display: flex;
     align-items: center;
+    width: max-content;
+    height: 3rem;
 
     font-family: inherit;
     font-size: 1.3rem;
 
     background-color: var(--roxo1);
     color: var(--cinza1);
-    height: 3rem;
     border-radius: 10px;
 
     border-color: black;
@@ -25,17 +26,8 @@
     background-color: var(--roxo2);
     transition: 0.2s;
   }
-
-  p {
-    min-width: max-content;
-    min-height: max-content;
-    max-width: max-content;
-    max-height: max-content;
-  }
 </style>
 
 <button on:click>
-  <p>
-    <slot />
-  </p>
+  <slot />
 </button>

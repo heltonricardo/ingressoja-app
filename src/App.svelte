@@ -7,6 +7,7 @@
   import Detalhes from "./Eventos/Detalhes.svelte";
 
   let modo = MODO.NORMAL;
+  // let modo = MODO.NORMAL;
   let id = null;
 
   function modoNormal() {
@@ -34,5 +35,6 @@
 {:else if modo === MODO.LOGIN}
   <Login on:voltar={modoNormal} />
 {:else if modo === MODO.DETALHES}
-  <Detalhes {id} on:voltar={modoNormal} />
+  <Detalhes on:voltar={modoNormal} />
+  <!-- <Detalhes {id} on:voltar={modoNormal} /> -->
 {/if}

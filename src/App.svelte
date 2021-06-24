@@ -1,5 +1,5 @@
 <script>
-  import MODO from "./UI/BarraSuperior/MODO";
+  import MODO from "./ENUM/MODO";
   import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
   import GridEventos from "./Eventos//GridEventos.svelte";
   import Cadastro from "./Cadastro/Cadastro.svelte";

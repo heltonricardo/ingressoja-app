@@ -1,6 +1,6 @@
 <script>
   import Comprador from "./Comprador.svelte";
-  import TIPOCADASTRO from "./TIPOCADASTRO";
+  import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
   import Organizadora from "./Organizadora.svelte";
 
   let tipoCadastro = TIPOCADASTRO.COMPRADOR;

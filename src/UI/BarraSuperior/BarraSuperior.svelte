@@ -1,5 +1,5 @@
 <script>
-  import MODO from "./MODO";
+  import MODO from "../../ENUM/MODO";
   import Pesquisa from "./Pesquisa.svelte";
   import Titulo from "./Titulo.svelte";
   import Opcoes from "./Opcoes.svelte";

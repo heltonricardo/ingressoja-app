@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { postComprador } from "./cadastroConex";
+  import { postComprador } from "./compradorConex";
 
   import Entrada from "../UI/Entrada.svelte";
   import Botao from "../UI/Botao.svelte";
@@ -13,9 +13,10 @@
   let senha;
   let senha2;
 
-  function cadastrar() {
+  async function cadastrar() {
     if (senha === senha2) {
-      postComprador({ nome, cpf, email, usuario: { senha } });
+      const res = await postComprador({ nome, cpf, email, usuario: { senha } });
+      if (res) dispatch("voltar");
     }
   }
 </script>

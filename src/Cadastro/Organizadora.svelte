@@ -2,11 +2,35 @@
   import { createEventDispatcher } from "svelte";
   import Entrada from "../UI/Entrada.svelte";
   import Botao from "../UI/Botao.svelte";
+  import { postOrganizadora } from "./organizadoraConex";
 
   const dispatch = createEventDispatcher();
 
+  let razaoSocial;
+  let cnpj;
+  let nomeFantasia;
+  let email;
+  let banco;
+  let agencia;
+  let conta;
   let senha;
   let senha2;
+
+  async function cadastrar() {
+    if (senha === senha2) {
+      const res = await postOrganizadora({
+        razaoSocial,
+        cnpj,
+        nomeFantasia,
+        email,
+        banco,
+        agencia,
+        conta,
+        usuario: { senha },
+      });
+      if (res) dispatch("voltar");
+    }
+  }
 </script>
 
 <style>
@@ -22,13 +46,41 @@
 </style>
 
 <div id="corpo">
-  <Entrada id="razao" label="Razão Social" />
-  <Entrada id="cnpj" label="CNPJ" />
-  <Entrada id="nome" label="Nome Fantasia" />
-  <Entrada id="email" label="E-mail" />
-  <Entrada id="banco" label="Banco" />
-  <Entrada id="agencia" label="Agência" />
-  <Entrada id="conta" label="Conta" />
+  <Entrada
+    id="razaoSocial"
+    label="Razão Social"
+    on:input={(event) => (razaoSocial = event.target.value)}
+  />
+  <Entrada
+    id="cnpj"
+    label="CNPJ"
+    on:input={(event) => (cnpj = event.target.value)}
+  />
+  <Entrada
+    id="nomeFantasia"
+    label="Nome Fantasia"
+    on:input={(event) => (nomeFantasia = event.target.value)}
+  />
+  <Entrada
+    id="email"
+    label="E-mail"
+    on:input={(event) => (email = event.target.value)}
+  />
+  <Entrada
+    id="banco"
+    label="Banco"
+    on:input={(event) => (banco = event.target.value)}
+  />
+  <Entrada
+    id="agencia"
+    label="Agência"
+    on:input={(event) => (agencia = event.target.value)}
+  />
+  <Entrada
+    id="conta"
+    label="Conta"
+    on:input={(event) => (conta = event.target.value)}
+  />
 </div>
 
 <div id="senha">
@@ -48,5 +100,5 @@
 
 <div id="botoes">
   <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
-  <Botao>Finalizar</Botao>
+  <Botao on:click={cadastrar}>Finalizar</Botao>
 </div>

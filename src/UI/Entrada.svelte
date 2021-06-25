@@ -2,7 +2,7 @@
   export let id;
   export let label;
   export let value = "";
-  export let rows = null;
+  export let rows = 13;
   export let valid = true;
   export let type = "text";
   export let controlType = null;
@@ -23,16 +23,18 @@
     background: white;
     padding: 0.15rem 0.25rem;
     transition: border-color 0.1s ease-out;
+    resize: none;
   }
 
   input:focus,
   textarea:focus {
-    border-color: #e40763;
+    border-color: var(--roxo1);
     outline: none;
   }
 
   label {
     display: block;
+    margin-top: 1rem;
     margin-bottom: 0.5rem;
     width: 100%;
   }

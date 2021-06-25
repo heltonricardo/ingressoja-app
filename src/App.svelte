@@ -5,9 +5,9 @@
   import Cadastro from "./Cadastro/Cadastro.svelte";
   import Login from "./Login/Login.svelte";
   import Detalhes from "./Eventos/Detalhes.svelte";
+import CadastroEvento from "./Eventos/CadastroEvento.svelte";
 
-  let modo = MODO.CADASTRO;
-  // let modo = MODO.NORMAL;
+  let modo = MODO.NOVO_EVENTO;
   let id = null;
 
   function modoNormal() {
@@ -36,4 +36,6 @@
   <Login on:voltar={modoNormal} />
 {:else if modo === MODO.DETALHES}
   <Detalhes {id} on:voltar={modoNormal} />
+{:else if modo === MODO.NOVO_EVENTO}
+  <CadastroEvento />
 {/if}

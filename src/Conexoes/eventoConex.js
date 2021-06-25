@@ -1,3 +1,5 @@
+import swal from "sweetalert";
+
 import MSG from "../ENUM/MSG.js";
 import PATH from "../ENUM/PATH.js";
 import STATUS from "../ENUM/STATUS.js";
@@ -12,18 +14,24 @@ export async function postEvento(evento) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    alert(MSG.CONEXAO);
+    swal(MSG.RUIM, MSG.CONEXAO, "error");
     return false;
   }
 
   const status = res.status;
 
   if (status === STATUS.CREATED) {
-    alert(MSG.CRIADO);
+    swal(MSG.BOM, MSG.CRIADO, "sucess", {timer: 3000});
     return true;
   } //
-  else if (status === STATUS.CONFLICT) alert(MSG.DUPLICADO);
-  else if (status === STATUS.NOT_ACCEPTABLE) alert(MSG.INCORRETO);
-  else if (status === STATUS.INTERNAL_SERVER_ERROR) alert(MSG.SERVERROR);
+  else if (status === STATUS.CONFLICT) {
+    swal(MSG.RUIM, MSG.DUPLICADO, "error");
+  } //
+  else if (status === STATUS.NOT_ACCEPTABLE) {
+    swal(MSG.RUIM, MSG.INCORRETO, "error");
+  } //
+  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+    swal(MSG.RUIM, MSG.SERVERROR, "error");
+  }
   return false;
 }

@@ -4,8 +4,11 @@
 
   import Entrada from "../UI/Entrada.svelte";
   import Botao from "../UI/Botao.svelte";
+  import Aguarde from "../UI/Aguarde.svelte";
 
   const dispatch = createEventDispatcher();
+
+  let carregando = false;
 
   let nome;
   let cpf;
@@ -15,7 +18,9 @@
 
   async function cadastrar() {
     if (senha === senha2) {
+      carregando = true;
       const res = await postComprador({ nome, cpf, email, usuario: { senha } });
+      carregando = false;
       if (res) dispatch("voltar");
     }
   }
@@ -32,6 +37,10 @@
     margin: 3rem 0;
   }
 </style>
+
+{#if carregando}
+  <Aguarde />
+{/if}
 
 <div id="campos">
   <Entrada

@@ -50,8 +50,9 @@
 
   #titulo {
     display: flex;
-    font-size: 1.5rem;
     height: 2rem;
+    font-size: 1.8rem;
+    font-weight: bold;
     margin-bottom: 0.5rem;
     align-self: flex-start;
     align-items: center;

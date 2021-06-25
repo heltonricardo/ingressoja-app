@@ -2,7 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import Entrada from "../UI/Entrada.svelte";
   import Botao from "../UI/Botao.svelte";
-  import { postOrganizadora } from "./organizadoraConex";
+  import { postOrganizadora } from "../Conexoes/organizadoraConex";
 
   const dispatch = createEventDispatcher();
 

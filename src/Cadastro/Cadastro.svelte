@@ -10,6 +10,12 @@
   #corpo {
     width: 30rem;
     margin: 2rem auto;
+    min-height: calc(100vh - 22rem);
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 3rem;
   }
 
   #opcoes {
@@ -20,6 +26,7 @@
 </style>
 
 <div id="corpo">
+  <h1>Faça seu Cadastro</h1>
   <div id="opcoes">
     <label>
       <input

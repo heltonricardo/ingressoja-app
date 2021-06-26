@@ -16,7 +16,8 @@ const MSG = Object.freeze({
   SERVERROR: "Ocorreu um erro no servidor. Tente novamente mais tarde.",
   CONEXAO: "Não foi possível estabelecer conexão com o servidor... Tente \
   novamente mais tarde.",
-  CREDENCIAL: "As credenciais informadas são inválidas!"
+  CREDENCIAL: "As credenciais informadas são inválidas!",
+  NAO_EXISTE: "As informações procuradas não existem!"
 });
 
 export default MSG;

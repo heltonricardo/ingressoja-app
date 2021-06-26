@@ -1,6 +1,5 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import swal from "sweetalert";
   import autenticacao from "../../Autenticacao/autenticacao";
   import Botao from "../Botao.svelte";
 

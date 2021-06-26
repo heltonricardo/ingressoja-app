@@ -11,7 +11,9 @@ const autenticacao = {
 
   estaLogadoComTipo: (tipo) => estaLogado() && Cookies.get(TIPO) === tipo,
 
-  tipoLogado: () => Cookies.get(TIPO),
+  idLogado: () => parseInt(Cookies.get(ID)),
+  
+  tipoLogado: () => parseInt(Cookies.get(TIPO)),
 
   deslogar: () => {
     Cookies.remove(ID);
@@ -32,7 +34,7 @@ const autenticacao = {
       swal(MSG.RUIM, MSG.CONEXAO, "error");
       return false;
     }
-
+    
     const status = res.status;
 
     if (status === STATUS.OK) {
@@ -44,6 +46,9 @@ const autenticacao = {
     } //
     else if (status === STATUS.UNAUTHORIZED) {
       swal(MSG.RUIM, MSG.CREDENCIAL, "error");
+    } //
+    else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+      swal(MSG.RUIM, MSG.SERVERROR, "error");
     }
     return false;
   },

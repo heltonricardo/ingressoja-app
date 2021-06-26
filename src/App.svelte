@@ -28,6 +28,7 @@
   on:voltar={modoNormal}
   on:cadastrese={() => (modo = MODO.CADASTRO)}
   on:entrar={() => (modo = MODO.LOGIN)}
+  on:minhaconta={() => modo = MODO.MINHA_CONTA}
 />
 
 {#if modo === MODO.NORMAL}
@@ -41,7 +42,7 @@
 {:else if modo === MODO.NOVO_EVENTO}
   <CadastroEvento />
 {:else if modo === MODO.MINHA_CONTA}
-  <MinhaConta />
+  <MinhaConta on:voltar={modoNormal} />
 {/if}
 
 <BarraInferior />

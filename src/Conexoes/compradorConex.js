@@ -4,6 +4,8 @@ import MSG from "../ENUM/MSG.js";
 import PATH from "../ENUM/PATH.js";
 import STATUS from "../ENUM/STATUS.js";
 
+import autenticacao from "../Autenticacao/autenticacao";
+
 export async function postComprador(comprador) {
   let res;
 
@@ -21,7 +23,7 @@ export async function postComprador(comprador) {
   const status = res.status;
 
   if (status === STATUS.CREATED) {
-    swal(MSG.BOM, MSG.CRIADO, "success", {timer: 5000});
+    swal(MSG.BOM, MSG.CRIADO, "success", { timer: 5000 });
     return true;
   } //
   else if (status === STATUS.CONFLICT) {
@@ -34,4 +36,29 @@ export async function postComprador(comprador) {
     swal(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
+}
+
+export async function getComprador() {
+  if (!autenticacao.estaLogado()) return null;
+  
+  const id = autenticacao.idLogado();
+  
+  let res;
+  try {
+    res = await fetch(`${PATH.COMPRADOR}/${id}`);
+  } catch (error) {
+    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    return null;
+  }
+
+  const status = res.status;
+
+  if (status === STATUS.OK) {
+    const comprador = await res.json();
+    return comprador;
+  } //
+  else if (status === STATUS.NOT_ACCEPTABLE) {
+    swal(MSG.RUIM, MSG.NAO_EXISTE, "error");
+  }
+  return null;
 }

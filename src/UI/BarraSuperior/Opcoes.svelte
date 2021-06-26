@@ -1,8 +1,17 @@
 <script>
   import { createEventDispatcher } from "svelte";
-import Botao from "../Botao.svelte";
+  import swal from "sweetalert";
+  import autenticacao from "../../Autenticacao/autenticacao";
+  import Botao from "../Botao.svelte";
 
   const dispatch = createEventDispatcher();
+
+  let logado = autenticacao.estaLogado();
+
+  function deslogar() {
+    autenticacao.deslogar();
+    logado = autenticacao.estaLogado();
+  }
 </script>
 
 <style>
@@ -13,6 +22,11 @@ import Botao from "../Botao.svelte";
 </style>
 
 <div id="conteudo">
-  <Botao on:click={() => dispatch("cadastrese")}>Cadastre-se</Botao>
-  <Botao on:click={() => dispatch("entrar")}>Entrar</Botao>
+  {#if logado}
+    <Botao on:click={() => dispatch("minhaconta")}>Minha Conta</Botao>
+    <Botao on:click={deslogar}>Sair</Botao>
+  {:else}
+    <Botao on:click={() => dispatch("cadastrese")}>Cadastre-se</Botao>
+    <Botao on:click={() => dispatch("entrar")}>Entrar</Botao>
+  {/if}
 </div>

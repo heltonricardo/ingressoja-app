@@ -1,13 +1,16 @@
 const MSG = Object.freeze({
   BOM: "😄 Legal!",
-  OLA: "😉 Olá!",
+  RUIM: "😭 Poxa!",
+  OLA: "🤩 Olá!",
+  TCHAU: "😉 Até breve!",
+
   OK: "Operação realizada com sucesso!",
   CRIADO: "Cadastro criado com sucesso!",
   ALTERADO: "Cadastro alterado com sucesso!",
   EXCLUÍDO: "Cadastro excluído com sucesso!",
-  BEM_VINDO: "Saudações!",
+  SAUDACAO: "Nossas boas-vindas!",
+  VOLTE_SEMPRE: "Volte sempre!",
 
-  RUIM: "😭 Poxa!",
   INCORRETO: "Os dados informados estão incorretos!",
   DUPLICADO: "Os dados informados já pertencem a um cadastro existente!",
   SERVERROR: "Ocorreu um erro no servidor. Tente novamente mais tarde.",

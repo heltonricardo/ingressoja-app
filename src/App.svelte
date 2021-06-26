@@ -5,9 +5,11 @@
   import Cadastro from "./Cadastro/Cadastro.svelte";
   import Login from "./Login/Login.svelte";
   import Detalhes from "./Eventos/Detalhes.svelte";
-import CadastroEvento from "./Eventos/CadastroEvento.svelte";
+  import CadastroEvento from "./Eventos/CadastroEvento.svelte";
+  import BarraInferior from "./UI/BarraInferior.svelte";
+  import MinhaConta from "./Conta/MinhaConta.svelte";
 
-  let modo = MODO.LOGIN;
+  let modo = MODO.MINHA_CONTA;
   let id = null;
 
   function modoNormal() {
@@ -38,4 +40,8 @@ import CadastroEvento from "./Eventos/CadastroEvento.svelte";
   <Detalhes {id} on:voltar={modoNormal} />
 {:else if modo === MODO.NOVO_EVENTO}
   <CadastroEvento />
+{:else if modo === MODO.MINHA_CONTA}
+  <MinhaConta />
 {/if}
+
+<BarraInferior />

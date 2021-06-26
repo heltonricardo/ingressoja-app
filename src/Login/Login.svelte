@@ -3,6 +3,7 @@
   import autenticacao from "../Autenticacao/autenticacao";
   import Botao from "../UI/Botao.svelte";
   import Entrada from "../UI/Entrada.svelte";
+  import Aguarde from "../UI/Aguarde.svelte"
 
   const dispatch = createEventDispatcher();
 
@@ -12,10 +13,10 @@
   let senha = "";
 
   async function entrar() {
+    carregando = true;
     const login = await autenticacao.logar({ email, senha });
-    if (login) {
-      console.log(autenticacao.tipoLogado())
-    }
+    carregando = false;
+    dispatch("voltar");
   }
 </script>
 
@@ -31,6 +32,10 @@
     justify-content: center;
   }
 </style>
+
+{#if carregando}
+  <Aguarde />
+{/if}
 
 <div id="corpo">
   <div id="campos">

@@ -32,6 +32,6 @@
   <Titulo on:click={() => dispatch("voltar")} />
   {#if modo === MODO.NORMAL}
     <Pesquisa />
-    <Opcoes on:cadastrese on:entrar />
+    <Opcoes on:cadastrese on:entrar on:minhaconta />
   {/if}
 </div>

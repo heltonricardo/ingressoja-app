@@ -16,6 +16,7 @@ const autenticacao = {
   deslogar: () => {
     Cookies.remove(ID);
     Cookies.remove(TIPO);
+    swal(MSG.TCHAU, MSG.VOLTE_SEMPRE, "info", { timer: 3000 });
   },
 
   logar: async (credencial) => {
@@ -35,9 +36,10 @@ const autenticacao = {
     const status = res.status;
 
     if (status === STATUS.OK) {
-      const tipo = await res.json();
-      Cookies.set(TIPO, tipo);
-      swal(MSG.BOM, MSG.BEM_VINDO, "success", { timer: 3000 });
+      const jsonResp = await res.json();
+      Cookies.set(TIPO, jsonResp.tipo, { expires: 7 });
+      Cookies.set(ID, jsonResp.id, { expires: 7 });
+      swal(MSG.OLA, MSG.SAUDACAO, "success", { timer: 3000 });
       return true;
     } //
     else if (status === STATUS.UNAUTHORIZED) {

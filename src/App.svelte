@@ -7,7 +7,7 @@
   import Detalhes from "./Eventos/Detalhes.svelte";
 import CadastroEvento from "./Eventos/CadastroEvento.svelte";
 
-  let modo = MODO.NOVO_EVENTO;
+  let modo = MODO.LOGIN;
   let id = null;
 
   function modoNormal() {

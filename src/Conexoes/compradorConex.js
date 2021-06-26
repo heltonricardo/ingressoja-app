@@ -21,7 +21,7 @@ export async function postComprador(comprador) {
   const status = res.status;
 
   if (status === STATUS.CREATED) {
-    swal(MSG.BOM, MSG.CRIADO, "sucess", {timer: 3000});
+    swal(MSG.BOM, MSG.CRIADO, "success", {timer: 5000});
     return true;
   } //
   else if (status === STATUS.CONFLICT) {

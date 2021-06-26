@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import autenticacao from "../Autenticacao/autenticacao";
   import Botao from "../UI/Botao.svelte";
   import Entrada from "../UI/Entrada.svelte";
 
@@ -7,8 +8,15 @@
 
   let carregando = false;
 
-  let email;
-  let senha;
+  let email = "";
+  let senha = "";
+
+  async function entrar() {
+    const login = await autenticacao.logar({ email, senha });
+    if (login) {
+      console.log(autenticacao.tipoLogado())
+    }
+  }
 </script>
 
 <style>
@@ -41,6 +49,6 @@
 
   <div id="botoes">
     <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
-    <Botao>Finalizar</Botao>
+    <Botao on:click={entrar}>Entrar</Botao>
   </div>
 </div>

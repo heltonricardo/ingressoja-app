@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import PATH from "../ENUM/PATH";
 import STATUS from "../ENUM/STATUS";
 import MSG from "../ENUM/MSG";
@@ -7,17 +6,17 @@ const ID = "id";
 const TIPO = "tipo";
 
 const autenticacao = {
-  estaLogado: () => Cookies.get(ID) && Cookies.get(TIPO),
+  estaLogado: () => localStorage.getItem(ID) && localStorage.getItem(TIPO),
 
-  estaLogadoComTipo: (tipo) => estaLogado() && Cookies.get(TIPO) === tipo,
+  estaLogadoComTipo: (tipo) =>
+    estaLogado() && localStorage.getItem(TIPO) === tipo,
 
-  idLogado: () => parseInt(Cookies.get(ID)),
-  
-  tipoLogado: () => parseInt(Cookies.get(TIPO)),
+  idLogado: () => parseInt(localStorage.getItem(ID)),
+
+  tipoLogado: () => parseInt(localStorage.getItem(TIPO)),
 
   deslogar: () => {
-    Cookies.remove(ID);
-    Cookies.remove(TIPO);
+    localStorage.clear();
     swal(MSG.TCHAU, MSG.VOLTE_SEMPRE, "info", { timer: 3000 });
   },
 
@@ -34,13 +33,13 @@ const autenticacao = {
       swal(MSG.RUIM, MSG.CONEXAO, "error");
       return false;
     }
-    
+
     const status = res.status;
 
     if (status === STATUS.OK) {
       const jsonResp = await res.json();
-      Cookies.set(TIPO, jsonResp.tipo, { expires: 7 });
-      Cookies.set(ID, jsonResp.id, { expires: 7 });
+      localStorage.setItem(TIPO, jsonResp.tipo, { expires: 7 });
+      localStorage.setItem(ID, jsonResp.id, { expires: 7 });
       swal(MSG.OLA, MSG.SAUDACAO, "success", { timer: 3000 });
       return true;
     } //

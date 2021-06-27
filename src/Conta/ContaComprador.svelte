@@ -2,21 +2,15 @@
   import { createEventDispatcher, onMount } from "svelte";
 
   import { getComprador } from "../Conexoes/compradorConex";
+  import Aguarde from "../UI/Aguarde.svelte";
 
   const dispatch = createEventDispatcher();
 
-  let comprador;
-
   async function carregaDados() {
-    comprador = await getComprador();
-    if (!comprador) {
-      dispatch("voltar");
-    }
+    return await getComprador();
   }
 
-  onMount(() => {
-    carregaDados();
-  });
+  let dadosCarregados = carregaDados();
 </script>
 
 <style>
@@ -27,7 +21,11 @@
   }
 </style>
 
-<div id="corpo">
-  <h1>Minha Conta</h1>
-  <h2>Olá</h2>
-</div>
+{#await dadosCarregados}
+  <Aguarde />
+{:then comprador}
+  <div id="corpo">
+    <h1>Minha Conta</h1>
+    <h2>Olá, {comprador.nome}</h2>
+  </div>
+{/await}

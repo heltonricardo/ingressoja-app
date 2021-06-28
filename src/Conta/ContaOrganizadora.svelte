@@ -1,13 +1,13 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
-  import { getComprador } from "../Conexoes/compradorConex";
+  import { getOrganizadora } from "../Conexoes/organizadoraConex";
   import Aguarde from "../UI/Aguarde.svelte";
 
   const dispatch = createEventDispatcher();
 
   async function carregaDados() {
-    return await getComprador();
+    return await getOrganizadora();
   }
 
   let dadosCarregados = carregaDados();
@@ -37,9 +37,9 @@
 
 {#await dadosCarregados}
   <Aguarde />
-{:then comprador}
+{:then organizadora}
   <div id="corpo">
     <h1>Minha Conta</h1>
-    <h2>Olá, {comprador.nome.split(" ")[0]}!</h2>
+    <h2>Olá, {organizadora.nomeFantasia.split(" ")[0]}!</h2>
   </div>
 {/await}

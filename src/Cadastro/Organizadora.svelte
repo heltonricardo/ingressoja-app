@@ -4,6 +4,7 @@
   import Botao from "../UI/Botao.svelte";
   import { postOrganizadora } from "../Conexoes/organizadoraConex";
   import Aguarde from "../UI/Aguarde.svelte";
+  import autenticacao from "../Autenticacao/autenticacao"
 
   const dispatch = createEventDispatcher();
 
@@ -33,7 +34,10 @@
         usuario: { senha },
       });
       carregando = false;
-      if (res) dispatch("voltar");
+      if (res) {
+        await autenticacao.logar({ email, senha }, false);
+        dispatch("voltar");
+      }
     }
   }
 </script>

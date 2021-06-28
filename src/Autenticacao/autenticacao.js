@@ -20,7 +20,7 @@ const autenticacao = {
     swal(MSG.TCHAU, MSG.VOLTE_SEMPRE, "info", { timer: 3000 });
   },
 
-  logar: async (credencial) => {
+  logar: async (credencial, exibeMsg) => {
     let res;
 
     try {
@@ -30,7 +30,9 @@ const autenticacao = {
         headers: { "Content-Type": "application/json" },
       });
     } catch (error) {
-      swal(MSG.RUIM, MSG.CONEXAO, "error");
+      if (exibeMsg) {
+        swal(MSG.RUIM, MSG.CONEXAO, "error");
+      }
       return false;
     }
 
@@ -38,15 +40,17 @@ const autenticacao = {
 
     if (status === STATUS.OK) {
       const jsonResp = await res.json();
-      localStorage.setItem(TIPO, jsonResp.tipo, { expires: 7 });
-      localStorage.setItem(ID, jsonResp.id, { expires: 7 });
-      swal(MSG.OLA, MSG.SAUDACAO, "success", { timer: 3000 });
+      localStorage.setItem(TIPO, jsonResp.tipo);
+      localStorage.setItem(ID, jsonResp.id);
+      if (exibeMsg) {
+        swal(MSG.OLA, MSG.SAUDACAO, "success", { timer: 3000 });
+      }
       return true;
     } //
-    else if (status === STATUS.UNAUTHORIZED) {
+    else if (status === STATUS.UNAUTHORIZED && exibeMsg) {
       swal(MSG.RUIM, MSG.CREDENCIAL, "error");
     } //
-    else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+    else if (status === STATUS.INTERNAL_SERVER_ERROR && exibeMsg) {
       swal(MSG.RUIM, MSG.SERVERROR, "error");
     }
     return false;

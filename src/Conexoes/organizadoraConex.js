@@ -3,6 +3,9 @@ import swal from "sweetalert";
 import MSG from "../ENUM/MSG.js";
 import PATH from "../ENUM/PATH.js";
 import STATUS from "../ENUM/STATUS.js";
+import TIPOCADASTRO from "../ENUM/TIPOCADASTRO.js";
+
+import autenticacao from "../Autenticacao/autenticacao.js";
 
 export async function postOrganizadora(organizadora) {
   let res;
@@ -34,4 +37,32 @@ export async function postOrganizadora(organizadora) {
     swal(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
+}
+
+export async function getOrganizadora() {
+  if (
+    !autenticacao.estaLogado() ||
+    autenticacao.tipoLogado() !== TIPOCADASTRO.ORGANIZADORA
+  )
+    return null;
+
+  const id = autenticacao.idLogado();
+
+  let res;
+  try {
+    res = await fetch(`${PATH.ORGANIZADORA}/${id}`);
+  } catch (error) {
+    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    return null;
+  }
+  const status = res.status;
+
+  if (status === STATUS.OK) {
+    const organizadora = await res.json();
+    return organizadora;
+  } //
+  else if (status === STATUS.NOT_ACCEPTABLE) {
+    swal(MSG.RUIM, MSG.NAO_EXISTE, "error");
+  }
+  return null;
 }

@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import { postComprador } from "../Conexoes/compradorConex";
+  import autenticacao from "../Autenticacao/autenticacao";
 
   import Entrada from "../UI/Entrada.svelte";
   import Botao from "../UI/Botao.svelte";
@@ -21,7 +22,10 @@
       carregando = true;
       const res = await postComprador({ nome, cpf, email, usuario: { senha } });
       carregando = false;
-      if (res) dispatch("voltar");
+      if (res) {
+        await autenticacao.logar({ email, senha }, false);
+        dispatch("voltar");
+      }
     }
   }
 </script>

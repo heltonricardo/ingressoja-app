@@ -15,11 +15,13 @@
   function modoNormal() {
     id = null;
     modo = MODO.NORMAL;
+    window.scrollTo(0, 0);
   }
-
+  
   function modoDetalhes(event) {
     id = event.detail;
     modo = MODO.DETALHES;
+    window.scrollTo(0, 0);
   }
 </script>
 
@@ -28,7 +30,7 @@
   on:voltar={modoNormal}
   on:cadastrese={() => (modo = MODO.CADASTRO)}
   on:entrar={() => (modo = MODO.LOGIN)}
-  on:minhaconta={() => modo = MODO.MINHA_CONTA}
+  on:minhaconta={() => (modo = MODO.MINHA_CONTA)}
 />
 
 {#if modo === MODO.NORMAL}

@@ -14,7 +14,7 @@
 
   async function entrar() {
     carregando = true;
-    const login = await autenticacao.logar({ email, senha });
+    const login = await autenticacao.logar({ email, senha }, true);
     carregando = false;
 
     if (login) dispatch("voltar");

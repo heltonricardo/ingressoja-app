@@ -4,6 +4,7 @@
   import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
 
   import ContaComprador from "./ContaComprador.svelte";
+  import ContaOrganizadora from "./ContaOrganizadora.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -18,4 +19,6 @@
 
 {#if tipo === TIPOCADASTRO.COMPRADOR}
   <ContaComprador on:voltar />
+  {:else}
+  <ContaOrganizadora on:voltar />
 {/if}

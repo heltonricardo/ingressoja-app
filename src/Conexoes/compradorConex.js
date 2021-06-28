@@ -3,6 +3,7 @@ import swal from "sweetalert";
 import MSG from "../ENUM/MSG.js";
 import PATH from "../ENUM/PATH.js";
 import STATUS from "../ENUM/STATUS.js";
+import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
 
 import autenticacao from "../Autenticacao/autenticacao";
 
@@ -39,10 +40,14 @@ export async function postComprador(comprador) {
 }
 
 export async function getComprador() {
-  if (!autenticacao.estaLogado()) return null;
-  
+  if (
+    !autenticacao.estaLogado() ||
+    autenticacao.tipoLogado() !== TIPOCADASTRO.COMPRADOR
+  )
+    return null;
+
   const id = autenticacao.idLogado();
-  
+
   let res;
   try {
     res = await fetch(`${PATH.COMPRADOR}/${id}`);

@@ -17,10 +17,15 @@
     modo = MODO.NORMAL;
     window.scrollTo(0, 0);
   }
-  
+
   function modoDetalhes(event) {
     id = event.detail;
     modo = MODO.DETALHES;
+    window.scrollTo(0, 0);
+  }
+  
+  function modoCadastraEvento() {
+    modo = MODO.NOVO_EVENTO;
     window.scrollTo(0, 0);
   }
 </script>
@@ -44,7 +49,9 @@
 {:else if modo === MODO.NOVO_EVENTO}
   <CadastroEvento />
 {:else if modo === MODO.MINHA_CONTA}
-  <MinhaConta on:voltar={modoNormal} />
+  <MinhaConta on:voltar={modoNormal} on:novoevento={modoCadastraEvento} />
+{:else if modo === MODO.NOVO_EVENTO}
+  <CadastroEvento on:voltar={modoNormal} />
 {/if}
 
 <BarraInferior />

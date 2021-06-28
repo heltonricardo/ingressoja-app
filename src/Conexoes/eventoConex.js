@@ -3,14 +3,24 @@ import swal from "sweetalert";
 import MSG from "../ENUM/MSG.js";
 import PATH from "../ENUM/PATH.js";
 import STATUS from "../ENUM/STATUS.js";
+import TIPOCADASTRO from "../ENUM/TIPOCADASTRO.js";
+
+import autenticacao from "../Autenticacao/autenticacao.js";
 
 export async function postEvento(evento) {
-  let res;
+  if (
+    !autenticacao.estaLogado() ||
+    autenticacao.tipoLogado() !== TIPOCADASTRO.ORGANIZADORA
+  )
+    return null;
 
+  const organizadora = autenticacao.idLogado();
+
+  let res;
   try {
     res = await fetch(PATH.EVENTO, {
       method: "POST",
-      body: JSON.stringify(evento),
+      body: JSON.stringify({ ...evento, organizadora }),
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
@@ -21,7 +31,7 @@ export async function postEvento(evento) {
   const status = res.status;
 
   if (status === STATUS.CREATED) {
-    swal(MSG.BOM, MSG.CRIADO, "success", {timer: 5000});
+    swal(MSG.BOM, MSG.CRIADO, "success", { timer: 5000 });
     return true;
   } //
   else if (status === STATUS.CONFLICT) {

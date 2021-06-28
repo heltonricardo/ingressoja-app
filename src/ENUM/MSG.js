@@ -5,9 +5,9 @@ const MSG = Object.freeze({
   TCHAU: "😉 Até breve!",
 
   OK: "Operação realizada com sucesso!",
-  CRIADO: "Cadastro criado com sucesso!",
-  ALTERADO: "Cadastro alterado com sucesso!",
-  EXCLUÍDO: "Cadastro excluído com sucesso!",
+  CRIADO: "Cadastrado com sucesso!",
+  ALTERADO: "Alterado com sucesso!",
+  EXCLUÍDO: "Excluído com sucesso!",
   SAUDACAO: "Nossas boas-vindas!",
   VOLTE_SEMPRE: "Volte sempre!",
 

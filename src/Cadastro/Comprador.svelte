@@ -20,7 +20,7 @@
   async function cadastrar() {
     if (senha === senha2) {
       carregando = true;
-      const res = await postComprador({ nome, cpf, email, usuario: { senha } });
+      const res = await postComprador({ nome, cpf, email, senha });
       carregando = false;
       if (res) {
         await autenticacao.logar({ email, senha }, false);

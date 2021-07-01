@@ -19,7 +19,7 @@
   }
 
   #opcoes {
-    margin: 3rem auto;
+    margin: 3rem 0;
     display: flex;
     justify-content: space-between;
   }

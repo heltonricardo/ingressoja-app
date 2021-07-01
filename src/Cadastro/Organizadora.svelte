@@ -4,7 +4,7 @@
   import Botao from "../UI/Botao.svelte";
   import { postOrganizadora } from "../Conexoes/organizadoraConex";
   import Aguarde from "../UI/Aguarde.svelte";
-  import autenticacao from "../Autenticacao/autenticacao"
+  import autenticacao from "../Autenticacao/autenticacao";
 
   const dispatch = createEventDispatcher();
 
@@ -31,7 +31,7 @@
         banco,
         agencia,
         conta,
-        usuario: { senha },
+        senha,
       });
       carregando = false;
       if (res) {

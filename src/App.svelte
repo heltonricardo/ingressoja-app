@@ -9,7 +9,7 @@
   import BarraInferior from "./UI/BarraInferior.svelte";
   import MinhaConta from "./Conta/MinhaConta.svelte";
 
-  let modo = MODO.MINHA_CONTA;
+  let modo = MODO.NOVO_EVENTO;
   let id = null;
 
   function modoNormal() {

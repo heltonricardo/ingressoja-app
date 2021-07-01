@@ -4,6 +4,7 @@
   import Aguarde from "../UI/Aguarde.svelte";
   import Botao from "../UI/Botao.svelte";
   import Entrada from "../UI/Entrada.svelte";
+  import TipoDeIngresso from "./TipoDeIngresso.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -23,6 +24,8 @@
   let estado = "";
   let pais = "";
   let cep = "";
+  let qntTipoDeIngresso = 1;
+  let tiposDeIngresso = [];
 
   async function cadastrar() {
     carregando = true;
@@ -64,6 +67,14 @@
     font-size: 3rem;
     align-self: center;
     margin-bottom: 2rem;
+  }
+
+  hr {
+    width: 100%;
+    margin: 3rem 0;
+    height: 0.1rem;
+    background-color: var(--roxo2);
+    border: none;
   }
 
   #opcoes {
@@ -173,6 +184,14 @@
         on:input={(event) => (cep = event.target.value)}
       />
     {/if}
+  </div>
+
+  <hr />
+
+  <div class="campos">
+    <h1>Tipos de Ingressos</h1>
+
+    <TipoDeIngresso />
   </div>
 </div>
 

@@ -58,7 +58,7 @@
       tiposDeIngresso
     });
     carregando = false;
-    if (sucesso) dispatch("voltar");
+    if (sucesso) dispatch("minhaconta");
   }
 </script>
 

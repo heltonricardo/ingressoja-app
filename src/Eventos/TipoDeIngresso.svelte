@@ -5,7 +5,7 @@
     nome: "",
     valor: 0.0,
     descricao: "",
-    quantidade: 0,
+    quantidadeTotal: 0,
   };
 
   export let nomeValido = true;
@@ -117,7 +117,7 @@
         type="number"
         class="pequeno"
         class:invalid={!qntValida && qntTocada}
-        bind:value={tipoDeIngresso.quantidade}
+        bind:value={tipoDeIngresso.quantidadeTotal}
         on:blur={() => (qntTocada = true)}
       />
       {#if qntTocada && !qntValida}

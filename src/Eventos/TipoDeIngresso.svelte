@@ -18,7 +18,8 @@
     flex-direction: column;
     padding: 0.5rem 0;
     width: 100%;
-    margin: 0.25rem 0;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 
   .item {

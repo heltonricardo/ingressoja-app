@@ -3,6 +3,7 @@
   import { postEvento } from "../Conexoes/eventoConex";
   import Aguarde from "../UI/Aguarde.svelte";
   import Botao from "../UI/Botao.svelte";
+  import Icone from "../UI/Icone.svelte";
   import Entrada from "../UI/Entrada.svelte";
   import TipoDeIngresso from "./TipoDeIngresso.svelte";
 
@@ -84,7 +85,12 @@
   }
 
   #botoes {
-    margin: 3rem auto;
+    margin: 4rem auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  #tipoIngressoControle {
     display: flex;
     justify-content: center;
   }
@@ -190,8 +196,16 @@
 
   <div class="campos">
     <h1>Tipos de Ingressos</h1>
+    {#each { length: qntTipoDeIngresso } as i}
+      <TipoDeIngresso />
+    {/each}
+  </div>
 
-    <TipoDeIngresso />
+  <div id="tipoIngressoControle">
+    {#if qntTipoDeIngresso > 1}
+      <Icone icon="minus" on:click={() => qntTipoDeIngresso--} />
+    {/if}
+    <Icone icon="plus" on:click={() => qntTipoDeIngresso++} />
   </div>
 </div>
 

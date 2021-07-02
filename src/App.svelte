@@ -9,7 +9,7 @@
   import BarraInferior from "./UI/BarraInferior.svelte";
   import MinhaConta from "./Conta/MinhaConta.svelte";
 
-  let modo = MODO.NOVO_EVENTO;
+  let modo = MODO.NORMAL;
   let id = null;
 
   function modoNormal() {
@@ -23,10 +23,14 @@
     modo = MODO.DETALHES;
     window.scrollTo(0, 0);
   }
-  
+
   function modoCadastraEvento() {
     modo = MODO.NOVO_EVENTO;
     window.scrollTo(0, 0);
+  }
+
+  function modoMinhaConta() {
+    modo = MODO.MINHA_CONTA;
   }
 </script>
 
@@ -35,7 +39,7 @@
   on:voltar={modoNormal}
   on:cadastrese={() => (modo = MODO.CADASTRO)}
   on:entrar={() => (modo = MODO.LOGIN)}
-  on:minhaconta={() => (modo = MODO.MINHA_CONTA)}
+  on:minhaconta={modoMinhaConta}
 />
 
 {#if modo === MODO.NORMAL}
@@ -46,12 +50,14 @@
   <Login on:voltar={modoNormal} />
 {:else if modo === MODO.DETALHES}
   <Detalhes {id} on:voltar={modoNormal} />
-{:else if modo === MODO.NOVO_EVENTO}
-  <CadastroEvento />
 {:else if modo === MODO.MINHA_CONTA}
-  <MinhaConta on:voltar={modoNormal} on:novoevento={modoCadastraEvento} />
+  <MinhaConta
+    on:voltar={modoNormal}
+    on:minhaconta={modoMinhaConta}
+    on:novoevento={modoCadastraEvento}
+  />
 {:else if modo === MODO.NOVO_EVENTO}
-  <CadastroEvento on:voltar={modoNormal} />
+  <CadastroEvento on:minhaconta={modoMinhaConta} />
 {/if}
 
 <BarraInferior />

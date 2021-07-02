@@ -20,5 +20,5 @@
 {#if tipo === TIPOCADASTRO.COMPRADOR}
   <ContaComprador on:voltar />
   {:else}
-  <ContaOrganizadora on:voltar on:novoevento />
+  <ContaOrganizadora on:novoevento on:voltar />
 {/if}

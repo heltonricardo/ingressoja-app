@@ -26,17 +26,27 @@
   let pais = "";
   let cep = "";
   let qntTipoDeIngresso = 1;
+
   let tiposDeIngresso = [];
+
+  function adicionaIngresso() {
+    qntTipoDeIngresso++;
+  }
+
+  function removeIngresso() {
+    tiposDeIngresso.pop();
+    qntTipoDeIngresso--;
+  }
 
   async function cadastrar() {
     carregando = true;
-    const res = await postEvento({
+    const sucesso = await postEvento({
       titulo,
-      descricao,
       imagemURL,
-      online,
       inicio,
       termino,
+      descricao,
+      online,
       url,
       logradouro,
       numero,
@@ -45,9 +55,10 @@
       estado,
       pais,
       cep,
+      tiposDeIngresso
     });
     carregando = false;
-    if (res) dispatch("voltar");
+    if (sucesso) dispatch("voltar");
   }
 </script>
 
@@ -196,20 +207,20 @@
 
   <div class="campos">
     <h1>Tipos de Ingressos</h1>
-    {#each { length: qntTipoDeIngresso } as i}
-      <TipoDeIngresso />
+    {#each [...Array(qntTipoDeIngresso).keys()] as i}
+      <TipoDeIngresso bind:tipoDeIngresso={tiposDeIngresso[i]} />
     {/each}
   </div>
 
   <div id="tipoIngressoControle">
     {#if qntTipoDeIngresso > 1}
-      <Icone icon="minus" on:click={() => qntTipoDeIngresso--} />
+      <Icone icon="minus" on:click={removeIngresso} />
     {/if}
-    <Icone icon="plus" on:click={() => qntTipoDeIngresso++} />
+    <Icone icon="plus" on:click={adicionaIngresso} />
   </div>
 </div>
 
 <div id="botoes">
-  <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
+  <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
   <Botao on:click={cadastrar}>Finalizar</Botao>
 </div>

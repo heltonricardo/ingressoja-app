@@ -18,7 +18,7 @@ export async function postEvento(evento) {
 
   let res;
   try {
-    res = await fetch(PATH.EVENTO, {
+    res = await fetch(`${PATH.EVENTO}/${organizadora}`, {
       method: "POST",
       body: JSON.stringify({ ...evento, organizadora }),
       headers: { "Content-Type": "application/json" },

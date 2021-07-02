@@ -1,6 +1,13 @@
 <script>
   export let msgValidacao = "";
 
+  export let tipoDeIngresso = {
+    nome: "",
+    valor: 0.0,
+    descricao: "",
+    quantidade: 0,
+  };
+
   export let nomeValido = true;
   export let descricaoValida = true;
   export let valorValido = true;
@@ -78,6 +85,7 @@
         type="text"
         class="grande"
         class:invalid={!nomeValido && nomeTocado}
+        bind:value={tipoDeIngresso.nome}
         on:blur={() => (nomeTocado = true)}
       />
       {#if nomeTocado && !nomeValido}
@@ -92,6 +100,7 @@
         type="text"
         class="grande"
         class:invalid={!descricaoValida && descricaoTocada}
+        bind:value={tipoDeIngresso.descricao}
         on:blur={() => (descricaoTocada = true)}
       />
       {#if descricaoTocada && !descricaoValida}
@@ -108,6 +117,7 @@
         type="number"
         class="pequeno"
         class:invalid={!qntValida && qntTocada}
+        bind:value={tipoDeIngresso.quantidade}
         on:blur={() => (qntTocada = true)}
       />
       {#if qntTocada && !qntValida}
@@ -122,6 +132,7 @@
         type="text"
         class="pequeno"
         class:invalid={!valorValido && valorTocado}
+        bind:value={tipoDeIngresso.valor}
         on:blur={() => (valorTocado = true)}
       />
       {#if valorTocado && !valorValido}

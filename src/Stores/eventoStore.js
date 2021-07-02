@@ -3,11 +3,11 @@ import { writable } from "svelte/store";
 const store = writable([
   {
     id: 1,
-    nome: "Festa das Galinhas",
-    descricao: "Um evento tão legal que dá pena",
+    titulo: "Festa das Galinhas",
+    descricao:
+      "Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. PÓ PÓ PÓ PÓ PÓ PÓ PÓ PÓ PÓ PÓ.",
     imagemURL:
       "https://pm1.narvii.com/6324/4baaba01e333f7fe7381e298c0bb5cafe838e635_hq.jpg",
-    ativo: true,
     inicio: "2021-01-13T20:30:00.000+00:00",
     termino: "2021-06-04T16:00:00.000+00:00",
     online: false,
@@ -19,15 +19,22 @@ const store = writable([
     uf: "MG",
     pais: "Brasil",
     cep: "12345-678",
-    tiposDeIngresso: [],
+    tiposDeIngresso: [
+      {
+        id: 1,
+        nome: "Inteira",
+        valor: 39.90,
+        descricao: 1,
+        quantidade: 1
+      }
+    ],
   },
   {
     id: 2,
-    nome: "Festa dos Quero-quero",
+    titulo: "Festa dos Quero-quero",
     descricao: "Um evento tão legal que dá pena",
     imagemURL:
       "https://s3.amazonaws.com/media.wikiaves.com.br/images/1472/2741122g_2f0a284bf77b7ab02aab73af0619621d.jpg",
-    ativo: true,
     inicio: "2021-03-18T15:05:00.000+00:00",
     termino: "2021-06-04T16:00:00.000+00:00",
     online: false,
@@ -44,11 +51,10 @@ const store = writable([
 
   {
     id: 3,
-    nome: "Festa das Pombinhas",
+    titulo: "Festa das Pombinhas",
     descricao: "Um evento tão legal que dá pena",
     imagemURL:
       "https://pm1.narvii.com/6324/2f360c4b1421088953a66c6ae21655a43145b834_hq.jpg",
-    ativo: true,
     inicio: "2021-09-07T15:00:00.000+00:00",
     termino: "2021-06-04T16:00:00.000+00:00",
     online: true,
@@ -64,11 +70,10 @@ const store = writable([
   },
   {
     id: 4,
-    nome: "Festa das Águias",
+    titulo: "Festa das Águias",
     descricao: "Um evento tão legal que dá pena",
     imagemURL:
       "https://pm1.narvii.com/6324/fd595260fee030b93c5be0623de9bee4596693c3_hq.jpg",
-    ativo: true,
     inicio: "2021-12-25T11:00:00.000+00:00",
     termino: "2021-06-04T16:00:00.000+00:00",
     online: false,
@@ -84,11 +89,10 @@ const store = writable([
   },
   {
     id: 5,
-    nome: "Festa das Araras",
+    titulo: "Festa das Araras",
     descricao: "Um evento tão legal que dá pena",
     imagemURL:
       "https://pm1.narvii.com/6324/e3a8d2a42c01960629fa605e791d9de581258fe6_hq.jpg",
-    ativo: true,
     inicio: "2023-06-04T15:00:00.000+00:00",
     termino: "2023-06-04T16:00:00.000+00:00",
     online: false,
@@ -104,11 +108,10 @@ const store = writable([
   },
   {
     id: 6,
-    nome: "Festa dos Gaviões",
+    titulo: "Festa dos Gaviões",
     descricao: "Um evento tão legal que dá pena",
     imagemURL:
       "https://pm1.narvii.com/6324/afd9fc875be0e09fd79c3b1eedee67ba2df5b0a4_hq.jpg",
-    ativo: true,
     inicio: "2021-06-04T15:00:00.000+00:00",
     termino: "2021-06-04T16:00:00.000+00:00",
     online: false,
@@ -124,11 +127,10 @@ const store = writable([
   },
   {
     id: 7,
-    nome: "Festa dos Pinguins",
+    titulo: "Festa dos Pinguins",
     descricao: "Um evento tão legal que dá pena",
     imagemURL:
       "https://pm1.narvii.com/6324/427c1925324f398538c85f86a46584b070ce1536_hq.jpg",
-    ativo: true,
     inicio: "2021-06-04T15:00:00.000+00:00",
     termino: "2021-06-04T16:00:00.000+00:00",
     online: false,

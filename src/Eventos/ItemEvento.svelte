@@ -114,7 +114,7 @@
 <div id="card">
   <div id="principal">
     <div id="titulo">
-      <h1>{evento.nome}</h1>
+      <h1>{evento.titulo}</h1>
     </div>
 
     <div id="imagem">

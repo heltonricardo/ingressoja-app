@@ -23,10 +23,17 @@ const store = writable([
       {
         id: 1,
         nome: "Inteira",
-        valor: 39.90,
-        descricao: 1,
-        quantidade: 1
-      }
+        valor: 39.9,
+        descricao: "Esse ingresso acompanha uma caneca-brinde",
+        quantidadeDisponivel: 200,
+      },
+      {
+        id: 2,
+        nome: "Meia",
+        valor: 19.9,
+        descricao: "Esse ingresso NÃO acompanha uma caneca-brinde",
+        quantidadeDisponivel: 100,
+      },
     ],
   },
   {

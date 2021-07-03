@@ -9,7 +9,7 @@
   import BarraInferior from "./UI/BarraInferior.svelte";
   import MinhaConta from "./Conta/MinhaConta.svelte";
 
-  let modo = MODO.NORMAL;
+  let modo = MODO.DETALHES;
   let id = null;
 
   function modoNormal() {
@@ -49,7 +49,7 @@
 {:else if modo === MODO.LOGIN}
   <Login on:voltar={modoNormal} />
 {:else if modo === MODO.DETALHES}
-  <Detalhes {id} on:voltar={modoNormal} />
+  <Detalhes id={1} on:voltar={modoNormal} />
 {:else if modo === MODO.MINHA_CONTA}
   <MinhaConta
     on:voltar={modoNormal}

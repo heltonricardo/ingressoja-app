@@ -15,7 +15,7 @@
   input,
   textarea {
     display: block;
-    width: 100%;
+    width: calc(100% - 0.5rem);
     font: inherit;
     border: none;
     border-bottom: 2px solid #ccc;

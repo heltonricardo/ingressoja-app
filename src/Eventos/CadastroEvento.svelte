@@ -28,12 +28,11 @@
   let cep = "";
   let qntTipoDeIngresso = 1;
   let tiposDeIngresso = [];
+  let categoriaEvento;
 
   async function carregaCategorias() {
     return await getCategoriasEvento();
   }
-
-  let categoriaEvento;
 
   function adicionaIngresso() {
     qntTipoDeIngresso++;
@@ -62,6 +61,7 @@
       pais,
       cep,
       tiposDeIngresso,
+      categoriaEvento,
     });
     carregando = false;
     if (sucesso) dispatch("minhaconta");

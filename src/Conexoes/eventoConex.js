@@ -18,9 +18,16 @@ export async function postEvento(evento) {
 
   let res;
   try {
-    res = await fetch(`${PATH.EVENTO}/${organizadora}`, {
+    const idCategoria = evento.categoriaEvento;
+    delete evento.categoriaEvento;
+
+    const url =
+      PATH.EVENTO +
+      `?idOrganizadora=${organizadora}&idCategoria=${idCategoria}`;
+
+    res = await fetch(url, {
       method: "POST",
-      body: JSON.stringify({ ...evento, organizadora }),
+      body: JSON.stringify(evento),
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {

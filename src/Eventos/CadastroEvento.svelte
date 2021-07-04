@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import { postEvento } from "../Conexoes/eventoConex";
+  import { getCategoriasEvento } from "../Conexoes/categoriaEventoConex";
   import Aguarde from "../UI/Aguarde.svelte";
   import Botao from "../UI/Botao.svelte";
   import Icone from "../UI/Icone.svelte";
@@ -26,8 +27,13 @@
   let pais = "";
   let cep = "";
   let qntTipoDeIngresso = 1;
-
   let tiposDeIngresso = [];
+
+  async function carregaCategorias() {
+    return await getCategoriasEvento();
+  }
+
+  let categoriaEvento;
 
   function adicionaIngresso() {
     qntTipoDeIngresso++;
@@ -55,7 +61,7 @@
       estado,
       pais,
       cep,
-      tiposDeIngresso
+      tiposDeIngresso,
     });
     carregando = false;
     if (sucesso) dispatch("minhaconta");
@@ -105,6 +111,33 @@
     display: flex;
     justify-content: center;
   }
+
+  label {
+    display: block;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+
+  select {
+    font: inherit;
+    align-self: center;
+    width: 100%;
+    margin-bottom: 1rem;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #ccc;
+    border-radius: 3px 3px 0 0;
+    background: white;
+    padding: 0.15rem 0;
+    transition: border-color 0.1s ease-out;
+    resize: none;
+  }
+
+  select:focus {
+    border-color: var(--roxo1);
+    outline: none;
+  }
 </style>
 
 {#if carregando}
@@ -119,6 +152,18 @@
       label="Título"
       on:input={(event) => (titulo = event.target.value)}
     />
+
+    {#await carregaCategorias()}
+      <Aguarde />
+    {:then categorias}
+      <label for="selecao">Categoria do Evento</label>
+      <select bind:value={categoriaEvento}>
+        {#each categorias as categoria (categoria.id)}
+          <option value={categoria.id}>{categoria.nome}</option>
+        {/each}
+      </select>
+    {/await}
+
     <Entrada
       id="imagemURL"
       label="URL da Imagem de Capa"

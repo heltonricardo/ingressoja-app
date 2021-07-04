@@ -39,7 +39,7 @@ const store = writable([
   {
     id: 2,
     titulo: "Festa dos Quero-quero",
-    descricao: "Um evento tão legal que dá pena",
+    descricao:"Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. Um evento tão legal que dá pena. PÓ PÓ PÓ PÓ PÓ PÓ PÓ PÓ PÓ PÓ.",
     imagemURL:
       "https://s3.amazonaws.com/media.wikiaves.com.br/images/1472/2741122g_2f0a284bf77b7ab02aab73af0619621d.jpg",
     inicio: "2021-03-18T15:05:00.000+00:00",
@@ -53,7 +53,33 @@ const store = writable([
     uf: "SP",
     pais: "Brasil",
     cep: "12345-678",
-    tiposDeIngresso: [],
+    organizadora: {
+      id: 1,
+      email: "Organizadora1Nova",
+      nomeFantasia: "Organiza JA",
+      razaoSocial: "Organiza LTDA",
+      cnpj: "12.654.987/0001-89",
+    },
+    categoriaEvento: {
+      id: 1,
+      nome: "Show",
+    },
+    tiposDeIngresso: [
+      {
+        id: 3,
+        nome: "Inteira",
+        valor: 59.99,
+        descricao: "Ingresso no valor inteiro",
+        quantidadeDisponivel: 200,
+      },
+      {
+        id: 4,
+        nome: "Meia",
+        valor: 29.99,
+        descricao: "Ingresso com metade do valor",
+        quantidadeDisponivel: 50,
+      },
+    ],
   },
 
   {

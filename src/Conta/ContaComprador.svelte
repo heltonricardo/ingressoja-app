@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
-  import { getComprador } from "../Conexoes/compradorConex";
+  import { getComprador } from "../Conexao/compradorConex";
   import Aguarde from "../UI/Aguarde.svelte";
 
   const dispatch = createEventDispatcher();

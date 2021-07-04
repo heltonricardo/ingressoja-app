@@ -1,15 +1,15 @@
 <script>
   import MODO from "./ENUM/MODO";
   import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
-  import GridEventos from "./Eventos//GridEventos.svelte";
+  import GridEventos from "./Evento/GridEventos.svelte";
   import Cadastro from "./Cadastro/Cadastro.svelte";
   import Login from "./Login/Login.svelte";
-  import Detalhes from "./Eventos/Detalhes.svelte";
-  import CadastroEvento from "./Eventos/CadastroEvento.svelte";
+  import Detalhes from "./Evento/Detalhes.svelte";
+  import Evento from "./Cadastro/Evento.svelte";
   import BarraInferior from "./UI/BarraInferior.svelte";
   import MinhaConta from "./Conta/MinhaConta.svelte";
 
-  let modo = MODO.NOVO_EVENTO;
+  let modo = MODO.DETALHES;
   let id = null;
 
   function modoNormal() {
@@ -49,7 +49,7 @@
 {:else if modo === MODO.LOGIN}
   <Login on:voltar={modoNormal} />
 {:else if modo === MODO.DETALHES}
-  <Detalhes id={1} on:voltar={modoNormal} />
+  <Detalhes id={2} on:voltar={modoNormal} />
 {:else if modo === MODO.MINHA_CONTA}
   <MinhaConta
     on:voltar={modoNormal}
@@ -57,7 +57,7 @@
     on:novoevento={modoCadastraEvento}
   />
 {:else if modo === MODO.NOVO_EVENTO}
-  <CadastroEvento on:minhaconta={modoMinhaConta} />
+  <Evento on:minhaconta={modoMinhaConta} />
 {/if}
 
 <BarraInferior />

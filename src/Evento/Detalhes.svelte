@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import eventoStore from "../Stores/eventoStore";
+  import eventoStore from "../Store/eventoStore";
+import TipoDeIngresso from "../TipoDeIngresso/TipoDeIngresso.svelte";
   import Botao from "../UI/Botao.svelte";
   import { extrairDataHora } from "../utils/manipulaDataHora";
 
@@ -20,6 +21,7 @@
 <style>
   #corpo {
     width: 40%;
+    min-width: 30rem;
     margin: 2rem auto;
     display: flex;
     flex-direction: column;
@@ -35,9 +37,13 @@
     border-radius: 5px;
   }
 
-  #titulo {
+  .titulo {
     margin: 1rem 0;
     font-size: 30pt;
+  }
+
+  #categoria {
+    color: var(--cinza2);
   }
 
   #detalhes {
@@ -53,12 +59,18 @@
     line-height: 2rem;
     margin: 1rem 0;
   }
+
+  #escolha {
+    margin-top: 3rem;
+    align-self: center;
+  }
 </style>
 
 <div id="corpo">
   <img id="imagem" src={evento.imagemURL} alt={evento.titulo} />
 
-  <h1 id="titulo">{evento.titulo}</h1>
+  <h1 class="titulo">{evento.titulo}</h1>
+  <h4 id="categoria">{evento.categoriaEvento.nome}</h4>
 
   <div id="detalhes">
     <span id="local">
@@ -85,6 +97,12 @@
   </div>
 
   <span id="descricao">{evento.descricao}</span>
+
+  <h2 class="titulo" id="escolha">Escolha os ingressos</h2>
+
+  {#each evento.tiposDeIngresso as tipoDeIngresso}
+    <TipoDeIngresso {tipoDeIngresso}/>
+  {/each}
 
   <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
 </div>

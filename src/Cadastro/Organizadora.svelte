@@ -2,7 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import Entrada from "../UI/Entrada.svelte";
   import Botao from "../UI/Botao.svelte";
-  import { postOrganizadora } from "../Conexoes/organizadoraConex";
+  import { postOrganizadora } from "../Conexao/organizadoraConex";
   import Aguarde from "../UI/Aguarde.svelte";
   import autenticacao from "../Autenticacao/autenticacao";
 

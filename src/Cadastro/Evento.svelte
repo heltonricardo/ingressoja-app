@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { postEvento } from "../Conexoes/eventoConex";
-  import { getCategoriasEvento } from "../Conexoes/categoriaEventoConex";
+  import { postEvento } from "../Conexao/eventoConex";
+  import { getCategoriasEvento } from "../Conexao/categoriaEventoConex";
   import Aguarde from "../UI/Aguarde.svelte";
   import Botao from "../UI/Botao.svelte";
   import Icone from "../UI/Icone.svelte";

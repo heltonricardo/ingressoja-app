@@ -1,6 +1,6 @@
 <script>
   import ItemEvento from "./ItemEvento.svelte";
-  import eventoStore from "../Stores/eventoStore";
+  import eventoStore from "../Store/eventoStore";
 </script>
 
 <style>

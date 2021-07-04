@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
-  import { getOrganizadora } from "../Conexoes/organizadoraConex";
+  import { getOrganizadora } from "../Conexao/organizadoraConex";
   import Aguarde from "../UI/Aguarde.svelte";
   import Botao from "../UI/Botao.svelte";
 

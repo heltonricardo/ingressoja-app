@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { postComprador } from "../Conexoes/compradorConex";
+  import { postComprador } from "../Conexao/compradorConex";
   import autenticacao from "../Autenticacao/autenticacao";
 
   import Entrada from "../UI/Entrada.svelte";

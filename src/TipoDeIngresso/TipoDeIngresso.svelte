@@ -1,16 +1,23 @@
 <script>
   import { valorVirgula } from "../utils/formatador";
   import Icone from "../UI/Icone.svelte";
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
 
   export let tipoDeIngresso;
-  export let quantidade = 0;
 
   function diminuir() {
-    quantidade = Math.max(0, quantidade - 1);
+    tipoDeIngresso.quantidade = Math.max(0, tipoDeIngresso.quantidade - 1);
+    dispatch("calcular")
   }
-
+  
   function aumentar() {
-    quantidade = Math.min(quantidade + 1, tipoDeIngresso.quantidadeDisponivel);
+    tipoDeIngresso.quantidade = Math.min(
+      tipoDeIngresso.quantidade + 1,
+      tipoDeIngresso.quantidadeDisponivel
+      );
+      dispatch("calcular")
   }
 </script>
 
@@ -64,7 +71,7 @@
 
   <div id="controles">
     <Icone icon="minus" on:click={diminuir} />
-    <span>{quantidade}</span>
+    <span>{tipoDeIngresso.quantidade}</span>
     <Icone icon="plus" on:click={aumentar} />
   </div>
 </div>

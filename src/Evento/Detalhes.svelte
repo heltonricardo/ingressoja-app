@@ -6,19 +6,28 @@
   import { valorVirgula } from "../utils/formatador";
   import { extrairDataHora } from "../utils/manipulaDataHora";
 
-  const dispatch = createEventDispatcher();
-
   export let id = 1;
+
+  const dispatch = createEventDispatcher();
+  const evento = $eventoStore.find((e) => e.id === id);
 
   let total = 0.0;
 
-  const evento = $eventoStore.find((e) => e.id === id);
+  evento.tiposDeIngresso.map((t) => (t.quantidade = 0));
+
   const { data: dataInicio, horario: horarioInicio } = extrairDataHora(
     evento.inicio
   );
   const { data: dataTermino, horario: horarioTermino } = extrairDataHora(
     evento.termino
   );
+
+  function calcular() {
+    total = evento.tiposDeIngresso.reduce(
+      (soma, t) => soma + t.valor * t.quantidade,
+      0.0
+    );
+  }
 </script>
 
 <style>
@@ -152,9 +161,8 @@
   <h2 class="titulo" id="escolha">Selecione os ingressos</h2>
 
   {#each evento.tiposDeIngresso as tipoDeIngresso}
-    <TipoDeIngresso {tipoDeIngresso} />
+    <TipoDeIngresso {tipoDeIngresso} on:calcular={calcular} />
   {/each}
-
   <div id="rodape">
     <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
     <span id="total">Total: R$ {valorVirgula(total)}</span>

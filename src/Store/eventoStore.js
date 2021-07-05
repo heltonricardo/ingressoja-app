@@ -80,6 +80,13 @@ const store = writable([
         descricao: "Ingresso com metade do valor",
         quantidadeDisponivel: 50,
       },
+      {
+        id: 8,
+        nome: "Meião",
+        valor: 9.99,
+        descricao: "Ingresso com metade do valor",
+        quantidadeDisponivel: 50,
+      },
     ],
   },
 

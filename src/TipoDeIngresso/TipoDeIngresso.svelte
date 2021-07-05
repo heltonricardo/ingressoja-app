@@ -21,13 +21,12 @@
     justify-content: space-between;
     margin: 1rem 0;
     padding: 0.5rem 0;
-
-
   }
 
   #textos {
     display: flex;
     flex-direction: column;
+    justify-content: center;
   }
 
   #nome {

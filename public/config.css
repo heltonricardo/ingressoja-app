@@ -5,8 +5,8 @@
   --verde2: rgb(180, 210, 71);
   --verde3: rgb(128, 194, 78);
   --cinza1: rgb(245, 245, 245);
+  --cinza1-5: rgb(241, 241, 241);
   --cinza2: rgb(207, 207, 207);
-  --cinza2-5: rgb(241, 241, 241);
   --cinza3: rgb(163, 163, 163);
 }
 
@@ -18,7 +18,7 @@ body {
     135deg,
     var(--cinza1),
     var(--cinza1) 10px,
-    var(--cinza2-5) 10px,
-    var(--cinza2-5) 20px
+    var(--cinza1-5) 10px,
+    var(--cinza1-5) 20px
   );
 }

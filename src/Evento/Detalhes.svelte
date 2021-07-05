@@ -48,10 +48,14 @@
 
   #detalhes {
     display: flex;
-    flex-direction: column;
     margin: 3rem 0;
     line-height: 2rem;
-    text-align: right;
+    width: fit-content;
+    align-self: flex-end;
+  }
+
+  #dados {
+    margin-left: 0.6rem;
   }
 
   #descricao {
@@ -73,27 +77,53 @@
   <h4 id="categoria">{evento.categoriaEvento.nome}</h4>
 
   <div id="detalhes">
-    <span id="local">
-      {#if evento.online}
-        <p>Evento On-line</p>
-      {:else}
+    <div id="rotulos">
+      <span id="local">
+        {#if evento.online}
+          <p>Evento On-line</p>
+        {:else}
+          <p>
+            <i class={"fas fa-location-arrow"} />  Local:
+          </p>
+        {/if}
+      </span>
+
+      <span id="data-hora-inicio">
         <p>
-          Local: {evento.bairro}, {evento.cidade}-{evento.uf} • {evento.pais}
+          <i class={"fas fa-clock"} />  Início:
         </p>
-      {/if}
-    </span>
+      </span>
 
-    <span id="data-hora-inicio">
-      <p>
-        Início: {dataInicio} • {horarioInicio}
-      </p>
-    </span>
+      <span id="data-hora-termino">
+        <p>
+          <i class="fas fa-hand-point-left" />  Término:
+        </p>
+      </span>
+    </div>
 
-    <span id="data-hora-termino">
-      <p>
-        Término: {dataTermino} • {horarioTermino}
-      </p>
-    </span>
+    <div id="dados">
+      <span id="local">
+        {#if evento.online}
+          <p>Evento On-line</p>
+        {:else}
+          <p>
+            {evento.bairro}, {evento.cidade}-{evento.uf} • {evento.pais}
+          </p>
+        {/if}
+      </span>
+
+      <span id="data-hora-inicio">
+        <p>
+          {dataInicio} • {horarioInicio}
+        </p>
+      </span>
+
+      <span id="data-hora-termino">
+        <p>
+          {dataTermino} • {horarioTermino}
+        </p>
+      </span>
+    </div>
   </div>
 
   <span id="descricao">{evento.descricao}</span>

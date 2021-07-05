@@ -2,7 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import Entrada from "../UI/Entrada.svelte";
   import Botao from "../UI/Botao.svelte";
-  import { postOrganizadora } from "../Conexao/organizadoraConex";
+  import { postProdutora } from "../Conexao/produtoraConex";
   import Aguarde from "../UI/Aguarde.svelte";
   import autenticacao from "../Autenticacao/autenticacao";
 
@@ -23,7 +23,7 @@
   async function cadastrar() {
     if (senha === senha2) {
       carregando = true;
-      const res = await postOrganizadora({
+      const res = await postProdutora({
         razaoSocial,
         cnpj,
         nomeFantasia,

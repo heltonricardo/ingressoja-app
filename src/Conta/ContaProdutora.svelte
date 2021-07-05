@@ -1,14 +1,14 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
-  import { getOrganizadora } from "../Conexao/organizadoraConex";
+  import { getProdutora } from "../Conexao/produtoraConex";
   import Aguarde from "../UI/Aguarde.svelte";
   import Botao from "../UI/Botao.svelte";
 
   const dispatch = createEventDispatcher();
 
   async function carregaDados() {
-    const res = await getOrganizadora();
+    const res = await getProdutora();
     if (!res) dispatch("voltar")
   }
 
@@ -39,11 +39,11 @@
 
 {#await dadosCarregados}
   <Aguarde />
-{:then organizadora}
+{:then produtora}
   <div id="corpo">
     <h1>Minha Conta</h1>
     <p>
-      Olá, {organizadora.nomeFantasia.split(" ")[0]}! Selecione uma opção
+      Olá, {produtora.nomeFantasia.split(" ")[0]}! Selecione uma opção
       abaixo:
     </p>
     <Botao on:click={() => dispatch("novoevento")}>Cadastrar Evento</Botao>

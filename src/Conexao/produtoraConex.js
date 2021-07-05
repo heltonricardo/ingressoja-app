@@ -7,13 +7,13 @@ import TIPOCADASTRO from "../ENUM/TIPOCADASTRO.js";
 
 import autenticacao from "../Autenticacao/autenticacao.js";
 
-export async function postOrganizadora(organizadora) {
+export async function postProdutora(produtora) {
   let res;
 
   try {
-    res = await fetch(PATH.ORGANIZADORA, {
+    res = await fetch(PATH.PRODUTORA, {
       method: "POST",
-      body: JSON.stringify(organizadora),
+      body: JSON.stringify(produtora),
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
@@ -39,10 +39,10 @@ export async function postOrganizadora(organizadora) {
   return false;
 }
 
-export async function getOrganizadora() {
+export async function getProdutora() {
   if (
     !autenticacao.estaLogado() ||
-    autenticacao.tipoLogado() !== TIPOCADASTRO.ORGANIZADORA
+    autenticacao.tipoLogado() !== TIPOCADASTRO.PRODUTORA
   )
     return null;
 
@@ -50,7 +50,7 @@ export async function getOrganizadora() {
 
   let res;
   try {
-    res = await fetch(`${PATH.ORGANIZADORA}/${id}`);
+    res = await fetch(`${PATH.PRODUTORA}/${id}`);
   } catch (error) {
     swal(MSG.RUIM, MSG.CONEXAO, "error");
     return null;
@@ -58,8 +58,8 @@ export async function getOrganizadora() {
   const status = res.status;
 
   if (status === STATUS.OK) {
-    const organizadora = await res.json();
-    return organizadora;
+    const produtora = await res.json();
+    return produtora;
   } //
   else if (status === STATUS.NOT_ACCEPTABLE) {
     swal(MSG.RUIM, MSG.NAO_EXISTE, "error");

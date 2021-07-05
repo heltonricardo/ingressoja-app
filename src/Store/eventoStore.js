@@ -54,9 +54,9 @@ const store = writable([
     uf: "SP",
     pais: "Brasil",
     cep: "12345-678",
-    organizadora: {
+    produtora: {
       id: 1,
-      email: "Organizadora1Nova",
+      email: "Produtora1Nova",
       nomeFantasia: "Organiza JA",
       razaoSocial: "Organiza LTDA",
       cnpj: "12.654.987/0001-89",
@@ -100,9 +100,9 @@ const store = writable([
     uf: "",
     pais: "",
     cep: "",
-    organizadora: {
+    produtora: {
       id: 1,
-      email: "Organizadora1Nova",
+      email: "Produtora1Nova",
       nomeFantasia: "Organiza JA",
       razaoSocial: "Organiza LTDA",
       cnpj: "12.654.987/0001-89",

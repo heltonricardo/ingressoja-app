@@ -1,7 +1,7 @@
 <script>
   import Comprador from "./Comprador.svelte";
   import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
-  import Organizadora from "./Organizadora.svelte";
+  import Produtora from "./Produtora.svelte";
 
   let tipoCadastro = TIPOCADASTRO.COMPRADOR;
 </script>
@@ -42,7 +42,7 @@
       <input
         name="tipoCadastro"
         type="radio"
-        value={TIPOCADASTRO.ORGANIZADORA}
+        value={TIPOCADASTRO.PRODUTORA}
         bind:group={tipoCadastro}
       />
       Quero vender ingressos!
@@ -51,7 +51,7 @@
 
   {#if tipoCadastro === TIPOCADASTRO.COMPRADOR}
     <Comprador on:voltar />
-  {:else if tipoCadastro === TIPOCADASTRO.ORGANIZADORA}
-    <Organizadora on:voltar />
+  {:else if tipoCadastro === TIPOCADASTRO.PRODUTORA}
+    <Produtora on:voltar />
   {/if}
 </div>

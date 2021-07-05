@@ -10,11 +10,11 @@ import autenticacao from "../Autenticacao/autenticacao.js";
 export async function postEvento(evento) {
   if (
     !autenticacao.estaLogado() ||
-    autenticacao.tipoLogado() !== TIPOCADASTRO.ORGANIZADORA
+    autenticacao.tipoLogado() !== TIPOCADASTRO.PRODUTORA
   )
     return null;
 
-  const organizadora = autenticacao.idLogado();
+  const produtora = autenticacao.idLogado();
 
   let res;
   try {
@@ -23,7 +23,7 @@ export async function postEvento(evento) {
 
     const url =
       PATH.EVENTO +
-      `?idOrganizadora=${organizadora}&idCategoria=${idCategoria}`;
+      `?idProdutora=${produtora}&idCategoria=${idCategoria}`;
 
     res = await fetch(url, {
       method: "POST",

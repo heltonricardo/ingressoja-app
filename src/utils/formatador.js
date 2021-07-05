@@ -5,3 +5,7 @@ export function capitalizar(str) {
 export function zeroEsquerda(num, qnt) {
   return ("0".repeat(qnt - 1) + num).toString().slice(-qnt);
 }
+
+export function valorVirgula(num) {
+  return num.toString().replace(".", ",");
+}

@@ -8,7 +8,8 @@
   const dispatch = createEventDispatcher();
 
   async function carregaDados() {
-    return await getOrganizadora();
+    const res = await getOrganizadora();
+    if (!res) dispatch("voltar")
   }
 
   let dadosCarregados = carregaDados();

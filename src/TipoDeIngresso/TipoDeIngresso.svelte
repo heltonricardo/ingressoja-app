@@ -1,7 +1,17 @@
 <script>
+  import { valorVirgula } from "../utils/formatador";
   import Icone from "../UI/Icone.svelte";
 
   export let tipoDeIngresso;
+  export let quantidade = 0;
+
+  function diminuir() {
+    quantidade = Math.max(0, quantidade - 1);
+  }
+
+  function aumentar() {
+    quantidade = Math.min(quantidade + 1, tipoDeIngresso.quantidadeDisponivel);
+  }
 </script>
 
 <style>
@@ -11,6 +21,8 @@
     justify-content: space-between;
     margin: 1rem 0;
     padding: 0.5rem 0;
+
+
   }
 
   #textos {
@@ -44,7 +56,7 @@
 <div id="corpo">
   <div id="textos">
     <div id="nome">
-      {tipoDeIngresso.nome}
+      {tipoDeIngresso.nome} • R$ {valorVirgula(tipoDeIngresso.valor)}
     </div>
     <div id="descricao">
       {tipoDeIngresso.descricao}
@@ -52,8 +64,8 @@
   </div>
 
   <div id="controles">
-    <Icone icon="minus" />
-    <span>0</span>
-    <Icone icon="plus" />
+    <Icone icon="minus" on:click={diminuir} />
+    <span>{quantidade}</span>
+    <Icone icon="plus" on:click={aumentar} />
   </div>
 </div>

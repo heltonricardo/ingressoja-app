@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import eventoStore from "../Store/eventoStore";
-import TipoDeIngresso from "../TipoDeIngresso/TipoDeIngresso.svelte";
+  import TipoDeIngresso from "../TipoDeIngresso/TipoDeIngresso.svelte";
   import Botao from "../UI/Botao.svelte";
   import { extrairDataHora } from "../utils/manipulaDataHora";
 
@@ -101,7 +101,7 @@ import TipoDeIngresso from "../TipoDeIngresso/TipoDeIngresso.svelte";
   <h2 class="titulo" id="escolha">Escolha os ingressos</h2>
 
   {#each evento.tiposDeIngresso as tipoDeIngresso}
-    <TipoDeIngresso {tipoDeIngresso}/>
+    <TipoDeIngresso {tipoDeIngresso} />
   {/each}
 
   <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>

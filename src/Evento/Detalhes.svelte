@@ -3,11 +3,14 @@
   import eventoStore from "../Store/eventoStore";
   import TipoDeIngresso from "../TipoDeIngresso/TipoDeIngresso.svelte";
   import Botao from "../UI/Botao.svelte";
+  import { valorVirgula } from "../utils/formatador";
   import { extrairDataHora } from "../utils/manipulaDataHora";
 
   const dispatch = createEventDispatcher();
 
   export let id = 1;
+
+  let total = 0.0;
 
   const evento = $eventoStore.find((e) => e.id === id);
   const { data: dataInicio, horario: horarioInicio } = extrairDataHora(
@@ -54,6 +57,12 @@
     align-self: flex-end;
   }
 
+  #rotulos {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
   #dados {
     margin-left: 0.6rem;
   }
@@ -68,6 +77,17 @@
     margin-top: 3rem;
     align-self: center;
   }
+
+  #rodape {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  #total {
+    font-size: 1.5rem;
+  }
 </style>
 
 <div id="corpo">
@@ -79,9 +99,7 @@
   <div id="detalhes">
     <div id="rotulos">
       <span id="local">
-        {#if evento.online}
-          <p>Evento On-line</p>
-        {:else}
+        {#if !evento.online}
           <p>
             <i class={"fas fa-location-arrow"} />  Local:
           </p>
@@ -104,7 +122,10 @@
     <div id="dados">
       <span id="local">
         {#if evento.online}
-          <p>Evento On-line</p>
+          <p>
+            Evento On-line 
+            <i class="fas fa-mouse-pointer" />
+          </p>
         {:else}
           <p>
             {evento.bairro}, {evento.cidade}-{evento.uf} • {evento.pais}
@@ -128,11 +149,15 @@
 
   <span id="descricao">{evento.descricao}</span>
 
-  <h2 class="titulo" id="escolha">Escolha os ingressos</h2>
+  <h2 class="titulo" id="escolha">Selecione os ingressos</h2>
 
   {#each evento.tiposDeIngresso as tipoDeIngresso}
     <TipoDeIngresso {tipoDeIngresso} />
   {/each}
 
-  <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
+  <div id="rodape">
+    <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
+    <span id="total">Total: R$ {valorVirgula(total)}</span>
+    <Botao on:click={() => dispatch("voltar")}>Comprar</Botao>
+  </div>
 </div>

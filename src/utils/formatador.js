@@ -7,5 +7,8 @@ export function zeroEsquerda(num, qnt) {
 }
 
 export function valorVirgula(num) {
-  return num.toString().replace(".", ",");
+  if (num.toString().includes(".")) {
+    return num.toString().replace(".", ",");
+  }
+  return num.toString() + ",00";
 }

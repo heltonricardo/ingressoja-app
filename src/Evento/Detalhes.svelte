@@ -166,6 +166,8 @@
   <div id="rodape">
     <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
     <span id="total">Total: R$ {valorVirgula(total)}</span>
-    <Botao on:click={() => dispatch("voltar")}>Comprar</Botao>
+    <Botao on:click={() => dispatch("finalizacao", evento)}
+      >Comprar</Botao
+    >
   </div>
 </div>

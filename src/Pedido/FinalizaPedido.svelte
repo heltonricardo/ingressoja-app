@@ -9,11 +9,14 @@
   );
   /************************************/
 
+  let dom = 0;
   let ingressos = evento.tiposDeIngresso.flatMap((t) => {
     const tmp = [];
 
-    for (let i = 0; i < t.quantidade; i++)
-      tmp.push({ id: t.id, nome: t.nome, valor: t.valor });
+    for (let i = 0; i < t.quantidade; i++) {
+      tmp.push({ id: t.id, nome: t.nome, valor: t.valor, dom });
+      ++dom;
+    }
 
     return tmp;
   });
@@ -34,13 +37,20 @@
 
   #titulo {
     font-size: 3rem;
-    align-self: center;
+    text-align: center;
+  }
+
+  #subtitulo {
+    margin: 3rem 0;
+    text-align: center;
   }
 </style>
 
 <div id="corpo">
   <h1 id="titulo">Detalhes de Ingresso</h1>
-  {#each [...Array(ingressos.length).keys()] as i}
-    <CardIngresso ingresso={ingressos[i]} />
+  <h3 id="subtitulo">Insira os dados de cada ingressante:</h3>
+  {#each [...Array(ingressos.length).keys()] as x}
+    <CardIngresso bind:ingresso={ingressos[x]} />
   {/each}
+  <button on:click={() => console.log(ingressos)}>aaaa</button>
 </div>

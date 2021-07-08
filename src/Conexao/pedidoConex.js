@@ -7,26 +7,22 @@ import TIPOCADASTRO from "../ENUM/TIPOCADASTRO.js";
 
 import autenticacao from "../Autenticacao/autenticacao.js";
 
-export async function postEvento(evento) {
+export async function postPedido(pedido) {
+
   if (
     !autenticacao.estaLogado() ||
-    !autenticacao.estaLogadoComTipo(TIPOCADASTRO.PRODUTORA)
-  )
+    !autenticacao.estaLogadoComTipo(TIPOCADASTRO.COMPRADOR)
+  ) {
     return false;
+  }
 
-  const produtora = autenticacao.idLogado();
+  pedido.idComprador = autenticacao.idLogado();
 
   let res;
   try {
-    const idCategoria = evento.categoriaEvento;
-    delete evento.categoriaEvento;
-
-    const url =
-      PATH.EVENTO + `?idProdutora=${produtora}&idCategoria=${idCategoria}`;
-
-    res = await fetch(url, {
+    res = await fetch(PATH.PEDIDO, {
       method: "POST",
-      body: JSON.stringify(evento),
+      body: JSON.stringify(pedido),
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
@@ -37,11 +33,9 @@ export async function postEvento(evento) {
   const status = res.status;
 
   if (status === STATUS.CREATED) {
-    swal(MSG.BOM, MSG.CRIADO, "success", { timer: 5000 });
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    swal(MSG.APROVADO, MSG.PED_REALIZADO, "success", { timer: 5000 });
     return true;
-  } //
-  else if (status === STATUS.CONFLICT) {
-    swal(MSG.RUIM, MSG.DUPLICADO, "error");
   } //
   else if (status === STATUS.NOT_ACCEPTABLE) {
     swal(MSG.RUIM, MSG.INCORRETO, "error");

@@ -7,6 +7,7 @@ const PATH = Object.freeze({
   EVENTO: API + "/evento",
   CATEGORIA_EVENTO: API + "/categoria-evento",
   AUTENTICACAO: API + "/autenticacao",
+  PEDIDO: API + "/pedido",
 });
 
 export default PATH;

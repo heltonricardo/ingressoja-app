@@ -1,11 +1,15 @@
 <script>
   import swal from "sweetalert";
-  import MSG from "../ENUM/MSG";
   import { createEventDispatcher } from "svelte";
+
+  import MSG from "../ENUM/MSG";
+  import { postPedido } from "../Conexao/pedidoConex";
   import eventoStore from "../Store/eventoStore";
+
   import Botao from "../UI/Botao.svelte";
   import Entrada from "../UI/Entrada.svelte";
   import CardIngresso from "./CardIngresso.svelte";
+  import Aguarde from "../UI/Aguarde.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -15,6 +19,7 @@
   /************************************/
 
   let pedido = {};
+  let carregando = false;
 
   let ordem = 0;
   let ingressos = evento.tiposDeIngresso.flatMap((t) => {
@@ -45,15 +50,14 @@
       email: i.email,
       cpf: i.cpf,
     }));
-    
-    const pack = { ...pedido, itensPedido };
 
-    const res = await postComprador({ nome, cpf, email, senha });
-    carregando = false;
+    pedido = { ...pedido, itensPedido, idEvento: evento.id };
+
+    const res = await postPedido(pedido);
     if (res) {
-      await autenticacao.logar({ email, senha }, false);
       dispatch("voltar");
     }
+    carregando = false;
   }
 </script>
 
@@ -88,6 +92,10 @@
     justify-content: space-around;
   }
 </style>
+
+{#if carregando}
+  <Aguarde />
+{/if}
 
 <div id="corpo">
   <h1 id="titulo">Detalhes de Ingresso</h1>

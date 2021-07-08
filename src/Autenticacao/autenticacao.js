@@ -9,7 +9,7 @@ const autenticacao = {
   estaLogado: () => localStorage.getItem(ID) && localStorage.getItem(TIPO),
 
   estaLogadoComTipo: (tipo) =>
-    estaLogado() && localStorage.getItem(TIPO) === tipo,
+    localStorage.getItem(ID) && localStorage.getItem(TIPO) === tipo.toString(),
 
   idLogado: () => parseInt(localStorage.getItem(ID)),
 

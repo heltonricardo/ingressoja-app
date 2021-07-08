@@ -65,21 +65,21 @@ const store = writable([
     },
     tiposDeIngresso: [
       {
-        id: 3,
+        id: 1,
         nome: "Inteira",
         valor: 59.99,
         descricao: "Ingresso no valor inteiro",
         quantidadeDisponivel: 200,
       },
       {
-        id: 4,
+        id: 2,
         nome: "Meia",
         valor: 29.99,
         descricao: "Ingresso com metade do valor",
         quantidadeDisponivel: 50,
       },
       {
-        id: 8,
+        id: 3,
         nome: "Meião",
         valor: 9.99,
         descricao: "Ingresso com metade do valor",

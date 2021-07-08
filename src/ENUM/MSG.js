@@ -3,6 +3,7 @@ const MSG = Object.freeze({
   RUIM: "😭 Poxa!",
   OLA: "🤩 Olá!",
   TCHAU: "😉 Até breve!",
+  CERTEZA: "🤔 Você tem certeza?",
 
   OK: "Operação realizada com sucesso!",
   CRIADO: "Cadastrado com sucesso!",
@@ -10,6 +11,8 @@ const MSG = Object.freeze({
   EXCLUÍDO: "Excluído com sucesso!",
   SAUDACAO: "Nossas boas-vindas!",
   VOLTE_SEMPRE: "Volte sempre!",
+
+  PERDER_INFO: "Os dados informados serão perdidos!",
 
   INCORRETO: "Os dados informados estão incorretos!",
   DUPLICADO: "Os dados informados já pertencem a um cadastro existente!",

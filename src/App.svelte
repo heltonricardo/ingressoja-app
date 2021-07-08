@@ -10,7 +10,7 @@
   import MinhaConta from "./Conta/MinhaConta.svelte";
   import FinalizaPedido from "./Pedido/FinalizaPedido.svelte";
 
-  let modo = MODO.LOGIN;
+  let modo = MODO.FINALIZACAO;
   let id = null;
 
   function modoNormal() {
@@ -29,14 +29,13 @@
     modo = MODO.NOVO_EVENTO;
     window.scrollTo(0, 0);
   }
-
+  
   function modoMinhaConta() {
     modo = MODO.MINHA_CONTA;
+    window.scrollTo(0, 0);
   }
 
-  function modoFinalizacao(event) {
-
-  }
+  function modoFinalizacao(event) {}
 </script>
 
 <BarraSuperior
@@ -64,7 +63,7 @@
 {:else if modo === MODO.NOVO_EVENTO}
   <Evento on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.FINALIZACAO}
-  <FinalizaPedido />
+  <FinalizaPedido on:voltar={modoNormal} />
 {/if}
 
 <BarraInferior />

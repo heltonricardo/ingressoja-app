@@ -1,30 +1,43 @@
 <script>
+  import swal from "sweetalert";
+  import MSG from "../ENUM/MSG"
+  import { createEventDispatcher } from "svelte";
   import eventoStore from "../Store/eventoStore";
+  import Botao from "../UI/Botao.svelte";
+  import Entrada from "../UI/Entrada.svelte";
   import CardIngresso from "./CardIngresso.svelte";
+
+  const dispatch = createEventDispatcher();
 
   /************************************/
   export let evento = $eventoStore[1];
-  evento.tiposDeIngresso.map(
-    (t) => (t.quantidade = parseInt(Math.random() * 3, 10) + 1)
-  );
+  evento.tiposDeIngresso.map((t) => (t.quantidade = 1));
   /************************************/
 
   let dom = 0;
   let ingressos = evento.tiposDeIngresso.flatMap((t) => {
     const tmp = [];
-
     for (let i = 0; i < t.quantidade; i++) {
       tmp.push({ id: t.id, nome: t.nome, valor: t.valor, dom });
       ++dom;
     }
-
     return tmp;
   });
+
+  function voltar() {
+    swal({
+      title: MSG.CERTEZA,
+      text: MSG.PERDER_INFO,
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((volte) => volte && dispatch("voltar"));
+  }
 </script>
 
 <style>
   #corpo {
-    width: 40%;
+    width: 35%;
     min-width: 30rem;
     margin: 2rem auto;
     display: flex;
@@ -33,24 +46,49 @@
     box-sizing: border-box;
     padding: 1rem;
     border-radius: 5px;
+    min-height: calc(100vh - 21rem);
   }
 
   #titulo {
+    margin: 2rem 0;
     font-size: 3rem;
     text-align: center;
   }
 
   #subtitulo {
-    margin: 3rem 0;
+    margin: 2rem 0;
     text-align: center;
+  }
+
+  #botoes {
+    margin: 3rem 0;
+    display: flex;
+    justify-content: space-around;
   }
 </style>
 
 <div id="corpo">
   <h1 id="titulo">Detalhes de Ingresso</h1>
   <h3 id="subtitulo">Insira os dados de cada ingressante:</h3>
+
   {#each [...Array(ingressos.length).keys()] as x}
     <CardIngresso bind:ingresso={ingressos[x]} />
   {/each}
-  <button on:click={() => console.log(ingressos)}>aaaa</button>
+
+  <h1 id="titulo">Detalhes de Pagamento</h1>
+  <h3 id="subtitulo">Insira os dados do cartão de crédito:</h3>
+
+  <Entrada id="numeroCartao" label="Número do cartão" />
+  <Entrada
+    id="codigoSegurancaCartao"
+    label="Código de segurança"
+    type="number"
+  />
+  <Entrada id="nomeTitular" label="Titular (como consta no cartão)" />
+  <Entrada id="cpfTitular" label="CPF do titular" />
+
+  <div id="botoes">
+    <Botao on:click={voltar}>Página principal</Botao>
+    <Botao>Concluir pedido</Botao>
+  </div>
 </div>

@@ -10,7 +10,7 @@
   import MinhaConta from "./Conta/MinhaConta.svelte";
   import FinalizaPedido from "./Pedido/FinalizaPedido.svelte";
 
-  let modo = MODO.CADASTRO;
+  let modo = MODO.LOGIN;
   let id = null;
 
   function modoNormal() {

@@ -29,7 +29,7 @@
     margin: 2rem auto;
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: var(--branco);
     box-sizing: border-box;
     padding: 1rem;
     border-radius: 5px;

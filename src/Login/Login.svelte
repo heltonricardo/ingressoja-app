@@ -23,11 +23,17 @@
 
 <style>
   #corpo {
+
     width: 30rem;
-    min-height: calc(100vh - 21rem);
+    min-width: 30rem;
     margin: 2rem auto;
     display: flex;
     flex-direction: column;
+    background-color: var(--branco);
+    box-sizing: border-box;
+    padding: 1rem;
+    border-radius: 5px;
+    min-height: calc(100vh - 21rem);
     justify-content: center;
   }
 

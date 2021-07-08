@@ -47,7 +47,7 @@
     border: none;
     border-bottom: 2px solid #ccc;
     border-radius: 3px 3px 0 0;
-    background: white;
+    background: var(--cinza0-5);
     padding: 0.15rem 0.25rem;
     transition: border-color 0.1s ease-out;
     resize: none;

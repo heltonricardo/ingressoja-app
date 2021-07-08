@@ -8,8 +8,15 @@
 
 <style>
   #corpo {
-    width: 30rem;
+    width: 35%;
+    min-width: 30rem;
     margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--branco);
+    box-sizing: border-box;
+    padding: 1rem;
+    border-radius: 5px;
     min-height: calc(100vh - 22rem);
   }
 

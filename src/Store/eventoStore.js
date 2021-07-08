@@ -17,7 +17,6 @@ const store = writable([
     bairro: "Acrelândia",
     cidade: "Varginha",
     uf: "MG",
-    pais: "Brasil",
     cep: "12345-678",
     tiposDeIngresso: [
       {
@@ -52,7 +51,6 @@ const store = writable([
     bairro: "Acrelândia",
     cidade: "Hortolândia",
     uf: "SP",
-    pais: "Brasil",
     cep: "12345-678",
     produtora: {
       id: 1,
@@ -105,7 +103,6 @@ const store = writable([
     bairro: "",
     cidade: "",
     uf: "",
-    pais: "",
     cep: "",
     produtora: {
       id: 1,
@@ -150,7 +147,6 @@ const store = writable([
     bairro: "Acrelândia",
     cidade: "Barrigudinha Seleida",
     uf: "AC",
-    pais: "Brasil",
     cep: "12345-678",
     tiposDeIngresso: [],
   },
@@ -169,7 +165,6 @@ const store = writable([
     bairro: "Acrelândia",
     cidade: "Venceslau Brás",
     uf: "MG",
-    pais: "Brasil",
     cep: "12345-678",
     tiposDeIngresso: [],
   },
@@ -188,7 +183,6 @@ const store = writable([
     bairro: "Acrelândia",
     cidade: "Favela da Rocinha",
     uf: "RJ",
-    pais: "Brasil",
     cep: "12345-678",
     tiposDeIngresso: [],
   },
@@ -207,7 +201,6 @@ const store = writable([
     bairro: "Acrelândia",
     cidade: "Mônaco",
     uf: "XY",
-    pais: "Brasil",
     cep: "12345-678",
     tiposDeIngresso: [],
   },

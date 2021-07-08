@@ -24,7 +24,6 @@
   let bairro = "";
   let cidade = "";
   let estado = "";
-  let pais = "";
   let cep = "";
   let qntTipoDeIngresso = 1;
   let tiposDeIngresso = [];
@@ -58,7 +57,6 @@
       bairro,
       cidade,
       estado,
-      pais,
       cep,
       tiposDeIngresso,
       categoriaEvento,
@@ -234,11 +232,6 @@
         id="estado"
         label="Estado"
         on:input={(event) => (estado = event.target.value)}
-      />
-      <Entrada
-        id="pais"
-        label="País"
-        on:input={(event) => (pais = event.target.value)}
       />
       <Entrada
         id="cep"

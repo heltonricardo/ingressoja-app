@@ -23,7 +23,7 @@
   let numero = "";
   let bairro = "";
   let cidade = "";
-  let estado = "";
+  let uf = "";
   let cep = "";
   let qntTipoDeIngresso = 1;
   let tiposDeIngresso = [];
@@ -56,7 +56,7 @@
       numero,
       bairro,
       cidade,
-      estado,
+      uf,
       cep,
       tiposDeIngresso,
       categoriaEvento,
@@ -68,10 +68,15 @@
 
 <style>
   #corpo {
-    width: 30rem;
+    width: 35%;
+    min-width: 30rem;
     margin: 2rem auto;
     display: flex;
     flex-direction: column;
+    background-color: var(--branco);
+    box-sizing: border-box;
+    padding: 1rem;
+    border-radius: 5px;
   }
 
   .campos {
@@ -82,23 +87,19 @@
   h1 {
     font-size: 3rem;
     align-self: center;
-    margin-bottom: 2rem;
-  }
-
-  hr {
-    width: 100%;
-    margin: 3rem 0;
-    height: 0.1rem;
-    background-color: var(--roxo2);
-    border: none;
+    margin: 3rem 0 1rem 0;
   }
 
   #opcoes {
     margin: 3rem 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    width: 100%;
   }
 
+  #opcoes label {
+    width: fit-content;
+  }
   #botoes {
     margin: 4rem auto;
     display: flex;
@@ -126,7 +127,7 @@
     outline: none;
     border-bottom: 2px solid #ccc;
     border-radius: 3px 3px 0 0;
-    background: white;
+    background: var(--cinza0-5);
     padding: 0.15rem 0;
     transition: border-color 0.1s ease-out;
     resize: none;
@@ -143,8 +144,8 @@
 {/if}
 
 <div id="corpo">
+  <h1>Novo Evento</h1>
   <div class="campos">
-    <h1>Novo Evento</h1>
     <Entrada
       id="titulo"
       label="Título"
@@ -208,6 +209,26 @@
       />
     {:else}
       <Entrada
+        id="cep"
+        label="CEP"
+        on:input={(event) => (cep = event.target.value)}
+      />
+      <Entrada
+        id="uf"
+        label="UF"
+        on:input={(event) => (uf = event.target.value)}
+      />
+      <Entrada
+        id="cidade"
+        label="Cidade"
+        on:input={(event) => (cidade = event.target.value)}
+      />
+      <Entrada
+        id="bairro"
+        label="Bairro"
+        on:input={(event) => (bairro = event.target.value)}
+      />
+      <Entrada
         id="logradouro"
         label="Logradouro"
         on:input={(event) => (logradouro = event.target.value)}
@@ -218,33 +239,13 @@
         type="number"
         on:input={(event) => (numero = event.target.value)}
       />
-      <Entrada
-        id="bairro"
-        label="Bairro"
-        on:input={(event) => (bairro = event.target.value)}
-      />
-      <Entrada
-        id="cidade"
-        label="Cidade"
-        on:input={(event) => (cidade = event.target.value)}
-      />
-      <Entrada
-        id="estado"
-        label="Estado"
-        on:input={(event) => (estado = event.target.value)}
-      />
-      <Entrada
-        id="cep"
-        label="CEP"
-        on:input={(event) => (cep = event.target.value)}
-      />
     {/if}
   </div>
 
-  <hr />
+  <br />
 
+  <h1>Tipos de Ingressos</h1>
   <div class="campos">
-    <h1>Tipos de Ingressos</h1>
     {#each [...Array(qntTipoDeIngresso).keys()] as i}
       <TipoDeIngresso bind:tipoDeIngresso={tiposDeIngresso[i]} />
     {/each}
@@ -256,9 +257,9 @@
     {/if}
     <Icone icon="plus" on:click={adicionaIngresso} />
   </div>
-</div>
 
-<div id="botoes">
-  <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
-  <Botao on:click={cadastrar}>Finalizar</Botao>
+  <div id="botoes">
+    <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
+    <Botao on:click={cadastrar}>Finalizar</Botao>
+  </div>
 </div>

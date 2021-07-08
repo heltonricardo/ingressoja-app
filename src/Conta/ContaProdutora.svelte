@@ -10,6 +10,7 @@
   async function carregaDados() {
     const res = await getProdutora();
     if (!res) dispatch("voltar")
+    return res;
   }
 
   let dadosCarregados = carregaDados();

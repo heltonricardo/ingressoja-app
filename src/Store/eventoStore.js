@@ -48,7 +48,7 @@ const store = writable([
     url: "",
     logradouro: "Rua Dorival de Carvalho",
     numero: "13",
-    bairro: "Acrelândia",
+    bairro: "Vila Maria",
     cidade: "Hortolândia",
     uf: "SP",
     cep: "12345-678",

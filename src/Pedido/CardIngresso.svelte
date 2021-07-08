@@ -22,19 +22,19 @@
 </style>
 
 <div id="corpo">
-  <span id="titulo">Ingresso #{ingresso.dom + 1} • {ingresso.nome}</span>
+  <span id="titulo">Ingresso #{ingresso.ordem + 1} • {ingresso.nome}</span>
   <Entrada
-    id={`nome${ingresso.dom}`}
+    id={`nome${ingresso.ordem}`}
     label="Nome"
     on:input={(event) => (ingresso.ingressante = event.target.value)}
   />
   <Entrada
-    id={`cpf${ingresso.dom}`}
+    id={`cpf${ingresso.ordem}`}
     label="CPF"
     on:input={(event) => (ingresso.cpf = event.target.value)}
   />
   <Entrada
-    id={`email${ingresso.dom}`}
+    id={`email${ingresso.ordem}`}
     label="E-mail"
     on:input={(event) => (ingresso.email = event.target.value)}
   />

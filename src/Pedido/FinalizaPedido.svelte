@@ -1,6 +1,6 @@
 <script>
   import swal from "sweetalert";
-  import MSG from "../ENUM/MSG"
+  import MSG from "../ENUM/MSG";
   import { createEventDispatcher } from "svelte";
   import eventoStore from "../Store/eventoStore";
   import Botao from "../UI/Botao.svelte";
@@ -14,12 +14,14 @@
   evento.tiposDeIngresso.map((t) => (t.quantidade = 1));
   /************************************/
 
-  let dom = 0;
+  let pedido = {};
+
+  let ordem = 0;
   let ingressos = evento.tiposDeIngresso.flatMap((t) => {
     const tmp = [];
     for (let i = 0; i < t.quantidade; i++) {
-      tmp.push({ id: t.id, nome: t.nome, valor: t.valor, dom });
-      ++dom;
+      tmp.push({ id: t.id, nome: t.nome, valor: t.valor, ordem });
+      ++ordem;
     }
     return tmp;
   });
@@ -32,6 +34,26 @@
       buttons: true,
       dangerMode: true,
     }).then((volte) => volte && dispatch("voltar"));
+  }
+
+  async function concluir() {
+    carregando = true;
+
+    let itensPedido = ingressos.map((i) => ({
+      idTipoDeIngresso: i.id,
+      ingressante: i.ingressante,
+      email: i.email,
+      cpf: i.cpf,
+    }));
+    
+    const pack = { ...pedido, itensPedido };
+
+    const res = await postComprador({ nome, cpf, email, senha });
+    carregando = false;
+    if (res) {
+      await autenticacao.logar({ email, senha }, false);
+      dispatch("voltar");
+    }
   }
 </script>
 
@@ -78,17 +100,30 @@
   <h1 id="titulo">Detalhes de Pagamento</h1>
   <h3 id="subtitulo">Insira os dados do cartão de crédito:</h3>
 
-  <Entrada id="numeroCartao" label="Número do cartão" />
+  <Entrada
+    id="numeroCartao"
+    label="Número do cartão"
+    on:input={(event) => (pedido.numeroCartao = event.target.value)}
+  />
   <Entrada
     id="codigoSegurancaCartao"
     label="Código de segurança"
     type="number"
+    on:input={(event) => (pedido.codigoSegurancaCartao = event.target.value)}
   />
-  <Entrada id="nomeTitular" label="Titular (como consta no cartão)" />
-  <Entrada id="cpfTitular" label="CPF do titular" />
+  <Entrada
+    id="nomeTitular"
+    label="Titular (como consta no cartão)"
+    on:input={(event) => (pedido.nomeTitular = event.target.value)}
+  />
+  <Entrada
+    id="cpfTitular"
+    label="CPF do titular"
+    on:input={(event) => (pedido.cpfTitular = event.target.value)}
+  />
 
   <div id="botoes">
     <Botao on:click={voltar}>Página principal</Botao>
-    <Botao>Concluir pedido</Botao>
+    <Botao on:click={concluir}>Concluir pedido</Botao>
   </div>
 </div>

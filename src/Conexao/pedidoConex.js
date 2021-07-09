@@ -33,7 +33,7 @@ export async function postPedido(pedido) {
   const status = res.status;
 
   if (status === STATUS.CREATED) {
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    await new Promise(resolve => setTimeout(resolve, 4000));
     swal(MSG.APROVADO, MSG.PED_REALIZADO, "success", { timer: 5000 });
     return true;
   } //

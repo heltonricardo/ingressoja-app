@@ -12,6 +12,7 @@
 
   let modo = MODO.NORMAL;
   let id = null;
+  let evento = null;
 
   function modoNormal() {
     id = null;
@@ -29,13 +30,17 @@
     modo = MODO.NOVO_EVENTO;
     window.scrollTo(0, 0);
   }
-  
+
   function modoMinhaConta() {
     modo = MODO.MINHA_CONTA;
     window.scrollTo(0, 0);
   }
 
-  function modoFinalizacao(event) {}
+  function modoFinalizacao(event) {
+    evento = event.detail;
+    modo = MODO.FINALIZACAO;
+    window.scrollTo(0, 0);
+  }
 </script>
 
 <BarraSuperior
@@ -53,7 +58,12 @@
 {:else if modo === MODO.LOGIN}
   <Login on:voltar={modoNormal} />
 {:else if modo === MODO.DETALHES}
-  <Detalhes {id} on:voltar={modoNormal} on:finalizacao={modoFinalizacao} />
+  <Detalhes
+    {id}
+    on:voltar={modoNormal}
+    on:finalizacao={modoFinalizacao}
+    on:entrar={() => (modo = MODO.LOGIN)}
+  />
 {:else if modo === MODO.MINHA_CONTA}
   <MinhaConta
     on:voltar={modoNormal}
@@ -63,7 +73,7 @@
 {:else if modo === MODO.NOVO_EVENTO}
   <Evento on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.FINALIZACAO}
-  <FinalizaPedido on:voltar={modoNormal} />
+  <FinalizaPedido {evento} on:voltar={modoNormal} />
 {/if}
 
 <BarraInferior />

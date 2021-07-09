@@ -7,5 +7,5 @@ export function zeroEsquerda(num, qnt) {
 }
 
 export function valorVirgula(num) {
-  return num ? num.toLocaleString('pt-BR') : "0,00";
+  return num ? num.toLocaleString('pt-BR') : "0";
 }

@@ -4,7 +4,6 @@
 
   import MSG from "../ENUM/MSG";
   import { postPedido } from "../Conexao/pedidoConex";
-  import eventoStore from "../Store/eventoStore";
 
   import Botao from "../UI/Botao.svelte";
   import Entrada from "../UI/Entrada.svelte";
@@ -13,10 +12,7 @@
 
   const dispatch = createEventDispatcher();
 
-  /************************************/
-  export let evento = $eventoStore[1];
-  evento.tiposDeIngresso.map((t) => (t.quantidade = 1));
-  /************************************/
+  export let evento;
 
   let pedido = {};
   let carregando = false;

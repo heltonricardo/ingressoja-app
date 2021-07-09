@@ -1,11 +1,15 @@
 <script>
   import { createEventDispatcher } from "svelte";
+
+  import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
+  import autenticacao from "../Autenticacao/autenticacao";
   import { getEvento } from "../Conexao/eventoConex";
-  import TipoDeIngresso from "../TipoDeIngresso/TipoDeIngresso.svelte";
-  import Aguarde from "../UI/Aguarde.svelte";
-  import Botao from "../UI/Botao.svelte";
   import { valorVirgula } from "../utils/formatador";
   import { extrairDataHora } from "../utils/manipulaDataHora";
+
+  import Botao from "../UI/Botao.svelte";
+  import Aguarde from "../UI/Aguarde.svelte";
+  import TipoDeIngresso from "../TipoDeIngresso/TipoDeIngresso.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -19,13 +23,28 @@
     return res;
   }
 
-  const eventoCarregado = carregaEvento();
+  let eventoCarregado = carregaEvento();
 
   function calcular() {
-    total = evento.tiposDeIngresso.reduce(
-      (soma, t) => soma + t.valor * t.quantidade,
-      0.0
-    );
+    eventoCarregado.then((evento) => {
+      total = evento.tiposDeIngresso.reduce(
+        (soma, t) => soma + t.valor * t.quantidade,
+        0.0
+      );
+    });
+  }
+
+  function comprar() {
+    if (autenticacao.estaLogado()) {
+      if (autenticacao.estaLogadoComTipo(TIPOCADASTRO.COMPRADOR)) {
+        eventoCarregado.then((evento) => dispatch("finalizacao", evento));
+      } else {
+        dispatch("voltar");
+      }
+    } //
+    else {
+      dispatch("entrar");
+    }
   }
 </script>
 
@@ -139,24 +158,23 @@
             </p>
           {:else}
             <p>
-              {evento.bairro} • {evento.cidade}-{evento.uf}
+              {evento.bairro} •
+              {evento.cidade}-{evento.uf}
             </p>
           {/if}
         </span>
 
         <span id="data-hora-inicio">
           <p>
-            {extrairDataHora(evento.inicio).data} • {extrairDataHora(
-              evento.inicio
-            ).horario}
+            {extrairDataHora(evento.inicio).data} •
+            {extrairDataHora(evento.inicio).horario}
           </p>
         </span>
 
         <span id="data-hora-termino">
           <p>
-            {extrairDataHora(evento.termino).data} • {extrairDataHora(
-              evento.termino
-            ).horario}
+            {extrairDataHora(evento.termino).data} •
+            {extrairDataHora(evento.termino).horario}
           </p>
         </span>
       </div>
@@ -172,7 +190,7 @@
     <div id="rodape">
       <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
       <span id="total">Total: R$ {valorVirgula(total)}</span>
-      <Botao on:click={() => dispatch("finalizacao", evento)}>Comprar</Botao>
+      <Botao on:click={comprar}>Comprar</Botao>
     </div>
   </div>
 {/await}

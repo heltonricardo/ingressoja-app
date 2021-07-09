@@ -23,7 +23,6 @@
 
 <style>
   #corpo {
-
     width: 30rem;
     min-width: 30rem;
     margin: 2rem auto;

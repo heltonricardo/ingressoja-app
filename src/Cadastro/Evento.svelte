@@ -27,7 +27,7 @@
   let cep = "";
   let qntTipoDeIngresso = 1;
   let tiposDeIngresso = [];
-  let categoriaEvento;
+  let idCategoria;
 
   async function carregaCategorias() {
     return await getCategoriasEvento();
@@ -59,7 +59,7 @@
       uf,
       cep,
       tiposDeIngresso,
-      categoriaEvento,
+      idCategoria,
     });
     carregando = false;
     if (sucesso) dispatch("minhaconta");
@@ -156,7 +156,7 @@
       <Aguarde />
     {:then categorias}
       <label for="selecao">Categoria do Evento</label>
-      <select bind:value={categoriaEvento}>
+      <select bind:value={idCategoria}>
         {#each categorias as categoria (categoria.id)}
           <option value={categoria.id}>{categoria.nome}</option>
         {/each}

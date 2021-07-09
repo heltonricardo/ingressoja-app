@@ -1,26 +1,25 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import eventoStore from "../Store/eventoStore";
+  import { getEvento } from "../Conexao/eventoConex";
   import TipoDeIngresso from "../TipoDeIngresso/TipoDeIngresso.svelte";
+  import Aguarde from "../UI/Aguarde.svelte";
   import Botao from "../UI/Botao.svelte";
   import { valorVirgula } from "../utils/formatador";
   import { extrairDataHora } from "../utils/manipulaDataHora";
 
-  export let id = 1;
-
   const dispatch = createEventDispatcher();
-  const evento = $eventoStore.find((e) => e.id === id);
+
+  export let id;
 
   let total = 0.0;
 
-  evento.tiposDeIngresso.map((t) => (t.quantidade = 0));
+  async function carregaEvento() {
+    const res = await getEvento(id);
+    if (!res) dispatch("voltar");
+    return res;
+  }
 
-  const { data: dataInicio, horario: horarioInicio } = extrairDataHora(
-    evento.inicio
-  );
-  const { data: dataTermino, horario: horarioTermino } = extrairDataHora(
-    evento.termino
-  );
+  const eventoCarregado = carregaEvento();
 
   function calcular() {
     total = evento.tiposDeIngresso.reduce(
@@ -99,75 +98,81 @@
   }
 </style>
 
-<div id="corpo">
-  <img id="imagem" src={evento.imagemURL} alt={evento.titulo} />
+{#await eventoCarregado}
+  <Aguarde />
+{:then evento}
+  <div id="corpo">
+    <img id="imagem" src={evento.imagemURL} alt={evento.titulo} />
 
-  <h1 class="titulo">{evento.titulo}</h1>
-  <h4 id="categoria">{evento.categoriaEvento.nome}</h4>
+    <h1 class="titulo">{evento.titulo}</h1>
+    <h4 id="categoria">{evento.categoriaEvento.nome}</h4>
 
-  <div id="detalhes">
-    <div id="rotulos">
-      <span id="local">
-        {#if !evento.online}
+    <div id="detalhes">
+      <div id="rotulos">
+        <span id="local">
+          {#if !evento.online}
+            <p>
+              <i class={"fas fa-location-arrow"} />  Local:
+            </p>
+          {/if}
+        </span>
+
+        <span id="data-hora-inicio">
           <p>
-            <i class={"fas fa-location-arrow"} />  Local:
+            <i class={"fas fa-clock"} />  Início:
           </p>
-        {/if}
-      </span>
+        </span>
 
-      <span id="data-hora-inicio">
-        <p>
-          <i class={"fas fa-clock"} />  Início:
-        </p>
-      </span>
+        <span id="data-hora-termino">
+          <p>
+            <i class="fas fa-hand-point-left" />  Término:
+          </p>
+        </span>
+      </div>
 
-      <span id="data-hora-termino">
-        <p>
-          <i class="fas fa-hand-point-left" />  Término:
-        </p>
-      </span>
+      <div id="dados">
+        <span id="local">
+          {#if evento.online}
+            <p>
+              Evento On-line 
+              <i class="fas fa-mouse-pointer" />
+            </p>
+          {:else}
+            <p>
+              {evento.bairro} • {evento.cidade}-{evento.uf}
+            </p>
+          {/if}
+        </span>
+
+        <span id="data-hora-inicio">
+          <p>
+            {extrairDataHora(evento.inicio).data} • {extrairDataHora(
+              evento.inicio
+            ).horario}
+          </p>
+        </span>
+
+        <span id="data-hora-termino">
+          <p>
+            {extrairDataHora(evento.termino).data} • {extrairDataHora(
+              evento.termino
+            ).horario}
+          </p>
+        </span>
+      </div>
     </div>
 
-    <div id="dados">
-      <span id="local">
-        {#if evento.online}
-          <p>
-            Evento On-line 
-            <i class="fas fa-mouse-pointer" />
-          </p>
-        {:else}
-          <p>
-            {evento.bairro} • {evento.cidade}-{evento.uf}
-          </p>
-        {/if}
-      </span>
+    <span id="descricao">{evento.descricao}</span>
 
-      <span id="data-hora-inicio">
-        <p>
-          {dataInicio} • {horarioInicio}
-        </p>
-      </span>
+    <h2 class="titulo" id="escolha">Selecione os ingressos</h2>
 
-      <span id="data-hora-termino">
-        <p>
-          {dataTermino} • {horarioTermino}
-        </p>
-      </span>
+    {#each evento.tiposDeIngresso as tipoDeIngresso}
+      <TipoDeIngresso {tipoDeIngresso} on:calcular={calcular} />
+    {/each}
+    <div id="rodape">
+      <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
+      <span id="total">Total: R$ {valorVirgula(total)}</span>
+      <Botao on:click={() => dispatch("finalizacao", evento)}>Comprar</Botao>
     </div>
   </div>
-
-  <span id="descricao">{evento.descricao}</span>
-
-  <h2 class="titulo" id="escolha">Selecione os ingressos</h2>
-
-  {#each evento.tiposDeIngresso as tipoDeIngresso}
-    <TipoDeIngresso {tipoDeIngresso} on:calcular={calcular} />
-  {/each}
-  <div id="rodape">
-    <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
-    <span id="total">Total: R$ {valorVirgula(total)}</span>
-    <Botao on:click={() => dispatch("finalizacao", evento)}
-      >Comprar</Botao
-    >
-  </div>
-</div>
+{/await}

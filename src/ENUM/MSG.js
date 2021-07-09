@@ -15,6 +15,7 @@ const MSG = Object.freeze({
   PED_REALIZADO: "Seu pedido foi realizado com sucesso!",
 
   PERDER_INFO: "Os dados informados serão perdidos!",
+  SEM_EVENTO: "Não existem eventos para mostrar 😖",
 
   INCORRETO: "Os dados informados estão incorretos!",
   DUPLICADO: "Os dados informados já pertencem a um cadastro existente!",

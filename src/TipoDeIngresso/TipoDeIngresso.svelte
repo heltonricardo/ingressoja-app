@@ -7,6 +7,8 @@
 
   export let tipoDeIngresso;
 
+  tipoDeIngresso.quantidade = 0;
+
   function diminuir() {
     tipoDeIngresso.quantidade = Math.max(0, tipoDeIngresso.quantidade - 1);
     dispatch("calcular")

@@ -15,16 +15,11 @@ export async function postEvento(evento) {
     return false;
 
   const produtora = autenticacao.idLogado();
+  evento.idProdutora = produtora;
 
   let res;
   try {
-    const idCategoria = evento.categoriaEvento;
-    delete evento.categoriaEvento;
-
-    const url =
-      PATH.EVENTO + `?idProdutora=${produtora}&idCategoria=${idCategoria}`;
-
-    res = await fetch(url, {
+    res = await fetch(PATH.EVENTO, {
       method: "POST",
       body: JSON.stringify(evento),
       headers: { "Content-Type": "application/json" },
@@ -45,6 +40,46 @@ export async function postEvento(evento) {
   } //
   else if (status === STATUS.NOT_ACCEPTABLE) {
     swal(MSG.RUIM, MSG.INCORRETO, "error");
+  } //
+  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+    swal(MSG.RUIM, MSG.SERVERROR, "error");
+  }
+  return false;
+}
+
+export async function getEventos() {
+  let res;
+  try {
+    res = await fetch(PATH.EVENTO);
+  } catch (error) {
+    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    return false;
+  }
+
+  const status = res.status;
+
+  if (status === STATUS.OK) {
+    return await res.json();
+  } //
+  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+    swal(MSG.RUIM, MSG.SERVERROR, "error");
+  }
+  return false;
+}
+
+export async function getEvento(id) {
+  let res;
+  try {
+    res = await fetch(`${PATH.EVENTO}/${id}`);
+  } catch (error) {
+    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    return false;
+  }
+
+  const status = res.status;
+
+  if (status === STATUS.OK) {
+    return await res.json();
   } //
   else if (status === STATUS.INTERNAL_SERVER_ERROR) {
     swal(MSG.RUIM, MSG.SERVERROR, "error");

@@ -9,7 +9,7 @@
 
   async function carregaDados() {
     const res = await getProdutora();
-    if (!res) dispatch("voltar")
+    if (!res) dispatch("voltar");
     return res;
   }
 
@@ -18,12 +18,17 @@
 
 <style>
   #corpo {
-    width: 40rem;
+    width: 40%;
+    min-width: 30rem;
     margin: 2rem auto;
     min-height: calc(100vh - 21rem);
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: var(--branco);
+    box-sizing: border-box;
+    padding: 1rem;
+    border-radius: 5px;
   }
 
   #corpo h1 {
@@ -44,8 +49,7 @@
   <div id="corpo">
     <h1>Minha Conta</h1>
     <p>
-      Olá, {produtora.nomeFantasia.split(" ")[0]}! Selecione uma opção
-      abaixo:
+      Olá, {produtora.nomeFantasia.split(" ")[0]}! Selecione uma opção abaixo:
     </p>
     <Botao on:click={() => dispatch("novoevento")}>Cadastrar Evento</Botao>
     <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>

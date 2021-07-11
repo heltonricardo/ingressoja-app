@@ -18,7 +18,7 @@
 </script>
 
 {#if tipo === TIPOCADASTRO.COMPRADOR}
-  <ContaComprador on:voltar />
+  <ContaComprador on:meuspedidos on:voltar />
   {:else}
   <ContaProdutora on:novoevento on:voltar />
 {/if}

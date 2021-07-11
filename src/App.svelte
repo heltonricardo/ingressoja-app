@@ -9,8 +9,9 @@
   import BarraInferior from "./UI/BarraInferior.svelte";
   import MinhaConta from "./Conta/MinhaConta.svelte";
   import FinalizaPedido from "./Pedido/FinalizaPedido.svelte";
+  import MeusPedidos from "./Conta/MeusPedidos.svelte";
 
-  let modo = MODO.NORMAL;
+  let modo = MODO.MEUS_PEDIDOS;
   let id = null;
   let evento = null;
 
@@ -41,6 +42,11 @@
     modo = MODO.FINALIZACAO;
     window.scrollTo(0, 0);
   }
+  
+  function modoMeusPedidos() {
+    modo = MODO.MEUS_PEDIDOS;
+    window.scrollTo(0, 0);
+  }
 </script>
 
 <BarraSuperior
@@ -69,11 +75,14 @@
     on:voltar={modoNormal}
     on:minhaconta={modoMinhaConta}
     on:novoevento={modoCadastraEvento}
+    on:meuspedidos={modoMeusPedidos}
   />
 {:else if modo === MODO.NOVO_EVENTO}
   <Evento on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.FINALIZACAO}
   <FinalizaPedido {evento} on:voltar={modoNormal} />
+{:else if modo === MODO.MEUS_PEDIDOS}
+  <MeusPedidos />
 {/if}
 
 <BarraInferior />

@@ -1,9 +1,14 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+
   import { getPedidos } from "../Conexao/compradorConex";
-  import {extrairDataHora} from "../utils/manipulaDataHora"
+  import { extrairDataHora } from "../utils/manipulaDataHora";
+  import { valorVirgula } from "../utils/formatador";
 
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
+
+  const dispatch = createEventDispatcher();
 
   async function carregaPedidos() {
     pedidos = await getPedidos();
@@ -50,9 +55,18 @@
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #04aa6d;
-    color: white;
+    background-color: var(--verde2);
+    color: black;
     text-align: center;
+  }
+
+  #detalhes {
+    display: flex;
+    justify-content: center;
+  }
+
+  #voltar {
+    margin: 3rem 0;
   }
 </style>
 
@@ -65,6 +79,7 @@
         <tr>
           <th>Pedido</th>
           <th>Data</th>
+          <th>Evento</th>
           <th>Valor</th>
           <th>Ações</th>
         </tr>
@@ -73,8 +88,9 @@
           <tr>
             <td>{pedido.id}</td>
             <td>{extrairDataHora(pedido.dataHora).data}</td>
-            <td>R$ {pedido.valorTotal}</td>
-            <td><Botao>Detalhes</Botao></td>
+            <td>{pedido.tituloEvento}</td>
+            <td>R$ {valorVirgula(pedido.valorTotal)}</td>
+            <td id="detalhes"><Botao>Detalhes</Botao></td>
           </tr>
         {/each}
       </table>
@@ -82,4 +98,7 @@
       Não há pedidos para mostrar
     {/if}
   {/await}
+  <div id="voltar">
+    <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
+  </div>
 </div>

@@ -42,7 +42,7 @@
     modo = MODO.FINALIZACAO;
     window.scrollTo(0, 0);
   }
-  
+
   function modoMeusPedidos() {
     modo = MODO.MEUS_PEDIDOS;
     window.scrollTo(0, 0);
@@ -82,7 +82,7 @@
 {:else if modo === MODO.FINALIZACAO}
   <FinalizaPedido {evento} on:voltar={modoNormal} />
 {:else if modo === MODO.MEUS_PEDIDOS}
-  <MeusPedidos />
+  <MeusPedidos on:minhaconta={modoMinhaConta} />
 {/if}
 
 <BarraInferior />

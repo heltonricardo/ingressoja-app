@@ -19,7 +19,6 @@
 
     display: flex;
     box-sizing: border-box;
-
     background-color: var(--cinza1);
     
     border: 0.125rem solid black;
@@ -38,25 +37,29 @@
   }
 
   #principal {
-    box-sizing: border-box;
     padding: 0.5rem;
-    justify-content: space-between;
-    display: flex;
-    align-items: center;
+    width: 75%;
+    max-width: 75%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    width: 75%;
-    height: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 0;
   }
 
   #titulo {
     display: flex;
+    width: 100%;
     height: 2rem;
     font-size: 1.8rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
     align-self: flex-start;
     align-items: center;
+    overflow: hidden;
+    box-sizing: border-box;
   }
 
   #imagem {
@@ -64,6 +67,7 @@
     height: 100%;
     box-sizing: border-box;
     overflow: hidden;
+    display: flex;
   }
 
   #imagem img {
@@ -75,6 +79,7 @@
   #detalhes {
     border-left: 5px dotted;
     width: 25%;
+    min-width: 25%;
     padding: 0.5rem;
     display: flex;
     flex-direction: column;
@@ -84,8 +89,8 @@
 
   #local {
     font-size: 1.25rem;
-    color: #777;
     text-align: center;
+    color: #777;
   }
 
   #data {
@@ -98,9 +103,9 @@
     align-items: flex-end;
     justify-content: center;
     font-weight: bold;
-    color: var(--roxo2);
     font-size: 80pt;
     height: 9rem;
+    color: var(--roxo2);
   }
 
   #mes {

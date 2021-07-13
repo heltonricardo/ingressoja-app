@@ -17,9 +17,10 @@
     -webkit-filter: drop-shadow(1px 1px 1px #222);
     filter: drop-shadow(1px 1px 1px #222);
   }
-
+  
   .logo {
     width: 5rem;
+    margin-right: 1rem;
     -webkit-filter: drop-shadow(1px 1px 1px #222);
     filter: drop-shadow(1px 1px 1px #222);
   }

@@ -12,15 +12,16 @@
 
 <style>
   #card {
-    margin: 2rem 2rem;
+    margin: 1.5rem 1.5rem;
     width: 40%;
-    min-width: 40rem;
-    height: 25rem;
+    min-width: 28.5rem;
+    height: auto;
 
     display: flex;
     box-sizing: border-box;
 
     background-color: var(--cinza1);
+    
     border: 0.125rem solid black;
     border-radius: 5px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;

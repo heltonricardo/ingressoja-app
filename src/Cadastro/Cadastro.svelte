@@ -17,7 +17,7 @@
     box-sizing: border-box;
     padding: 1rem;
     border-radius: 5px;
-    min-height: calc(100vh - 22rem);
+    min-height: calc(100vh - 20rem);
   }
 
   h1 {

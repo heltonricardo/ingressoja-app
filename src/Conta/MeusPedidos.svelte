@@ -13,6 +13,7 @@
   async function carregaPedidos() {
     pedidos = await getPedidos();
   }
+
   let pedidos = carregaPedidos();
 </script>
 
@@ -21,7 +22,7 @@
     width: 40%;
     min-width: 30rem;
     margin: 2rem auto;
-    min-height: calc(100vh - 21rem);
+    min-height: calc(100vh - 20rem);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,6 +30,12 @@
     box-sizing: border-box;
     padding: 1rem;
     border-radius: 5px;
+  }
+
+  h1 {
+    font-size: 3rem;
+    align-self: center;
+    margin: 1rem 0;
   }
 
   #tabela {
@@ -71,6 +78,7 @@
 </style>
 
 <div id="corpo">
+  <h1>Meus Pedidos</h1>
   {#await pedidos}
     <Aguarde />
   {:then pedidos}

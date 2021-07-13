@@ -12,7 +12,7 @@
   #entrada {
     border-radius: 5px;
     height: 3rem;
-    width: 30rem;
+    width: 23rem;
     font-family: inherit;
     font-size: 1.5rem;
     margin-right: 1rem;

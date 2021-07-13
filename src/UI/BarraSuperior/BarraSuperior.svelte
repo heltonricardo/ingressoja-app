@@ -13,11 +13,16 @@
 <style>
   .barra {
     width: 100%;
-    height: 7rem;
+    height: fit-content;
+    padding: 0.5rem;
     background-color: var(--verde1);
+
     display: flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
+
     -webkit-box-shadow: rgba(100, 100, 111, 0.2) 0 0 29px 0;
     -moz-box-shadow: rgba(100, 100, 111, 0.2) 0 0 29px 0;
     box-shadow: rgba(100, 100, 111, 0.2) 0 0 29px 0;

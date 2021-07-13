@@ -21,7 +21,7 @@
     width: 40%;
     min-width: 30rem;
     margin: 2rem auto;
-    min-height: calc(100vh - 21rem);
+    min-height: calc(100vh - 20rem);
     display: flex;
     flex-direction: column;
     align-items: center;

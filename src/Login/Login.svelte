@@ -32,7 +32,7 @@
     box-sizing: border-box;
     padding: 1rem;
     border-radius: 5px;
-    min-height: calc(100vh - 21rem);
+    min-height: calc(100vh - 20rem);
     justify-content: center;
   }
 

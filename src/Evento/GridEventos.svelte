@@ -12,12 +12,12 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    min-height: calc(100vh - 17rem);
+    min-height: calc(100vh - 20rem);
     justify-content: center;
   }
 
   .conteudo {
-    margin: 0 auto;
+    margin: 2rem auto;
     width: 100%;
     display: flex;
     flex-direction: row;

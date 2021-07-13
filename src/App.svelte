@@ -10,8 +10,9 @@
   import MinhaConta from "./Conta/MinhaConta.svelte";
   import FinalizaPedido from "./Pedido/FinalizaPedido.svelte";
   import MeusPedidos from "./Conta/MeusPedidos.svelte";
+  import CategoriaEvento from "./Cadastro/CategoriaEvento.svelte";
 
-  let modo = MODO.MEUS_PEDIDOS;
+  let modo = MODO.NORMAL;
   let id = null;
   let evento = null;
 
@@ -47,6 +48,11 @@
     modo = MODO.MEUS_PEDIDOS;
     window.scrollTo(0, 0);
   }
+
+  function modoCategoriasEvento() {
+    modo = MODO.CATEGORIAS_EVENTO;
+    window.scrollTo(0, 0);
+  }
 </script>
 
 <BarraSuperior
@@ -76,6 +82,7 @@
     on:minhaconta={modoMinhaConta}
     on:novoevento={modoCadastraEvento}
     on:meuspedidos={modoMeusPedidos}
+    on:novacategoria={modoCategoriasEvento}
   />
 {:else if modo === MODO.NOVO_EVENTO}
   <Evento on:minhaconta={modoMinhaConta} />
@@ -83,6 +90,8 @@
   <FinalizaPedido {evento} on:voltar={modoNormal} />
 {:else if modo === MODO.MEUS_PEDIDOS}
   <MeusPedidos on:minhaconta={modoMinhaConta} />
+{:else if modo === MODO.CATEGORIAS_EVENTO}
+  <CategoriaEvento on:minhaconta={modoMinhaConta} />
 {/if}
 
 <BarraInferior />

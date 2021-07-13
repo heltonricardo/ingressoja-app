@@ -3,11 +3,11 @@ import swal from "sweetalert";
 import MSG from "../ENUM/MSG.js";
 import PATH from "../ENUM/PATH.js";
 import STATUS from "../ENUM/STATUS.js";
-import TIPOCADASTRO from "../ENUM/TIPOCADASTRO.js";
+import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
 
-import autenticacao from "../Autenticacao/autenticacao.js";
+import autenticacao from "../Autenticacao/autenticacao";
 
-export async function postCategoriaEvento(categoriaEvento) {
+export async function postAdministrador(administrador) {
   if (
     !autenticacao.estaLogado() ||
     !autenticacao.estaLogadoComTipo(TIPOCADASTRO.ADMINISTRADOR)
@@ -16,9 +16,9 @@ export async function postCategoriaEvento(categoriaEvento) {
 
   let res;
   try {
-    res = await fetch(PATH.CATEGORIA_EVENTO, {
+    res = await fetch(PATH.ADMINISTRADOR, {
       method: "POST",
-      body: JSON.stringify(categoriaEvento),
+      body: JSON.stringify(administrador),
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
@@ -44,22 +44,31 @@ export async function postCategoriaEvento(categoriaEvento) {
   return false;
 }
 
-export async function getCategoriasEvento() {
-  let resposta;
+export async function getAdministrador() {
+  if (
+    !autenticacao.estaLogado() ||
+    !autenticacao.estaLogadoComTipo(TIPOCADASTRO.ADMINISTRADOR)
+  )
+    return null;
 
+  const id = autenticacao.idLogado();
+
+  let res;
   try {
-    resposta = await fetch(PATH.CATEGORIA_EVENTO);
+    res = await fetch(`${PATH.ADMINISTRADOR}/${id}`);
   } catch (error) {
     swal(MSG.RUIM, MSG.CONEXAO, "error");
     return null;
   }
 
-  const status = resposta.status;
+  const status = res.status;
 
   if (status === STATUS.OK) {
-    const categoriasEvento = await resposta.json();
-    return categoriasEvento;
+    const administrador = await res.json();
+    return administrador;
+  } //
+  else if (status === STATUS.NOT_ACCEPTABLE) {
+    swal(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
-
   return null;
 }

@@ -45,12 +45,15 @@
 
 {#await dadosCarregados}
   <Aguarde />
-{:then comprador}
+{:then administrador}
   <div id="corpo">
     <h1>Minha Conta</h1>
     <p>
-      Olá, {comprador.nome.split(" ")[0]}! Selecione uma opção abaixo:
+      Olá, {administrador.nome.split(" ")[0]}! Selecione uma opção abaixo:
     </p>
+    <Botao on:click={() => dispatch("novoadm")}
+      >Cadastrar Administrador</Botao
+    >
     <Botao on:click={() => dispatch("novacategoria")}
       >Categorias de Evento</Botao
     >

@@ -20,8 +20,8 @@
 
 {#if tipo === TIPOCADASTRO.COMPRADOR}
   <ContaComprador on:meuspedidos on:voltar />
-{:else if tipo === TIPOCADASTRO.ADMINISTRADOR}
-  <ContaAdministrador on:novacategoria on:voltar />
 {:else if tipo === TIPOCADASTRO.PRODUTORA}
   <ContaProdutora on:novoevento on:voltar />
+{:else if tipo === TIPOCADASTRO.ADMINISTRADOR}
+  <ContaAdministrador on:novacategoria on:novoadm on:voltar />
 {/if}

@@ -27,7 +27,10 @@
 </style>
 
 <div id="barra">
-  <span>© 2021, Plataforma IngressoJá! Todos os direitos reservados.</span>
+  <span
+    >© {new Date().getFullYear()}, Plataforma IngressoJá! Todos os direitos
+    reservados.</span
+  >
   <span
     ><a target="_blank" href="https://github.com/heltonricardo"
       >Entre em Contato</a

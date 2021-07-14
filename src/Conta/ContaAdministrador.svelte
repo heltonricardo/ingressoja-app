@@ -1,9 +1,9 @@
 <script>
-  import { createEventDispatcher } from "svelte";
-
+  import autenticacao from "../Autenticacao/autenticacao";
   import { getAdministrador } from "../Conexao/administradorConex";
-  import Aguarde from "../UI/Aguarde.svelte";
+  import { createEventDispatcher } from "svelte";
   import Botao from "../UI/Botao.svelte";
+  import Aguarde from "../UI/Aguarde.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -14,6 +14,11 @@
   }
 
   let dadosCarregados = carregaDados();
+
+  onMount(() => {
+    if (!autenticacao.estaLogadoComTipo(TIPOCADASTRO.ADMINISTRADOR))
+      dispatch("minhaconta");
+  });
 </script>
 
 <style>
@@ -51,9 +56,7 @@
     <p>
       Olá, {administrador.nome.split(" ")[0]}! Selecione uma opção abaixo:
     </p>
-    <Botao on:click={() => dispatch("novoadm")}
-      >Cadastrar Administrador</Botao
-    >
+    <Botao on:click={() => dispatch("novoadm")}>Cadastrar Administrador</Botao>
     <Botao on:click={() => dispatch("novacategoria")}
       >Categorias de Evento</Botao
     >

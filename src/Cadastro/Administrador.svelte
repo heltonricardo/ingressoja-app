@@ -1,8 +1,10 @@
 <script>
-  import Entrada from "../UI/Entrada.svelte";
-  import Botao from "../UI/Botao.svelte";
-  import { createEventDispatcher } from "svelte";
   import { postAdministrador } from "../Conexao/administradorConex";
+  import { createEventDispatcher, onMount } from "svelte";
+  import autenticacao from "../Autenticacao/autenticacao";
+  import Botao from "../UI/Botao.svelte";
+  import Entrada from "../UI/Entrada.svelte";
+  import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
 
   const dispatch = createEventDispatcher();
 
@@ -21,6 +23,11 @@
       if (res) dispatch("minhaconta");
     }
   }
+
+  onMount(() => {
+    if (!autenticacao.estaLogadoComTipo(TIPOCADASTRO.ADMINISTRADOR))
+      dispatch("minhaconta");
+  });
 </script>
 
 <style>
@@ -86,7 +93,7 @@
   </div>
 
   <div id="botoes">
-    <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
+    <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
     <Botao on:click={cadastrar}>Finalizar</Botao>
   </div>
 </div>

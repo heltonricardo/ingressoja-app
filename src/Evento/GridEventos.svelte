@@ -12,7 +12,7 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    min-height: calc(100vh - 20rem);
+    min-height: calc(100vh - 16rem);
     justify-content: center;
   }
 

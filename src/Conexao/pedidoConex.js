@@ -45,3 +45,30 @@ export async function postPedido(pedido) {
   }
   return false;
 }
+
+export async function getPedido(id) {
+  if (
+    !autenticacao.estaLogado() ||
+    autenticacao.tipoLogado() !== TIPOCADASTRO.COMPRADOR
+  )
+    return null;
+
+  let res;
+  try {
+    res = await fetch(`${PATH.PEDIDO}/${id}`);
+  } catch (error) {
+    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    return null;
+  }
+
+  const status = res.status;
+
+  if (status === STATUS.OK) {
+    const pedido = await res.json();
+    return pedido;
+  } //
+  else if (status === STATUS.NOT_ACCEPTABLE) {
+    swal(MSG.RUIM, MSG.NAO_EXISTE, "error");
+  }
+  return null;
+}

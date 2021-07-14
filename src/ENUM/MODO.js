@@ -9,6 +9,7 @@ const MODO = Object.freeze({
   FINALIZACAO: 8,
   MEUS_PEDIDOS: 9,
   CATEGORIAS_EVENTO: 10,
+  DETALHE_PEDIDO: 11,
 });
 
 export default MODO;

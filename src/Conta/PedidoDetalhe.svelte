@@ -1,20 +1,20 @@
 <script>
   import { createEventDispatcher } from "svelte";
-
-  import { getPedidos } from "../Conexao/compradorConex";
+  import { getPedido } from "../Conexao/pedidoConex";
   import { extrairDataHora } from "../utils/manipulaDataHora";
   import { valorVirgula } from "../utils/formatador";
-
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
 
   const dispatch = createEventDispatcher();
 
-  async function carregaPedidos() {
-    pedidos = await getPedidos();
+  export let id;
+
+  async function carregaPedido() {
+    pedido = await getPedido(id);
   }
 
-  let pedidos = carregaPedidos();
+  let pedido = carregaPedido();
 </script>
 
 <style>
@@ -36,6 +36,7 @@
     font-size: 3rem;
     align-self: center;
     margin: 1rem 0;
+    text-align: center;
   }
 
   #tabela {
@@ -69,50 +70,58 @@
     text-align: center;
   }
 
-  #detalhes {
-    display: flex;
-    justify-content: center;
-  }
-
   #voltar {
     margin: 3rem 0;
   }
 </style>
 
 <div id="corpo">
-  <h1>Meus Pedidos</h1>
-  {#await pedidos}
+  <h1>Detalhes de Pedido</h1>
+  {#await pedido}
     <Aguarde />
-  {:then pedidos}
-    {#if pedidos.length}
-      <table id="tabela">
-        <tr>
-          <th>Pedido</th>
-          <th>Data</th>
-          <th>Evento</th>
-          <th>Valor</th>
-          <th>Ações</th>
-        </tr>
+  {:then pedido}
+    <table id="tabela">
+      <tr>
+        <th>Pedido</th>
+        <th>Data</th>
+        <th>Hora</th>
+        <th>Final do cartão</th>
+        <th>Valor total</th>
+      </tr>
 
-        {#each pedidos as pedido}
-          <tr>
-            <td>{pedido.id}</td>
-            <td>{extrairDataHora(pedido.dataHora).data}</td>
-            <td>{pedido.tituloEvento}</td>
-            <td>R$ {valorVirgula(pedido.valorTotal)}</td>
-            <td id="detalhes"
-              ><Botao on:click={() => dispatch("detalhespedido", pedido.id)}
-                >Detalhes</Botao
-              ></td
-            >
-          </tr>
-        {/each}
-      </table>
-    {:else}
-      Não há pedidos para mostrar
-    {/if}
+      <tr>
+        <td>{pedido.id}</td>
+        <td>{extrairDataHora(pedido.dataHora).data}</td>
+        <td>{extrairDataHora(pedido.dataHora).horario}</td>
+        <td>{pedido.numeroCartao}</td>
+        <td>R$ {valorVirgula(pedido.valorTotal)}</td>
+      </tr>
+
+      <tr>
+        <th colspan="5">Itens do Pedido</th>
+      </tr>
+
+      <tr>
+        <th>Ingresso</th>
+        <th>Nome do ingressante</th>
+        <th>CPF</th>
+        <th>Tipo de ingresso</th>
+        <th>Preço</th>
+      </tr>
+
+      {#each pedido.itensPedido as item}
+        <tr>
+          <td>{item.id}</td>
+          <td>{item.ingressante}</td>
+          <td>{item.cpf}</td>
+          <td>{item.tipoDeIngresso.nome}</td>
+          <td>R$ {valorVirgula(item.tipoDeIngresso.valor)}</td>
+        </tr>
+      {/each}
+    </table>
   {/await}
+
   <div id="voltar">
-    <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
+    <Botao on:click={() => dispatch("meuspedidos")}>Voltar</Botao>
   </div>
 </div>

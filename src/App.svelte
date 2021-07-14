@@ -1,20 +1,22 @@
 <script>
   import MODO from "./ENUM/MODO";
-  import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
-  import GridEventos from "./Evento//GridEventos.svelte";
-  import Cadastro from "./Cadastro/Cadastro.svelte";
   import Login from "./Login/Login.svelte";
-  import Detalhes from "./Evento/Detalhes.svelte";
   import Evento from "./Cadastro/Evento.svelte";
-  import BarraInferior from "./UI/BarraInferior.svelte";
+  import Detalhes from "./Evento/Detalhes.svelte";
+  import Cadastro from "./Cadastro/Cadastro.svelte";
   import MinhaConta from "./Conta/MinhaConta.svelte";
-  import FinalizaPedido from "./Pedido/FinalizaPedido.svelte";
+  import GridEventos from "./Evento//GridEventos.svelte";
   import MeusPedidos from "./Conta/MeusPedidos.svelte";
+  import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
+  import BarraInferior from "./UI/BarraInferior.svelte";
+  import Administrador from "./Cadastro/Administrador.svelte";
+  import FinalizaPedido from "./Pedido/FinalizaPedido.svelte";
   import CategoriaEvento from "./Cadastro/CategoriaEvento.svelte";
-import Administrador from "./Cadastro/Administrador.svelte";
+  import PedidoDetalhe from "./Conta/PedidoDetalhe.svelte";
 
-  let modo = MODO.NOVO_ADM;
+  let modo = MODO.NORMAL;
   let id = null;
+  let pedido = null;
   let evento = null;
 
   function modoNormal() {
@@ -59,6 +61,12 @@ import Administrador from "./Cadastro/Administrador.svelte";
     modo = MODO.NOVO_ADM;
     window.scrollTo(0, 0);
   }
+
+  function modoPedido(event) {
+    pedido = event.detail;
+    modo = MODO.DETALHE_PEDIDO;
+    window.scrollTo(0, 0);
+  }
 </script>
 
 <BarraSuperior
@@ -96,11 +104,13 @@ import Administrador from "./Cadastro/Administrador.svelte";
 {:else if modo === MODO.FINALIZACAO}
   <FinalizaPedido {evento} on:voltar={modoNormal} />
 {:else if modo === MODO.MEUS_PEDIDOS}
-  <MeusPedidos on:minhaconta={modoMinhaConta} />
+  <MeusPedidos on:minhaconta={modoMinhaConta} on:detalhespedido={modoPedido} />
 {:else if modo === MODO.CATEGORIAS_EVENTO}
   <CategoriaEvento on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.NOVO_ADM}
   <Administrador on:minhaconta={modoMinhaConta} />
+{:else if modo === MODO.DETALHE_PEDIDO}
+  <PedidoDetalhe id={pedido} on:meuspedidos={modoMeusPedidos} />
 {/if}
 
 <BarraInferior />

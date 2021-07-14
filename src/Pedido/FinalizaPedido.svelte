@@ -43,7 +43,6 @@
     let itensPedido = ingressos.map((i) => ({
       idTipoDeIngresso: i.id,
       ingressante: i.ingressante,
-      email: i.email,
       cpf: i.cpf,
     }));
 

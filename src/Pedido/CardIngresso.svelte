@@ -33,9 +33,4 @@
     label="CPF"
     on:input={(event) => (ingresso.cpf = event.target.value)}
   />
-  <Entrada
-    id={`email${ingresso.ordem}`}
-    label="E-mail"
-    on:input={(event) => (ingresso.email = event.target.value)}
-  />
 </div>

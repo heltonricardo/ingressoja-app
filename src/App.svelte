@@ -63,7 +63,8 @@
   }
 
   function modoPedido(event) {
-    pedido = event.detail;
+    pedido = event.detail.id;
+    evento = event.detail.evento;
     modo = MODO.DETALHE_PEDIDO;
     window.scrollTo(0, 0);
   }
@@ -110,7 +111,7 @@
 {:else if modo === MODO.NOVO_ADM}
   <Administrador on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.DETALHE_PEDIDO}
-  <PedidoDetalhe id={pedido} on:meuspedidos={modoMeusPedidos} />
+  <PedidoDetalhe id={pedido} {evento} on:meuspedidos={modoMeusPedidos} />
 {/if}
 
 <BarraInferior />

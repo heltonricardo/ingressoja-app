@@ -9,6 +9,7 @@
   const dispatch = createEventDispatcher();
 
   export let id;
+  export let evento;
 
   async function carregaPedido() {
     pedido = await getPedido(id);
@@ -37,6 +38,11 @@
     align-self: center;
     margin: 1rem 0;
     text-align: center;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin: 1rem 0;
   }
 
   #tabela {
@@ -77,6 +83,7 @@
 
 <div id="corpo">
   <h1>Detalhes de Pedido</h1>
+  <h2>{evento}</h2>
   {#await pedido}
     <Aguarde />
   {:then pedido}

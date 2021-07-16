@@ -2,9 +2,9 @@
   import { createEventDispatcher } from "svelte";
   import { postEvento } from "../Conexao/eventoConex";
   import { getCategoriasEvento } from "../Conexao/categoriaEventoConex";
-  import Aguarde from "../UI/Aguarde.svelte";
-  import Botao from "../UI/Botao.svelte";
   import Icone from "../UI/Icone.svelte";
+  import Botao from "../UI/Botao.svelte";
+  import Aguarde from "../UI/Aguarde.svelte";
   import Entrada from "../UI/Entrada.svelte";
   import TipoDeIngresso from "./TipoDeIngresso.svelte";
 
@@ -14,7 +14,7 @@
 
   let titulo = "";
   let descricao = "";
-  let imagemURL = "";
+  let imagem = null;
   let online = true;
   let inicio = "";
   let termino = "";
@@ -45,21 +45,23 @@
   async function cadastrar() {
     carregando = true;
     const sucesso = await postEvento({
-      titulo,
-      imagemURL,
-      inicio,
-      termino,
-      descricao,
-      online,
-      url,
-      logradouro,
-      numero,
-      bairro,
-      cidade,
-      uf,
-      cep,
-      tiposDeIngresso,
-      idCategoria,
+      dto: {
+        titulo,
+        inicio,
+        termino,
+        descricao,
+        online,
+        url,
+        logradouro,
+        numero,
+        bairro,
+        cidade,
+        uf,
+        cep,
+        tiposDeIngresso,
+        idCategoria,
+      },
+      file: imagem,
     });
     carregando = false;
     if (sucesso) dispatch("minhaconta");
@@ -163,11 +165,12 @@
       </select>
     {/await}
 
-    <Entrada
-      id="imagemURL"
-      label="URL da Imagem de Capa"
-      on:input={(event) => (imagemURL = event.target.value)}
+    <input
+      type="file"
+      id="imagem"
+      on:change={(event) => (imagem = event.target.files[0])}
     />
+
     <Entrada
       id="inicio"
       label="Data e Hora de Início"

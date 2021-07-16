@@ -15,14 +15,17 @@ export async function postEvento(evento) {
     return false;
 
   const produtora = autenticacao.idLogado();
-  evento.idProdutora = produtora;
+  evento.dto.idProdutora = produtora;
+
+  const requisicao = new FormData();
+  requisicao.append("evento", JSON.stringify(evento.dto));
+  requisicao.append("file", evento.file);
 
   let res;
   try {
     res = await fetch(PATH.EVENTO, {
       method: "POST",
-      body: JSON.stringify(evento),
-      headers: { "Content-Type": "application/json" },
+      body: requisicao,
     });
   } catch (error) {
     swal(MSG.RUIM, MSG.CONEXAO, "error");

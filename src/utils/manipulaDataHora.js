@@ -21,5 +21,5 @@ export function extrairDataHora(info) {
   );
   const horario = `${hora}h` + (minuto === "00" ? "" : minuto);
 
-  return { dia, mes, data, horario };
+  return { dia, mes, ano, anoAtual, data, horario };
 }

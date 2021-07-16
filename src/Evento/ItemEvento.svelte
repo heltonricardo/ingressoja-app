@@ -7,7 +7,7 @@
 
   export let evento;
 
-  const {dia, mes} = extrairDataHora(evento.inicio)
+  const { dia, mes, ano, anoAtual } = extrairDataHora(evento.inicio);
 </script>
 
 <style>
@@ -15,12 +15,13 @@
     margin: 1.5rem 1.5rem;
     width: 40%;
     min-width: 28.5rem;
-    height: auto;
+    max-width: 38rem;
+    height: 23rem;
 
     display: flex;
     box-sizing: border-box;
     background-color: var(--cinza1);
-    
+
     border: 0.125rem solid black;
     border-radius: 5px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -95,7 +96,7 @@
 
   #data {
     width: 100%;
-    height: 13rem;
+    height: fit-content;
   }
 
   #dia {
@@ -103,16 +104,25 @@
     align-items: flex-end;
     justify-content: center;
     font-weight: bold;
-    font-size: 80pt;
-    height: 9rem;
+    font-size: 5.5rem;
+    height: fit-content;
     color: var(--roxo2);
   }
-
+  
   #mes {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    height: 4rem;
+    height: fit-content;
+    font-size: 18pt;
+    margin: 0.3rem 0;
+  }
+  
+  #ano {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    height: fit-content;
     font-size: 18pt;
   }
 </style>
@@ -144,6 +154,11 @@
       <div id="mes">
         <p>{mes}</p>
       </div>
+      {#if ano !== anoAtual}
+      <div id="ano">
+        <p>{ano}</p>
+      </div>
+      {/if}
     </div>
 
     <div>

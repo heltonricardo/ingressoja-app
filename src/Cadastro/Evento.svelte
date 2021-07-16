@@ -120,7 +120,8 @@
     width: 100%;
   }
 
-  select {
+  select,
+  #imagem {
     font: inherit;
     align-self: center;
     width: 100%;
@@ -165,6 +166,7 @@
       </select>
     {/await}
 
+    <label for="imagem">Imagem da capa</label>
     <input
       type="file"
       id="imagem"

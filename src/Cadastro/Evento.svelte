@@ -170,6 +170,7 @@
     <input
       type="file"
       id="imagem"
+      accept="image/bmp, image/jpeg, image/png"
       on:change={(event) => (imagem = event.target.files[0])}
     />
 

@@ -59,16 +59,17 @@
     width: 100%;
     margin: 1rem 0;
     display: flex;
+    flex-direction: column;
+  }
+
+  .linha {
+    display: flex;
   }
 
   .titulo {
     font-weight: bold;
-    margin-right: 1rem;
-    min-width: fit-content;
-  }
-
-  .dados {
-    flex-grow: 1;
+    margin-right: 0.1rem;
+    min-width: 9rem;
   }
 
   p {
@@ -88,59 +89,156 @@
   {:then dados}
     <div id="conteudo">
       {#if tipoLogado === TIPOCADASTRO.COMPRADOR}
-        <div class="titulo">
-          <p>Tipo:</p>
-          <p>Id:</p>
-          <p>Nome:</p>
-          <p>E-mail:</p>
-          <p>CPF:</p>
+        <div class="linha">
+          <div class="titulo">
+            <p>Tipo:</p>
+          </div>
+          <div class="dados">
+            <p>Comprador</p>
+          </div>
         </div>
-        <div class="dados">
-          <p>Comprador</p>
-          <p>{dados.id}</p>
-          <p>{dados.nome}</p>
-          <p>{dados.email}</p>
-          <p>{dados.cpf}</p>
+        <div class="linha">
+          <div class="titulo">
+            <p>Id:</p>
+          </div>
+          <div class="dados">
+            <p>{dados.id}</p>
+          </div>
+        </div>
+        <div class="linha">
+          <div class="titulo">
+            <p>Nome:</p>
+          </div>
+          <div class="dados">
+            <p>{dados.nome}</p>
+          </div>
+        </div>
+        <div class="linha">
+          <div class="titulo">
+            <p>E-mail:</p>
+          </div>
+          <div class="dados">
+            <p>{dados.email}</p>
+          </div>
+        </div>
+        <div class="linha">
+          <div class="titulo">
+            <p>CPF:</p>
+          </div>
+          <div class="dados">
+            <p>{dados.cpf}</p>
+          </div>
         </div>
       {:else if tipoLogado === TIPOCADASTRO.PRODUTORA}
-        <div class="titulo">
-          <p>Tipo:</p>
-          <p>Id:</p>
-          <p>Razão social:</p>
-          <p>Nome fantasia:</p>
-          <p>CNPJ:</p>
-          <p>E-mail:</p>
-          <p>Banco:</p>
-          <p>Agência:</p>
-          <p>Conta:</p>
+        <div class="linha">
+          <div class="titulo">
+            <p>Tipo:</p>
+          </div>
+          <div class="dados">
+            <p>Produtora</p>
+          </div>
         </div>
-        <div class="dados">
-          <p>Produtora</p>
-          <p>{dados.id}</p>
-          <p>{dados.razaoSocial}</p>
-          <p>{dados.nomeFantasia}</p>
-          <p>{dados.cnpj}</p>
-          <p>{dados.email}</p>
-          <p>{dados.banco}</p>
-          <p>{dados.agencia}</p>
-          <p>{dados.conta}</p>
+        <div class="linha">
+          <div class="titulo">
+            <p>Id:</p>
+          </div>
+          <div class="dados">
+            <p>{dados.id}</p>
+          </div>
+        </div>
+        <div class="linha">
+          <div class="titulo">
+            <p>Razão social:</p>
+          </div>
+          <div class="dados">
+            <p>{dados.razaoSocial}</p>
+          </div>
+        </div>
+        <div class="linha">
+          <div class="titulo">
+            <p>Nome fantasia:</p>
+          </div>
+          <div class="dados">
+            <p>{dados.nomeFantasia}</p>
+          </div>
+        </div>
+        <div class="linha">
+          <div class="titulo">
+            <p>CNPJ:</p>
+          </div>
+          <div class="dados">
+            <p>{dados.cnpj}</p>
+          </div>
+        </div>
+        <div class="linha">
+          <div class="titulo">
+            <p>E-mail:</p>
+          </div>
+          <div class="dados">
+            <p>{dados.email}</p>
+          </div>
+        </div>
+        <div class="linha">
+          <div class="titulo">
+            <p>Banco:</p>
+          </div>
+          <div class="dados">
+            <p>{dados.banco}</p>
+          </div>
+        </div>
+        <div class="linha">
+          <div class="titulo">
+            <p>Agência:</p>
+          </div>
+          <div class="dados">
+            <p>{dados.agencia}</p>
+          </div>
+        </div>
+        <div class="linha">
+          <div class="titulo">
+            <p>Conta:</p>
+          </div>
+          <div class="dados">
+            <p>{dados.conta}</p>
+          </div>
         </div>
       {:else if tipoLogado === TIPOCADASTRO.ADMINISTRADOR}
-        <div class="titulo">
-          <p>Tipo:</p>
-          <p>Id:</p>
-          <p>Nome:</p>
-          <p>E-mail:</p>
+        <div class="linha">
+          <div class="titulo">
+            <p>Tipo:</p>
+          </div>
+          <div class="dados">
+            <p>Administrador</p>
+          </div>
         </div>
-        <div class="dados">
-          <p>Administrador</p>
-          <p>{dados.id}</p>
-          <p>{dados.nome}</p>
-          <p>{dados.email}</p>
+        <div class="linha">
+          <div class="titulo">
+            <p>Id:</p>
+          </div>
+          <div class="dados">
+            <p>{dados.id}</p>
+          </div>
+        </div>
+        <div class="linha">
+          <div class="titulo">
+            <p>Nome:</p>
+          </div>
+          <div class="dados">
+            <p>{dados.nome}</p>
+          </div>
+        </div>
+        <div class="linha">
+          <div class="titulo">
+            <p>E-mail:</p>
+          </div>
+          <div class="dados">
+            <p>{dados.email}</p>
+          </div>
         </div>
       {/if}
     </div>
   {/await}
+
   <div id="botoes">
     <Botao on:click={() => dispatch("minhaconta")}>Editar</Botao>
     <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>

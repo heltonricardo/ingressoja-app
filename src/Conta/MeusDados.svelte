@@ -39,7 +39,7 @@
     width: 30rem;
     min-width: 30rem;
     margin: 2rem auto;
-    min-height: calc(100vh - 20rem);
+    min-height: calc(100vh - 21rem);
     display: flex;
     flex-direction: column;
     align-items: center;

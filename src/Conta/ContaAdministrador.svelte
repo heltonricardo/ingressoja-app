@@ -14,11 +14,6 @@
   }
 
   let dadosCarregados = carregaDados();
-
-  onMount(() => {
-    if (!autenticacao.estaLogadoComTipo(TIPOCADASTRO.ADMINISTRADOR))
-      dispatch("minhaconta");
-  });
 </script>
 
 <style>

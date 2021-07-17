@@ -94,6 +94,6 @@
 
   <div id="botoes">
     <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
-    <Botao on:click={cadastrar}>Finalizar</Botao>
+    <Botao on:click={cadastrar}>Salvar</Botao>
   </div>
 </div>

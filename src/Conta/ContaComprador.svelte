@@ -52,6 +52,7 @@
       Olá, {comprador.nome.split(" ")[0]}! Selecione uma opção
       abaixo:
     </p>
+    <Botao on:click={() => dispatch("meusdados")}>Meus Dados</Botao>
     <Botao on:click={() => dispatch("meuspedidos")}>Meus Pedidos</Botao>
     <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
   </div>

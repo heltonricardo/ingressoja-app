@@ -62,7 +62,7 @@
     overflow: hidden;
     box-sizing: border-box;
   }
-
+  
   #imagem {
     width: 100%;
     height: 100%;

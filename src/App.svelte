@@ -13,6 +13,7 @@
   import FinalizaPedido from "./Pedido/FinalizaPedido.svelte";
   import CategoriaEvento from "./Cadastro/CategoriaEvento.svelte";
   import PedidoDetalhe from "./Conta/PedidoDetalhe.svelte";
+  import MeusDados from "./Conta/MeusDados.svelte";
 
   let modo = MODO.NORMAL;
   let id = null;
@@ -68,6 +69,11 @@
     modo = MODO.DETALHE_PEDIDO;
     window.scrollTo(0, 0);
   }
+
+  function modoMeusDados() {
+    modo = MODO.MEUS_DADOS;
+    window.scrollTo(0, 0);
+  }
 </script>
 
 <BarraSuperior
@@ -99,6 +105,7 @@
     on:meuspedidos={modoMeusPedidos}
     on:novacategoria={modoCategoriasEvento}
     on:novoadm={modoNovoAdm}
+    on:meusdados={modoMeusDados}
   />
 {:else if modo === MODO.NOVO_EVENTO}
   <Evento on:minhaconta={modoMinhaConta} />
@@ -112,6 +119,8 @@
   <Administrador on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.DETALHE_PEDIDO}
   <PedidoDetalhe id={pedido} {evento} on:meuspedidos={modoMeusPedidos} />
+{:else if modo === MODO.MEUS_DADOS}
+  <MeusDados on:minhaconta={modoMinhaConta} />
 {/if}
 
 <BarraInferior />

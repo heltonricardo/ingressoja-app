@@ -16,7 +16,7 @@
 <style>
   #conteudo {
     display: flex;
-    margin-right: 1rem;
+    margin: 0.5rem 0;
   }
 </style>
 

@@ -64,7 +64,7 @@
   .titulo {
     font-weight: bold;
     margin-right: 1rem;
-    width: fit-content;
+    min-width: fit-content;
   }
 
   .dados {
@@ -102,8 +102,42 @@
           <p>{dados.email}</p>
           <p>{dados.cpf}</p>
         </div>
-
-        {#else if tipoLogado === TIPOCADASTRO.PRODUTORA}
+      {:else if tipoLogado === TIPOCADASTRO.PRODUTORA}
+        <div class="titulo">
+          <p>Tipo:</p>
+          <p>Id:</p>
+          <p>Razão social:</p>
+          <p>Nome fantasia:</p>
+          <p>CNPJ:</p>
+          <p>E-mail:</p>
+          <p>Banco:</p>
+          <p>Agência:</p>
+          <p>Conta:</p>
+        </div>
+        <div class="dados">
+          <p>Produtora</p>
+          <p>{dados.id}</p>
+          <p>{dados.razaoSocial}</p>
+          <p>{dados.nomeFantasia}</p>
+          <p>{dados.cnpj}</p>
+          <p>{dados.email}</p>
+          <p>{dados.banco}</p>
+          <p>{dados.agencia}</p>
+          <p>{dados.conta}</p>
+        </div>
+      {:else if tipoLogado === TIPOCADASTRO.ADMINISTRADOR}
+        <div class="titulo">
+          <p>Tipo:</p>
+          <p>Id:</p>
+          <p>Nome:</p>
+          <p>E-mail:</p>
+        </div>
+        <div class="dados">
+          <p>Administrador</p>
+          <p>{dados.id}</p>
+          <p>{dados.nome}</p>
+          <p>{dados.email}</p>
+        </div>
       {/if}
     </div>
   {/await}

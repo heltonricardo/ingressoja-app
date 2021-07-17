@@ -15,7 +15,7 @@
   import PedidoDetalhe from "./Conta/PedidoDetalhe.svelte";
   import MeusDados from "./Conta/MeusDados.svelte";
 
-  let modo = MODO.NORMAL;
+  let modo = MODO.MEUS_DADOS;
   let id = null;
   let pedido = null;
   let evento = null;

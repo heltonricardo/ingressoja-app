@@ -1,25 +1,42 @@
 <script>
   import { createEventDispatcher } from "svelte";
-
-  import { getPedidos } from "../Conexao/compradorConex";
-  import { extrairDataHora } from "../utils/manipulaDataHora";
+  import autenticacao from "../Autenticacao/autenticacao";
+  import { getComprador } from "../Conexao/compradorConex";
+  import { getProdutora } from "../Conexao/produtoraConex";
+  import { getAdministrador } from "../Conexao/administradorConex";
   import { valorVirgula } from "../utils/formatador";
-
+  import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
 
   const dispatch = createEventDispatcher();
 
-  async function carregaPedidos() {
-    pedidos = await getPedidos();
-  }
+  let tipoLogado = autenticacao.tipoLogado();
 
-  let pedidos = carregaPedidos();
+  async function carregaDados() {
+    let dados;
+
+    if (tipoLogado === TIPOCADASTRO.COMPRADOR) {
+      dados = await getComprador();
+    } //
+    else if (tipoLogado === TIPOCADASTRO.PRODUTORA) {
+      dados = await getProdutora();
+    } //
+    else if (tipoLogado === TIPOCADASTRO.ADMINISTRADOR) {
+      dados = await getAdministrador();
+    }
+
+    if (dados === null) {
+      dispatch("minhaconta");
+    }
+
+    return dados;
+  }
 </script>
 
 <style>
   #corpo {
-    width: 40%;
+    width: 30rem;
     min-width: 30rem;
     margin: 2rem auto;
     min-height: calc(100vh - 20rem);
@@ -38,85 +55,60 @@
     margin: 1rem 0;
   }
 
-  #tabela {
-    border-collapse: collapse;
-    text-align: center;
+  #conteudo {
     width: 100%;
-    border-radius: 7px;
-    overflow: hidden;
-  }
-
-  #tabela td,
-  #tabela th {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-
-  #tabela tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-
-  #tabela tr:hover {
-    background-color: #ddd;
-  }
-
-  #tabela th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: var(--verde2);
-    color: black;
-    text-align: center;
-  }
-
-  #detalhes {
+    margin: 1rem 0;
     display: flex;
-    justify-content: center;
   }
 
-  #voltar {
-    margin: 3rem 0;
+  .titulo {
+    font-weight: bold;
+    margin-right: 1rem;
+    width: fit-content;
+  }
+
+  .dados {
+    flex-grow: 1;
+  }
+
+  p {
+    margin: 0.8rem 0;
+  }
+
+  #botoes {
+    display: flex;
+    margin: 2rem 0;
   }
 </style>
 
 <div id="corpo">
-  <h1>Meus Pedidos</h1>
-  {#await pedidos}
+  <h1>Meus Dados</h1>
+  {#await carregaDados()}
     <Aguarde />
-  {:then pedidos}
-    {#if pedidos.length}
-      <table id="tabela">
-        <tr>
-          <th>Pedido</th>
-          <th>Data</th>
-          <th>Evento</th>
-          <th>Valor</th>
-          <th>Ações</th>
-        </tr>
+  {:then dados}
+    <div id="conteudo">
+      {#if tipoLogado === TIPOCADASTRO.COMPRADOR}
+        <div class="titulo">
+          <p>Tipo:</p>
+          <p>Id:</p>
+          <p>Nome:</p>
+          <p>E-mail:</p>
+          <p>CPF:</p>
+        </div>
+        <div class="dados">
+          <p>Comprador</p>
+          <p>{dados.id}</p>
+          <p>{dados.nome}</p>
+          <p>{dados.email}</p>
+          <p>{dados.cpf}</p>
+        </div>
 
-        {#each pedidos as pedido}
-          <tr>
-            <td>{pedido.id}</td>
-            <td>{extrairDataHora(pedido.dataHora).data}</td>
-            <td>{pedido.tituloEvento}</td>
-            <td>R$ {valorVirgula(pedido.valorTotal)}</td>
-            <td id="detalhes"
-              ><Botao
-                on:click={() =>
-                  dispatch("detalhespedido", {
-                    id: pedido.id,
-                    evento: pedido.tituloEvento,
-                  })}>Detalhes</Botao
-              ></td
-            >
-          </tr>
-        {/each}
-      </table>
-    {:else}
-      Não há pedidos para mostrar
-    {/if}
+        {#else if tipoLogado === TIPOCADASTRO.PRODUTORA}
+      {/if}
+    </div>
   {/await}
-  <div id="voltar">
+  <div id="botoes">
+    <Botao on:click={() => dispatch("minhaconta")}>Editar</Botao>
     <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
   </div>
 </div>

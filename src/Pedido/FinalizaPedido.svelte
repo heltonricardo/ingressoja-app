@@ -50,7 +50,7 @@
 
     const res = await postPedido(pedido);
     if (res) {
-      dispatch("voltar");
+      dispatch("meuspedidos");
     }
     carregando = false;
   }

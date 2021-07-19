@@ -110,7 +110,11 @@
 {:else if modo === MODO.NOVO_EVENTO}
   <Evento on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.FINALIZACAO}
-  <FinalizaPedido {evento} on:voltar={modoNormal} />
+  <FinalizaPedido
+    {evento}
+    on:voltar={modoNormal}
+    on:meuspedidos={modoMeusPedidos}
+  />
 {:else if modo === MODO.MEUS_PEDIDOS}
   <MeusPedidos on:minhaconta={modoMinhaConta} on:detalhespedido={modoPedido} />
 {:else if modo === MODO.CATEGORIAS_EVENTO}

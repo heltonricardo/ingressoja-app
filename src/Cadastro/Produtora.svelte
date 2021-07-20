@@ -31,7 +31,7 @@
         banco,
         agencia,
         conta,
-        senha,
+        usuario: { senha },
       });
       carregando = false;
       if (res) {

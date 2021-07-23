@@ -167,7 +167,7 @@
       </select>
     {/await}
 
-    <label for="imagem">Imagem da capa</label>
+    <label for="imagem">Imagem da capa (máx. 2 MB)</label>
     <input
       type="file"
       id="imagem"

@@ -109,10 +109,10 @@
     on:input={(event) => (pedido.numeroCartao = event.target.value)}
   />
   <Entrada
-    id="codigoSegurancaCartao"
+    id="codigoCartao"
     label="Código de segurança"
     type="number"
-    on:input={(event) => (pedido.codigoSegurancaCartao = event.target.value)}
+    on:input={(event) => (pedido.codigoCartao = event.target.value)}
   />
   <Entrada
     id="nomeTitular"

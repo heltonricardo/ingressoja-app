@@ -41,7 +41,7 @@ export async function postEvento(evento) {
   else if (status === STATUS.CONFLICT) {
     swal(MSG.RUIM, MSG.DUPLICADO, "error");
   } //
-  else if (status === STATUS.NOT_ACCEPTABLE) {
+  else if (status === STATUS.BAD_REQUEST) {
     swal(MSG.RUIM, MSG.INCORRETO, "error");
   } //
   else if (status === STATUS.INTERNAL_SERVER_ERROR) {

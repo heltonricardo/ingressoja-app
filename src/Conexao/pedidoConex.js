@@ -37,7 +37,7 @@ export async function postPedido(pedido) {
     swal(MSG.APROVADO, MSG.PED_REALIZADO, "success", { timer: 5000 });
     return true;
   } //
-  else if (status === STATUS.NOT_ACCEPTABLE) {
+  else if (status === STATUS.BAD_REQUEST) {
     swal(MSG.RUIM, MSG.INCORRETO, "error");
   } //
   else if (status === STATUS.INTERNAL_SERVER_ERROR) {
@@ -67,7 +67,7 @@ export async function getPedido(id) {
     const pedido = await res.json();
     return pedido;
   } //
-  else if (status === STATUS.NOT_ACCEPTABLE) {
+  else if (status === STATUS.BAD_REQUEST) {
     swal(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
   return null;

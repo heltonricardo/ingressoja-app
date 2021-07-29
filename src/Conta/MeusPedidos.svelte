@@ -50,6 +50,7 @@
   #tabela th {
     border: 1px solid #ddd;
     padding: 8px;
+    vertical-align: middle;
   }
 
   #tabela tr:nth-child(even) {
@@ -87,19 +88,19 @@
     {#if pedidos.length}
       <table id="tabela">
         <tr>
-          <th>Pedido</th>
-          <th>Data</th>
-          <th>Evento</th>
-          <th>Valor</th>
+          <th>Número do pedido</th>
+          <th>Data do pedido</th>
+          <th>Valor do pedido</th>
+          <th>Nome do evento</th>
           <th>Ações</th>
         </tr>
 
         {#each pedidos as pedido}
           <tr>
-            <td>{pedido.id}</td>
+            <td>#{pedido.id}</td>
             <td>{extrairDataHora(pedido.dataHora).data}</td>
-            <td>{pedido.tituloEvento}</td>
             <td>R$ {valorVirgula(pedido.valorTotal)}</td>
+            <td>{pedido.tituloEvento}</td>
             <td id="detalhes"
               ><Botao
                 on:click={() =>

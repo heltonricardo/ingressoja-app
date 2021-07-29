@@ -57,6 +57,7 @@
   #tabela th {
     border: 1px solid #ddd;
     padding: 8px;
+    vertical-align: middle;
   }
 
   #tabela tr:nth-child(even) {
@@ -90,14 +91,14 @@
     <table id="tabela">
       <tr>
         <th>Pedido</th>
-        <th>Data</th>
-        <th>Hora</th>
+        <th>Data do pedido</th>
+        <th>Hora do pedido</th>
         <th>Final do cartão</th>
         <th>Valor total</th>
       </tr>
 
       <tr>
-        <td>{pedido.id}</td>
+        <td>#{pedido.id}</td>
         <td>{extrairDataHora(pedido.dataHora).data}</td>
         <td>{extrairDataHora(pedido.dataHora).horario}</td>
         <td>{pedido.numeroCartao}</td>
@@ -111,14 +112,14 @@
       <tr>
         <th>Ingresso</th>
         <th>Nome do ingressante</th>
-        <th>CPF</th>
+        <th>CPF do ingressante</th>
         <th>Tipo de ingresso</th>
         <th>Preço</th>
       </tr>
 
       {#each pedido.itensPedido as item}
         <tr>
-          <td>{item.id}</td>
+          <td>#{item.id}</td>
           <td>{item.ingressante}</td>
           <td>{item.cpf}</td>
           <td>{item.tipoDeIngresso.nome}</td>

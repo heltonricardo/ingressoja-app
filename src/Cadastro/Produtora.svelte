@@ -52,6 +52,11 @@
   #senha {
     margin: 3rem 0;
   }
+
+  #subtitulo {
+    margin: 4rem 0 2rem 0;
+    text-align: center;
+  }
 </style>
 
 {#if carregando}
@@ -79,6 +84,9 @@
     label="E-mail"
     on:input={(event) => (email = event.target.value)}
   />
+
+  <h3 id="subtitulo">Dados bancários:</h3>
+
   <Entrada
     id="banco"
     label="Banco"

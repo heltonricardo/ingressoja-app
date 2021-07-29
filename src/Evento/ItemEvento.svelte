@@ -53,7 +53,8 @@
   #titulo {
     display: flex;
     width: 100%;
-    height: 2rem;
+    height: fit-content;
+    padding: 0.1rem 0;
     font-size: 1.8rem;
     font-weight: bold;
     margin-bottom: 0.5rem;

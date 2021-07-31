@@ -28,8 +28,19 @@
     background-color: var(--roxo2);
     transition: 0.2s;
   }
+
+  button:disabled {
+    color: var(--roxo2);
+    background-color: var(--cinza1);
+    transition: 0.2s;
+    cursor: not-allowed;
+  }
 </style>
 
-<button on:click>
+<button on:click disabled={!habilitado}>
   <slot />
 </button>
+
+<script>
+  export let habilitado = true;
+</script>

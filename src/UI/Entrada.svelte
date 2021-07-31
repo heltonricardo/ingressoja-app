@@ -45,6 +45,11 @@
     margin: 0.25rem 0;
   }
 
+  .valid {
+    border-color: rgb(0, 192, 10);
+    background: #e3fde9;
+  }
+
   .invalid {
     border-color: red;
     background: #fde3e3;
@@ -60,14 +65,16 @@
   <label for={id}>{label}</label>
   {#if controlType === "textarea"}
     <textarea
+      class:valid={valido && tocado}
       class:invalid={!valido && tocado}
       {rows}
       {id}
       on:input
       on:blur={() => (tocado = true)}
-    />
-  {:else}
-    <input
+      />
+      {:else}
+      <input
+      class:valid={valido && tocado}
       class:invalid={!valido && tocado}
       {type}
       {id}

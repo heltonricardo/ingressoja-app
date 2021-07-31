@@ -18,7 +18,7 @@
   let senha = "";
   let senha2 = "";
 
-  $: nomeValido = validator.isLength(nome, { min: 1, max: 255 });
+  $: nomeValido = validator.isLength(nome.trim(), { min: 1, max: 255 });
   $: emailValido = validator.isEmail(email);
   $: senhaValida = validator.isLength(senha, { min: 6, max: 30 });
   $: senha2Valida = validator.equals(senha, senha2) && senhaValida;

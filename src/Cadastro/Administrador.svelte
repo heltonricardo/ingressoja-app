@@ -1,6 +1,9 @@
 <script>
-  import { postAdministrador } from "../Conexao/administradorConex";
   import { createEventDispatcher, onMount } from "svelte";
+
+  import validator from 'validator';
+
+  import { postAdministrador } from "../Conexao/administradorConex";
   import autenticacao from "../Autenticacao/autenticacao";
   import Botao from "../UI/Botao.svelte";
   import Entrada from "../UI/Entrada.svelte";
@@ -10,10 +13,14 @@
 
   let carregando = false;
 
-  let nome;
-  let email;
-  let senha;
-  let senha2;
+  let nome = "";
+  let email = "";
+  let senha = "";
+  let senha2 = "";
+
+  $: emailValido = validator.isEmail(email);
+
+  $: formularioValido = emailValido;
 
   async function cadastrar() {
     if (senha === senha2) {
@@ -74,6 +81,8 @@
       id="email"
       label="E-mail"
       on:input={(event) => (email = event.target.value)}
+      valido={emailValido}
+      mensagemValidacao="Insira um e-mail válido"
     />
   </div>
 

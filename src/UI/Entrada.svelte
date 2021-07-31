@@ -3,12 +3,12 @@
   export let label;
   export let value = "";
   export let rows = 13;
-  export let valid = true;
+  export let valido = true;
   export let type = "text";
   export let controlType = null;
-  export let validityMessage = "";
+  export let mensagemValidacao = "";
 
-  let touched = false;
+  let tocado = false;
 </script>
 
 <style>
@@ -60,23 +60,23 @@
   <label for={id}>{label}</label>
   {#if controlType === "textarea"}
     <textarea
-      class:invalid={!valid && touched}
+      class:invalid={!valido && tocado}
       {rows}
       {id}
       on:input
-      on:blur={() => (touched = true)}
+      on:blur={() => (tocado = true)}
     />
   {:else}
     <input
-      class:invalid={!valid && touched}
+      class:invalid={!valido && tocado}
       {type}
       {id}
       {value}
       on:input
-      on:blur={() => (touched = true)}
+      on:blur={() => (tocado = true)}
     />
   {/if}
-  {#if touched && !valid && validityMessage}
-    <p class="error-message">{validityMessage}</p>
+  {#if tocado && !valido && mensagemValidacao}
+    <p class="error-message">{mensagemValidacao}</p>
   {/if}
 </div>

@@ -75,6 +75,7 @@
 
   #categoria {
     color: var(--cinza2);
+    word-wrap: break-word;
   }
 
   #detalhes {

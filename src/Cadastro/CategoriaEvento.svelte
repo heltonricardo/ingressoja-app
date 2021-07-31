@@ -43,10 +43,12 @@
   h1 {
     font-size: 3rem;
     align-self: center;
+    text-align: center;
     margin: 2rem 0 3rem 0;
   }
 
   #tabela {
+    word-break: break-all;
     border-collapse: collapse;
     text-align: center;
     width: 100%;
@@ -62,6 +64,10 @@
     background-color: #f2f2f2;
   }
 
+  #tabela tr:nth-child(odd) {
+    background-color: var(--branco);
+  }
+
   #tabela tr:hover {
     background-color: #ddd;
   }
@@ -73,6 +79,7 @@
     background-color: var(--verde2);
     color: black;
     text-align: center;
+    word-break: keep-all;
   }
 
   #nova {
@@ -109,7 +116,7 @@
 
         {#each categorias as categoria}
           <tr>
-            <td>{categoria.id}</td>
+            <td>#{categoria.id}</td>
             <td>{categoria.nome}</td>
             <td>-</td>
           </tr>

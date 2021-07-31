@@ -46,9 +46,11 @@
   }
 
   #tabela {
+    word-break: break-all;
+    width: 100%;
     border-collapse: collapse;
     text-align: center;
-    width: 100%;
+    word-break: break-all;
     border-radius: 7px;
     overflow: hidden;
   }
@@ -62,6 +64,10 @@
 
   #tabela tr:nth-child(even) {
     background-color: #f2f2f2;
+  }
+
+  #tabela tr:nth-child(odd) {
+    background-color: var(--branco);
   }
 
   #tabela tr:hover {

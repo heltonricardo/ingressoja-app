@@ -44,6 +44,7 @@
     width: 100%;
     border-radius: 7px;
     overflow: hidden;
+    word-break: break-all;
   }
 
   #tabela td,
@@ -57,6 +58,10 @@
     background-color: #f2f2f2;
   }
 
+  #tabela tr:nth-child(odd) {
+    background-color: var(--branco);
+  }
+
   #tabela tr:hover {
     background-color: #ddd;
   }
@@ -68,6 +73,7 @@
     background-color: var(--verde2);
     color: black;
     text-align: center;
+    word-break: keep-all;
   }
 
   #detalhes {

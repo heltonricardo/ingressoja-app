@@ -55,6 +55,11 @@
     margin: 1rem 0;
   }
 
+  table {
+    word-break: break-all;
+    width: 100%;
+  }
+  
   .titulo {
     font-weight: bold;
     white-space: nowrap;

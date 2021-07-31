@@ -84,21 +84,22 @@
     width: fit-content;
     align-self: flex-end;
   }
-
+  
   #rotulos {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
   }
-
+  
   #dados {
     margin-left: 0.6rem;
   }
-
+  
   #descricao {
     text-align: justify;
     line-height: 2rem;
     margin: 1rem 0;
+    word-wrap: break-word;
   }
 
   #escolha {

@@ -1,9 +1,11 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import validator from "validator";
+
   import { postCategoriaEvento } from "../Conexao/categoriaEventoConex";
   import { getCategoriasEvento } from "../Conexao/categoriaEventoConex";
-  import Aguarde from "../UI/Aguarde.svelte";
   import Botao from "../UI/Botao.svelte";
+  import Aguarde from "../UI/Aguarde.svelte";
   import Entrada from "../UI/Entrada.svelte";
 
   const dispatch = createEventDispatcher();
@@ -11,6 +13,8 @@
   let carregando = false;
 
   let nome = "";
+
+  $: nomeValido = validator.isLength(nome.trim(), { min: 1, max: 50 });
 
   async function carregaCategorias() {
     return await getCategoriasEvento();
@@ -21,6 +25,7 @@
     const sucesso = await postCategoriaEvento({ nome });
     if (sucesso) categorias = carregaCategorias();
     carregando = false;
+    nome = "";
   }
 
   let categorias = carregaCategorias();
@@ -131,10 +136,15 @@
     <Entrada
       id="nome"
       label="Insira o nome de uma categoria para cadastrar:"
+      value={nome}
+      valido={nomeValido}
+      mensagemValidacao="Insira um nome de 1 a 50 caracteres"
       on:input={(event) => (nome = event.target.value)}
     />
     <div id="cadastrar">
-      <Botao on:click={cadastrar}>Cadastrar Categoria</Botao>
+      <Botao on:click={cadastrar} habilitado={nomeValido}
+        >Cadastrar Categoria</Botao
+      >
     </div>
   </div>
 

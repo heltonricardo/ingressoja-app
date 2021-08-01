@@ -1,5 +1,8 @@
 <script>
   import { createEventDispatcher } from "svelte";
+
+  import validator from "validator";
+
   import { postEvento } from "../Conexao/eventoConex";
   import { getCategoriasEvento } from "../Conexao/categoriaEventoConex";
   import Icone from "../UI/Icone.svelte";
@@ -44,6 +47,7 @@
 
   async function cadastrar() {
     carregando = true;
+    cep = validator.whitelist(cep, /\d/g);
     const sucesso = await postEvento({
       dto: {
         titulo,

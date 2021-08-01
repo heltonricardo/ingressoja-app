@@ -52,23 +52,22 @@
     senha2Valida;
 
   async function cadastrar() {
-    if (senha === senha2) {
-      carregando = true;
-      const res = await postProdutora({
-        razaoSocial,
-        cnpj,
-        nomeFantasia,
-        email,
-        banco,
-        agencia,
-        conta,
-        usuario: { senha },
-      });
-      carregando = false;
-      if (res) {
-        await autenticacao.logar({ email, senha }, false);
-        dispatch("voltar");
-      }
+    carregando = true;
+    cnpj = validator.whitelist(cnpj, /\d/g);
+    const res = await postProdutora({
+      razaoSocial,
+      cnpj,
+      nomeFantasia,
+      email,
+      banco,
+      agencia,
+      conta,
+      usuario: { senha },
+    });
+    carregando = false;
+    if (res) {
+      await autenticacao.logar({ email, senha }, false);
+      dispatch("voltar");
     }
   }
 </script>

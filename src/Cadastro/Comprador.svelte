@@ -30,6 +30,8 @@
 
   async function cadastrar() {
     carregando = true;
+    cpf = validator.whitelist(cpf, /\d/g);
+    console.log(cpf);
     const res = await postComprador({ nome, cpf, email, usuario: { senha } });
     carregando = false;
     if (res) {

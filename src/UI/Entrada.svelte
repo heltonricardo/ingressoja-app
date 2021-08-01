@@ -7,6 +7,7 @@
   export let type = "text";
   export let controlType = null;
   export let mensagemValidacao = "";
+  export let validar = true;
 
   let tocado = false;
 </script>
@@ -65,8 +66,8 @@
   <label for={id}>{label}</label>
   {#if controlType === "textarea"}
     <textarea
-      class:valid={valido && tocado}
-      class:invalid={!valido && tocado}
+      class:valid={validar && valido && tocado}
+      class:invalid={validar && !valido && tocado}
       {rows}
       {id}
       on:input
@@ -74,8 +75,8 @@
       />
       {:else}
       <input
-      class:valid={valido && tocado}
-      class:invalid={!valido && tocado}
+      class:valid={validar && valido && tocado}
+      class:invalid={validar && !valido && tocado}
       {type}
       {id}
       {value}

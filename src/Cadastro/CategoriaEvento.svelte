@@ -23,9 +23,11 @@
   async function cadastrar() {
     carregando = true;
     const sucesso = await postCategoriaEvento({ nome });
-    if (sucesso) categorias = carregaCategorias();
+    if (sucesso) {
+      categorias = carregaCategorias();
+      nome = "";
+    }
     carregando = false;
-    nome = "";
   }
 
   let categorias = carregaCategorias();
@@ -132,21 +134,23 @@
     {/if}
   {/await}
 
-  <div id="nova">
-    <Entrada
-      id="nome"
-      label="Insira o nome de uma categoria para cadastrar:"
-      value={nome}
-      valido={nomeValido}
-      mensagemValidacao="Insira um nome de 1 a 50 caracteres"
-      on:input={(event) => (nome = event.target.value)}
-    />
-    <div id="cadastrar">
-      <Botao on:click={cadastrar} habilitado={nomeValido}
-        >Cadastrar Categoria</Botao
-      >
+  {#if !carregando}
+    <div id="nova">
+      <Entrada
+        id="nome"
+        label="Insira o nome de uma categoria para cadastrar:"
+        value={nome}
+        valido={nomeValido}
+        mensagemValidacao="Insira um nome de 1 a 50 caracteres"
+        on:input={(event) => (nome = event.target.value)}
+      />
+      <div id="cadastrar">
+        <Botao on:click={cadastrar} habilitado={nomeValido}
+          >Cadastrar Categoria</Botao
+        >
+      </div>
     </div>
-  </div>
+  {/if}
 
   <div id="voltar">
     <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>

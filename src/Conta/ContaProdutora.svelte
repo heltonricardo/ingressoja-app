@@ -31,6 +31,12 @@
     border-radius: 5px;
   }
 
+  p {
+    text-align: center;
+    word-wrap: break-word;
+    width: 100%;
+  }
+
   #corpo h1 {
     font-size: 3rem;
     margin-bottom: 2rem;

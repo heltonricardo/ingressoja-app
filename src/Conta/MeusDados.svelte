@@ -1,11 +1,14 @@
 <script>
   import { createEventDispatcher } from "svelte";
+
+  import { maskBr } from "js-brasil";
+
   import autenticacao from "../Autenticacao/autenticacao";
+  import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
   import { getComprador } from "../Conexao/compradorConex";
   import { getProdutora } from "../Conexao/produtoraConex";
   import { getAdministrador } from "../Conexao/administradorConex";
-  import { valorVirgula } from "../utils/formatador";
-  import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
+
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
 
@@ -59,7 +62,7 @@
     word-break: break-all;
     width: 100%;
   }
-  
+
   .titulo {
     font-weight: bold;
     white-space: nowrap;
@@ -98,7 +101,7 @@
           </tr>
           <tr>
             <td class="titulo">CPF:</td>
-            <td class="dado">{dados.cpf}</td>
+            <td class="dado">{maskBr.cpf(dados.cpf)}</td>
           </tr>
         </table>
       {:else if tipoLogado === TIPOCADASTRO.PRODUTORA}
@@ -121,7 +124,7 @@
           </tr>
           <tr>
             <td class="titulo">CNPJ:</td>
-            <td class="dado">{dados.cnpj}</td>
+            <td class="dado">{maskBr.cnpj(dados.cnpj)}</td>
           </tr>
           <tr>
             <td class="titulo">E-mail:</td>

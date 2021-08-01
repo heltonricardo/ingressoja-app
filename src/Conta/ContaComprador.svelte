@@ -9,7 +9,7 @@
 
   async function carregaDados() {
     const res = await getComprador();
-    if (!res) dispatch("voltar")
+    if (!res) dispatch("voltar");
     return res;
   }
 
@@ -31,6 +31,12 @@
     border-radius: 5px;
   }
 
+  p {
+    text-align: center;
+    word-wrap: break-word;
+    width: 100%;
+  }
+
   #corpo h1 {
     font-size: 3rem;
     margin-bottom: 2rem;
@@ -49,8 +55,7 @@
   <div id="corpo">
     <h1>Minha Conta</h1>
     <p>
-      Olá, {comprador.nome.split(" ")[0]}! Selecione uma opção
-      abaixo:
+      Olá, {comprador.nome.split(" ")[0]}! Selecione uma opção abaixo:
     </p>
     <Botao on:click={() => dispatch("meusdados")}>Meus Dados</Botao>
     <Botao on:click={() => dispatch("meuspedidos")}>Meus Pedidos</Botao>

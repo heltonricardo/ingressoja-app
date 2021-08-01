@@ -53,7 +53,7 @@
 
   async function cadastrar() {
     carregando = true;
-    cnpj = validator.whitelist(cnpj, /\d/g);
+    cnpj = cnpj.replace(/[^\d]/g, "");
     const res = await postProdutora({
       razaoSocial,
       cnpj,

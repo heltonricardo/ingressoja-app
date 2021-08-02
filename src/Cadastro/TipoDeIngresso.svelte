@@ -126,7 +126,7 @@
     </div>
 
     <div class="item">
-      <label for="valor">Valor</label>
+      <label for="valor">Valor (R$)</label>
       <input
         id="valor"
         type="text"

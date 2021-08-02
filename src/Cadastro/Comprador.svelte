@@ -31,7 +31,7 @@
   async function cadastrar() {
     carregando = true;
     cpf = cpf.replace(/[^\d]/g, "");
-    const res = await postComprador({ nome, cpf, email, usuario: { senha } });
+    const res = await postComprador({ nome, cpf, usuario: { email, senha } });
     carregando = false;
     if (res) {
       await autenticacao.logar({ email, senha }, false);

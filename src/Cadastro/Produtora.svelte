@@ -58,11 +58,10 @@
       razaoSocial,
       cnpj,
       nomeFantasia,
-      email,
       banco,
       agencia,
       conta,
-      usuario: { senha },
+      usuario: { email, senha },
     });
     carregando = false;
     if (res) {

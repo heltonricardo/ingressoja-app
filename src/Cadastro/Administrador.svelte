@@ -29,7 +29,7 @@
   async function cadastrar() {
     if (senha === senha2) {
       carregando = true;
-      const res = await postAdministrador({ nome, email, usuario: { senha } });
+      const res = await postAdministrador({ nome, usuario: { email, senha } });
       carregando = false;
       if (res) dispatch("minhaconta");
     }

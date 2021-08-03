@@ -1,3 +1,7 @@
+<script>
+  export let habilitado = true;
+</script>
+
 <style>
   button {
     padding: 0.5rem;
@@ -40,7 +44,3 @@
 <button on:click disabled={!habilitado}>
   <slot />
 </button>
-
-<script>
-  export let habilitado = true;
-</script>

@@ -193,7 +193,7 @@
     <div id="rodape">
       <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
       <span id="total">Total: R$ {valorVirgula(total)}</span>
-      <Botao on:click={comprar}>Comprar</Botao>
+      <Botao on:click={comprar} habilitado={total !== 0.0}>Comprar</Botao>
     </div>
   </div>
 {/await}

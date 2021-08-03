@@ -16,6 +16,7 @@
   export let id;
 
   let total = 0.0;
+  let quantidade = 0;
 
   async function carregaEvento() {
     const res = await getEvento(id);
@@ -31,6 +32,7 @@
         (soma, t) => soma + t.valor * t.quantidade,
         0.0
       );
+      quantidade = evento.tiposDeIngresso.find((t) => t.quantidade);
     });
   }
 
@@ -85,17 +87,17 @@
     width: fit-content;
     align-self: flex-end;
   }
-  
+
   #rotulos {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
   }
-  
+
   #dados {
     margin-left: 0.6rem;
   }
-  
+
   #descricao {
     text-align: justify;
     line-height: 2rem;
@@ -193,7 +195,7 @@
     <div id="rodape">
       <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
       <span id="total">Total: R$ {valorVirgula(total)}</span>
-      <Botao on:click={comprar} habilitado={total !== 0.0}>Comprar</Botao>
+      <Botao on:click={comprar} habilitado={quantidade}>Comprar</Botao>
     </div>
   </div>
 {/await}

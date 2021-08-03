@@ -22,7 +22,7 @@
   $: nomeValido = validator.isLength(nome.trim(), { min: 1, max: 255 });
   $: cpfValido = validateBr.cpf(cpf);
   $: emailValido = validator.isEmail(email);
-  $: senhaValida = validator.isLength(senha, { min: 6, max: 30 });
+  $: senhaValida = validator.isLength(senha, { min: 6, max: 50 });
   $: senha2Valida = validator.equals(senha, senha2) && senhaValida;
 
   $: formularioValido =

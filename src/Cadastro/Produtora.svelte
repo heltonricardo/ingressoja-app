@@ -37,7 +37,7 @@
   $: bancoValido = validator.isLength(banco, { min: 1, max: 100 });
   $: agenciaValida = validator.isLength(agencia, { min: 1, max: 50 });
   $: contaValida = validator.isLength(conta, { min: 1, max: 50 });
-  $: senhaValida = validator.isLength(senha, { min: 6, max: 30 });
+  $: senhaValida = validator.isLength(senha, { min: 6, max: 50 });
   $: senha2Valida = validator.equals(senha, senha2) && senhaValida;
 
   $: formularioValido =

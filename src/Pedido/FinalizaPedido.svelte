@@ -1,14 +1,16 @@
 <script>
   import swal from "sweetalert";
+  import validator from "validator";
+  import { validateBr } from "js-brasil";
   import { createEventDispatcher } from "svelte";
 
   import MSG from "../ENUM/MSG";
-  import { postPedido } from "../Conexao/pedidoConex";
-
   import Botao from "../UI/Botao.svelte";
   import Entrada from "../UI/Entrada.svelte";
-  import CardIngresso from "./CardIngresso.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
+  import CardIngresso from "./CardIngresso.svelte";
+  import { postPedido } from "../Conexao/pedidoConex";
+  import { onlyLetrasEEspacos, onlyNumeros } from "../utils/sanitarizador";
 
   const dispatch = createEventDispatcher();
 
@@ -16,6 +18,30 @@
 
   let pedido = {};
   let carregando = false;
+
+  /*************************** VALIDAÇÃO DE CAMPOS ****************************/
+
+  pedido.numeroCartao = "";
+  pedido.codigoCartao = "";
+  pedido.nomeTitular = "";
+  pedido.cpfTitular = "";
+
+  $: numeroCartaoValido = validator.isCreditCard(pedido.numeroCartao);
+  $: codigoCartaoValido =
+    validator.isLength(pedido.codigoCartao.trim(), { min: 3, max: 4 }) &&
+    validator.isNumeric(pedido.codigoCartao);
+  $: nomeTitularValido =
+    validator.isLength(pedido.nomeTitular.trim(), { min: 1, max: 255 }) &&
+    validator.isAlpha(pedido.nomeTitular, "pt-BR", { ignore: " " });
+  $: cpfTitularValido = validateBr.cpf(pedido.cpfTitular);
+
+  $: formularioValido =
+    numeroCartaoValido &&
+    codigoCartaoValido &&
+    nomeTitularValido &&
+    cpfTitularValido;
+
+  /************************* CRIAÇÃO DE CADA INGRESSO *************************/
 
   let ordem = 0;
   let ingressos = evento.tiposDeIngresso.flatMap((t) => {
@@ -27,6 +53,8 @@
     return tmp;
   });
 
+  /************************** VOLTAR COM CONFIRMAÇÃO **************************/
+
   function voltar() {
     swal({
       title: MSG.CERTEZA,
@@ -37,8 +65,15 @@
     }).then((volte) => volte && dispatch("voltar"));
   }
 
+  /***************************** EFETIVAR PEDIDO ******************************/
+
   async function concluir() {
     carregando = true;
+
+    pedido.numeroCartao = onlyNumeros(pedido.numeroCartao);
+    pedido.codigoCartao = onlyNumeros(pedido.codigoCartao);
+    pedido.nomeTitular = onlyLetrasEEspacos(pedido.nomeTitular);
+    pedido.cpfTitular = onlyNumeros(pedido.cpfTitular);
 
     let itensPedido = ingressos.map((i) => ({
       idTipoDeIngresso: i.id,
@@ -107,26 +142,36 @@
     id="numeroCartao"
     label="Número do cartão"
     on:input={(event) => (pedido.numeroCartao = event.target.value)}
+    valido={numeroCartaoValido}
+    mensagemValidacao="Insira um número de cartão de crédito válido"
   />
   <Entrada
     id="codigoCartao"
     label="Código de segurança"
     type="number"
     on:input={(event) => (pedido.codigoCartao = event.target.value)}
+    valido={codigoCartaoValido}
+    mensagemValidacao="Insira um código de segurança válido"
   />
   <Entrada
     id="nomeTitular"
     label="Titular (como consta no cartão)"
     on:input={(event) => (pedido.nomeTitular = event.target.value)}
+    valido={nomeTitularValido}
+    mensagemValidacao="Insira um titular válido"
   />
   <Entrada
     id="cpfTitular"
     label="CPF do titular"
     on:input={(event) => (pedido.cpfTitular = event.target.value)}
+    valido={cpfTitularValido}
+    mensagemValidacao="Insira um CPF válido"
   />
 
   <div id="botoes">
     <Botao on:click={voltar}>Página principal</Botao>
-    <Botao on:click={concluir}>Concluir pedido</Botao>
+    <Botao on:click={concluir} habilitado={formularioValido}
+      >Concluir pedido</Botao
+    >
   </div>
 </div>

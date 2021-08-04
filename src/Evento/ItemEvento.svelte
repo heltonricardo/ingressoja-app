@@ -8,6 +8,12 @@
   export let evento;
 
   const { dia, mes, ano, anoAtual } = extrairDataHora(evento.inicio);
+
+  const MAX_LENGTH = 35;
+
+  $: inicioTitulo =
+    evento.titulo.substr(0, MAX_LENGTH) +
+    (evento.titulo.length > MAX_LENGTH ? "..." : "");
 </script>
 
 <style>
@@ -60,10 +66,10 @@
     margin-bottom: 0.5rem;
     align-self: flex-start;
     align-items: center;
-    overflow: hidden;
+    overflow: visible;
     box-sizing: border-box;
   }
-  
+
   #imagem {
     width: 100%;
     height: 100%;
@@ -109,7 +115,7 @@
     height: fit-content;
     color: var(--roxo2);
   }
-  
+
   #mes {
     display: flex;
     align-items: flex-start;
@@ -118,7 +124,7 @@
     font-size: 18pt;
     margin: 0.3rem 0;
   }
-  
+
   #ano {
     display: flex;
     align-items: flex-start;
@@ -131,7 +137,7 @@
 <div id="card">
   <div id="principal">
     <div id="titulo">
-      <h1>{evento.titulo}</h1>
+      <h1>{inicioTitulo}</h1>
     </div>
 
     <div id="imagem">
@@ -156,9 +162,9 @@
         <p>{mes}</p>
       </div>
       {#if ano !== anoAtual}
-      <div id="ano">
-        <p>{ano}</p>
-      </div>
+        <div id="ano">
+          <p>{ano}</p>
+        </div>
       {/if}
     </div>
 

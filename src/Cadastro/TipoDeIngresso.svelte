@@ -19,14 +19,15 @@
   // Para evitar o erro de dependência cíclica:
   const validar = (flag) => (tipoDeIngresso.tipoValido = flag);
 
-  $: nomeValido = validator.isLength(tipoDeIngresso.nome, { min: 1, max: 30 });
+  $: nomeValido = validator.isLength(tipoDeIngresso.nome.trim(), {
+    min: 1,
+    max: 30,
+  });
   $: descricaoValida = validator.isLength(tipoDeIngresso.descricao, {
     max: 50,
   });
-  $: valorValido = validator.isCurrency(tipoDeIngresso.valor + "", {
-    allow_negatives: false,
-    decimal_separator: ",",
-  });
+  $: valorValido =
+    validator.isNumeric(tipoDeIngresso.valor + "") && tipoDeIngresso.valor >= 0;
   $: qntValida = tipoDeIngresso.quantidadeTotal > 0;
 
   $: validar(nomeValido && descricaoValida && valorValido && qntValida);

@@ -83,7 +83,8 @@
     bairroValido &&
     cidadeValida &&
     ufValida &&
-    cepValido;
+    cepValido &&
+    tiposDeIngresso.every((t) => t.tipoValido);
 
   /********************************* FUNÇÕES **********************************/
 

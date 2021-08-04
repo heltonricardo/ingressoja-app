@@ -1,22 +1,35 @@
 <script>
-  export let msgValidacao = "";
+  import validator from "validator";
 
   export let tipoDeIngresso = {
     nome: "",
     valor: 0.0,
     descricao: "",
-    quantidadeTotal: 0,
+    quantidadeTotal: 1,
+    tipoValido: false,
   };
 
-  export let nomeValido = true;
-  export let descricaoValida = true;
-  export let valorValido = true;
-  export let qntValida = true;
+  /*************************** VALIDAÇÃO DE CAMPOS ****************************/
 
   let nomeTocado = false;
   let descricaoTocada = false;
   let valorTocado = false;
   let qntTocada = false;
+
+  // Para evitar o erro de dependência cíclica:
+  const validar = (flag) => (tipoDeIngresso.tipoValido = flag);
+
+  $: nomeValido = validator.isLength(tipoDeIngresso.nome, { min: 1, max: 30 });
+  $: descricaoValida = validator.isLength(tipoDeIngresso.descricao, {
+    max: 50,
+  });
+  $: valorValido = validator.isCurrency(tipoDeIngresso.valor + "", {
+    allow_negatives: false,
+    decimal_separator: ",",
+  });
+  $: qntValida = tipoDeIngresso.quantidadeTotal > 0;
+
+  $: validar(nomeValido && descricaoValida && valorValido && qntValida);
 </script>
 
 <style>
@@ -40,6 +53,7 @@
     justify-content: space-between;
     align-items: center;
   }
+
   input {
     display: block;
     width: 100%;
@@ -65,6 +79,11 @@
     width: 100%;
   }
 
+  .valid {
+    border-color: rgb(0, 192, 10);
+    background: #e3fde9;
+  }
+
   .invalid {
     border-color: red;
     background: #fde3e3;
@@ -83,13 +102,13 @@
       <input
         id="nome"
         type="text"
-        class="grande"
+        class:valid={nomeValido && nomeTocado}
         class:invalid={!nomeValido && nomeTocado}
         bind:value={tipoDeIngresso.nome}
         on:blur={() => (nomeTocado = true)}
       />
       {#if nomeTocado && !nomeValido}
-        <p class="error-message">{msgValidacao}</p>
+        <p class="error-message">Insira um nome válido</p>
       {/if}
     </div>
 
@@ -98,13 +117,13 @@
       <input
         id="descricao"
         type="text"
-        class="grande"
+        class:valid={descricaoValida && descricaoTocada}
         class:invalid={!descricaoValida && descricaoTocada}
         bind:value={tipoDeIngresso.descricao}
         on:blur={() => (descricaoTocada = true)}
       />
       {#if descricaoTocada && !descricaoValida}
-        <p class="error-message">{msgValidacao}</p>
+        <p class="error-message">Insira uma descrição com até 50 caracteres</p>
       {/if}
     </div>
   </div>
@@ -115,13 +134,14 @@
       <input
         id="qnt"
         type="number"
-        class="pequeno"
+        min="1"
+        class:valid={qntValida && qntTocada}
         class:invalid={!qntValida && qntTocada}
         bind:value={tipoDeIngresso.quantidadeTotal}
         on:blur={() => (qntTocada = true)}
       />
       {#if qntTocada && !qntValida}
-        <p class="error-message">{msgValidacao}</p>
+        <p class="error-message">Insira uma quantidade válida</p>
       {/if}
     </div>
 
@@ -130,13 +150,13 @@
       <input
         id="valor"
         type="text"
-        class="pequeno"
+        class:valid={valorValido && valorTocado}
         class:invalid={!valorValido && valorTocado}
         bind:value={tipoDeIngresso.valor}
         on:blur={() => (valorTocado = true)}
       />
       {#if valorTocado && !valorValido}
-        <p class="error-message">{msgValidacao}</p>
+        <p class="error-message">Insira um valor válido</p>
       {/if}
     </div>
   </div>

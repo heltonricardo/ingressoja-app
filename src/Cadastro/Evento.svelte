@@ -3,6 +3,7 @@
 
   import validator from "validator";
 
+  import { imagemIsValida } from "../utils/validador";
   import { postEvento } from "../Conexao/eventoConex";
   import { getCategoriasEvento } from "../Conexao/categoriaEventoConex";
   import Icone from "../UI/Icone.svelte";
@@ -36,6 +37,8 @@
   let tiposDeIngresso = [];
   let idCategoria;
 
+  let imagemTocada = false;
+
   /*************************** VALIDAÇÃO DE CAMPOS ****************************/
 
   $: tituloValido = validator.isLength(titulo.trim(), { min: 1, max: 255 });
@@ -43,7 +46,7 @@
     min: 1,
     max: 2000,
   });
-  // IMAGEM
+  $: imagemValida = imagemIsValida(imagem);
   $: inicioValido = validator.isAfter(inicio);
   $: terminoValido = validator.isAfter(termino, inicio);
   $: urlValida = online
@@ -71,6 +74,7 @@
   $: formularioValido =
     tituloValido &&
     descricaoValida &&
+    imagemValida &&
     inicioValido &&
     terminoValido &&
     urlValida &&
@@ -192,6 +196,11 @@
     resize: none;
   }
 
+  .error-message {
+    color: red;
+    margin-top: -0.75rem;
+  }
+
   select:focus {
     border-color: var(--roxo1);
     outline: none;
@@ -229,8 +238,12 @@
       type="file"
       id="imagem"
       accept="image/bmp, image/jpeg, image/png"
+      on:blur={() => (imagemTocada = true)}
       on:change={(event) => (imagem = event.target.files[0])}
     />
+    {#if imagemTocada && !imagemValida}
+      <p class="error-message">Anexe uma imagem válida</p>
+    {/if}
 
     <Entrada
       id="inicio"

@@ -100,6 +100,7 @@
       on:input={(event) => (senha = event.target.value)}
       valido={senhaValida}
       mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"
+      maxlength="50"
     />
     <Entrada
       id="senha2"
@@ -108,6 +109,7 @@
       on:input={(event) => (senha2 = event.target.value)}
       valido={senha2Valida}
       mensagemValidacao="As senhas não coincidem"
+      maxlength="50"
     />
   </div>
 

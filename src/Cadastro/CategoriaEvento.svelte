@@ -143,6 +143,7 @@
         valido={nomeValido}
         mensagemValidacao="Insira um nome de 1 a 50 caracteres"
         on:input={(event) => (nome = event.target.value)}
+        maxlength="50"
       />
       <div id="cadastrar">
         <Botao on:click={cadastrar} habilitado={nomeValido}

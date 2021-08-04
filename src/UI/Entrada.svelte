@@ -8,6 +8,7 @@
   export let controlType = null;
   export let mensagemValidacao = "";
   export let validar = true;
+  export let maxlength = "255";
 
   let tocado = false;
 </script>
@@ -70,16 +71,18 @@
       class:invalid={validar && !valido && tocado}
       {rows}
       {id}
+      {maxlength}
       on:input
       on:blur={() => (tocado = true)}
-      />
-      {:else}
-      <input
+    />
+  {:else}
+    <input
       class:valid={validar && valido && tocado}
       class:invalid={validar && !valido && tocado}
       {type}
       {id}
       {value}
+      {maxlength}
       on:input
       on:blur={() => (tocado = true)}
     />

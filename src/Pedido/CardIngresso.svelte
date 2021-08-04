@@ -53,5 +53,6 @@
     valido={cpfValido}
     mensagemValidacao="Insira um CPF válido"
     on:input={(event) => (ingresso.cpf = event.target.value)}
+    maxlength="11"
   />
 </div>

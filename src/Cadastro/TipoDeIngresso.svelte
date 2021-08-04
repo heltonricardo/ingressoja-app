@@ -105,6 +105,7 @@
         type="text"
         class:valid={nomeValido && nomeTocado}
         class:invalid={!nomeValido && nomeTocado}
+        maxlength="30"
         bind:value={tipoDeIngresso.nome}
         on:blur={() => (nomeTocado = true)}
       />
@@ -120,6 +121,7 @@
         type="text"
         class:valid={descricaoValida && descricaoTocada}
         class:invalid={!descricaoValida && descricaoTocada}
+        maxlength="50"
         bind:value={tipoDeIngresso.descricao}
         on:blur={() => (descricaoTocada = true)}
       />

@@ -269,6 +269,7 @@
       on:input={(event) => (descricao = event.target.value)}
       valido={descricaoValida}
       mensagemValidacao="Insira uma descrição válida"
+      maxlength="2000"
     />
   </div>
 
@@ -292,6 +293,7 @@
         on:input={(event) => (url = event.target.value)}
         valido={urlValida}
         mensagemValidacao="Insira uma URL válida"
+        maxlength="1000"
       />
     {:else}
       <Entrada
@@ -300,6 +302,7 @@
         on:input={(event) => (cep = event.target.value)}
         valido={cepValido}
         mensagemValidacao="Insira um CEP válido"
+        maxlength="8"
       />
       <Entrada
         id="uf"
@@ -307,6 +310,7 @@
         on:input={(event) => (uf = event.target.value)}
         valido={ufValida}
         mensagemValidacao="Insira uma UF válida"
+        maxlength="2"
       />
       <Entrada
         id="cidade"
@@ -314,6 +318,7 @@
         on:input={(event) => (cidade = event.target.value)}
         valido={cidadeValida}
         mensagemValidacao="Insira uma cidade válida"
+        maxlength="50"
       />
       <Entrada
         id="bairro"
@@ -321,6 +326,7 @@
         on:input={(event) => (bairro = event.target.value)}
         valido={bairroValido}
         mensagemValidacao="Insira um bairro válido"
+        maxlength="50"
       />
       <Entrada
         id="logradouro"
@@ -328,6 +334,7 @@
         on:input={(event) => (logradouro = event.target.value)}
         valido={logradouroValido}
         mensagemValidacao="Insira um logradouro válido"
+        maxlength="100"
       />
       <Entrada
         id="numero"
@@ -336,6 +343,7 @@
         on:input={(event) => (numero = event.target.value)}
         valido={numeroValido}
         mensagemValidacao="Insira um número válido"
+        maxlength="10"
       />
     {/if}
   </div>

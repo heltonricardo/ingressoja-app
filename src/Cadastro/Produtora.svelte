@@ -106,6 +106,7 @@
     on:input={(event) => (cnpj = event.target.value)}
     valido={cnpjValido}
     mensagemValidacao="Insira um CNPJ válido"
+    maxlength="14"
   />
   <Entrada
     id="nomeFantasia"
@@ -130,6 +131,7 @@
     on:input={(event) => (banco = event.target.value)}
     valido={bancoValido}
     mensagemValidacao="Insira um nome de banco válido"
+    maxlength="100"
   />
   <Entrada
     id="agencia"
@@ -137,6 +139,7 @@
     on:input={(event) => (agencia = event.target.value)}
     valido={agenciaValida}
     mensagemValidacao="Insira um número de agência válido"
+    maxlength="50"
   />
   <Entrada
     id="conta"
@@ -144,6 +147,7 @@
     on:input={(event) => (conta = event.target.value)}
     valido={contaValida}
     mensagemValidacao="Insira um número de conta válido"
+    maxlength="50"
   />
 </div>
 
@@ -155,6 +159,7 @@
     on:input={(event) => (senha = event.target.value)}
     valido={senhaValida}
     mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"
+    maxlength="50"
   />
   <Entrada
     id="senha2"
@@ -163,6 +168,7 @@
     on:input={(event) => (senha2 = event.target.value)}
     valido={senha2Valida}
     mensagemValidacao="As senhas não coincidem"
+    maxlength="50"
   />
 </div>
 

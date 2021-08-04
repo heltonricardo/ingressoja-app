@@ -145,6 +145,7 @@
     on:input={(event) => (pedido.numeroCartao = event.target.value)}
     valido={numeroCartaoValido}
     mensagemValidacao="Insira um número de cartão de crédito válido"
+    maxlength="19"
   />
   <Entrada
     id="codigoCartao"
@@ -153,6 +154,7 @@
     on:input={(event) => (pedido.codigoCartao = event.target.value)}
     valido={codigoCartaoValido}
     mensagemValidacao="Insira um código de segurança válido"
+    maxlength="4"
   />
   <Entrada
     id="nomeTitular"
@@ -167,6 +169,7 @@
     on:input={(event) => (pedido.cpfTitular = event.target.value)}
     valido={cpfTitularValido}
     mensagemValidacao="Insira um CPF válido"
+    maxlength="11"
   />
 
   <div id="botoes">

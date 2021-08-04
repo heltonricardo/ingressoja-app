@@ -19,28 +19,6 @@
   let pedido = {};
   let carregando = false;
 
-  /*************************** VALIDAÇÃO DE CAMPOS ****************************/
-
-  pedido.numeroCartao = "";
-  pedido.codigoCartao = "";
-  pedido.nomeTitular = "";
-  pedido.cpfTitular = "";
-
-  $: numeroCartaoValido = validator.isCreditCard(pedido.numeroCartao);
-  $: codigoCartaoValido =
-    validator.isLength(pedido.codigoCartao.trim(), { min: 3, max: 4 }) &&
-    validator.isNumeric(pedido.codigoCartao);
-  $: nomeTitularValido =
-    validator.isLength(pedido.nomeTitular.trim(), { min: 1, max: 255 }) &&
-    validator.isAlpha(pedido.nomeTitular, "pt-BR", { ignore: " " });
-  $: cpfTitularValido = validateBr.cpf(pedido.cpfTitular);
-
-  $: formularioValido =
-    numeroCartaoValido &&
-    codigoCartaoValido &&
-    nomeTitularValido &&
-    cpfTitularValido;
-
   /************************* CRIAÇÃO DE CADA INGRESSO *************************/
 
   let ordem = 0;
@@ -77,8 +55,8 @@
 
     let itensPedido = ingressos.map((i) => ({
       idTipoDeIngresso: i.id,
-      ingressante: i.ingressante,
-      cpf: i.cpf,
+      ingressante: onlyLetrasEEspacos(i.ingressante),
+      cpf: onlyNumeros(i.cpf),
     }));
 
     pedido = { ...pedido, itensPedido, idEvento: evento.id };
@@ -89,6 +67,29 @@
     }
     carregando = false;
   }
+
+  /*************************** VALIDAÇÃO DE CAMPOS ****************************/
+
+  pedido.numeroCartao = "";
+  pedido.codigoCartao = "";
+  pedido.nomeTitular = "";
+  pedido.cpfTitular = "";
+
+  $: numeroCartaoValido = validator.isCreditCard(pedido.numeroCartao);
+  $: codigoCartaoValido =
+    validator.isLength(pedido.codigoCartao.trim(), { min: 3, max: 4 }) &&
+    validator.isNumeric(pedido.codigoCartao);
+  $: nomeTitularValido =
+    validator.isLength(pedido.nomeTitular.trim(), { min: 1, max: 255 }) &&
+    validator.isAlpha(pedido.nomeTitular, "pt-BR", { ignore: " " });
+  $: cpfTitularValido = validateBr.cpf(pedido.cpfTitular);
+
+  $: formularioValido =
+    numeroCartaoValido &&
+    codigoCartaoValido &&
+    nomeTitularValido &&
+    cpfTitularValido &&
+    ingressos.every((i) => i.valido);
 </script>
 
 <style>

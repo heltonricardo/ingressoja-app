@@ -85,6 +85,22 @@
   #voltar {
     margin: 3rem 0;
   }
+
+  #detalhes {
+    display: flex;
+    margin-top: 3rem;
+    line-height: 2rem;
+  }
+
+  #rotulos {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  #dados {
+    margin-left: 0.6rem;
+  }
 </style>
 
 {#await pedido}
@@ -132,6 +148,65 @@
         </tr>
       {/each}
     </table>
+
+    <div id="detalhes">
+      <div id="rotulos">
+        <span id="local">
+          {#if pedido.evento.online}
+            <p>
+              <i class="fas fa-mouse-pointer" />   Evento On-line:
+            </p>
+          {:else}
+            <p>
+              <i class="fas fa-location-arrow" />  Local:
+            </p>
+          {/if}
+        </span>
+
+        <span id="data-hora-inicio">
+          <p>
+            <i class="fas fa-clock" />  Início:
+          </p>
+        </span>
+
+        <span id="data-hora-termino">
+          <p>
+            <i class="fas fa-hand-point-left" />  Término:
+          </p>
+        </span>
+      </div>
+
+      <div id="dados">
+        <span id="local">
+          {#if pedido.evento.online}
+            <p>
+              <a target="_blank" href={pedido.evento.url}>Acessar</a>
+            </p>
+          {:else}
+            <p>
+              {pedido.evento.logradouro}, {pedido.evento.numero} •
+              {pedido.evento.bairro} •
+              {pedido.evento.cidade}-{pedido.evento.uf} •
+              {pedido.evento.cep}
+            </p>
+          {/if}
+        </span>
+
+        <span id="data-hora-inicio">
+          <p>
+            {extrairDataHora(pedido.evento.inicio).data} •
+            {extrairDataHora(pedido.evento.inicio).horario}
+          </p>
+        </span>
+
+        <span id="data-hora-termino">
+          <p>
+            {extrairDataHora(pedido.evento.termino).data} •
+            {extrairDataHora(pedido.evento.termino).horario}
+          </p>
+        </span>
+      </div>
+    </div>
 
     <div id="voltar">
       <Botao on:click={() => dispatch("meuspedidos")}>Voltar</Botao>

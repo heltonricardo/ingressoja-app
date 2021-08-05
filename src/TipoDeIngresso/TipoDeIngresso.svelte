@@ -54,10 +54,11 @@
   #controles span {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     width: 3rem;
     border: none;
     font-size: 1.5rem;
+    padding-top: 1rem;
   }
 </style>
 

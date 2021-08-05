@@ -9,7 +9,6 @@
   const dispatch = createEventDispatcher();
 
   export let id;
-  export let evento;
 
   async function carregaPedido() {
     pedido = await getPedido(id);
@@ -88,12 +87,12 @@
   }
 </style>
 
-<div id="corpo">
-  <h1>Detalhes de Pedido</h1>
-  <h2>{evento}</h2>
-  {#await pedido}
-    <Aguarde />
-  {:then pedido}
+{#await pedido}
+  <Aguarde />
+{:then pedido}
+  <div id="corpo">
+    <h1>Detalhes de Pedido</h1>
+    <h2>{pedido.evento.titulo}</h2>
     <table id="tabela">
       <tr>
         <th>Pedido</th>
@@ -133,9 +132,9 @@
         </tr>
       {/each}
     </table>
-  {/await}
 
-  <div id="voltar">
-    <Botao on:click={() => dispatch("meuspedidos")}>Voltar</Botao>
+    <div id="voltar">
+      <Botao on:click={() => dispatch("meuspedidos")}>Voltar</Botao>
+    </div>
   </div>
-</div>
+{/await}

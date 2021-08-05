@@ -17,7 +17,7 @@
 
   let modo = MODO.NORMAL;
   let id = null;
-  let pedido = null;
+  let idPedido = null;
   let evento = null;
 
   function modoNormal() {
@@ -64,8 +64,7 @@
   }
 
   function modoPedido(event) {
-    pedido = event.detail.id;
-    evento = event.detail.evento;
+    idPedido = event.detail;
     modo = MODO.DETALHE_PEDIDO;
     window.scrollTo(0, 0);
   }
@@ -122,7 +121,7 @@
 {:else if modo === MODO.NOVO_ADM}
   <Administrador on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.DETALHE_PEDIDO}
-  <PedidoDetalhe id={pedido} {evento} on:meuspedidos={modoMeusPedidos} />
+  <PedidoDetalhe id={idPedido} on:meuspedidos={modoMeusPedidos} />
 {:else if modo === MODO.MEUS_DADOS}
   <MeusDados on:minhaconta={modoMinhaConta} />
 {/if}

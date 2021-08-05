@@ -108,12 +108,8 @@
             <td>R$ {valorVirgula(pedido.valorTotal)}</td>
             <td>{pedido.tituloEvento}</td>
             <td id="detalhes"
-              ><Botao
-                on:click={() =>
-                  dispatch("detalhespedido", {
-                    id: pedido.id,
-                    evento: pedido.tituloEvento,
-                  })}>Detalhes</Botao
+              ><Botao on:click={() => dispatch("detalhespedido", pedido.id)}
+                >Detalhes</Botao
               ></td
             >
           </tr>

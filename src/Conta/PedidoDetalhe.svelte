@@ -1,10 +1,12 @@
 <script>
+  import { maskBr } from "js-brasil";
   import { createEventDispatcher } from "svelte";
-  import { getPedido } from "../Conexao/pedidoConex";
-  import { extrairDataHora } from "../utils/manipulaDataHora";
-  import { valorVirgula } from "../utils/formatador";
+
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
+  import { getPedido } from "../Conexao/pedidoConex";
+  import { valorVirgula } from "../utils/formatador";
+  import { extrairDataHora } from "../utils/manipulaDataHora";
 
   const dispatch = createEventDispatcher();
 
@@ -184,10 +186,10 @@
             </p>
           {:else}
             <p>
-              {pedido.evento.logradouro}, {pedido.evento.numero} •
+              {pedido.evento.logradouro}, {pedido.evento.numero} -
               {pedido.evento.bairro} •
               {pedido.evento.cidade}-{pedido.evento.uf} •
-              {pedido.evento.cep}
+              CEP: {maskBr.cep(pedido.evento.cep)}
             </p>
           {/if}
         </span>

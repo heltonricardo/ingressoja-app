@@ -144,7 +144,7 @@
         <tr>
           <td>#{item.id}</td>
           <td>{item.ingressante}</td>
-          <td>{item.cpf}</td>
+          <td>{maskBr.cpf(item.cpf)}</td>
           <td>{item.tipoDeIngresso.nome}</td>
           <td>R$ {valorVirgula(item.tipoDeIngresso.valor)}</td>
         </tr>

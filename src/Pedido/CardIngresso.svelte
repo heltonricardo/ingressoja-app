@@ -5,7 +5,7 @@
   import Entrada from "../UI/Entrada.svelte";
 
   export let ingresso = {
-    nome: "",
+    ingressante: "",
     cpf: "",
     valido: false,
   };
@@ -13,7 +13,7 @@
   // Impedir erro de dependência cíclica:
   const validar = (flag) => (ingresso.valido = flag);
 
-  $: nomeValido = validator.isLength(ingresso.nome.trim(), {
+  $: nomeValido = validator.isLength(ingresso.ingressante?.trim() || "", {
     min: 1,
     max: 255,
   });

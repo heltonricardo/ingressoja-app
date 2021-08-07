@@ -50,8 +50,10 @@
   $: inicioValido = validator.isAfter(inicio);
   $: terminoValido = validator.isAfter(termino, inicio);
   $: urlValida = online
-    ? validator.isURL(url) &&
-      validator.isLength(url.trim(), { min: 1, max: 1000 })
+    ? validator.isURL(url, {
+        require_protocol: true,
+        protocols: ["http", "https"],
+      }) && validator.isLength(url.trim(), { min: 1, max: 1000 })
     : true;
   $: logradouroValido = online
     ? true

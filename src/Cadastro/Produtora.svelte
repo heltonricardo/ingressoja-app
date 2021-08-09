@@ -106,7 +106,6 @@
     on:input={(event) => (cnpj = event.target.value)}
     valido={cnpjValido}
     mensagemValidacao="Insira um CNPJ válido"
-    maxlength="14"
   />
   <Entrada
     id="nomeFantasia"

@@ -169,7 +169,6 @@
     on:input={(event) => (pedido.cpfTitular = event.target.value)}
     valido={cpfTitularValido}
     mensagemValidacao="Insira um CPF válido"
-    maxlength="11"
   />
 
   <div id="botoes">

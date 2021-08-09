@@ -70,7 +70,6 @@
     on:input={(event) => (cpf = event.target.value)}
     valido={cpfValido}
     mensagemValidacao="Insira um CPF válido"
-    maxlength="11"
   />
   <Entrada
     id="email"

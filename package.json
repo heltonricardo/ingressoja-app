@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "js-brasil": "^2.4.8",
+    "moment": "^2.29.1",
     "prettier-miscellaneous": "^1.5.3",
     "sirv-cli": "^1.0.0",
     "sweetalert": "^2.1.2",

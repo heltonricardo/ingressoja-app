@@ -1,4 +1,5 @@
 import { capitalizar, zeroEsquerda } from "./formatador.js";
+import moment from "moment"
 
 export function nomeDoMes(num) {
   return num.toLocaleString("pt-BR", { month: "long" });
@@ -24,4 +25,4 @@ export function extrairDataHora(info) {
   return { dia, mes, ano, anoAtual, data, horario };
 }
 
-export const hojeStringISO = new Date().toISOString().substring(0, 16);
+export const hojeStringISO = moment().format().substring(0, 16);

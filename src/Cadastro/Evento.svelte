@@ -15,6 +15,8 @@
   import ESTADOS from "../ENUM/ESTADOS";
   import { hojeStringISO } from "../utils/manipulaDataHora";
 
+  console.log(hojeStringISO)
+
   /************************** CONSTANTES E VARIÁVEIS **************************/
 
   const dispatch = createEventDispatcher();

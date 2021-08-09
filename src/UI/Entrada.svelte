@@ -9,6 +9,7 @@
   export let mensagemValidacao = "";
   export let validar = true;
   export let maxlength = "255";
+  export let min = null;
 
   let tocado = false;
 </script>
@@ -79,6 +80,7 @@
     <input
       class:valid={validar && valido && tocado}
       class:invalid={validar && !valido && tocado}
+      {min}
       {type}
       {id}
       {value}

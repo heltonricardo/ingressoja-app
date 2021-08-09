@@ -23,3 +23,5 @@ export function extrairDataHora(info) {
 
   return { dia, mes, ano, anoAtual, data, horario };
 }
+
+export const hojeStringISO = new Date().toISOString().substring(0, 16);

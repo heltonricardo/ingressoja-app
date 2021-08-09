@@ -13,6 +13,7 @@
   import TipoDeIngresso from "./TipoDeIngresso.svelte";
   import { validateBr } from "js-brasil";
   import ESTADOS from "../ENUM/ESTADOS";
+  import { hojeStringISO } from "../utils/manipulaDataHora";
 
   /************************** CONSTANTES E VARIÁVEIS **************************/
 
@@ -252,14 +253,18 @@
       id="inicio"
       label="Data e Hora de Início"
       type="datetime-local"
+      value={hojeStringISO}
+      min={hojeStringISO}
       on:input={(event) => (inicio = event.target.value)}
       valido={inicioValido}
       mensagemValidacao="Insira uma data de início válida"
-    />
-    <Entrada
+      />
+      <Entrada
       id="termino"
       label="Data e Hora de Término"
       type="datetime-local"
+      min={hojeStringISO}
+      value={hojeStringISO}
       on:input={(event) => (termino = event.target.value)}
       valido={terminoValido}
       mensagemValidacao="Insira uma data de término válida"

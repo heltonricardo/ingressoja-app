@@ -33,7 +33,7 @@
     window.scrollTo(0, 0);
   }
 
-  function modoCadastraEvento() {
+  function modoNovoEvento() {
     modo = MODO.NOVO_EVENTO;
     window.scrollTo(0, 0);
   }
@@ -113,7 +113,7 @@
     on:meusdados={modoMeusDados}
   />
 {:else if modo === MODO.NOVO_EVENTO}
-  <Evento on:minhaconta={modoMinhaConta} />
+  <Evento on:meuseventos={modoMeusEventos} />
 {:else if modo === MODO.FINALIZACAO}
   <FinalizaPedido
     {evento}
@@ -131,7 +131,7 @@
 {:else if modo === MODO.MEUS_DADOS}
   <MeusDados on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.MEUS_EVENTOS}
-  <MeusEventos />
+  <MeusEventos on:minhaconta={modoMinhaConta} on:novoevento={modoNovoEvento} />
 {/if}
 
 <BarraInferior />

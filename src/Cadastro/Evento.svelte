@@ -372,7 +372,7 @@
   </div>
 
   <div id="botoes">
-    <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
+    <Botao on:click={() => dispatch("meuseventos")}>Voltar</Botao>
     <Botao on:click={cadastrar} habilitado={formularioValido}>Salvar</Botao>
   </div>
 </div>

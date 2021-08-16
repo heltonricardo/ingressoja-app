@@ -81,6 +81,10 @@
     justify-content: center;
   }
 
+  #cadastrar {
+    margin: 2rem 0 0 0;
+  }
+
   #voltar {
     margin: 3rem 0;
   }
@@ -107,11 +111,7 @@
             <td>{evento.titulo}</td>
             <td>{extrairDataHora(evento.inicio).data}</td>
             <td>{evento.categoriaEvento.nome}</td>
-            <td id="detalhes"
-              ><Botao on:click={() => dispatch("editarevento", evento.id)}
-                >Editar</Botao
-              ></td
-            >
+            <td id="detalhes"><Botao>Editar</Botao></td>
           </tr>
         {/each}
       </table>
@@ -119,6 +119,9 @@
       Não há eventos para mostrar
     {/if}
   {/await}
+  <div id="cadastrar">
+    <Botao on:click={() => dispatch("novoevento")}>Cadastrar Evento</Botao>
+  </div>
   <div id="voltar">
     <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
   </div>

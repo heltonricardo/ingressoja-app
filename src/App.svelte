@@ -3,17 +3,18 @@
   import Login from "./Login/Login.svelte";
   import Evento from "./Cadastro/Evento.svelte";
   import Detalhes from "./Evento/Detalhes.svelte";
+  import MeusDados from "./Conta/MeusDados.svelte";
   import Cadastro from "./Cadastro/Cadastro.svelte";
   import MinhaConta from "./Conta/MinhaConta.svelte";
-  import GridEventos from "./Evento//GridEventos.svelte";
-  import MeusPedidos from "./Conta/MeusPedidos.svelte";
-  import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
   import BarraInferior from "./UI/BarraInferior.svelte";
+  import MeusEventos from "./Conta/MeusEventos.svelte";
+  import MeusPedidos from "./Conta/MeusPedidos.svelte";
+  import GridEventos from "./Evento//GridEventos.svelte";
+  import PedidoDetalhe from "./Conta/PedidoDetalhe.svelte";
   import Administrador from "./Cadastro/Administrador.svelte";
   import FinalizaPedido from "./Pedido/FinalizaPedido.svelte";
   import CategoriaEvento from "./Cadastro/CategoriaEvento.svelte";
-  import PedidoDetalhe from "./Conta/PedidoDetalhe.svelte";
-  import MeusDados from "./Conta/MeusDados.svelte";
+  import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
 
   let modo = MODO.NORMAL;
   let id = null;
@@ -73,6 +74,11 @@
     modo = MODO.MEUS_DADOS;
     window.scrollTo(0, 0);
   }
+
+  function modoMeusEventos() {
+    modo = MODO.MEUS_EVENTOS;
+    window.scrollTo(0, 0);
+  }
 </script>
 
 <BarraSuperior
@@ -100,7 +106,7 @@
   <MinhaConta
     on:voltar={modoNormal}
     on:minhaconta={modoMinhaConta}
-    on:novoevento={modoCadastraEvento}
+    on:meuseventos={modoMeusEventos}
     on:meuspedidos={modoMeusPedidos}
     on:novacategoria={modoCategoriasEvento}
     on:novoadm={modoNovoAdm}
@@ -124,6 +130,8 @@
   <PedidoDetalhe id={idPedido} on:meuspedidos={modoMeusPedidos} />
 {:else if modo === MODO.MEUS_DADOS}
   <MeusDados on:minhaconta={modoMinhaConta} />
+{:else if modo === MODO.MEUS_EVENTOS}
+  <MeusEventos />
 {/if}
 
 <BarraInferior />

@@ -62,6 +62,7 @@
     padding: 1rem;
     border-radius: 5px;
     min-height: calc(100vh - 21rem);
+    border: 1px solid black;
   }
 
   #imagem {

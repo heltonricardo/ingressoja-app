@@ -24,7 +24,7 @@ export async function postProdutora(produtora) {
   const status = res.status;
 
   if (status === STATUS.CREATED) {
-    swal(MSG.BOM, MSG.CRIADO, "success", {timer: 5000});
+    swal(MSG.BOM, MSG.CRIADO, "success", { timer: 5000 });
     return true;
   } //
   else if (status === STATUS.CONFLICT) {
@@ -60,6 +60,33 @@ export async function getProdutora() {
   if (status === STATUS.OK) {
     const produtora = await res.json();
     return produtora;
+  } //
+  else if (status === STATUS.BAD_REQUEST) {
+    swal(MSG.RUIM, MSG.NAO_EXISTE, "error");
+  }
+  return null;
+}
+
+export async function getEventos() {
+  if (
+    !autenticacao.estaLogado() ||
+    autenticacao.tipoLogado() !== TIPOCADASTRO.PRODUTORA
+  )
+    return null;
+
+  const id = autenticacao.idLogado();
+
+  let res;
+  try {
+    res = await fetch(`${PATH.PRODUTORA}/${id}/eventos`);
+  } catch (error) {
+    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    return null;
+  }
+  const status = res.status;
+
+  if (status === STATUS.OK) {
+    return await res.json();
   } //
   else if (status === STATUS.BAD_REQUEST) {
     swal(MSG.RUIM, MSG.NAO_EXISTE, "error");

@@ -58,7 +58,8 @@
       Olá, {produtora.nomeFantasia.split(" ")[0]}! Selecione uma opção abaixo:
     </p>
     <Botao on:click={() => dispatch("meusdados")}>Meus Dados</Botao>
-    <Botao on:click={() => dispatch("novoevento")}>Cadastrar Evento</Botao>
+    <Botao on:click={() => dispatch("carteira")}>Carteira Digital</Botao>
+    <Botao on:click={() => dispatch("meuseventos")}>Meus Eventos</Botao>
     <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
   </div>
 {/await}

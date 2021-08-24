@@ -21,63 +21,43 @@
   let idPedido = null;
   let evento = null;
 
+  function trocaModo(novoModo) {
+    modo = novoModo;
+    window.scrollTo(0, 0);
+  }
+
+  const modoNovoEvento = () => trocaModo(MODO.NOVO_EVENTO);
+
+  const modoMinhaConta = () => trocaModo(MODO.MINHA_CONTA);
+
+  const modoMeusPedidos = () => trocaModo(MODO.MEUS_PEDIDOS);
+
+  const modoCategoriasEvento = () => trocaModo(MODO.CATEGORIAS_EVENTO);
+
+  const modoNovoAdm = () => trocaModo(MODO.NOVO_ADM);
+
+  const modoMeusDados = () => trocaModo(MODO.MEUS_DADOS);
+
+  const modoMeusEventos = () => trocaModo(MODO.MEUS_EVENTOS);
+
   function modoNormal() {
     id = null;
-    modo = MODO.NORMAL;
-    window.scrollTo(0, 0);
+    trocaModo(MODO.NORMAL);
   }
 
   function modoDetalhes(event) {
     id = event.detail;
-    modo = MODO.DETALHES;
-    window.scrollTo(0, 0);
-  }
-
-  function modoNovoEvento() {
-    modo = MODO.NOVO_EVENTO;
-    window.scrollTo(0, 0);
-  }
-
-  function modoMinhaConta() {
-    modo = MODO.MINHA_CONTA;
-    window.scrollTo(0, 0);
+    trocaModo(MODO.DETALHES);
   }
 
   function modoFinalizacao(event) {
     evento = event.detail;
-    modo = MODO.FINALIZACAO;
-    window.scrollTo(0, 0);
-  }
-
-  function modoMeusPedidos() {
-    modo = MODO.MEUS_PEDIDOS;
-    window.scrollTo(0, 0);
-  }
-
-  function modoCategoriasEvento() {
-    modo = MODO.CATEGORIAS_EVENTO;
-    window.scrollTo(0, 0);
-  }
-
-  function modoNovoAdm() {
-    modo = MODO.NOVO_ADM;
-    window.scrollTo(0, 0);
+    trocaModo(MODO.FINALIZACAO);
   }
 
   function modoPedido(event) {
     idPedido = event.detail;
-    modo = MODO.DETALHE_PEDIDO;
-    window.scrollTo(0, 0);
-  }
-
-  function modoMeusDados() {
-    modo = MODO.MEUS_DADOS;
-    window.scrollTo(0, 0);
-  }
-
-  function modoMeusEventos() {
-    modo = MODO.MEUS_EVENTOS;
-    window.scrollTo(0, 0);
+    trocaModo(MODO.DETALHE_PEDIDO);
   }
 </script>
 

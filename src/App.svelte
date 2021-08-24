@@ -15,6 +15,7 @@
   import FinalizaPedido from "./Pedido/FinalizaPedido.svelte";
   import CategoriaEvento from "./Cadastro/CategoriaEvento.svelte";
   import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
+  import Administradores from "./Conta/Administradores.svelte";
 
   let modo = MODO.NORMAL;
   let id = null;
@@ -26,19 +27,21 @@
     window.scrollTo(0, 0);
   }
 
-  const modoNovoEvento = () => trocaModo(MODO.NOVO_EVENTO);
-
-  const modoMinhaConta = () => trocaModo(MODO.MINHA_CONTA);
-
-  const modoMeusPedidos = () => trocaModo(MODO.MEUS_PEDIDOS);
+  const modoAdministradores = () => trocaModo(MODO.ADMINISTRADORES);
 
   const modoCategoriasEvento = () => trocaModo(MODO.CATEGORIAS_EVENTO);
-
-  const modoNovoAdm = () => trocaModo(MODO.NOVO_ADM);
 
   const modoMeusDados = () => trocaModo(MODO.MEUS_DADOS);
 
   const modoMeusEventos = () => trocaModo(MODO.MEUS_EVENTOS);
+
+  const modoMeusPedidos = () => trocaModo(MODO.MEUS_PEDIDOS);
+
+  const modoMinhaConta = () => trocaModo(MODO.MINHA_CONTA);
+
+  const modoNovoAdm = () => trocaModo(MODO.NOVO_ADM);
+
+  const modoNovoEvento = () => trocaModo(MODO.NOVO_EVENTO);
 
   function modoNormal() {
     id = null;
@@ -84,13 +87,14 @@
   />
 {:else if modo === MODO.MINHA_CONTA}
   <MinhaConta
-    on:voltar={modoNormal}
-    on:minhaconta={modoMinhaConta}
+    on:administradores={modoAdministradores}
+    on:meusdados={modoMeusDados}
     on:meuseventos={modoMeusEventos}
     on:meuspedidos={modoMeusPedidos}
+    on:minhaconta={modoMinhaConta}
     on:novacategoria={modoCategoriasEvento}
     on:novoadm={modoNovoAdm}
-    on:meusdados={modoMeusDados}
+    on:voltar={modoNormal}
   />
 {:else if modo === MODO.NOVO_EVENTO}
   <Evento on:meuseventos={modoMeusEventos} />
@@ -112,6 +116,8 @@
   <MeusDados on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.MEUS_EVENTOS}
   <MeusEventos on:minhaconta={modoMinhaConta} on:novoevento={modoNovoEvento} />
+{:else if modo === MODO.ADMINISTRADORES}
+  <Administradores on:minhaconta={modoMinhaConta} />
 {/if}
 
 <BarraInferior />

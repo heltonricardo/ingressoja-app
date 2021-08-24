@@ -12,6 +12,9 @@ const MODO = Object.freeze({
   DETALHE_PEDIDO: 11,
   MEUS_DADOS: 12,
   MEUS_EVENTOS: 13,
+  ADMINISTRADORES: 14,
+  COMPRADORES: 15,
+  PRODUTORAS: 16,
 });
 
 export default MODO;

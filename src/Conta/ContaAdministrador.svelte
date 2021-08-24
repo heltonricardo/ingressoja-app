@@ -58,6 +58,9 @@
       Olá, {administrador.nome.split(" ")[0]}! Selecione uma opção abaixo:
     </p>
     <Botao on:click={() => dispatch("meusdados")}>Meus Dados</Botao>
+    <Botao on:click={() => dispatch("administradores")}>Administradores</Botao>
+    <Botao on:click={() => dispatch("compradores")}>Compradores</Botao>
+    <Botao on:click={() => dispatch("produtoras")}>Produtoras</Botao>
     <Botao on:click={() => dispatch("novoadm")}>Cadastrar Administrador</Botao>
     <Botao on:click={() => dispatch("novacategoria")}
       >Categorias de Evento</Botao

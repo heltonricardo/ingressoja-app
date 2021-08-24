@@ -16,6 +16,7 @@
   import CategoriaEvento from "./Cadastro/CategoriaEvento.svelte";
   import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
   import Administradores from "./Conta/Administradores.svelte";
+  import Compradores from "./Conta/Compradores.svelte";
 
   let modo = MODO.NORMAL;
   let id = null;
@@ -30,6 +31,8 @@
   const modoAdministradores = () => trocaModo(MODO.ADMINISTRADORES);
 
   const modoCategoriasEvento = () => trocaModo(MODO.CATEGORIAS_EVENTO);
+
+  const modoCompradores = () => trocaModo(MODO.COMPRADORES);
 
   const modoMeusDados = () => trocaModo(MODO.MEUS_DADOS);
 
@@ -88,6 +91,7 @@
 {:else if modo === MODO.MINHA_CONTA}
   <MinhaConta
     on:administradores={modoAdministradores}
+    on:compradores={modoCompradores}
     on:meusdados={modoMeusDados}
     on:meuseventos={modoMeusEventos}
     on:meuspedidos={modoMeusPedidos}
@@ -118,6 +122,8 @@
   <MeusEventos on:minhaconta={modoMinhaConta} on:novoevento={modoNovoEvento} />
 {:else if modo === MODO.ADMINISTRADORES}
   <Administradores on:minhaconta={modoMinhaConta} />
+{:else if modo === MODO.COMPRADORES}
+  <Compradores on:minhaconta={modoMinhaConta} />
 {/if}
 
 <BarraInferior />

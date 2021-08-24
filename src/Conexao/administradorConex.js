@@ -98,3 +98,29 @@ export async function getAdministradores() {
   }
   return null;
 }
+
+export async function getCompradores() {
+  if (
+    !autenticacao.estaLogado() ||
+    !autenticacao.estaLogadoComTipo(TIPOCADASTRO.ADMINISTRADOR)
+  )
+    return null;
+
+  let res;
+  try {
+    res = await fetch(PATH.COMPRADOR);
+  } catch (error) {
+    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    return null;
+  }
+
+  const status = res.status;
+
+  if (status === STATUS.OK) {
+    return await res.json();
+  } //
+  else if (status === STATUS.BAD_REQUEST) {
+    swal(MSG.RUIM, MSG.NAO_EXISTE, "error");
+  }
+  return null;
+}

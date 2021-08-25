@@ -92,18 +92,17 @@
     {#if admins.length}
       <table id="tabela">
         <tr>
-          <th>Id</th>
           <th>Nome</th>
-          <th>E-mail</th>
           <th>Ações</th>
         </tr>
 
         {#each admins as adm}
           <tr>
-            <td>#{adm.id}</td>
             <td>{adm.nome}</td>
-            <td>{adm.email}</td>
-            <td id="detalhes">-</td>
+            <td id="detalhes">
+              <Botao>Detalhes</Botao>
+              <Botao>Excluir</Botao>
+            </td>
           </tr>
         {/each}
       </table>

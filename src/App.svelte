@@ -17,6 +17,7 @@
   import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
   import Administradores from "./Conta/Administradores.svelte";
   import Compradores from "./Conta/Compradores.svelte";
+  import Produtoras from "./Conta/Produtoras.svelte";
 
   let modo = MODO.NORMAL;
   let id = null;
@@ -45,6 +46,8 @@
   const modoNovoAdm = () => trocaModo(MODO.NOVO_ADM);
 
   const modoNovoEvento = () => trocaModo(MODO.NOVO_EVENTO);
+
+  const modoProdutoras = () => trocaModo(MODO.PRODUTORAS);
 
   function modoNormal() {
     id = null;
@@ -98,6 +101,7 @@
     on:minhaconta={modoMinhaConta}
     on:novacategoria={modoCategoriasEvento}
     on:novoadm={modoNovoAdm}
+    on:produtoras={modoProdutoras}
     on:voltar={modoNormal}
   />
 {:else if modo === MODO.NOVO_EVENTO}
@@ -124,6 +128,8 @@
   <Administradores on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.COMPRADORES}
   <Compradores on:minhaconta={modoMinhaConta} />
+{:else if modo === MODO.PRODUTORAS}
+  <Produtoras on:minhaconta={modoMinhaConta} />
 {/if}
 
 <BarraInferior />

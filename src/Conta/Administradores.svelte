@@ -5,6 +5,14 @@
   import { getAdministradores } from "../Conexao/administradorConex";
 
   const dispatch = createEventDispatcher();
+
+  const admins = getAdministradores().then((d) =>
+    d.sort((x, y) => {
+      const a = x.nome.toLowerCase();
+      const b = y.nome.toLowerCase();
+      return (a < b) ? -1 : (a > b) ? 1 : 0;
+    })
+  );
 </script>
 
 <style>
@@ -78,7 +86,7 @@
 
 <div id="corpo">
   <h1>Administradores</h1>
-  {#await getAdministradores()}
+  {#await admins}
     <Aguarde />
   {:then admins}
     {#if admins.length}

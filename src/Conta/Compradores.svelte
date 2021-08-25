@@ -9,9 +9,9 @@
 
   const compradores = getCompradores().then((d) =>
     d.sort((x, y) => {
-      if (x.nome < y.nome) return -1;
-      if (x.nome > y.nome) return 1;
-      return 0;
+      const a = x.nome.toLowerCase();
+      const b = y.nome.toLowerCase();
+      return a < b ? -1 : a > b ? 1 : 0;
     })
   );
 </script>

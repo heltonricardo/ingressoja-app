@@ -72,7 +72,7 @@
     id="nome"
     label="Nome Completo"
     value={nome}
-    disabled={true}
+    disabled={dados}
     on:input={(event) => (nome = event.target.value)}
     valido={nomeValido}
     mensagemValidacao="Insira um nome válido"
@@ -81,7 +81,7 @@
     id="cpf"
     label="CPF"
     value={cpf}
-    disabled={true}
+    disabled={dados}
     on:input={(event) => (cpf = event.target.value)}
     valido={cpfValido}
     mensagemValidacao="Insira um CPF válido"

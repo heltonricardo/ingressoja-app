@@ -1,21 +1,23 @@
 <script>
-  import { createEventDispatcher } from "svelte";
   import validator from "validator";
+  import { maskBr } from "js-brasil";
   import { validateBr } from "js-brasil";
+  import { createEventDispatcher } from "svelte";
 
-  import { postComprador } from "../Conexao/compradorConex";
-  import autenticacao from "../Autenticacao/autenticacao";
-  import Entrada from "../UI/Entrada.svelte";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
+  import Entrada from "../UI/Entrada.svelte";
+  import autenticacao from "../Autenticacao/autenticacao";
+  import { postComprador, putComprador } from "../Conexao/compradorConex";
 
   const dispatch = createEventDispatcher();
 
+  export let dados = null;
   let carregando = false;
 
-  let nome = "";
-  let cpf = "";
-  let email = "";
+  let nome = dados ? dados.nome : "";
+  let cpf = dados ? maskBr.cpf(dados.cpf) : "";
+  let email = dados ? dados.email : "";
   let senha = "";
   let senha2 = "";
 
@@ -28,14 +30,23 @@
   $: formularioValido =
     nomeValido && cpfValido && emailValido && senhaValida && senha2Valida;
 
-  async function cadastrar() {
+  function voltar() {
+    if (dados) dispatch("minhaconta");
+    else dispatch("voltar");
+  }
+
+  async function salvar() {
     carregando = true;
     cpf = cpf.replace(/[^\d]/g, "");
-    const res = await postComprador({ nome, cpf, usuario: { email, senha } });
+    const res = dados
+      ? await putComprador({ nome, cpf, usuario: { email, senha } })
+      : await postComprador({ nome, cpf, usuario: { email, senha } });
     carregando = false;
     if (res) {
       await autenticacao.logar({ email, senha }, false);
-      dispatch("voltar");
+      voltar();
+    } else {
+      cpf = maskBr.cpf(cpf);
     }
   }
 </script>
@@ -60,6 +71,7 @@
   <Entrada
     id="nome"
     label="Nome Completo"
+    value={nome}
     on:input={(event) => (nome = event.target.value)}
     valido={nomeValido}
     mensagemValidacao="Insira um nome válido"
@@ -67,6 +79,7 @@
   <Entrada
     id="cpf"
     label="CPF"
+    value={cpf}
     on:input={(event) => (cpf = event.target.value)}
     valido={cpfValido}
     mensagemValidacao="Insira um CPF válido"
@@ -74,6 +87,7 @@
   <Entrada
     id="email"
     label="E-mail"
+    value={email}
     on:input={(event) => (email = event.target.value)}
     valido={emailValido}
     mensagemValidacao="Insira um e-mail válido"
@@ -102,6 +116,6 @@
 </div>
 
 <div id="botoes">
-  <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
-  <Botao on:click={cadastrar} habilitado={formularioValido}>Salvar</Botao>
+  <Botao on:click={voltar}>Voltar</Botao>
+  <Botao on:click={salvar} habilitado={formularioValido}>Salvar</Botao>
 </div>

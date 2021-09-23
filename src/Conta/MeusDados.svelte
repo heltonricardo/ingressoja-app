@@ -16,8 +16,9 @@
 
   let tipoLogado = autenticacao.tipoLogado();
 
+  let dados;
+
   async function carregaDados() {
-    let dados;
 
     if (tipoLogado === TIPOCADASTRO.COMPRADOR) {
       dados = await getComprador();
@@ -167,7 +168,7 @@
   {/await}
 
   <div id="botoes">
-    <Botao on:click={() => dispatch("minhaconta")}>Editar</Botao>
+    <Botao on:click={() => dispatch("cadastro", dados)}>Editar</Botao>
     <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
   </div>
 </div>

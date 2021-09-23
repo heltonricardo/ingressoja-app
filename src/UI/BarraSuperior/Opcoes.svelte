@@ -25,7 +25,7 @@
     <Botao on:click={() => dispatch("minhaconta")}>Minha Conta</Botao>
     <Botao on:click={deslogar}>Sair</Botao>
   {:else}
-    <Botao on:click={() => dispatch("cadastrese")}>Cadastre-se</Botao>
+    <Botao on:click={() => dispatch("cadastro")}>Cadastre-se</Botao>
     <Botao on:click={() => dispatch("entrar")}>Entrar</Botao>
   {/if}
 </div>

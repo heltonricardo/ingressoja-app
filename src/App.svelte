@@ -23,10 +23,36 @@
   let id = null;
   let idPedido = null;
   let evento = null;
+  let dados = null;
 
   function trocaModo(novoModo) {
     modo = novoModo;
     window.scrollTo(0, 0);
+  }
+
+  function modoCadastro(event) {
+    dados = event.detail;
+    trocaModo(MODO.CADASTRO);
+  }
+
+  function modoDetalhes(event) {
+    id = event.detail;
+    trocaModo(MODO.DETALHES);
+  }
+
+  function modoFinalizacao(event) {
+    evento = event.detail;
+    trocaModo(MODO.FINALIZACAO);
+  }
+
+  function modoNormal() {
+    id = null;
+    trocaModo(MODO.NORMAL);
+  }
+
+  function modoPedido(event) {
+    idPedido = event.detail;
+    trocaModo(MODO.DETALHE_PEDIDO);
   }
 
   const modoAdministradores = () => trocaModo(MODO.ADMINISTRADORES);
@@ -48,32 +74,12 @@
   const modoNovoEvento = () => trocaModo(MODO.NOVO_EVENTO);
 
   const modoProdutoras = () => trocaModo(MODO.PRODUTORAS);
-
-  function modoNormal() {
-    id = null;
-    trocaModo(MODO.NORMAL);
-  }
-
-  function modoDetalhes(event) {
-    id = event.detail;
-    trocaModo(MODO.DETALHES);
-  }
-
-  function modoFinalizacao(event) {
-    evento = event.detail;
-    trocaModo(MODO.FINALIZACAO);
-  }
-
-  function modoPedido(event) {
-    idPedido = event.detail;
-    trocaModo(MODO.DETALHE_PEDIDO);
-  }
 </script>
 
 <BarraSuperior
   {modo}
   on:voltar={modoNormal}
-  on:cadastrese={() => (modo = MODO.CADASTRO)}
+  on:cadastro={modoCadastro}
   on:entrar={() => (modo = MODO.LOGIN)}
   on:minhaconta={modoMinhaConta}
 />
@@ -81,7 +87,7 @@
 {#if modo === MODO.NORMAL}
   <GridEventos on:vermais={modoDetalhes} />
 {:else if modo === MODO.CADASTRO}
-  <Cadastro on:voltar={modoNormal} />
+  <Cadastro {dados} on:minhaconta={modoMinhaConta} on:voltar={modoNormal} />
 {:else if modo === MODO.LOGIN}
   <Login on:voltar={modoNormal} />
 {:else if modo === MODO.DETALHES}
@@ -121,7 +127,7 @@
 {:else if modo === MODO.DETALHE_PEDIDO}
   <PedidoDetalhe id={idPedido} on:meuspedidos={modoMeusPedidos} />
 {:else if modo === MODO.MEUS_DADOS}
-  <MeusDados on:minhaconta={modoMinhaConta} />
+  <MeusDados on:minhaconta={modoMinhaConta} on:cadastro={modoCadastro} />
 {:else if modo === MODO.MEUS_EVENTOS}
   <MeusEventos on:minhaconta={modoMinhaConta} on:novoevento={modoNovoEvento} />
 {:else if modo === MODO.ADMINISTRADORES}

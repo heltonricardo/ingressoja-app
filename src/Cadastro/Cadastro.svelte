@@ -1,9 +1,16 @@
 <script>
   import Comprador from "./Comprador.svelte";
-  import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
   import Produtora from "./Produtora.svelte";
+  import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
+  import autenticacao from "../Autenticacao/autenticacao";
 
   let tipoCadastro = TIPOCADASTRO.COMPRADOR;
+
+  export let dados = null;
+
+  if (dados) {
+    tipoCadastro = autenticacao.tipoLogado();
+  }
 </script>
 
 <style>
@@ -23,42 +30,46 @@
   h1 {
     text-align: center;
     font-size: 3rem;
+    margin-bottom: 3rem;
   }
 
   #opcoes {
-    margin: 3rem 0;
+    margin-bottom: 3rem;
     display: flex;
     justify-content: space-between;
   }
 </style>
 
 <div id="corpo">
-  <h1>Faça seu Cadastro</h1>
-  <div id="opcoes">
-    <label>
-      <input
-        name="tipoCadastro"
-        type="radio"
-        value={TIPOCADASTRO.COMPRADOR}
-        bind:group={tipoCadastro}
-      />
-      Quero comprar ingressos!
-    </label>
-
-    <label>
-      <input
-        name="tipoCadastro"
-        type="radio"
-        value={TIPOCADASTRO.PRODUTORA}
-        bind:group={tipoCadastro}
-      />
-      Quero vender ingressos!
-    </label>
-  </div>
+  {#if !dados}
+    <h1>Faça seu Cadastro</h1>
+    <div id="opcoes">
+      <label>
+        <input
+          name="tipoCadastro"
+          type="radio"
+          value={TIPOCADASTRO.COMPRADOR}
+          bind:group={tipoCadastro}
+        />
+        Quero comprar ingressos!
+      </label>
+      <label>
+        <input
+          name="tipoCadastro"
+          type="radio"
+          value={TIPOCADASTRO.PRODUTORA}
+          bind:group={tipoCadastro}
+        />
+        Quero vender ingressos!
+      </label>
+    </div>
+  {:else}
+    <h1>Atualize seu Cadastro</h1>
+  {/if}
 
   {#if tipoCadastro === TIPOCADASTRO.COMPRADOR}
-    <Comprador on:voltar />
+    <Comprador {dados} on:voltar on:minhaconta />
   {:else if tipoCadastro === TIPOCADASTRO.PRODUTORA}
-    <Produtora on:voltar />
+    <Produtora {dados} on:voltar />
   {/if}
 </div>

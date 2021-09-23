@@ -40,6 +40,7 @@ const autenticacao = {
 
     if (status === STATUS.OK) {
       const jsonResp = await res.json();
+      localStorage.clear();
       localStorage.setItem(TIPO, jsonResp.tipo);
       localStorage.setItem(ID, jsonResp.id);
       if (exibeMsg) {

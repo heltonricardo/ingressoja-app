@@ -39,6 +39,45 @@ export async function postComprador(comprador) {
   return false;
 }
 
+export async function putComprador(comprador) {
+  if (
+    !autenticacao.estaLogado() ||
+    autenticacao.tipoLogado() !== TIPOCADASTRO.COMPRADOR
+  )
+    return null;
+
+  const id = autenticacao.idLogado();
+
+  let res;
+  try {
+    res = await fetch(`${PATH.COMPRADOR}/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(comprador),
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    return false;
+  }
+
+  const status = res.status;
+
+  if (status === STATUS.OK) {
+    swal(MSG.BOM, MSG.ALTERADO, "success", { timer: 5000 });
+    return true;
+  } //
+  else if (status === STATUS.CONFLICT) {
+    swal(MSG.RUIM, MSG.DUPLICADO, "error");
+  } //
+  else if (status === STATUS.BAD_REQUEST) {
+    swal(MSG.RUIM, MSG.INCORRETO, "error");
+  } //
+  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+    swal(MSG.RUIM, MSG.SERVERROR, "error");
+  }
+  return false;
+}
+
 export async function getComprador() {
   if (
     !autenticacao.estaLogado() ||

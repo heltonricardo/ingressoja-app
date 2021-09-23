@@ -10,6 +10,7 @@
   export let validar = true;
   export let maxlength = "255";
   export let min = null;
+  export let disabled = false;
 
   let tocado = false;
 </script>
@@ -33,6 +34,13 @@
   textarea:focus {
     border-color: var(--roxo1);
     outline: none;
+  }
+
+  input:disabled,
+  textarea:disabled {
+    border-color: var(--cinza0-5);
+    outline: none;
+    cursor: no-drop;
   }
 
   label {
@@ -85,6 +93,7 @@
       {id}
       {value}
       {maxlength}
+      {disabled}
       on:input
       on:blur={() => (tocado = true)}
     />

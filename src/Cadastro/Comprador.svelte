@@ -72,6 +72,7 @@
     id="nome"
     label="Nome Completo"
     value={nome}
+    disabled={true}
     on:input={(event) => (nome = event.target.value)}
     valido={nomeValido}
     mensagemValidacao="Insira um nome válido"
@@ -80,6 +81,7 @@
     id="cpf"
     label="CPF"
     value={cpf}
+    disabled={true}
     on:input={(event) => (cpf = event.target.value)}
     valido={cpfValido}
     mensagemValidacao="Insira um CPF válido"
@@ -98,7 +100,7 @@
   <Entrada
     id="senha1"
     type="password"
-    label="Crie uma senha"
+    label={dados ? "Crie uma nova senha" : "Crie uma senha"}
     on:input={(event) => (senha = event.target.value)}
     valido={senhaValida}
     mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"

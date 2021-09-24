@@ -16,6 +16,7 @@ const MSG = Object.freeze({
 
   PERDER_INFO: "Os dados informados serão perdidos!",
   SEM_EVENTO: "Não existem eventos para mostrar 😖",
+  EXCLUIR: "A conta será inativada e não poderá mais ser acessada...",
 
   INCORRETO: "Os dados informados estão incorretos!",
   DUPLICADO: "Os dados informados já pertencem a um cadastro existente!",
@@ -23,7 +24,7 @@ const MSG = Object.freeze({
   CONEXAO: "Não foi possível estabelecer conexão com o servidor... Tente \
   novamente mais tarde.",
   CREDENCIAL: "As credenciais informadas são inválidas!",
-  NAO_EXISTE: "As informações procuradas não existem!"
+  NAO_EXISTE: "As informações procuradas não existem!",
 });
 
 export default MSG;

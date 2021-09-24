@@ -1,16 +1,15 @@
 <script>
+  import { maskBr } from "js-brasil";
   import { createEventDispatcher } from "svelte";
 
-  import { maskBr } from "js-brasil";
-
-  import autenticacao from "../Autenticacao/autenticacao";
-  import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
-  import { getComprador } from "../Conexao/compradorConex";
-  import { getProdutora } from "../Conexao/produtoraConex";
-  import { getAdministrador } from "../Conexao/administradorConex";
-
+  import MSG from "../ENUM/MSG";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
+  import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
+  import autenticacao from "../Autenticacao/autenticacao";
+  import { getProdutora } from "../Conexao/produtoraConex";
+  import { getAdministrador } from "../Conexao/administradorConex";
+  import { getComprador, deleteComprador } from "../Conexao/compradorConex";
 
   const dispatch = createEventDispatcher();
 
@@ -19,7 +18,6 @@
   let dados;
 
   async function carregaDados() {
-
     if (tipoLogado === TIPOCADASTRO.COMPRADOR) {
       dados = await getComprador();
     } //
@@ -35,6 +33,18 @@
     }
 
     return dados;
+  }
+
+  function excluir() {
+    swal({
+      title: MSG.CERTEZA,
+      text: MSG.EXCLUIR,
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((temCerteza) => temCerteza && deleteComprador())
+      .then((temCerteza) => temCerteza && dispatch("voltar"));
   }
 </script>
 
@@ -169,6 +179,7 @@
 
   <div id="botoes">
     <Botao on:click={() => dispatch("cadastro", dados)}>Editar</Botao>
+    <Botao on:click={excluir}>Excluir Conta</Botao>
     <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
   </div>
 </div>

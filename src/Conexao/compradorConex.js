@@ -135,3 +135,33 @@ export async function getPedidos() {
   }
   return null;
 }
+
+export async function deleteComprador() {
+  if (
+    !autenticacao.estaLogado() ||
+    autenticacao.tipoLogado() !== TIPOCADASTRO.COMPRADOR
+  )
+    return null;
+
+  const id = autenticacao.idLogado();
+
+  let res;
+  try {
+    res = await fetch(`${PATH.COMPRADOR}/${id}`, { method: "DELETE" });
+  } catch (error) {
+    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    return null;
+  }
+
+  const status = res.status;
+
+  if (status === STATUS.OK) {
+    autenticacao.deslogar();
+    return true;
+  }
+  else if (status === STATUS.BAD_REQUEST) {
+    swal(MSG.RUIM, MSG.NAO_EXISTE, "error");
+  }
+
+  return null;
+}

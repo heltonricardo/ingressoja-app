@@ -127,7 +127,11 @@
 {:else if modo === MODO.DETALHE_PEDIDO}
   <PedidoDetalhe id={idPedido} on:meuspedidos={modoMeusPedidos} />
 {:else if modo === MODO.MEUS_DADOS}
-  <MeusDados on:minhaconta={modoMinhaConta} on:cadastro={modoCadastro} />
+  <MeusDados
+    on:minhaconta={modoMinhaConta}
+    on:cadastro={modoCadastro}
+    on:voltar={modoNormal}
+  />
 {:else if modo === MODO.MEUS_EVENTOS}
   <MeusEventos on:minhaconta={modoMinhaConta} on:novoevento={modoNovoEvento} />
 {:else if modo === MODO.ADMINISTRADORES}

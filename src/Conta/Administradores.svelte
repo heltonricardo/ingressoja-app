@@ -1,18 +1,16 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
-  import { createEventDispatcher } from "svelte";
+  import autenticacao from "../Autenticacao/autenticacao";
   import { getAdministradores } from "../Conexao/administradorConex";
 
   const dispatch = createEventDispatcher();
 
-  const admins = getAdministradores().then((d) =>
-    d.sort((x, y) => {
-      const a = x.nome.toLowerCase();
-      const b = y.nome.toLowerCase();
-      return (a < b) ? -1 : (a > b) ? 1 : 0;
-    })
-  );
+  const admins = getAdministradores();
+
+  const idLogado = autenticacao.idLogado();
 </script>
 
 <style>
@@ -92,16 +90,20 @@
     {#if admins.length}
       <table id="tabela">
         <tr>
+          <th>Id</th>
           <th>Nome</th>
           <th>Ações</th>
         </tr>
 
         {#each admins as adm}
           <tr>
+            <td>{adm.id}</td>
             <td>{adm.nome}</td>
             <td id="detalhes">
               <Botao>Detalhes</Botao>
-              <Botao>Excluir</Botao>
+              {#if adm.id !== idLogado}
+                <Botao>Excluir</Botao>
+              {/if}
             </td>
           </tr>
         {/each}

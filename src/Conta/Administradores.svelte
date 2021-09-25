@@ -24,8 +24,7 @@
       dangerMode: true,
     }).then((temCerteza) => {
       if (temCerteza) {
-        deleteAdministrador(id);
-        admins = getAdministradores();
+        deleteAdministrador(id).then(() => (admins = getAdministradores()));
       }
     });
   }

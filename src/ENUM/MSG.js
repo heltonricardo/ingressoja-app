@@ -16,7 +16,8 @@ const MSG = Object.freeze({
 
   PERDER_INFO: "Os dados informados serão perdidos!",
   SEM_EVENTO: "Não existem eventos para mostrar 😖",
-  EXCLUIR: "A conta será inativada e não poderá mais ser acessada...",
+  EXCLUIR: "A conta será inativada e não poderá mais ser acessada. Essa \
+  operação não poderá ser desfeita!",
 
   INCORRETO: "Os dados informados estão incorretos!",
   DUPLICADO: "Os dados informados já pertencem a um cadastro existente!",

@@ -1,20 +1,23 @@
 <script>
+  import validator from "validator";
   import { createEventDispatcher, onMount } from "svelte";
 
-  import validator from "validator";
-
-  import { postAdministrador } from "../Conexao/administradorConex";
-  import autenticacao from "../Autenticacao/autenticacao";
+  import {
+    postAdministrador,
+    putAdministrador,
+  } from "../Conexao/administradorConex";
   import Botao from "../UI/Botao.svelte";
   import Entrada from "../UI/Entrada.svelte";
   import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
+  import autenticacao from "../Autenticacao/autenticacao";
 
   const dispatch = createEventDispatcher();
 
+  export let dados = null;
   let carregando = false;
 
-  let nome = "";
-  let email = "";
+  let nome = dados ? dados.nome : "";
+  let email = dados ? dados.email : "";
   let senha = "";
   let senha2 = "";
 
@@ -26,13 +29,18 @@
   $: formularioValido =
     nomeValido && emailValido && senhaValida && senha2Valida;
 
-  async function cadastrar() {
-    if (senha === senha2) {
-      carregando = true;
-      const res = await postAdministrador({ nome, usuario: { email, senha } });
-      carregando = false;
-      if (res) dispatch("minhaconta");
-    }
+  async function salvar() {
+    carregando = true;
+    const res = dados
+      ? await putAdministrador({ nome, usuario: { email, senha } })
+      : await postAdministrador({ nome, usuario: { email, senha } });
+    carregando = false;
+    if (res) dispatch("minhaconta");
+  }
+
+  function voltar() {
+    if (dados) dispatch("minhaconta");
+    else dispatch("voltar");
   }
 
   onMount(() => {
@@ -78,13 +86,16 @@
   <div id="campos">
     <Entrada
       id="nome"
+      value={nome}
       label="Nome Completo"
+      disabled={dados}
       on:input={(event) => (nome = event.target.value)}
       valido={nomeValido}
       mensagemValidacao="Insira um nome válido"
     />
     <Entrada
       id="email"
+      value={email}
       label="E-mail"
       on:input={(event) => (email = event.target.value)}
       valido={emailValido}
@@ -114,7 +125,7 @@
   </div>
 
   <div id="botoes">
-    <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
-    <Botao on:click={cadastrar} habilitado={formularioValido}>Salvar</Botao>
+    <Botao on:click={voltar}>Voltar</Botao>
+    <Botao on:click={salvar} habilitado={formularioValido}>Salvar</Botao>
   </div>
 </div>

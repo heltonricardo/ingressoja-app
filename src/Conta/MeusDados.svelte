@@ -35,6 +35,11 @@
     return dados;
   }
 
+  function editar() {
+    if (tipoLogado === TIPOCADASTRO.ADMINISTRADOR) dispatch("novoadm", dados);
+    else dispatch("cadastro", dados);
+  }
+
   function excluir() {
     swal({
       title: MSG.CERTEZA,
@@ -178,8 +183,10 @@
   {/await}
 
   <div id="botoes">
-    <Botao on:click={() => dispatch("cadastro", dados)}>Editar</Botao>
-    <Botao on:click={excluir}>Excluir Conta</Botao>
+    <Botao on:click={editar}>Editar</Botao>
+    {#if tipoLogado !== TIPOCADASTRO.ADMINISTRADOR}
+      <Botao on:click={excluir}>Excluir Conta</Botao>
+    {/if}
     <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
   </div>
 </div>

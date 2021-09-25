@@ -151,6 +151,33 @@ export async function getProdutoras() {
   return null;
 }
 
+export async function deleteAdministrador(id) {
+  if (
+    !autenticacao.estaLogado() ||
+    !autenticacao.estaLogadoComTipo(TIPOCADASTRO.ADMINISTRADOR)
+  )
+    return null;
+
+  let res;
+  try {
+    res = await fetch(`${PATH.ADMINISTRADOR}/${id}`, { method: "DELETE" });
+  } catch (error) {
+    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    return null;
+  }
+
+  const status = res.status;
+
+  if (status === STATUS.OK) {
+    swal(MSG.BOM, MSG.OK, "success");
+    return true;
+  } else if (status === STATUS.BAD_REQUEST) {
+    swal(MSG.RUIM, MSG.NAO_EXISTE, "error");
+  }
+
+  return null;
+}
+
 export async function putAdministrador(administrador) {
   if (
     !autenticacao.estaLogado() ||

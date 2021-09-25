@@ -1,16 +1,34 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
+  import {
+    getAdministradores,
+    deleteAdministrador,
+  } from "../Conexao/administradorConex";
+  import MSG from "../ENUM/MSG";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import autenticacao from "../Autenticacao/autenticacao";
-  import { getAdministradores } from "../Conexao/administradorConex";
 
   const dispatch = createEventDispatcher();
-
-  const admins = getAdministradores();
-
   const idLogado = autenticacao.idLogado();
+
+  let admins = getAdministradores();
+
+  function excluir(id) {
+    swal({
+      title: MSG.CERTEZA,
+      text: MSG.EXCLUIR,
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((temCerteza) => {
+      if (temCerteza) {
+        deleteAdministrador(id);
+        admins = getAdministradores();
+      }
+    });
+  }
 </script>
 
 <style>
@@ -102,7 +120,7 @@
             <td id="detalhes">
               <Botao>Detalhes</Botao>
               {#if adm.id !== idLogado}
-                <Botao>Excluir</Botao>
+                <Botao on:click={() => excluir(adm.id)}>Excluir</Botao>
               {/if}
             </td>
           </tr>

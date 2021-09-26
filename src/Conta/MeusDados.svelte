@@ -50,8 +50,9 @@
     })
       .then((temCerteza) => {
         if (temCerteza) {
-          if (tipoLogado === TIPOCADASTRO.COMPRADOR) deleteComprador();
-          else if (tipoLogado === TIPOCADASTRO.PRODUTORA) deleteProdutora();
+          if (tipoLogado === TIPOCADASTRO.COMPRADOR) return deleteComprador();
+          else if (tipoLogado === TIPOCADASTRO.PRODUTORA)
+            return deleteProdutora();
         }
       })
       .then((temCerteza) => temCerteza && dispatch("voltar"));

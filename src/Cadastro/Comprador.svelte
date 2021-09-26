@@ -9,6 +9,7 @@
   import Entrada from "../UI/Entrada.svelte";
   import autenticacao from "../Autenticacao/autenticacao";
   import { postComprador, putComprador } from "../Conexao/compradorConex";
+  import { onlyNumeros } from "../utils/sanitarizador";
 
   const dispatch = createEventDispatcher();
 
@@ -36,7 +37,7 @@
 
   async function salvar() {
     carregando = true;
-    cpf = maskBr.cpf(cpf);
+    cpf = onlyNumeros(cpf);
     const obj = { nome, cpf, usuario: { email, senha } };
     const res = dados ? await putComprador(obj) : await postComprador(obj);
     carregando = false;

@@ -31,16 +31,14 @@
     nomeValido && cpfValido && emailValido && senhaValida && senha2Valida;
 
   function voltar() {
-    if (dados) dispatch("minhaconta");
-    else dispatch("voltar");
+    dados ? dispatch("meusdados") : dispatch("voltar");
   }
 
   async function salvar() {
     carregando = true;
-    cpf = cpf.replace(/[^\d]/g, "");
-    const res = dados
-      ? await putComprador({ nome, cpf, usuario: { email, senha } })
-      : await postComprador({ nome, cpf, usuario: { email, senha } });
+    cpf = maskBr.cpf(cpf);
+    const obj = { nome, cpf, usuario: { email, senha } };
+    const res = dados ? await putComprador(obj) : await postComprador(obj);
     carregando = false;
     if (res) {
       await autenticacao.logar({ email, senha }, false);

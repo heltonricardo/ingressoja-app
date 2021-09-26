@@ -7,9 +7,9 @@
   import Aguarde from "../UI/Aguarde.svelte";
   import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
   import autenticacao from "../Autenticacao/autenticacao";
-  import { getProdutora } from "../Conexao/produtoraConex";
   import { getAdministrador } from "../Conexao/administradorConex";
   import { getComprador, deleteComprador } from "../Conexao/compradorConex";
+  import { deleteProdutora, getProdutora } from "../Conexao/produtoraConex";
 
   const dispatch = createEventDispatcher();
 
@@ -48,7 +48,12 @@
       buttons: true,
       dangerMode: true,
     })
-      .then((temCerteza) => temCerteza && deleteComprador())
+      .then((temCerteza) => {
+        if (temCerteza) {
+          if (tipoLogado === TIPOCADASTRO.COMPRADOR) deleteComprador();
+          else if (tipoLogado === TIPOCADASTRO.PRODUTORA) deleteProdutora();
+        }
+      })
       .then((temCerteza) => temCerteza && dispatch("voltar"));
   }
 </script>

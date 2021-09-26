@@ -90,7 +90,7 @@
 {#if modo === MODO.NORMAL}
   <GridEventos on:vermais={modoDetalhes} />
 {:else if modo === MODO.CADASTRO}
-  <Cadastro {dados} on:minhaconta={modoMinhaConta} on:voltar={modoNormal} />
+  <Cadastro {dados} on:meusdados={modoMeusDados} on:voltar={modoNormal} />
 {:else if modo === MODO.LOGIN}
   <Login on:voltar={modoNormal} />
 {:else if modo === MODO.DETALHES}

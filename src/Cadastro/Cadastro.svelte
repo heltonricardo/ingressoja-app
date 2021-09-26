@@ -68,8 +68,8 @@
   {/if}
 
   {#if tipoCadastro === TIPOCADASTRO.COMPRADOR}
-    <Comprador {dados} on:voltar on:minhaconta />
+    <Comprador {dados} on:voltar on:meusdados />
   {:else if tipoCadastro === TIPOCADASTRO.PRODUTORA}
-    <Produtora {dados} on:voltar />
+    <Produtora {dados} on:voltar on:meusdados />
   {/if}
 </div>

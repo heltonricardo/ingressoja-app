@@ -1,26 +1,29 @@
 <script>
+  import validator from "validator";
+  import { maskBr } from "js-brasil";
+  import { validateBr } from "js-brasil";
   import { createEventDispatcher } from "svelte";
 
-  import validator from "validator";
-  import { validateBr } from "js-brasil";
-
-  import autenticacao from "../Autenticacao/autenticacao";
-  import { postProdutora } from "../Conexao/produtoraConex";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import Entrada from "../UI/Entrada.svelte";
+  import { onlyNumeros } from "../utils/sanitarizador";
+  import autenticacao from "../Autenticacao/autenticacao";
+  import { postProdutora, putProdutora } from "../Conexao/produtoraConex";
 
   const dispatch = createEventDispatcher();
 
+  export let dados = null;
+
   let carregando = false;
 
-  let razaoSocial = "";
-  let cnpj = "";
-  let nomeFantasia = "";
-  let email = "";
-  let banco = "";
-  let agencia = "";
-  let conta = "";
+  let razaoSocial = dados ? dados.razaoSocial : "";
+  let cnpj = dados ? maskBr.cnpj(dados.cnpj) : "";
+  let nomeFantasia = dados ? dados.nomeFantasia : "";
+  let email = dados ? dados.email : "";
+  let banco = dados ? dados.banco : "";
+  let agencia = dados ? dados.agencia : "";
+  let conta = dados ? dados.conta : "";
   let senha = "";
   let senha2 = "";
 
@@ -51,10 +54,13 @@
     senhaValida &&
     senha2Valida;
 
-  async function cadastrar() {
+  function voltar() {
+    dados ? dispatch("meusdados") : dispatch("voltar");
+  }
+  async function salvar() {
     carregando = true;
-    cnpj = cnpj.replace(/[^\d]/g, "");
-    const res = await postProdutora({
+    cnpj = onlyNumeros(cnpj);
+    const obj = {
       razaoSocial,
       cnpj,
       nomeFantasia,
@@ -62,12 +68,13 @@
       agencia,
       conta,
       usuario: { email, senha },
-    });
+    };
+    const res = dados ? await putProdutora(obj) : await postProdutora(obj);
     carregando = false;
     if (res) {
       await autenticacao.logar({ email, senha }, false);
-      dispatch("voltar");
-    }
+      voltar();
+    } else cnpj = maskBr.cnpj(cnpj);
   }
 </script>
 
@@ -96,6 +103,8 @@
   <Entrada
     id="razaoSocial"
     label="Razão Social"
+    value={razaoSocial}
+    disabled={dados}
     on:input={(event) => (razaoSocial = event.target.value)}
     valido={razaoSocialValida}
     mensagemValidacao="Insira uma razão social válida"
@@ -103,6 +112,8 @@
   <Entrada
     id="cnpj"
     label="CNPJ"
+    value={cnpj}
+    disabled={dados}
     on:input={(event) => (cnpj = event.target.value)}
     valido={cnpjValido}
     mensagemValidacao="Insira um CNPJ válido"
@@ -110,6 +121,7 @@
   <Entrada
     id="nomeFantasia"
     label="Nome Fantasia"
+    value={nomeFantasia}
     on:input={(event) => (nomeFantasia = event.target.value)}
     valido={nomeFantasiaValido}
     mensagemValidacao="Insira um nome fantasia válido"
@@ -117,6 +129,7 @@
   <Entrada
     id="email"
     label="E-mail"
+    value={email}
     on:input={(event) => (email = event.target.value)}
     valido={emailValido}
     mensagemValidacao="Insira um e-mail válido"
@@ -127,6 +140,7 @@
   <Entrada
     id="banco"
     label="Banco"
+    value={banco}
     on:input={(event) => (banco = event.target.value)}
     valido={bancoValido}
     mensagemValidacao="Insira um nome de banco válido"
@@ -135,6 +149,7 @@
   <Entrada
     id="agencia"
     label="Agência"
+    value={agencia}
     on:input={(event) => (agencia = event.target.value)}
     valido={agenciaValida}
     mensagemValidacao="Insira um número de agência válido"
@@ -143,6 +158,7 @@
   <Entrada
     id="conta"
     label="Conta"
+    value={conta}
     on:input={(event) => (conta = event.target.value)}
     valido={contaValida}
     mensagemValidacao="Insira um número de conta válido"
@@ -154,7 +170,7 @@
   <Entrada
     id="senha1"
     type="password"
-    label="Crie uma senha"
+    label={dados ? "Crie uma nova senha" : "Crie uma senha"}
     on:input={(event) => (senha = event.target.value)}
     valido={senhaValida}
     mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"
@@ -172,6 +188,6 @@
 </div>
 
 <div id="botoes">
-  <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
-  <Botao on:click={cadastrar} habilitado={formularioValido}>Salvar</Botao>
+  <Botao on:click={voltar}>Voltar</Botao>
+  <Botao on:click={salvar} habilitado={formularioValido}>Salvar</Botao>
 </div>

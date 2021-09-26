@@ -107,7 +107,7 @@
     <Entrada
       id="senha1"
       type="password"
-      label="Crie uma senha"
+      label={dados ? "Crie uma nova senha" : "Crie uma senha"}
       on:input={(event) => (senha = event.target.value)}
       valido={senhaValida}
       mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"

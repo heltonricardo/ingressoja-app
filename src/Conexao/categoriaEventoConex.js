@@ -29,7 +29,12 @@ export async function postCategoriaEvento(categoriaEvento) {
   const status = res.status;
 
   if (status === STATUS.CREATED) {
-    Swal.fire(MSG.BOM, MSG.CRIADO, "success", { timer: 5000 });
+    Swal.fire({
+      title: MSG.BOM,
+      text: MSG.CRIADO,
+      icon: "success",
+      timer: 5000,
+    });
     return true;
   } //
   else if (status === STATUS.CONFLICT) {

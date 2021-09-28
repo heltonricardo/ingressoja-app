@@ -23,7 +23,12 @@ export async function postComprador(comprador) {
   const status = res.status;
 
   if (status === STATUS.CREATED) {
-    Swal.fire(MSG.BOM, MSG.CRIADO, "success", { timer: 5000 });
+    Swal.fire({
+      title: MSG.BOM,
+      text: MSG.CRIADO,
+      icon: "success",
+      timer: 5000,
+    });
     return true;
   } //
   else if (status === STATUS.CONFLICT) {
@@ -62,7 +67,12 @@ export async function putComprador(comprador) {
   const status = res.status;
 
   if (status === STATUS.OK) {
-    Swal.fire(MSG.BOM, MSG.ALTERADO, "success", { timer: 5000 });
+    Swal.fire({
+      title: MSG.BOM,
+      text: MSG.ALTERADO,
+      icon: "success",
+      timer: 5000,
+    });
     return true;
   } //
   else if (status === STATUS.CONFLICT) {
@@ -157,8 +167,7 @@ export async function deleteComprador() {
   if (status === STATUS.OK) {
     autenticacao.deslogar();
     return true;
-  }
-  else if (status === STATUS.BAD_REQUEST) {
+  } else if (status === STATUS.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
 

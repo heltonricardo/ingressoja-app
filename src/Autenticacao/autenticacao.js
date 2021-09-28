@@ -19,7 +19,12 @@ const autenticacao = {
 
   deslogar: () => {
     localStorage.clear();
-    Swal.fire(MSG.TCHAU, MSG.VOLTE_SEMPRE, "info", { timer: 3000 });
+    Swal.fire({
+      title: MSG.TCHAU,
+      text: MSG.VOLTE_SEMPRE,
+      icon: "info",
+      timer: 3000,
+    });
   },
 
   logar: async (credencial, exibeMsg) => {
@@ -46,7 +51,12 @@ const autenticacao = {
       localStorage.setItem(TIPO, jsonResp.tipo);
       localStorage.setItem(ID, jsonResp.id);
       if (exibeMsg) {
-        Swal.fire(MSG.OLA, MSG.SAUDACAO, "success", { timer: 3000 });
+        Swal.fire({
+          title: MSG.OLA,
+          text: MSG.SAUDACAO,
+          icon: "success",
+          timer: 3000,
+        });
       }
       return true;
     } //

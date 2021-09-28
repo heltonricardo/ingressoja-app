@@ -8,7 +8,6 @@ import TIPOCADASTRO from "../ENUM/TIPOCADASTRO.js";
 import autenticacao from "../Autenticacao/autenticacao.js";
 
 export async function postPedido(pedido) {
-
   if (
     !autenticacao.estaLogado() ||
     !autenticacao.estaLogadoComTipo(TIPOCADASTRO.COMPRADOR)
@@ -33,8 +32,13 @@ export async function postPedido(pedido) {
   const status = res.status;
 
   if (status === STATUS.CREATED) {
-    await new Promise(resolve => setTimeout(resolve, 4000));
-    Swal.fire(MSG.APROVADO, MSG.PED_REALIZADO, "success", { timer: 5000 });
+    await new Promise((resolve) => setTimeout(resolve, 4000));
+    Swal.fire({
+      title: MSG.APROVADO,
+      text: MSG.PED_REALIZADO,
+      icon: "success",
+      timer: 5000,
+    });
     return true;
   } //
   else if (status === STATUS.BAD_REQUEST) {

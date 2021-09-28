@@ -45,7 +45,13 @@
   #botoes {
     margin: 3rem auto;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #duplo {
+    display: flex;
+    margin-top: 0.5rem;
   }
 </style>
 
@@ -73,7 +79,10 @@
   </div>
 
   <div id="botoes">
-    <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
     <Botao on:click={entrar}>Entrar</Botao>
+    <div id="duplo">
+      <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
+      <Botao on:click={() => dispatch("cadastro")}>Cadastre-se</Botao>
+    </div>
   </div>
 </div>

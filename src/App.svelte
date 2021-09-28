@@ -19,7 +19,7 @@
   import Compradores from "./Conta/Compradores.svelte";
   import Produtoras from "./Conta/Produtoras.svelte";
 
-  let modo = MODO.NORMAL;
+  let modo = MODO.LOGIN;
   let id = null;
   let idPedido = null;
   let evento = null;
@@ -94,7 +94,7 @@
 {:else if modo === MODO.CADASTRO}
   <Cadastro {dados} on:meusdados={modoMeusDados} on:voltar={modoNormal} />
 {:else if modo === MODO.LOGIN}
-  <Login on:voltar={modoNormal} />
+  <Login on:voltar={modoNormal} on:cadastro={modoCadastro} />
 {:else if modo === MODO.DETALHES}
   <Detalhes
     {id}

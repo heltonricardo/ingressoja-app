@@ -66,6 +66,8 @@
 
   const modoCompradores = () => trocaModo(MODO.COMPRADORES);
 
+  const modoLogin = () => trocaModo(MODO.LOGIN);
+
   const modoMeusDados = () => trocaModo(MODO.MEUS_DADOS);
 
   const modoMeusEventos = () => trocaModo(MODO.MEUS_EVENTOS);
@@ -83,7 +85,7 @@
   {modo}
   on:voltar={modoNormal}
   on:cadastro={modoCadastro}
-  on:entrar={() => (modo = MODO.LOGIN)}
+  on:entrar={modoLogin}
   on:minhaconta={modoMinhaConta}
 />
 
@@ -98,7 +100,7 @@
     {id}
     on:voltar={modoNormal}
     on:finalizacao={modoFinalizacao}
-    on:entrar={() => (modo = MODO.LOGIN)}
+    on:entrar={modoLogin}
   />
 {:else if modo === MODO.MINHA_CONTA}
   <MinhaConta

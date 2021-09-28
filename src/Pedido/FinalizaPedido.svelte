@@ -1,5 +1,5 @@
 <script>
-  import swal from "sweetalert";
+  import Swal from "sweetalert2";
   import validator from "validator";
   import { validateBr } from "js-brasil";
   import { createEventDispatcher } from "svelte";
@@ -34,7 +34,7 @@
   /************************** VOLTAR COM CONFIRMAÇÃO **************************/
 
   function voltar() {
-    swal({
+    Swal.fire({
       title: MSG.CERTEZA,
       text: MSG.PERDER_INFO,
       icon: "warning",

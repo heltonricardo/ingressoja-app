@@ -1,4 +1,4 @@
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 
 import MSG from "../ENUM/MSG.js";
 import PATH from "../ENUM/PATH.js";
@@ -22,24 +22,24 @@ export async function postCategoriaEvento(categoriaEvento) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
     return false;
   }
 
   const status = res.status;
 
   if (status === STATUS.CREATED) {
-    swal(MSG.BOM, MSG.CRIADO, "success", { timer: 5000 });
+    Swal.fire(MSG.BOM, MSG.CRIADO, "success", { timer: 5000 });
     return true;
   } //
   else if (status === STATUS.CONFLICT) {
-    swal(MSG.RUIM, MSG.DUPLICADO, "error");
+    Swal.fire(MSG.RUIM, MSG.DUPLICADO, "error");
   } //
   else if (status === STATUS.BAD_REQUEST) {
-    swal(MSG.RUIM, MSG.INCORRETO, "error");
+    Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
   } //
   else if (status === STATUS.INTERNAL_SERVER_ERROR) {
-    swal(MSG.RUIM, MSG.SERVERROR, "error");
+    Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
 }
@@ -50,7 +50,7 @@ export async function getCategoriasEvento() {
   try {
     resposta = await fetch(PATH.CATEGORIA_EVENTO);
   } catch (error) {
-    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
     return null;
   }
 

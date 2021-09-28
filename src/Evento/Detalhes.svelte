@@ -1,4 +1,5 @@
 <script>
+  import Swal from "sweetalert2";
   import { maskBr } from "js-brasil";
   import { createEventDispatcher } from "svelte";
 
@@ -41,7 +42,7 @@
     if (autenticacao.estaLogadoComTipo(TIPOCADASTRO.COMPRADOR)) {
       eventoCarregado.then((evento) => dispatch("finalizacao", evento));
     } else {
-      swal(MSG.OPS, MSG.AUTENTIQUE_COMPRADOR, "info");
+      Swal.fire(MSG.OPS, MSG.AUTENTIQUE_COMPRADOR, "info");
       dispatch("entrar");
     }
   }

@@ -1,4 +1,4 @@
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 
 import MSG from "../ENUM/MSG.js";
 import PATH from "../ENUM/PATH.js";
@@ -26,7 +26,7 @@ export async function postPedido(pedido) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
     return false;
   }
 
@@ -34,14 +34,14 @@ export async function postPedido(pedido) {
 
   if (status === STATUS.CREATED) {
     await new Promise(resolve => setTimeout(resolve, 4000));
-    swal(MSG.APROVADO, MSG.PED_REALIZADO, "success", { timer: 5000 });
+    Swal.fire(MSG.APROVADO, MSG.PED_REALIZADO, "success", { timer: 5000 });
     return true;
   } //
   else if (status === STATUS.BAD_REQUEST) {
-    swal(MSG.RUIM, MSG.INCORRETO, "error");
+    Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
   } //
   else if (status === STATUS.INTERNAL_SERVER_ERROR) {
-    swal(MSG.RUIM, MSG.SERVERROR, "error");
+    Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
 }
@@ -57,7 +57,7 @@ export async function getPedido(id) {
   try {
     res = await fetch(`${PATH.PEDIDO}/${id}`);
   } catch (error) {
-    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
     return null;
   }
 
@@ -68,7 +68,7 @@ export async function getPedido(id) {
     return pedido;
   } //
   else if (status === STATUS.BAD_REQUEST) {
-    swal(MSG.RUIM, MSG.NAO_EXISTE, "error");
+    Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
   return null;
 }

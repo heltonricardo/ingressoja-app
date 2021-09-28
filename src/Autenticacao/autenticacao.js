@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 import MSG from "../ENUM/MSG";
 import PATH from "../ENUM/PATH";
 import STATUS from "../ENUM/STATUS";
@@ -17,7 +19,7 @@ const autenticacao = {
 
   deslogar: () => {
     localStorage.clear();
-    swal(MSG.TCHAU, MSG.VOLTE_SEMPRE, "info", { timer: 3000 });
+    Swal.fire(MSG.TCHAU, MSG.VOLTE_SEMPRE, "info", { timer: 3000 });
   },
 
   logar: async (credencial, exibeMsg) => {
@@ -31,7 +33,7 @@ const autenticacao = {
       });
     } catch (error) {
       if (exibeMsg) {
-        swal(MSG.RUIM, MSG.CONEXAO, "error");
+        Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
       }
       return false;
     }
@@ -44,15 +46,15 @@ const autenticacao = {
       localStorage.setItem(TIPO, jsonResp.tipo);
       localStorage.setItem(ID, jsonResp.id);
       if (exibeMsg) {
-        swal(MSG.OLA, MSG.SAUDACAO, "success", { timer: 3000 });
+        Swal.fire(MSG.OLA, MSG.SAUDACAO, "success", { timer: 3000 });
       }
       return true;
     } //
     else if (status === STATUS.UNAUTHORIZED && exibeMsg) {
-      swal(MSG.RUIM, MSG.CREDENCIAL, "error");
+      Swal.fire(MSG.RUIM, MSG.CREDENCIAL, "error");
     } //
     else if (status === STATUS.INTERNAL_SERVER_ERROR && exibeMsg) {
-      swal(MSG.RUIM, MSG.SERVERROR, "error");
+      Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
     }
     return false;
   },

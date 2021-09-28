@@ -1,4 +1,4 @@
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 
 import MSG from "../ENUM/MSG.js";
 import PATH from "../ENUM/PATH.js";
@@ -22,24 +22,24 @@ export async function postAdministrador(administrador) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
     return false;
   }
 
   const status = res.status;
 
   if (status === STATUS.CREATED) {
-    swal(MSG.BOM, MSG.CRIADO, "success", { timer: 5000 });
+    Swal.fire(MSG.BOM, MSG.CRIADO, "success", { timer: 5000 });
     return true;
   } //
   else if (status === STATUS.CONFLICT) {
-    swal(MSG.RUIM, MSG.DUPLICADO, "error");
+    Swal.fire(MSG.RUIM, MSG.DUPLICADO, "error");
   } //
   else if (status === STATUS.BAD_REQUEST) {
-    swal(MSG.RUIM, MSG.INCORRETO, "error");
+    Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
   } //
   else if (status === STATUS.INTERNAL_SERVER_ERROR) {
-    swal(MSG.RUIM, MSG.SERVERROR, "error");
+    Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
 }
@@ -57,7 +57,7 @@ export async function getAdministrador() {
   try {
     res = await fetch(`${PATH.ADMINISTRADOR}/${id}`);
   } catch (error) {
-    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
     return null;
   }
 
@@ -68,7 +68,7 @@ export async function getAdministrador() {
     return administrador;
   } //
   else if (status === STATUS.BAD_REQUEST) {
-    swal(MSG.RUIM, MSG.NAO_EXISTE, "error");
+    Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
   return null;
 }
@@ -84,7 +84,7 @@ export async function getAdministradores() {
   try {
     res = await fetch(PATH.ADMINISTRADOR);
   } catch (error) {
-    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
     return null;
   }
 
@@ -94,7 +94,7 @@ export async function getAdministradores() {
     return await res.json();
   } //
   else if (status === STATUS.BAD_REQUEST) {
-    swal(MSG.RUIM, MSG.NAO_EXISTE, "error");
+    Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
   return null;
 }
@@ -110,7 +110,7 @@ export async function getCompradores() {
   try {
     res = await fetch(PATH.COMPRADOR);
   } catch (error) {
-    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
     return null;
   }
 
@@ -120,7 +120,7 @@ export async function getCompradores() {
     return await res.json();
   } //
   else if (status === STATUS.BAD_REQUEST) {
-    swal(MSG.RUIM, MSG.NAO_EXISTE, "error");
+    Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
   return null;
 }
@@ -136,7 +136,7 @@ export async function getProdutoras() {
   try {
     res = await fetch(PATH.PRODUTORA);
   } catch (error) {
-    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
     return null;
   }
 
@@ -146,7 +146,7 @@ export async function getProdutoras() {
     return await res.json();
   } //
   else if (status === STATUS.BAD_REQUEST) {
-    swal(MSG.RUIM, MSG.NAO_EXISTE, "error");
+    Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
   return null;
 }
@@ -162,17 +162,17 @@ export async function deleteAdministrador(id) {
   try {
     res = await fetch(`${PATH.ADMINISTRADOR}/${id}`, { method: "DELETE" });
   } catch (error) {
-    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
     return null;
   }
 
   const status = res.status;
 
   if (status === STATUS.OK) {
-    swal(MSG.BOM, MSG.OK, "success");
+    Swal.fire(MSG.BOM, MSG.OK, "success");
     return true;
   } else if (status === STATUS.BAD_REQUEST) {
-    swal(MSG.RUIM, MSG.NAO_EXISTE, "error");
+    Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
 
   return null;
@@ -195,24 +195,24 @@ export async function putAdministrador(administrador) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    swal(MSG.RUIM, MSG.CONEXAO, "error");
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
     return false;
   }
 
   const status = res.status;
 
   if (status === STATUS.OK) {
-    swal(MSG.BOM, MSG.ALTERADO, "success", { timer: 5000 });
+    Swal.fire(MSG.BOM, MSG.ALTERADO, "success", { timer: 5000 });
     return true;
   } //
   else if (status === STATUS.CONFLICT) {
-    swal(MSG.RUIM, MSG.DUPLICADO, "error");
+    Swal.fire(MSG.RUIM, MSG.DUPLICADO, "error");
   } //
   else if (status === STATUS.BAD_REQUEST) {
-    swal(MSG.RUIM, MSG.INCORRETO, "error");
+    Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
   } //
   else if (status === STATUS.INTERNAL_SERVER_ERROR) {
-    swal(MSG.RUIM, MSG.SERVERROR, "error");
+    Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
 }

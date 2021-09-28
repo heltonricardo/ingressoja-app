@@ -1,4 +1,5 @@
 <script>
+  import Swal from "sweetalert2";
   import { maskBr } from "js-brasil";
   import { createEventDispatcher } from "svelte";
 
@@ -41,7 +42,7 @@
   }
 
   function excluir() {
-    swal({
+    Swal.fire({
       title: MSG.CERTEZA,
       text: MSG.EXCLUIR,
       icon: "warning",

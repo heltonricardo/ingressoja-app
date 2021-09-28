@@ -1,4 +1,5 @@
 <script>
+  import Swal from "sweetalert2";
   import { createEventDispatcher } from "svelte";
 
   import {
@@ -16,7 +17,7 @@
   let admins = getAdministradores();
 
   function excluir(id) {
-    swal({
+    Swal.fire({
       title: MSG.CERTEZA,
       text: MSG.EXCLUIR,
       icon: "warning",

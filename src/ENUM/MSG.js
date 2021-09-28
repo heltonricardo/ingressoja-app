@@ -1,5 +1,6 @@
 const MSG = Object.freeze({
   BOM: "😄 Legal!",
+  OPS: "😅 Ops...",
   RUIM: "😭 Poxa!",
   OLA: "🤩 Olá!",
   TCHAU: "😉 Até breve!",
@@ -14,16 +15,20 @@ const MSG = Object.freeze({
   VOLTE_SEMPRE: "Volte sempre!",
   PED_REALIZADO: "Seu pedido foi realizado com sucesso!",
 
+  AUTENTIQUE_COMPRADOR:
+    "Primeiro, autentique-se como comprador ou faça seu cadastro!",
   PERDER_INFO: "Os dados informados serão perdidos!",
   SEM_EVENTO: "Não existem eventos para mostrar 😖",
-  EXCLUIR: "A conta será inativada e não poderá mais ser acessada. Essa \
-  operação não poderá ser desfeita!",
+  EXCLUIR:
+    "A conta será inativada e não poderá mais ser acessada. Essa operação não \
+    poderá ser desfeita!",
 
   INCORRETO: "Os dados informados estão incorretos!",
   DUPLICADO: "Os dados informados já pertencem a um cadastro existente!",
   SERVERROR: "Ocorreu um erro no servidor. Tente novamente mais tarde.",
-  CONEXAO: "Não foi possível estabelecer conexão com o servidor... Tente \
-  novamente mais tarde.",
+  CONEXAO:
+    "Não foi possível estabelecer conexão com o servidor... Tente novamente \
+    mais tarde.",
   CREDENCIAL: "As credenciais informadas são inválidas!",
   NAO_EXISTE: "As informações procuradas não existem!",
 });

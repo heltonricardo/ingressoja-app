@@ -1,6 +1,6 @@
+import MSG from "../ENUM/MSG";
 import PATH from "../ENUM/PATH";
 import STATUS from "../ENUM/STATUS";
-import MSG from "../ENUM/MSG";
 
 const ID = "id";
 const TIPO = "tipo";

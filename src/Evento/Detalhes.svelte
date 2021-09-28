@@ -1,14 +1,15 @@
 <script>
+  import { maskBr } from "js-brasil";
   import { createEventDispatcher } from "svelte";
 
-  import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
-  import autenticacao from "../Autenticacao/autenticacao";
-  import { getEvento } from "../Conexao/eventoConex";
-  import { valorVirgula } from "../utils/formatador";
-  import { extrairDataHora } from "../utils/manipulaDataHora";
-
+  import MSG from "../ENUM/MSG";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
+  import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
+  import { getEvento } from "../Conexao/eventoConex";
+  import { valorVirgula } from "../utils/formatador";
+  import autenticacao from "../Autenticacao/autenticacao";
+  import { extrairDataHora } from "../utils/manipulaDataHora";
   import TipoDeIngresso from "../TipoDeIngresso/TipoDeIngresso.svelte";
 
   const dispatch = createEventDispatcher();
@@ -37,14 +38,10 @@
   }
 
   function comprar() {
-    if (autenticacao.estaLogado()) {
-      if (autenticacao.estaLogadoComTipo(TIPOCADASTRO.COMPRADOR)) {
-        eventoCarregado.then((evento) => dispatch("finalizacao", evento));
-      } else {
-        dispatch("voltar");
-      }
-    } //
-    else {
+    if (autenticacao.estaLogadoComTipo(TIPOCADASTRO.COMPRADOR)) {
+      eventoCarregado.then((evento) => dispatch("finalizacao", evento));
+    } else {
+      swal(MSG.OPS, MSG.AUTENTIQUE_COMPRADOR, "info");
       dispatch("entrar");
     }
   }
@@ -120,6 +117,18 @@
   #total {
     font-size: 1.5rem;
   }
+
+  #produtora {
+    color: var(--verde4);
+  }
+
+  #organizacao {
+    font-size: 1.5rem;
+  }
+
+  #nomeFantasia {
+    margin: 0.5rem 0;
+  }
 </style>
 
 {#await eventoCarregado}
@@ -186,6 +195,15 @@
     </div>
 
     <span id="descricao">{evento.descricao}</span>
+
+    <span id="produtora">
+      <p id="organizacao">Organização</p>
+      <p id="nomeFantasia">
+        {evento.produtora.nomeFantasia}. CNPJ: {maskBr.cnpj(
+          evento.produtora.cnpj
+        )}
+      </p>
+    </span>
 
     <h2 class="titulo" id="escolha">Selecione os ingressos</h2>
 

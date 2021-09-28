@@ -61,13 +61,14 @@
       label="E-mail"
       validar={false}
       on:input={(event) => (email = event.target.value)}
-      />
-      <Entrada
+    />
+    <Entrada
       id="senha"
       label="Senha"
       type="password"
       validar={false}
       on:input={(event) => (senha = event.target.value)}
+      on:keypress={(e) => e.code === "Enter" && entrar()}
     />
   </div>
 

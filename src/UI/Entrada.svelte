@@ -82,6 +82,7 @@
       {id}
       {maxlength}
       on:input
+      on:keypress
       on:blur={() => (tocado = true)}
     />
   {:else}
@@ -95,6 +96,7 @@
       {maxlength}
       {disabled}
       on:input
+      on:keypress
       on:blur={() => (tocado = true)}
     />
   {/if}

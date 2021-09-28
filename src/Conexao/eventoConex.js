@@ -55,6 +55,54 @@ export async function postEvento(evento) {
   return false;
 }
 
+export async function putEvento(evento, idEvento) {
+  if (
+    !autenticacao.estaLogado() ||
+    autenticacao.tipoLogado() !== TIPOCADASTRO.PRODUTORA
+  )
+    return null;
+
+  const idProdutora = autenticacao.idLogado();
+  evento.dto.idProdutora = idProdutora;
+
+  const requisicao = new FormData();
+  requisicao.append("evento", JSON.stringify(evento.dto));
+  requisicao.append("file", evento.file);
+
+  let res;
+  try {
+    res = await fetch(`${PATH.EVENTO}/${idEvento}`, {
+      method: "PUT",
+      body: requisicao,
+    });
+  } catch (error) {
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
+    return false;
+  }
+
+  const status = res.status;
+
+  if (status === STATUS.OK) {
+    Swal.fire({
+      title: MSG.BOM,
+      text: MSG.ALTERADO,
+      icon: "success",
+      timer: 5000,
+    });
+    return true;
+  } //
+  else if (status === STATUS.CONFLICT) {
+    Swal.fire(MSG.RUIM, MSG.DUPLICADO, "error");
+  } //
+  else if (status === STATUS.BAD_REQUEST) {
+    Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
+  } //
+  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+    Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
+  }
+  return false;
+}
+
 export async function getEventos() {
   let res;
   try {

@@ -16,7 +16,8 @@ const MSG = Object.freeze({
   PED_REALIZADO: "Seu pedido foi realizado com sucesso!",
 
   AUTENTIQUE_COMPRADOR:
-    "Primeiro, autentique-se como comprador ou faça seu cadastro!",
+    "Primeiro, autentique-se como comprador ou faça seu cadastro na \
+    plataforma!",
   PERDER_INFO: "Os dados informados serão perdidos!",
   SEM_EVENTO: "Não existem eventos para mostrar 😖",
   EXCLUIR:

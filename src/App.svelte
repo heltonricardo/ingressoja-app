@@ -19,7 +19,7 @@
   import Compradores from "./Conta/Compradores.svelte";
   import Produtoras from "./Conta/Produtoras.svelte";
 
-  let modo = MODO.LOGIN;
+  let modo = MODO.MEUS_EVENTOS;
   let id = null;
   let idPedido = null;
   let evento = null;
@@ -30,23 +30,23 @@
     window.scrollTo(0, 0);
   }
 
-  function modoCadastro(event) {
-    dados = event.detail;
+  function modoCadastro(e) {
+    dados = e.detail;
     trocaModo(MODO.CADASTRO);
   }
 
-  function modoDetalhes(event) {
-    id = event.detail;
+  function modoDetalhes(e) {
+    id = e.detail;
     trocaModo(MODO.DETALHES);
   }
 
-  function modoFinalizacao(event) {
-    evento = event.detail;
+  function modoFinalizacao(e) {
+    evento = e.detail;
     trocaModo(MODO.FINALIZACAO);
   }
 
-  function modoNovoAdm(event) {
-    dados = event.detail;
+  function modoNovoAdm(e) {
+    dados = e.detail;
     trocaModo(MODO.NOVO_ADM);
   }
 
@@ -55,8 +55,8 @@
     trocaModo(MODO.NORMAL);
   }
 
-  function modoPedido(event) {
-    idPedido = event.detail;
+  function modoPedido(e) {
+    idPedido = e.detail;
     trocaModo(MODO.DETALHE_PEDIDO);
   }
 

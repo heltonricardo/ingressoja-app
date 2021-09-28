@@ -1,12 +1,11 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
-  import { valorVirgula } from "../utils/formatador";
-  import { getEventos } from "../Conexao/produtoraConex";
-  import { extrairDataHora } from "../utils/manipulaDataHora";
-
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
+  import MiniBotao from "../UI/MiniBotao.svelte";
+  import { getEventos } from "../Conexao/produtoraConex";
+  import { extrairDataHora } from "../utils/manipulaDataHora";
 
   const dispatch = createEventDispatcher();
 
@@ -44,7 +43,7 @@
     width: 100%;
     border-radius: 7px;
     overflow: hidden;
-    word-break: break-all;
+    word-break: normal;
   }
 
   #tabela td,
@@ -78,7 +77,8 @@
 
   #detalhes {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
 
   #cadastrar {
@@ -111,7 +111,10 @@
             <td>{evento.titulo}</td>
             <td>{extrairDataHora(evento.inicio).data}</td>
             <td>{evento.categoriaEvento.nome}</td>
-            <td id="detalhes"><Botao>Editar</Botao></td>
+            <td id="detalhes">
+              <MiniBotao>Editar</MiniBotao>
+              <MiniBotao>Excluir</MiniBotao>
+            </td>
           </tr>
         {/each}
       </table>

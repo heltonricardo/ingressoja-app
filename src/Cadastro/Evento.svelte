@@ -104,7 +104,7 @@
     qntTipoDeIngresso--;
   }
 
-  async function cadastrar() {
+  async function salvar() {
     carregando = true;
     cep = validator.whitelist(cep, /\d/g);
     const sucesso = await postEvento({
@@ -127,7 +127,7 @@
       file: imagem,
     });
     carregando = false;
-    if (sucesso) dispatch("minhaconta");
+    if (sucesso) dispatch("meuseventos");
   }
 </script>
 
@@ -373,6 +373,6 @@
 
   <div id="botoes">
     <Botao on:click={() => dispatch("meuseventos")}>Voltar</Botao>
-    <Botao on:click={cadastrar} habilitado={formularioValido}>Salvar</Botao>
+    <Botao on:click={salvar} habilitado={formularioValido}>Salvar</Botao>
   </div>
 </div>

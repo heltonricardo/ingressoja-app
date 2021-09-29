@@ -55,6 +55,11 @@
     trocaModo(MODO.NORMAL);
   }
 
+  function modoEvento(event) {
+    id = event.detail;
+    trocaModo(MODO.EVENTO);
+  }
+
   function modoPedido(e) {
     idPedido = e.detail;
     trocaModo(MODO.DETALHE_PEDIDO);
@@ -75,8 +80,6 @@
   const modoMeusPedidos = () => trocaModo(MODO.MEUS_PEDIDOS);
 
   const modoMinhaConta = () => trocaModo(MODO.MINHA_CONTA);
-
-  const modoNovoEvento = () => trocaModo(MODO.NOVO_EVENTO);
 
   const modoProdutoras = () => trocaModo(MODO.PRODUTORAS);
 </script>
@@ -115,8 +118,8 @@
     on:produtoras={modoProdutoras}
     on:voltar={modoNormal}
   />
-{:else if modo === MODO.NOVO_EVENTO}
-  <Evento on:meuseventos={modoMeusEventos} />
+{:else if modo === MODO.EVENTO}
+  <Evento {id} on:meuseventos={modoMeusEventos} />
 {:else if modo === MODO.FINALIZACAO}
   <FinalizaPedido
     {evento}
@@ -139,7 +142,11 @@
     on:voltar={modoNormal}
   />
 {:else if modo === MODO.MEUS_EVENTOS}
-  <MeusEventos on:minhaconta={modoMinhaConta} on:novoevento={modoNovoEvento} />
+  <MeusEventos
+    on:minhaconta={modoMinhaConta}
+    on:novoevento={modoEvento}
+    on:editar
+  />
 {:else if modo === MODO.ADMINISTRADORES}
   <Administradores on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.COMPRADORES}

@@ -3,7 +3,7 @@ const MODO = Object.freeze({
   CADASTRO: 2,
   LOGIN: 3,
   DETALHES: 4,
-  NOVO_EVENTO: 5,
+  EVENTO: 5,
   MINHA_CONTA: 6,
   NOVO_ADM: 7,
   FINALIZACAO: 8,

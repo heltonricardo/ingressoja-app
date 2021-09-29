@@ -18,7 +18,7 @@
   /************************** CONSTANTES E VARIÁVEIS **************************/
 
   const dispatch = createEventDispatcher();
-
+  export let id = null;
   let carregando = false;
 
   let titulo = "";
@@ -107,7 +107,7 @@
   async function salvar() {
     carregando = true;
     cep = validator.whitelist(cep, /\d/g);
-    const sucesso = await postEvento({
+    obj = {
       dto: {
         titulo,
         inicio,
@@ -125,7 +125,8 @@
         idCategoria,
       },
       file: imagem,
-    });
+    };
+    const sucesso = await postEvento(obj);
     carregando = false;
     if (sucesso) dispatch("meuseventos");
   }
@@ -258,8 +259,8 @@
       on:input={(event) => (inicio = event.target.value)}
       valido={inicioValido}
       mensagemValidacao="Insira uma data de início válida"
-      />
-      <Entrada
+    />
+    <Entrada
       id="termino"
       label="Data e Hora de Término"
       type="datetime-local"

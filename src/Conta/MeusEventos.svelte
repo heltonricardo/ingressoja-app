@@ -112,7 +112,9 @@
             <td>{extrairDataHora(evento.inicio).data}</td>
             <td>{evento.categoriaEvento.nome}</td>
             <td id="detalhes">
-              <MiniBotao>Editar</MiniBotao>
+              <MiniBotao on:click={() => dispatch("editar", evento.id)}
+                >Editar</MiniBotao
+              >
               <MiniBotao>Excluir</MiniBotao>
             </td>
           </tr>

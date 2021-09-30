@@ -34,6 +34,7 @@ export async function postCategoriaEvento(categoriaEvento) {
       text: MSG.CRIADO,
       icon: "success",
       timer: 5000,
+      timerProgressBar: true,
     });
     return true;
   } //

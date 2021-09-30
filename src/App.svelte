@@ -119,7 +119,7 @@
     on:voltar={modoNormal}
   />
 {:else if modo === MODO.EVENTO}
-  <Evento id={11} on:meuseventos={modoMeusEventos} />
+  <Evento {id} on:meuseventos={modoMeusEventos} />
 {:else if modo === MODO.FINALIZACAO}
   <FinalizaPedido
     {evento}

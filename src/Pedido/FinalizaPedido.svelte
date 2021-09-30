@@ -38,9 +38,9 @@
       title: MSG.CERTEZA,
       text: MSG.PERDER_INFO,
       icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((volte) => volte && dispatch("voltar"));
+      showCancelButton: true,
+      focusCancel: true,
+    }).then((volte) => volte.isConfirmed && dispatch("voltar"));
   }
 
   /***************************** EFETIVAR PEDIDO ******************************/

@@ -24,6 +24,7 @@ const autenticacao = {
       text: MSG.VOLTE_SEMPRE,
       icon: "info",
       timer: 3000,
+      timerProgressBar: true,
     });
   },
 
@@ -56,6 +57,7 @@ const autenticacao = {
           text: MSG.SAUDACAO,
           icon: "success",
           timer: 3000,
+          timerProgressBar: true,
         });
       }
       return true;

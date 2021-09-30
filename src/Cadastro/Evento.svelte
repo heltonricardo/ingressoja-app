@@ -1,8 +1,11 @@
 <script>
+  import Swal from "sweetalert2";
   import validator from "validator";
+  import { maskBr } from "js-brasil";
   import { validateBr } from "js-brasil";
   import { createEventDispatcher } from "svelte";
 
+  import MSG from "../ENUM/MSG";
   import ESTADOS from "../ENUM/ESTADOS";
   import Botao from "../UI/Botao.svelte";
   import Icone from "../UI/Icone.svelte";
@@ -18,6 +21,7 @@
 
   const dispatch = createEventDispatcher();
   export let id = null;
+
   let carregando = false;
   let imagemTocada = false;
   let imagemURL = null;
@@ -47,13 +51,13 @@
     getEvento(id).then((r) => {
       imagemURL = r.imagemURL;
       obj.dto.uf = r.uf;
-      obj.dto.cep = r.cep;
       obj.dto.url = r.url;
       obj.dto.bairro = r.bairro;
       obj.dto.cidade = r.cidade;
       obj.dto.numero = r.numero;
       obj.dto.online = r.online;
       obj.dto.titulo = r.titulo;
+      obj.dto.cep = maskBr.cep(r.cep);
       obj.dto.descricao = r.descricao;
       obj.dto.logradouro = r.logradouro;
       obj.dto.inicio = UTCParaPtBr(r.inicio);
@@ -119,6 +123,17 @@
 
   /********************************* FUNÇÕES **********************************/
 
+  $: if (obj.dto.online) {
+    obj.dto.uf = "";
+    obj.dto.cep = "";
+    obj.dto.bairro = "";
+    obj.dto.cidade = "";
+    obj.dto.numero = "";
+    obj.dto.logradouro = "";
+  } else {
+    obj.dto.url = "";
+  }
+
   function adicionaIngresso() {
     obj.dto.qntTipoDeIngresso++;
   }
@@ -137,8 +152,13 @@
   }
 
   function voltar() {
-    console.log("asdasdsa");
-    dispatch("meuseventos");
+    Swal.fire({
+      icon: "warning",
+      focusCancel: true,
+      title: MSG.CERTEZA,
+      showCancelButton: true,
+      text: MSG.ALTERADO_NAO_SALV,
+    }).then((volte) => volte.isConfirmed && dispatch("meuseventos"));
   }
 </script>
 
@@ -298,7 +318,7 @@
       <input
         type="radio"
         name="tipoEvento"
-        value={obj.dto.online}
+        value={true}
         bind:group={obj.dto.online}
       />
       Evento On-line
@@ -308,7 +328,7 @@
       <input
         type="radio"
         name="tipoEvento"
-        value={!obj.dto.online}
+        value={false}
         bind:group={obj.dto.online}
       />
       Evento Presencial

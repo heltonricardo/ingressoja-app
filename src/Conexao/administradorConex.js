@@ -34,6 +34,7 @@ export async function postAdministrador(administrador) {
       text: MSG.CRIADO,
       icon: "success",
       timer: 5000,
+      timerProgressBar: true,
     });
     return true;
   } //
@@ -212,6 +213,7 @@ export async function putAdministrador(administrador) {
       text: MSG.ALTERADO,
       icon: "success",
       timer: 5000,
+      timerProgressBar: true,
     });
     return true;
   } //

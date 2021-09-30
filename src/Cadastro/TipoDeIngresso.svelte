@@ -5,7 +5,7 @@
     nome: "",
     valor: 0.0,
     descricao: "",
-    quantidadeTotal: 1,
+    quantidadeDisponivel: 1,
     tipoValido: false,
   };
 
@@ -28,7 +28,7 @@
   });
   $: valorValido =
     validator.isNumeric(tipoDeIngresso.valor + "") && tipoDeIngresso.valor >= 0;
-  $: qntValida = tipoDeIngresso.quantidadeTotal > 0;
+  $: qntValida = tipoDeIngresso.quantidadeDisponivel > 0;
 
   $: validar(nomeValido && descricaoValida && valorValido && qntValida);
 </script>
@@ -103,11 +103,11 @@
       <input
         id="nome"
         type="text"
-        class:valid={nomeValido && nomeTocado}
-        class:invalid={!nomeValido && nomeTocado}
         maxlength="30"
         bind:value={tipoDeIngresso.nome}
         on:blur={() => (nomeTocado = true)}
+        class:valid={nomeValido && nomeTocado}
+        class:invalid={!nomeValido && nomeTocado}
       />
       {#if nomeTocado && !nomeValido}
         <p class="error-message">Insira um nome válido</p>
@@ -117,13 +117,13 @@
     <div class="item">
       <label for="descricao">Descrição</label>
       <input
-        id="descricao"
         type="text"
-        class:valid={descricaoValida && descricaoTocada}
-        class:invalid={!descricaoValida && descricaoTocada}
+        id="descricao"
         maxlength="50"
         bind:value={tipoDeIngresso.descricao}
         on:blur={() => (descricaoTocada = true)}
+        class:valid={descricaoValida && descricaoTocada}
+        class:invalid={!descricaoValida && descricaoTocada}
       />
       {#if descricaoTocada && !descricaoValida}
         <p class="error-message">Insira uma descrição com até 50 caracteres</p>
@@ -135,13 +135,13 @@
     <div class="item">
       <label for="qnt">Quantidade</label>
       <input
+        min="1"
         id="qnt"
         type="number"
-        min="1"
+        on:blur={() => (qntTocada = true)}
         class:valid={qntValida && qntTocada}
         class:invalid={!qntValida && qntTocada}
-        bind:value={tipoDeIngresso.quantidadeTotal}
-        on:blur={() => (qntTocada = true)}
+        bind:value={tipoDeIngresso.quantidadeDisponivel}
       />
       {#if qntTocada && !qntValida}
         <p class="error-message">Insira uma quantidade válida</p>
@@ -153,10 +153,10 @@
       <input
         id="valor"
         type="text"
-        class:valid={valorValido && valorTocado}
-        class:invalid={!valorValido && valorTocado}
         bind:value={tipoDeIngresso.valor}
         on:blur={() => (valorTocado = true)}
+        class:valid={valorValido && valorTocado}
+        class:invalid={!valorValido && valorTocado}
       />
       {#if valorTocado && !valorValido}
         <p class="error-message">Insira um valor válido</p>

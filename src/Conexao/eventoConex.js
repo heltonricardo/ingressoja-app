@@ -40,6 +40,7 @@ export async function postEvento(evento) {
       text: MSG.CRIADO,
       icon: "success",
       timer: 5000,
+      timerProgressBar: true,
     });
     return true;
   } //
@@ -88,6 +89,7 @@ export async function putEvento(evento, idEvento) {
       text: MSG.ALTERADO,
       icon: "success",
       timer: 5000,
+      timerProgressBar: true,
     });
     return true;
   } //

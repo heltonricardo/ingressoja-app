@@ -38,6 +38,7 @@ export async function postPedido(pedido) {
       text: MSG.PED_REALIZADO,
       icon: "success",
       timer: 5000,
+      timerProgressBar: true,
     });
     return true;
   } //

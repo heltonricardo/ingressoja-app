@@ -19,6 +19,7 @@ const MSG = Object.freeze({
     "Primeiro, autentique-se como comprador ou faça seu cadastro na \
     plataforma!",
   PERDER_INFO: "Os dados informados serão perdidos!",
+  ALTERADO_NAO_SALV: "Os dados alterados não serão salvos!",
   SEM_EVENTO: "Não existem eventos para mostrar 😖",
   EXCLUIR:
     "A conta será inativada e não poderá mais ser acessada. Essa operação não \

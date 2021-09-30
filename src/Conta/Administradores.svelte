@@ -21,10 +21,10 @@
       title: MSG.CERTEZA,
       text: MSG.EXCLUIR,
       icon: "warning",
-      buttons: true,
-      dangerMode: true,
+      showCancelButton: true,
+      focusCancel: true,
     }).then((temCerteza) => {
-      if (temCerteza) {
+      if (temCerteza.isConfirmed) {
         deleteAdministrador(id).then(() => (admins = getAdministradores()));
       }
     });

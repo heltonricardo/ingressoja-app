@@ -46,11 +46,11 @@
       title: MSG.CERTEZA,
       text: MSG.EXCLUIR,
       icon: "warning",
-      buttons: true,
-      dangerMode: true,
+      showCancelButton: true,
+      focusCancel: true,
     })
       .then((temCerteza) => {
-        if (temCerteza) {
+        if (temCerteza.isConfirmed) {
           if (tipoLogado === TIPOCADASTRO.COMPRADOR) return deleteComprador();
           else if (tipoLogado === TIPOCADASTRO.PRODUTORA)
             return deleteProdutora();

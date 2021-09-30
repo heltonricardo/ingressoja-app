@@ -76,28 +76,29 @@
   <label for={id}>{label}</label>
   {#if controlType === "textarea"}
     <textarea
-      class:valid={validar && valido && tocado}
-      class:invalid={validar && !valido && tocado}
-      {rows}
-      {id}
-      {maxlength}
-      on:input
-      on:keypress
-      on:blur={() => (tocado = true)}
+    {id}
+    {rows}
+    {value}
+    {maxlength}
+    on:input
+    on:keypress
+    on:blur={() => (tocado = true)}
+    class:valid={validar && valido && tocado}
+    class:invalid={validar && !valido && tocado}
     />
   {:else}
     <input
-      class:valid={validar && valido && tocado}
-      class:invalid={validar && !valido && tocado}
-      {min}
-      {type}
-      {id}
-      {value}
-      {maxlength}
-      {disabled}
-      on:input
-      on:keypress
-      on:blur={() => (tocado = true)}
+    {id}
+    {min}
+    {type}
+    {value}
+    {disabled}
+    {maxlength}
+    on:input
+    on:keypress
+    on:blur={() => (tocado = true)}
+    class:valid={validar && valido && tocado}
+    class:invalid={validar && !valido && tocado}
     />
   {/if}
   {#if tocado && !valido && mensagemValidacao}

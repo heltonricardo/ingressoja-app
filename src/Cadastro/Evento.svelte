@@ -1,78 +1,111 @@
 <script>
+  import Swal from "sweetalert2";
+  import validator from "validator";
+  import { maskBr } from "js-brasil";
+  import { validateBr } from "js-brasil";
   import { createEventDispatcher } from "svelte";
 
-  import validator from "validator";
-
-  import { imagemIsValida } from "../utils/validador";
-  import { postEvento } from "../Conexao/eventoConex";
-  import { getCategoriasEvento } from "../Conexao/categoriaEventoConex";
-  import Icone from "../UI/Icone.svelte";
+  import MSG from "../ENUM/MSG";
+  import ESTADOS from "../ENUM/ESTADOS";
   import Botao from "../UI/Botao.svelte";
+  import Icone from "../UI/Icone.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import Entrada from "../UI/Entrada.svelte";
+  import { imagemIsValida } from "../utils/validador";
   import TipoDeIngresso from "./TipoDeIngresso.svelte";
-  import { validateBr } from "js-brasil";
-  import ESTADOS from "../ENUM/ESTADOS";
-  import { hojeStringISO } from "../utils/manipulaDataHora";
+  import { postEvento, getEvento } from "../Conexao/eventoConex";
+  import { getCategoriasEvento } from "../Conexao/categoriaEventoConex";
+  import { hojeStringISO, UTCParaPtBr } from "../utils/manipulaDataHora";
 
-  /************************** CONSTANTES E VARIÁVEIS **************************/
+  /******************************** DEFINIÇÕES ********************************/
 
   const dispatch = createEventDispatcher();
   export let id = null;
+
+  let imagemURL = null;
   let carregando = false;
-
-  let titulo = "";
-  let descricao = "";
-  let imagem = null;
-  let online = true;
-  let inicio = "";
-  let termino = "";
-  let url = "";
-  let logradouro = "";
-  let numero = "";
-  let bairro = "";
-  let cidade = "";
-  let uf = "";
-  let cep = "";
-  let qntTipoDeIngresso = 1;
-  let tiposDeIngresso = [];
-  let idCategoria;
-
   let imagemTocada = false;
+  let imagemAWS = Boolean(id);
+
+  let obj = {
+    dto: {
+      uf: "",
+      cep: "",
+      url: "",
+      bairro: "",
+      cidade: "",
+      inicio: "",
+      numero: "",
+      titulo: "",
+      termino: "",
+      online: true,
+      descricao: "",
+      logradouro: "",
+      tiposDeIngresso: [],
+      qntTipoDeIngresso: 1,
+      idCategoria: undefined,
+    },
+    file: null,
+  };
+
+  id &&
+    getEvento(id).then((r) => {
+      imagemURL = r.imagemURL;
+      obj.dto.uf = r.uf;
+      obj.dto.url = r.url;
+      obj.dto.bairro = r.bairro;
+      obj.dto.cidade = r.cidade;
+      obj.dto.numero = r.numero;
+      obj.dto.online = r.online;
+      obj.dto.titulo = r.titulo;
+      obj.dto.cep = maskBr.cep(r.cep);
+      obj.dto.descricao = r.descricao;
+      obj.dto.logradouro = r.logradouro;
+      obj.dto.inicio = UTCParaPtBr(r.inicio);
+      obj.dto.termino = UTCParaPtBr(r.termino);
+      obj.dto.idCategoria = r.categoriaEvento.id;
+      obj.dto.tiposDeIngresso = r.tiposDeIngresso;
+      obj.dto.qntTipoDeIngresso = r.tiposDeIngresso.length;
+    });
 
   /*************************** VALIDAÇÃO DE CAMPOS ****************************/
 
-  $: tituloValido = validator.isLength(titulo.trim(), { min: 1, max: 255 });
-  $: descricaoValida = validator.isLength(descricao.trim(), {
+  $: tituloValido = validator.isLength(obj.dto.titulo.trim(), {
+    min: 1,
+    max: 255,
+  });
+  $: descricaoValida = validator.isLength(obj.dto.descricao.trim(), {
     min: 1,
     max: 2000,
   });
-  $: imagemValida = imagemIsValida(imagem);
-  $: inicioValido = validator.isAfter(inicio);
-  $: terminoValido = validator.isAfter(termino, inicio);
-  $: urlValida = online
-    ? validator.isURL(url, {
+  $: imagemValida = imagemIsValida(obj.file) || imagemAWS;
+  $: inicioValido = validator.isAfter(obj.dto.inicio);
+  $: terminoValido = validator.isAfter(obj.dto.termino, obj.dto.inicio);
+  $: urlValida = obj.dto.online
+    ? validator.isURL(obj.dto.url, {
         require_protocol: true,
         protocols: ["http", "https"],
-      }) && validator.isLength(url.trim(), { min: 1, max: 1000 })
+      }) && validator.isLength(obj.dto.url.trim(), { min: 1, max: 1000 })
     : true;
-  $: logradouroValido = online
+  $: logradouroValido = obj.dto.online
     ? true
-    : validator.isLength(logradouro.trim(), {
+    : validator.isLength(obj.dto.logradouro.trim(), {
         min: 1,
         max: 100,
       });
-  $: numeroValido = online
+  $: numeroValido = obj.dto.online
     ? true
-    : validator.isLength(numero.trim(), { min: 1, max: 10 });
-  $: bairroValido = online
+    : validator.isLength(obj.dto.numero.trim(), { min: 1, max: 10 });
+  $: bairroValido = obj.dto.online
     ? true
-    : validator.isLength(bairro.trim(), { min: 1, max: 50 });
-  $: cidadeValida = online
+    : validator.isLength(obj.dto.bairro.trim(), { min: 1, max: 50 });
+  $: cidadeValida = obj.dto.online
     ? true
-    : validator.isLength(cidade.trim(), { min: 1, max: 50 });
-  $: ufValida = online ? true : ESTADOS.includes(uf.toLowerCase());
-  $: cepValido = online ? true : validateBr.cep(cep);
+    : validator.isLength(obj.dto.cidade.trim(), { min: 1, max: 50 });
+  $: ufValida = obj.dto.online
+    ? true
+    : ESTADOS.includes(obj.dto.uf.toLowerCase());
+  $: cepValido = obj.dto.online ? true : validateBr.cep(obj.dto.cep);
 
   $: formularioValido =
     tituloValido &&
@@ -87,48 +120,51 @@
     cidadeValida &&
     ufValida &&
     cepValido &&
-    tiposDeIngresso.every((t) => t.tipoValido);
+    obj.dto.tiposDeIngresso.every((t) => t.tipoValido);
 
   /********************************* FUNÇÕES **********************************/
 
-  async function carregaCategorias() {
-    return await getCategoriasEvento();
+  $: if (obj.dto.online) {
+    obj.dto.uf = "";
+    obj.dto.cep = "";
+    obj.dto.bairro = "";
+    obj.dto.cidade = "";
+    obj.dto.numero = "";
+    obj.dto.logradouro = "";
+  } else {
+    obj.dto.url = "";
+  }
+
+  function trocaImagem(event) {
+    imagemAWS = false;
+    obj.file = event.target.files[0];
   }
 
   function adicionaIngresso() {
-    qntTipoDeIngresso++;
+    obj.dto.qntTipoDeIngresso++;
   }
 
   function removeIngresso() {
-    tiposDeIngresso.pop();
-    qntTipoDeIngresso--;
+    obj.dto.tiposDeIngresso.pop();
+    obj.dto.qntTipoDeIngresso--;
   }
 
   async function salvar() {
     carregando = true;
-    cep = validator.whitelist(cep, /\d/g);
-    obj = {
-      dto: {
-        titulo,
-        inicio,
-        termino,
-        descricao,
-        online,
-        url,
-        logradouro,
-        numero,
-        bairro,
-        cidade,
-        uf,
-        cep,
-        tiposDeIngresso,
-        idCategoria,
-      },
-      file: imagem,
-    };
+    obj.dto.cep = validator.whitelist(obj.dto.cep, /\d/g);
     const sucesso = await postEvento(obj);
     carregando = false;
     if (sucesso) dispatch("meuseventos");
+  }
+
+  function voltar() {
+    Swal.fire({
+      icon: "warning",
+      focusCancel: true,
+      title: MSG.CERTEZA,
+      showCancelButton: true,
+      text: MSG.ALTERADO_NAO_SALV,
+    }).then((volte) => volte.isConfirmed && dispatch("meuseventos"));
   }
 </script>
 
@@ -201,6 +237,14 @@
     resize: none;
   }
 
+  #preview {
+    max-height: 20rem;
+    max-width: 20rem;
+    align-self: center;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+  }
+
   .error-message {
     color: red;
     margin-top: -0.75rem;
@@ -222,16 +266,17 @@
     <Entrada
       id="titulo"
       label="Título"
-      on:input={(event) => (titulo = event.target.value)}
       valido={tituloValido}
+      value={obj.dto.titulo}
       mensagemValidacao="Insira um título válido"
+      on:input={(event) => (obj.dto.titulo = event.target.value)}
     />
 
-    {#await carregaCategorias()}
+    {#await getCategoriasEvento()}
       <Aguarde />
     {:then categorias}
       <label for="selecao">Categoria do Evento</label>
-      <select bind:value={idCategoria}>
+      <select bind:value={obj.dto.idCategoria}>
         {#each categorias as categoria (categoria.id)}
           <option value={categoria.id}>{categoria.nome}</option>
         {/each}
@@ -239,12 +284,21 @@
     {/await}
 
     <label for="imagem">Imagem da capa (máx. 2 MB)</label>
+    <img
+      id="preview"
+      src={imagemAWS
+        ? imagemURL
+        : obj.file
+        ? URL.createObjectURL(obj.file)
+        : ""}
+      alt=""
+    />
     <input
       type="file"
       id="imagem"
       accept="image/bmp, image/jpeg, image/png"
       on:blur={() => (imagemTocada = true)}
-      on:change={(event) => (imagem = event.target.files[0])}
+      on:change={trocaImagem}
     />
     {#if imagemTocada && !imagemValida}
       <p class="error-message">Anexe uma imagem válida</p>
@@ -252,106 +306,124 @@
 
     <Entrada
       id="inicio"
-      label="Data e Hora de Início"
-      type="datetime-local"
-      value={hojeStringISO}
       min={hojeStringISO}
-      on:input={(event) => (inicio = event.target.value)}
+      type="datetime-local"
       valido={inicioValido}
+      label="Data e Hora de Início"
+      value={id ? obj.dto.inicio : hojeStringISO}
       mensagemValidacao="Insira uma data de início válida"
+      on:input={(event) => (obj.dto.inicio = event.target.value)}
     />
     <Entrada
       id="termino"
-      label="Data e Hora de Término"
-      type="datetime-local"
       min={hojeStringISO}
-      value={hojeStringISO}
-      on:input={(event) => (termino = event.target.value)}
+      type="datetime-local"
       valido={terminoValido}
+      label="Data e Hora de Término"
+      value={id ? obj.dto.termino : hojeStringISO}
       mensagemValidacao="Insira uma data de término válida"
+      on:input={(event) => (obj.dto.termino = event.target.value)}
     />
     <Entrada
       id="descricao"
+      maxlength="2000"
       label="Descrição"
       controlType="textarea"
-      on:input={(event) => (descricao = event.target.value)}
       valido={descricaoValida}
+      value={obj.dto.descricao}
       mensagemValidacao="Insira uma descrição válida"
-      maxlength="2000"
+      on:input={(event) => (obj.dto.descricao = event.target.value)}
     />
   </div>
 
   <div id="opcoes">
     <label>
-      <input name="tipoEvento" type="radio" value={true} bind:group={online} />
+      <input
+        type="radio"
+        name="tipoEvento"
+        value={true}
+        bind:group={obj.dto.online}
+      />
       Evento On-line
     </label>
 
     <label>
-      <input name="tipoEvento" type="radio" value={false} bind:group={online} />
+      <input
+        type="radio"
+        name="tipoEvento"
+        value={false}
+        bind:group={obj.dto.online}
+      />
       Evento Presencial
     </label>
   </div>
 
   <div class="campos">
-    {#if online}
+    {#if obj.dto.online}
       <Entrada
         id="url"
-        label="URL do Evento"
-        on:input={(event) => (url = event.target.value)}
-        valido={urlValida}
-        mensagemValidacao="Insira uma URL válida"
         maxlength="1000"
+        valido={urlValida}
+        value={obj.dto.url}
+        label="URL do Evento"
+        mensagemValidacao="Insira uma URL válida"
+        on:input={(event) => (obj.dto.url = event.target.value)}
       />
     {:else}
       <Entrada
         id="cep"
         label="CEP"
-        on:input={(event) => (cep = event.target.value)}
-        valido={cepValido}
-        mensagemValidacao="Insira um CEP válido"
         maxlength="8"
+        valido={cepValido}
+        value={obj.dto.cep}
+        mensagemValidacao="Insira um CEP válido"
+        on:input={(event) => (obj.dto.cep = event.target.value)}
       />
       <Entrada
         id="uf"
         label="UF"
-        on:input={(event) => (uf = event.target.value)}
-        valido={ufValida}
-        mensagemValidacao="Insira uma UF válida"
         maxlength="2"
+        valido={ufValida}
+        value={obj.dto.uf}
+        mensagemValidacao="Insira uma UF válida"
+        on:input={(event) => (obj.dto.uf = event.target.value)}
       />
       <Entrada
         id="cidade"
         label="Cidade"
-        on:input={(event) => (cidade = event.target.value)}
-        valido={cidadeValida}
-        mensagemValidacao="Insira uma cidade válida"
         maxlength="50"
+        valido={cidadeValida}
+        value={obj.dto.cidade}
+        mensagemValidacao="Insira uma cidade válida"
+        on:input={(event) => (obj.dto.cidade = event.target.value)}
       />
       <Entrada
         id="bairro"
         label="Bairro"
-        on:input={(event) => (bairro = event.target.value)}
-        valido={bairroValido}
-        mensagemValidacao="Insira um bairro válido"
         maxlength="50"
+        valido={bairroValido}
+        value={obj.dto.bairro}
+        mensagemValidacao="Insira um bairro válido"
+        on:input={(event) => (obj.dto.bairro = event.target.value)}
       />
       <Entrada
         id="logradouro"
-        label="Logradouro"
-        on:input={(event) => (logradouro = event.target.value)}
-        valido={logradouroValido}
-        mensagemValidacao="Insira um logradouro válido"
         maxlength="100"
+        label="Logradouro"
+        valido={logradouroValido}
+        value={obj.dto.logradouro}
+        mensagemValidacao="Insira um logradouro válido"
+        on:input={(event) => (obj.dto.logradouro = event.target.value)}
       />
       <Entrada
         id="numero"
-        label="Número"
         type="number"
-        on:input={(event) => (numero = event.target.value)}
-        valido={numeroValido}
-        mensagemValidacao="Insira um número válido"
+        label="Número"
         maxlength="10"
+        valido={numeroValido}
+        value={obj.dto.numero}
+        mensagemValidacao="Insira um número válido"
+        on:input={(event) => (obj.dto.numero = event.target.value)}
       />
     {/if}
   </div>
@@ -360,20 +432,20 @@
 
   <h1>Tipos de Ingressos</h1>
   <div class="campos">
-    {#each [...Array(qntTipoDeIngresso).keys()] as i}
-      <TipoDeIngresso bind:tipoDeIngresso={tiposDeIngresso[i]} />
+    {#each [...Array(obj.dto.qntTipoDeIngresso).keys()] as i}
+      <TipoDeIngresso bind:tipoDeIngresso={obj.dto.tiposDeIngresso[i]} />
     {/each}
   </div>
 
   <div id="tipoIngressoControle">
-    {#if qntTipoDeIngresso > 1}
+    {#if obj.dto.qntTipoDeIngresso > 1}
       <Icone icon="minus" on:click={removeIngresso} />
     {/if}
     <Icone icon="plus" on:click={adicionaIngresso} />
   </div>
 
   <div id="botoes">
-    <Botao on:click={() => dispatch("meuseventos")}>Voltar</Botao>
+    <Botao on:click={voltar}>Voltar</Botao>
     <Botao on:click={salvar} habilitado={formularioValido}>Salvar</Botao>
   </div>
 </div>

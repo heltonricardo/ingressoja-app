@@ -10,9 +10,9 @@
   import Entrada from "../UI/Entrada.svelte";
   import { imagemIsValida } from "../utils/validador";
   import TipoDeIngresso from "./TipoDeIngresso.svelte";
-  import { hojeStringISO } from "../utils/manipulaDataHora";
   import { postEvento, getEvento } from "../Conexao/eventoConex";
   import { getCategoriasEvento } from "../Conexao/categoriaEventoConex";
+  import { hojeStringISO, UTCParaPtBr } from "../utils/manipulaDataHora";
 
   /******************************** DEFINIÇÕES ********************************/
 
@@ -47,17 +47,17 @@
     getEvento(id).then((r) => {
       imagemURL = r.imagemURL;
       obj.dto.uf = r.uf;
-      obj.dto.cidade = r;
       obj.dto.cep = r.cep;
       obj.dto.url = r.url;
       obj.dto.bairro = r.bairro;
-      obj.dto.inicio = r.inicio;
+      obj.dto.cidade = r.cidade;
       obj.dto.numero = r.numero;
       obj.dto.online = r.online;
       obj.dto.titulo = r.titulo;
-      obj.dto.termino = r.termino;
       obj.dto.descricao = r.descricao;
       obj.dto.logradouro = r.logradouro;
+      obj.dto.inicio = UTCParaPtBr(r.inicio);
+      obj.dto.termino = UTCParaPtBr(r.termino);
       obj.dto.idCategoria = r.categoriaEvento.id;
       obj.dto.tiposDeIngresso = r.tiposDeIngresso;
       obj.dto.qntTipoDeIngresso = r.tiposDeIngresso.length;
@@ -134,6 +134,11 @@
     const sucesso = await postEvento(obj);
     carregando = false;
     if (sucesso) dispatch("meuseventos");
+  }
+
+  function voltar() {
+    console.log("asdasdsa");
+    dispatch("meuseventos");
   }
 </script>
 
@@ -397,7 +402,7 @@
   </div>
 
   <div id="botoes">
-    <Botao on:click={() => dispatch("meuseventos")}>Voltar</Botao>
+    <Botao on:click={voltar}>Voltar</Botao>
     <Botao on:click={salvar} habilitado={formularioValido}>Salvar</Botao>
   </div>
 </div>

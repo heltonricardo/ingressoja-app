@@ -6,20 +6,20 @@
   import MeusDados from "./Conta/MeusDados.svelte";
   import Cadastro from "./Cadastro/Cadastro.svelte";
   import MinhaConta from "./Conta/MinhaConta.svelte";
-  import BarraInferior from "./UI/BarraInferior.svelte";
+  import Produtoras from "./Conta/Produtoras.svelte";
   import MeusEventos from "./Conta/MeusEventos.svelte";
   import MeusPedidos from "./Conta/MeusPedidos.svelte";
+  import Compradores from "./Conta/Compradores.svelte";
+  import BarraInferior from "./UI/BarraInferior.svelte";
   import GridEventos from "./Evento//GridEventos.svelte";
   import PedidoDetalhe from "./Conta/PedidoDetalhe.svelte";
   import Administrador from "./Cadastro/Administrador.svelte";
   import FinalizaPedido from "./Pedido/FinalizaPedido.svelte";
+  import Administradores from "./Conta/Administradores.svelte";
   import CategoriaEvento from "./Cadastro/CategoriaEvento.svelte";
   import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
-  import Administradores from "./Conta/Administradores.svelte";
-  import Compradores from "./Conta/Compradores.svelte";
-  import Produtoras from "./Conta/Produtoras.svelte";
 
-  let modo = MODO.MEUS_EVENTOS;
+  let modo = MODO.EVENTO;
   let id = null;
   let idPedido = null;
   let evento = null;
@@ -119,7 +119,7 @@
     on:voltar={modoNormal}
   />
 {:else if modo === MODO.EVENTO}
-  <Evento {id} on:meuseventos={modoMeusEventos} />
+  <Evento id={11} on:meuseventos={modoMeusEventos} />
 {:else if modo === MODO.FINALIZACAO}
   <FinalizaPedido
     {evento}
@@ -145,7 +145,7 @@
   <MeusEventos
     on:minhaconta={modoMinhaConta}
     on:novoevento={modoEvento}
-    on:editar
+    on:editar={modoEvento}
   />
 {:else if modo === MODO.ADMINISTRADORES}
   <Administradores on:minhaconta={modoMinhaConta} />

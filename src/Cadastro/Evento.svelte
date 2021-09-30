@@ -22,9 +22,10 @@
   const dispatch = createEventDispatcher();
   export let id = null;
 
+  let imagemURL = null;
   let carregando = false;
   let imagemTocada = false;
-  let imagemURL = null;
+  let imagemAWS = Boolean(id);
 
   let obj = {
     dto: {
@@ -77,7 +78,7 @@
     min: 1,
     max: 2000,
   });
-  $: imagemValida = imagemIsValida(obj.file);
+  $: imagemValida = imagemIsValida(obj.file) || imagemAWS;
   $: inicioValido = validator.isAfter(obj.dto.inicio);
   $: terminoValido = validator.isAfter(obj.dto.termino, obj.dto.inicio);
   $: urlValida = obj.dto.online
@@ -132,6 +133,11 @@
     obj.dto.logradouro = "";
   } else {
     obj.dto.url = "";
+  }
+
+  function trocaImagem(event) {
+    imagemAWS = false;
+    obj.file = event.target.files[0];
   }
 
   function adicionaIngresso() {
@@ -231,6 +237,14 @@
     resize: none;
   }
 
+  #preview {
+    max-height: 20rem;
+    max-width: 20rem;
+    align-self: center;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+  }
+
   .error-message {
     color: red;
     margin-top: -0.75rem;
@@ -270,12 +284,21 @@
     {/await}
 
     <label for="imagem">Imagem da capa (máx. 2 MB)</label>
+    <img
+      id="preview"
+      src={imagemAWS
+        ? imagemURL
+        : obj.file
+        ? URL.createObjectURL(obj.file)
+        : ""}
+      alt=""
+    />
     <input
       type="file"
       id="imagem"
       accept="image/bmp, image/jpeg, image/png"
       on:blur={() => (imagemTocada = true)}
-      on:change={(event) => (obj.file = event.target.files[0])}
+      on:change={trocaImagem}
     />
     {#if imagemTocada && !imagemValida}
       <p class="error-message">Anexe uma imagem válida</p>

@@ -262,7 +262,11 @@
 {/if}
 
 <div id="corpo">
-  <h1>Novo Evento</h1>
+  {#if id}
+    <h1>Editar Evento</h1>
+  {:else}
+    <h1>Novo Evento</h1>
+  {/if}
   <div class="campos">
     <Entrada
       id="titulo"

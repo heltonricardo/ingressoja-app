@@ -39,7 +39,7 @@ export async function postEvento(evento) {
       title: MSG.BOM,
       text: MSG.CRIADO,
       icon: "success",
-      timer: 5000,
+      timer: 3000,
       timerProgressBar: true,
     });
     return true;
@@ -88,7 +88,7 @@ export async function putEvento(evento, idEvento) {
       title: MSG.BOM,
       text: MSG.ALTERADO,
       icon: "success",
-      timer: 5000,
+      timer: 3000,
       timerProgressBar: true,
     });
     return true;

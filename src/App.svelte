@@ -19,7 +19,7 @@
   import CategoriaEvento from "./Cadastro/CategoriaEvento.svelte";
   import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
 
-  let modo = MODO.EVENTO;
+  let modo = MODO.NORMAL;
   let id = null;
   let idPedido = null;
   let evento = null;

@@ -13,9 +13,9 @@
   import Entrada from "../UI/Entrada.svelte";
   import { imagemIsValida } from "../utils/validador";
   import TipoDeIngresso from "./TipoDeIngresso.svelte";
-  import { postEvento, getEvento } from "../Conexao/eventoConex";
   import { getCategoriasEvento } from "../Conexao/categoriaEventoConex";
   import { hojeStringISO, UTCParaPtBr } from "../utils/manipulaDataHora";
+  import { postEvento, getEvento, putEvento } from "../Conexao/eventoConex";
 
   /******************************** DEFINIÇÕES ********************************/
 
@@ -152,9 +152,10 @@
   async function salvar() {
     carregando = true;
     obj.dto.cep = validator.whitelist(obj.dto.cep, /\d/g);
-    const sucesso = await postEvento(obj);
+    const sucesso = id ? await putEvento(obj, id) : await postEvento(obj);
     carregando = false;
     if (sucesso) dispatch("meuseventos");
+    else obj.dto.cep = maskBr.cep(obj.dto.cep);
   }
 
   function voltar() {

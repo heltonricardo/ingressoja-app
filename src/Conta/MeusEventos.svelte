@@ -20,6 +20,7 @@
       text: MSG.EXCLUIR_EVENTO,
       icon: "warning",
       showCancelButton: true,
+      cancelButtonText: "Cancelar",
       focusCancel: true,
     }).then(
       (temCerteza) =>

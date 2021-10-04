@@ -38,8 +38,11 @@
       input: "text",
       inputValue: categoria.nome,
       showCancelButton: true,
+      cancelButtonText: "Cancelar",
       inputValidator: (value) => {
         if (!value) return "Insira um nome de 1 a 50 caracteres";
+        else if (value === categoria.nome)
+          return "Para manter o mesmo nome, clique em cancelar";
       },
     });
 

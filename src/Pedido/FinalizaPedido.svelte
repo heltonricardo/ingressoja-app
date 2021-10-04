@@ -40,6 +40,7 @@
       icon: "warning",
       showCancelButton: true,
       focusCancel: true,
+      cancelButtonText: "Cancelar",
     }).then((volte) => volte.isConfirmed && dispatch("voltar"));
   }
 

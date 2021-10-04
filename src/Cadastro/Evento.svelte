@@ -164,6 +164,7 @@
       focusCancel: true,
       title: MSG.CERTEZA,
       showCancelButton: true,
+      cancelButtonText: "Cancelar",
       text: MSG.ALTERADO_NAO_SALV,
     }).then((volte) => volte.isConfirmed && dispatch("meuseventos"));
   }

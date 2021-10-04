@@ -23,6 +23,7 @@
       text: MSG.EXCLUIR,
       icon: "warning",
       showCancelButton: true,
+      cancelButtonText: "Cancelar",
       focusCancel: true,
     }).then((temCerteza) => {
       if (temCerteza.isConfirmed) {

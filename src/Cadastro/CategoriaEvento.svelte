@@ -1,36 +1,60 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import Swal from "sweetalert2";
   import validator from "validator";
+  import { createEventDispatcher } from "svelte";
 
-  import { postCategoriaEvento } from "../Conexao/categoriaEventoConex";
-  import { getCategoriasEvento } from "../Conexao/categoriaEventoConex";
+  import {
+    getCategoriasEvento,
+    postCategoriaEvento,
+    putCategoriaEvento,
+  } from "../Conexao/categoriaEventoConex";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import Entrada from "../UI/Entrada.svelte";
+  import MiniBotao from "../UI/MiniBotao.svelte";
 
   const dispatch = createEventDispatcher();
 
-  let carregando = false;
-
   let nome = "";
+  let carregando = false;
+  let categorias = getCategoriasEvento();
 
   $: nomeValido = validator.isLength(nome.trim(), { min: 1, max: 50 });
 
-  async function carregaCategorias() {
-    return await getCategoriasEvento();
-  }
-
   async function cadastrar() {
     carregando = true;
+    nome = nome.trim();
     const sucesso = await postCategoriaEvento({ nome });
     if (sucesso) {
-      categorias = carregaCategorias();
+      categorias = await getCategoriasEvento();
       nome = "";
     }
     carregando = false;
   }
 
-  let categorias = carregaCategorias();
+  async function editar(categoria) {
+    const { value: novoNome } = await Swal.fire({
+      title: "Entre o novo nome para essa categoria",
+      input: "text",
+      inputValue: categoria.nome,
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value) return "Insira um nome de 1 a 50 caracteres";
+      },
+    });
+
+    let res;
+    if (novoNome) {
+      carregando = true;
+      res = await putCategoriaEvento({ nome: novoNome }, categoria.id);
+    }
+
+    if (res) categorias = getCategoriasEvento();
+
+    carregando = false;
+  }
+
+  async function excluir(categoria) {}
 </script>
 
 <style>
@@ -63,8 +87,9 @@
 
   #tabela td,
   #tabela th {
-    border: 1px solid #ddd;
     padding: 8px;
+    vertical-align: middle;
+    border: 1px solid #ddd;
   }
 
   #tabela tr:nth-child(even) {
@@ -102,6 +127,11 @@
     align-self: center;
     margin: 2rem 0;
   }
+
+  #acoes {
+    display: flex;
+    justify-content: center;
+  }
 </style>
 
 {#if carregando}
@@ -125,7 +155,10 @@
           <tr>
             <td>#{categoria.id}</td>
             <td>{categoria.nome}</td>
-            <td>-</td>
+            <td id="acoes">
+              <MiniBotao on:click={() => editar(categoria)}>Editar</MiniBotao>
+              <MiniBotao on:click={() => excluir(categoria)}>Excluir</MiniBotao>
+            </td>
           </tr>
         {/each}
       </table>

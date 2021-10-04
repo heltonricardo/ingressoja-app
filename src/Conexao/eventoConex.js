@@ -144,3 +144,32 @@ export async function getEvento(id) {
   }
   return false;
 }
+
+export async function deleteEvento(id) {
+  if (
+    !autenticacao.estaLogado() ||
+    autenticacao.tipoLogado() !== TIPOCADASTRO.PRODUTORA
+  )
+    return null;
+
+  let res;
+  try {
+    res = await fetch(`${PATH.EVENTO}/${id}`, { method: "DELETE" });
+  } catch (error) {
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
+    return null;
+  }
+
+  const status = res.status;
+
+  if (status === STATUS.OK) {
+    Swal.fire(MSG.BOM, MSG.EXCLUIDO, "success");
+    return true;
+  } else if (status === STATUS.BAD_REQUEST) {
+    Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
+  } else if (status === STATUS.CONFLICT) {
+    Swal.fire(MSG.RUIM, MSG.EVENTO_NAO_EXCLUIDO, "error");
+  }
+
+  return null;
+}

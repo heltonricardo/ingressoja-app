@@ -1,19 +1,34 @@
 <script>
+  import Swal from "sweetalert2";
   import { createEventDispatcher } from "svelte";
 
+  import MSG from "../ENUM/MSG";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import MiniBotao from "../UI/MiniBotao.svelte";
+  import { deleteEvento } from "../Conexao/eventoConex";
   import { getEventos } from "../Conexao/produtoraConex";
   import { extrairDataHora } from "../utils/manipulaDataHora";
 
   const dispatch = createEventDispatcher();
 
-  async function carregaEventos() {
-    eventos = await getEventos();
-  }
+  let eventos = getEventos();
 
-  let eventos = carregaEventos();
+  function excluir(id) {
+    Swal.fire({
+      title: MSG.CERTEZA,
+      text: MSG.EXCLUIR_EVENTO,
+      icon: "warning",
+      showCancelButton: true,
+      focusCancel: true,
+    }).then(
+      (temCerteza) =>
+        temCerteza.isConfirmed &&
+        deleteEvento(id).then((ok) => {
+          if (ok) eventos = getEventos();
+        })
+    );
+  }
 </script>
 
 <style>
@@ -115,7 +130,7 @@
               <MiniBotao on:click={() => dispatch("editar", evento.id)}
                 >Editar</MiniBotao
               >
-              <MiniBotao>Excluir</MiniBotao>
+              <MiniBotao on:click={() => excluir(evento.id)}>Excluir</MiniBotao>
             </td>
           </tr>
         {/each}

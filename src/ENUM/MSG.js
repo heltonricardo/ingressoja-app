@@ -10,7 +10,7 @@ const MSG = Object.freeze({
   OK: "Operação realizada com sucesso!",
   CRIADO: "Cadastrado com sucesso!",
   ALTERADO: "Alterado com sucesso!",
-  EXCLUÍDO: "Excluído com sucesso!",
+  EXCLUIDO: "Excluído com sucesso!",
   SAUDACAO: "Nossas boas-vindas!",
   VOLTE_SEMPRE: "Volte sempre!",
   PED_REALIZADO: "Seu pedido foi realizado com sucesso!",
@@ -24,7 +24,9 @@ const MSG = Object.freeze({
   EXCLUIR:
     "A conta será inativada e não poderá mais ser acessada. Essa operação não \
     poderá ser desfeita!",
-
+  EXCLUIR_EVENTO:
+    "Esse evento será apagado e não poderá mais ser acessado. Essa operação \
+    não poderá ser desfeita!",
   INCORRETO: "Os dados informados estão incorretos!",
   DUPLICADO: "Os dados informados já pertencem a um cadastro existente!",
   SERVERROR: "Ocorreu um erro no servidor. Tente novamente mais tarde.",
@@ -33,6 +35,8 @@ const MSG = Object.freeze({
     mais tarde.",
   CREDENCIAL: "As credenciais informadas são inválidas!",
   NAO_EXISTE: "As informações procuradas não existem!",
+  EVENTO_NAO_EXCLUIDO:
+    "O evento nao pode ser excluído pois já possui ingresso(s) vendido(s)!",
 });
 
 export default MSG;

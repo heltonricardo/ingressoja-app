@@ -14,7 +14,6 @@
   const dispatch = createEventDispatcher();
 
   export let dados = null;
-  let carregando = false;
 
   let nome = dados ? dados.nome : "";
   let email = dados ? dados.email : "";
@@ -30,17 +29,16 @@
     nomeValido && emailValido && senhaValida && senha2Valida;
 
   async function salvar() {
-    carregando = true;
     const res = dados
       ? await putAdministrador({ nome, usuario: { email, senha } })
       : await postAdministrador({ nome, usuario: { email, senha } });
-    carregando = false;
-    if (res) dispatch("minhaconta");
+    if (res && dados) dispatch("meusdados");
+    else if (res) dispatch("administradores");
   }
 
   function voltar() {
-    if (dados) dispatch("minhaconta");
-    else dispatch("voltar");
+    if (dados) dispatch("meusdados");
+    else dispatch("minhaconta");
   }
 
   onMount(() => {
@@ -81,7 +79,11 @@
 </style>
 
 <div id="corpo">
-  <h1>Novo Administrador</h1>
+  {#if dados}
+    <h1>Editar Administrador</h1>
+  {:else}
+    <h1>Novo Administrador</h1>
+  {/if}
 
   <div id="campos">
     <Entrada

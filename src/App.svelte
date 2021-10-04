@@ -114,7 +114,6 @@
     on:meuspedidos={modoMeusPedidos}
     on:minhaconta={modoMinhaConta}
     on:novacategoria={modoCategoriasEvento}
-    on:novoadm={modoNovoAdm}
     on:produtoras={modoProdutoras}
     on:voltar={modoNormal}
   />
@@ -131,7 +130,12 @@
 {:else if modo === MODO.CATEGORIAS_EVENTO}
   <CategoriaEvento on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.NOVO_ADM}
-  <Administrador {dados} on:minhaconta={modoMinhaConta} />
+  <Administrador
+    {dados}
+    on:minhaconta={modoMinhaConta}
+    on:meusdados={modoMeusDados}
+    on:administradores={modoAdministradores}
+  />
 {:else if modo === MODO.DETALHE_PEDIDO}
   <PedidoDetalhe id={idPedido} on:meuspedidos={modoMeusPedidos} />
 {:else if modo === MODO.MEUS_DADOS}
@@ -148,7 +152,7 @@
     on:editar={modoEvento}
   />
 {:else if modo === MODO.ADMINISTRADORES}
-  <Administradores on:minhaconta={modoMinhaConta} />
+  <Administradores on:novoadm={modoNovoAdm} on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.COMPRADORES}
   <Compradores on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.PRODUTORAS}

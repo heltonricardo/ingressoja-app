@@ -9,6 +9,7 @@
   import MSG from "../ENUM/MSG";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
+  import MiniBotao from "../UI/MiniBotao.svelte";
   import autenticacao from "../Autenticacao/autenticacao";
 
   const dispatch = createEventDispatcher();
@@ -90,13 +91,17 @@
     word-break: keep-all;
   }
 
-  #detalhes {
+  #acoes {
     display: flex;
     justify-content: center;
   }
 
   #voltar {
     margin: 3rem 0;
+  }
+
+  #cadastrar {
+    margin: 2rem 0 0 0;
   }
 </style>
 
@@ -110,6 +115,7 @@
         <tr>
           <th>Id</th>
           <th>Nome</th>
+          <th>E-mail</th>
           <th>Ações</th>
         </tr>
 
@@ -117,10 +123,12 @@
           <tr>
             <td>{adm.id}</td>
             <td>{adm.nome}</td>
-            <td id="detalhes">
-              <Botao>Detalhes</Botao>
+            <td>{adm.email}</td>
+            <td id="acoes">
               {#if adm.id !== idLogado}
-                <Botao on:click={() => excluir(adm.id)}>Excluir</Botao>
+                <MiniBotao on:click={() => excluir(adm.id)}>Excluir</MiniBotao>
+              {:else}
+                -
               {/if}
             </td>
           </tr>
@@ -130,6 +138,9 @@
       Não há administradores para mostrar
     {/if}
   {/await}
+  <div id="cadastrar">
+    <Botao on:click={() => dispatch("novoadm")}>Cadastrar Administrador</Botao>
+  </div>
   <div id="voltar">
     <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
   </div>

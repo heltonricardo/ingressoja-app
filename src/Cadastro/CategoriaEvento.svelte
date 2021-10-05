@@ -4,10 +4,12 @@
   import { createEventDispatcher } from "svelte";
 
   import {
+    putCategoriaEvento,
     getCategoriasEvento,
     postCategoriaEvento,
-    putCategoriaEvento,
+    deleteCategoriaEvento,
   } from "../Conexao/categoriaEventoConex";
+  import MSG from "../ENUM/MSG";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import Entrada from "../UI/Entrada.svelte";
@@ -45,19 +47,34 @@
           return "Para manter o mesmo nome, clique em cancelar";
       },
     });
-
     let res;
     if (novoNome) {
       carregando = true;
       res = await putCategoriaEvento({ nome: novoNome }, categoria.id);
     }
-
     if (res) categorias = getCategoriasEvento();
-
     carregando = false;
   }
 
-  async function excluir(categoria) {}
+  async function excluir(categoria) {
+    Swal.fire({
+      title: MSG.CERTEZA,
+      text: MSG.EXCLUIR,
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "Cancelar",
+      focusCancel: true,
+    })
+      .then((temCerteza) => {
+        if (temCerteza.isConfirmed) {
+          carregando = true;
+          deleteCategoriaEvento(categoria.id).then((res) => {
+            if (res) categorias = getCategoriasEvento();
+          });
+        }
+      })
+      .then(() => (carregando = false));
+  }
 </script>
 
 <style>

@@ -113,7 +113,7 @@ export async function getCategoriasEvento() {
   return null;
 }
 
-export async function deleteComprador(id) {
+export async function deleteCategoriaEvento(id) {
   if (
     !autenticacao.estaLogado() ||
     autenticacao.tipoLogado() !== TIPOCADASTRO.ADMINISTRADOR
@@ -131,6 +131,16 @@ export async function deleteComprador(id) {
   const status = res.status;
 
   if (status === STATUS.OK) {
+    Swal.fire({
+      title: MSG.BOM,
+      text: MSG.EXCLUIDA,
+      icon: "success",
+      showCancelButton: true,
+      cancelButtonText: "Cancelar",
+      focusCancel: true,
+      timer: 5000,
+      timerProgressBar: true,
+    });
     return true;
   } else if (status === STATUS.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");

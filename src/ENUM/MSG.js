@@ -11,6 +11,7 @@ const MSG = Object.freeze({
   CRIADO: "Cadastrado com sucesso!",
   ALTERADO: "Alterado com sucesso!",
   EXCLUIDO: "Excluído com sucesso!",
+  EXCLUIDA: "Excluída com sucesso!",
   SAUDACAO: "Nossas boas-vindas!",
   VOLTE_SEMPRE: "Volte sempre!",
   PED_REALIZADO: "Seu pedido foi realizado com sucesso!",

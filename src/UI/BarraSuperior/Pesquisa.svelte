@@ -1,5 +1,17 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+
   import Icone from "../Icone.svelte";
+
+  const dispatch = createEventDispatcher();
+
+  let termo = "";
+
+  function pesquisar() {
+    dispatch("pesquisar", termo.trim().toLowerCase());
+  }
+
+  $: if (termo === "") pesquisar();
 </script>
 
 <style>
@@ -24,6 +36,12 @@
 </style>
 
 <div id="conteudo">
-  <input id="entrada" type="search" placeholder="Procure um evento..." />
-  <Icone icon="search" />
+  <input
+    on:keypress={(e) => e.code === "Enter" && pesquisar()}
+    bind:value={termo}
+    id="entrada"
+    type="search"
+    placeholder="Procure um evento..."
+  />
+  <Icone icon="search" on:click={pesquisar} />
 </div>

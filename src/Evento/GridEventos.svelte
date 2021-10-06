@@ -1,8 +1,20 @@
 <script>
-  import { getEventos } from "../Conexao/eventoConex";
-  import MSG from "../ENUM/MSG"
+  import MSG from "../ENUM/MSG";
   import Aguarde from "../UI/Aguarde.svelte";
   import ItemEvento from "./ItemEvento.svelte";
+  import { getEventos } from "../Conexao/eventoConex";
+
+  export let termoPesquisa = "";
+  let eventos = getEventos();
+
+  $: if (termoPesquisa !== "") {
+    getEventos().then(
+      (data) =>
+        (eventos = data.filter((e) =>
+          e.titulo.toLowerCase().includes(termoPesquisa)
+        ))
+    );
+  } else eventos = getEventos();
 </script>
 
 <style>
@@ -28,14 +40,14 @@
 
 <div class="corpo">
   <div class="conteudo">
-    {#await getEventos()}
+    {#await eventos}
       <Aguarde />
     {:then eventos}
       {#if eventos.length}
         {#each eventos as evento (evento.id)}
           <ItemEvento {evento} on:vermais />
         {/each}
-        {:else}
+      {:else}
         {MSG.SEM_EVENTO}
       {/if}
     {/await}

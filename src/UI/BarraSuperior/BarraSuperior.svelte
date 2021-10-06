@@ -1,9 +1,10 @@
 <script>
-  import MODO from "../../ENUM/MODO";
-  import Pesquisa from "./Pesquisa.svelte";
-  import Titulo from "./Titulo.svelte";
-  import Opcoes from "./Opcoes.svelte";
   import { createEventDispatcher } from "svelte";
+
+  import MODO from "../../ENUM/MODO";
+  import Opcoes from "./Opcoes.svelte";
+  import Titulo from "./Titulo.svelte";
+  import Pesquisa from "./Pesquisa.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -36,7 +37,7 @@
 <div class="barra" class:um-item={modo !== MODO.NORMAL}>
   <Titulo on:click={() => dispatch("voltar")} />
   {#if modo === MODO.NORMAL}
-    <Pesquisa />
+    <Pesquisa on:pesquisar />
     <Opcoes on:cadastro on:entrar on:minhaconta />
   {/if}
 </div>

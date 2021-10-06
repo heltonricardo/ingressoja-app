@@ -133,6 +133,7 @@
     {#if produtoras.length}
       <table id="tabela">
         <tr>
+          <th>Id</th>
           <th>Razão Social</th>
           <th>CNPJ</th>
           <th>Ações</th>
@@ -140,6 +141,7 @@
 
         {#each produtoras as produtora}
           <tr>
+            <td>{produtora.id}</td>
             <td>{produtora.razaoSocial}</td>
             <td>{maskBr.cnpj(produtora.cnpj)}</td>
             <td id="detalhes">

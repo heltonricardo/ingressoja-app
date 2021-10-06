@@ -1,4 +1,5 @@
 <script>
+  import Swal from "sweetalert2";
   import { maskBr } from "js-brasil";
 
   import Botao from "../UI/Botao.svelte";
@@ -8,6 +9,32 @@
   import { getCompradores } from "../Conexao/administradorConex";
 
   const dispatch = createEventDispatcher();
+
+  function detalhes(comprador) {
+    Swal.fire({
+      title: "Dados do comprador",
+      html: `<table style="word-break: break-all; width: 100%; text-align: left;">
+          <tr>
+            <td style="font-weight: bold; white-space: nowrap;">Id:</td>
+            <td style="padding-top: 1rem">${comprador.id}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold; white-space: nowrap;">Nome:</td>
+            <td style="padding-top: 1rem">${comprador.nome}</td>
+          </tr style="padding: 1rem">
+          <tr>
+            <td style="font-weight: bold; white-space: nowrap;">E-mail:</td>
+            <td style="padding-top: 1rem">${comprador.email}</td>
+          </tr>
+          <tr style="padding: 1rem">
+            <td style="font-weight: bold; white-space: nowrap;">CPF:</td>
+            <td style="padding-top: 1rem">${maskBr.cpf(comprador.cpf)}</td>
+          </tr>
+        </table>`,
+      showCloseButton: true,
+      showConfirmButton: false,
+    });
+  }
 </script>
 
 <style>
@@ -99,7 +126,9 @@
             <td>{comprador.nome}</td>
             <td>{maskBr.cpf(comprador.cpf)}</td>
             <td id="detalhes">
-              <MiniBotao>Detalhes</MiniBotao>
+              <MiniBotao on:click={() => detalhes(comprador)}
+                >Detalhes</MiniBotao
+              >
             </td>
           </tr>
         {/each}

@@ -1,19 +1,13 @@
 <script>
   import { maskBr } from "js-brasil";
+
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import { createEventDispatcher } from "svelte";
+  import MiniBotao from "../UI/MiniBotao.svelte";
   import { getCompradores } from "../Conexao/administradorConex";
 
   const dispatch = createEventDispatcher();
-
-  const compradores = getCompradores().then((d) =>
-    d.sort((x, y) => {
-      const a = x.nome.toLowerCase();
-      const b = y.nome.toLowerCase();
-      return a < b ? -1 : a > b ? 1 : 0;
-    })
-  );
 </script>
 
 <style>
@@ -87,12 +81,13 @@
 
 <div id="corpo">
   <h1>Compradores</h1>
-  {#await compradores}
+  {#await getCompradores()}
     <Aguarde />
   {:then compradores}
     {#if compradores.length}
       <table id="tabela">
         <tr>
+          <th>Id</th>
           <th>Nome</th>
           <th>CPF</th>
           <th>Ações</th>
@@ -100,10 +95,11 @@
 
         {#each compradores as comprador}
           <tr>
+            <td>{comprador.id}</td>
             <td>{comprador.nome}</td>
             <td>{maskBr.cpf(comprador.cpf)}</td>
             <td id="detalhes">
-              <Botao>Detalhes</Botao>
+              <MiniBotao>Detalhes</MiniBotao>
             </td>
           </tr>
         {/each}

@@ -15,10 +15,10 @@
 </script>
 
 <style>
-  #conteudo {
-    display: flex;
-    height: inherit;
-    align-items: center;
+  tr,
+  td {
+    text-align: center;
+    vertical-align: middle;
   }
 
   #entrada {
@@ -33,15 +33,35 @@
     padding-left: 1rem;
     padding-right: 1rem;
   }
+
+  #segunda-linha {
+    padding-top: 0.5rem;
+  }
+
+  #filtro:hover {
+    cursor: pointer;
+    font-weight: bolder;
+  }
 </style>
 
-<div id="conteudo">
-  <input
-    on:keypress={(e) => e.code === "Enter" && pesquisar()}
-    bind:value={termo}
-    id="entrada"
-    type="search"
-    placeholder="Procure um evento..."
-  />
-  <Icone icon="search" on:click={pesquisar} />
-</div>
+<table>
+  <tr>
+    <td>
+      <input
+        on:keypress={(e) => e.code === "Enter" && pesquisar()}
+        bind:value={termo}
+        id="entrada"
+        type="search"
+        placeholder="Procure um evento..."
+      />
+    </td>
+    <td>
+      <Icone icon="search" on:click={pesquisar} />
+    </td>
+  </tr>
+  <tr>
+    <td id="segunda-linha">
+      <a id="filtro"> Filtrar por categoria </a>
+    </td>
+  </tr>
+</table>

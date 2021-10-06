@@ -1,19 +1,59 @@
 <script>
+  import Swal from "sweetalert2";
   import { maskBr } from "js-brasil";
+  import { createEventDispatcher } from "svelte";
+
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
-  import { createEventDispatcher } from "svelte";
+  import MiniBotao from "../UI/MiniBotao.svelte";
   import { getProdutoras } from "../Conexao/administradorConex";
 
   const dispatch = createEventDispatcher();
 
-  const produtoras = getProdutoras().then((d) =>
-    d.sort((x, y) => {
-      const a = x.razaoSocial.toLowerCase();
-      const b = y.razaoSocial.toLowerCase();
-      return a < b ? -1 : a > b ? 1 : 0;
-    })
-  );
+  function detalhes(produtora) {
+    Swal.fire({
+      title: "Dados da produtora",
+      html: `<table
+          style="word-break: break-all; width: 100%; text-align: left;">
+          <tr>
+            <td style="font-weight: bold; white-space: nowrap;">Id:</td>
+            <td  style="padding: 1rem">${produtora.id}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold; white-space: nowrap;">
+              Razão social:</td>
+            <td  style="padding: 1rem">${produtora.razaoSocial}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold; white-space: nowrap;">
+              Nome fantasia:</td>
+            <td  style="padding: 1rem">${produtora.nomeFantasia}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold; white-space: nowrap;">CNPJ:</td>
+            <td  style="padding: 1rem">${maskBr.cnpj(produtora.cnpj)}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold; white-space: nowrap;">E-mail:</td>
+            <td  style="padding: 1rem">${produtora.email}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold; white-space: nowrap;">Banco:</td>
+            <td  style="padding: 1rem">${produtora.banco}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold; white-space: nowrap;">Agência:</td>
+            <td  style="padding: 1rem">${produtora.agencia}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold; white-space: nowrap;">Conta:</td>
+            <td  style="padding: 1rem">${produtora.conta}</td>
+          </tr>
+        </table>`,
+      showCloseButton: true,
+      showConfirmButton: false,
+    });
+  }
 </script>
 
 <style>
@@ -87,7 +127,7 @@
 
 <div id="corpo">
   <h1>Produtoras</h1>
-  {#await produtoras}
+  {#await getProdutoras()}
     <Aguarde />
   {:then produtoras}
     {#if produtoras.length}
@@ -103,7 +143,9 @@
             <td>{produtora.razaoSocial}</td>
             <td>{maskBr.cnpj(produtora.cnpj)}</td>
             <td id="detalhes">
-              <Botao>Detalhes</Botao>
+              <MiniBotao on:click={() => detalhes(produtora)}
+                >Detalhes</MiniBotao
+              >
             </td>
           </tr>
         {/each}

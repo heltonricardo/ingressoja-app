@@ -193,6 +193,8 @@ export async function podeAlterarEvento(id) {
 
   if (status === STATUS.OK) {
     return true;
+  } else if (status === STATUS.BAD_REQUEST) {
+    Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   } else if (status === STATUS.CONFLICT) {
     Swal.fire(MSG.RUIM, MSG.EVENTO_NAO, "error");
   }

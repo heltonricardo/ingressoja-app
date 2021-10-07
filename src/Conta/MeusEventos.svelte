@@ -6,29 +6,34 @@
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import MiniBotao from "../UI/MiniBotao.svelte";
-  import { deleteEvento } from "../Conexao/eventoConex";
   import { getEventos } from "../Conexao/produtoraConex";
   import { extrairDataHora } from "../utils/manipulaDataHora";
+  import { deleteEvento, podeAlterarEvento } from "../Conexao/eventoConex";
 
   const dispatch = createEventDispatcher();
 
   let eventos = getEventos();
 
-  function excluir(id) {
-    Swal.fire({
-      title: MSG.CERTEZA,
-      text: MSG.EXCLUIR_EVENTO,
-      icon: "warning",
-      showCancelButton: true,
-      cancelButtonText: "Cancelar",
-      focusCancel: true,
-    }).then(
-      (temCerteza) =>
-        temCerteza.isConfirmed &&
-        deleteEvento(id).then((ok) => {
-          if (ok) eventos = getEventos();
-        })
-    );
+  async function editar(id) {
+    if (await podeAlterarEvento(id)) dispatch("editar", id);
+  }
+
+  async function excluir(id) {
+    if (await podeAlterarEvento(id))
+      Swal.fire({
+        title: MSG.CERTEZA,
+        text: MSG.EXCLUIR_EVENTO,
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        focusCancel: true,
+      }).then(
+        (temCerteza) =>
+          temCerteza.isConfirmed &&
+          deleteEvento(id).then((ok) => {
+            if (ok) eventos = getEventos();
+          })
+      );
   }
 </script>
 
@@ -128,9 +133,7 @@
             <td>{extrairDataHora(evento.inicio).data}</td>
             <td>{evento.categoriaEvento.nome}</td>
             <td id="detalhes">
-              <MiniBotao on:click={() => dispatch("editar", evento.id)}
-                >Editar</MiniBotao
-              >
+              <MiniBotao on:click={() => editar(evento.id)}>Editar</MiniBotao>
               <MiniBotao on:click={() => excluir(evento.id)}>Excluir</MiniBotao>
             </td>
           </tr>

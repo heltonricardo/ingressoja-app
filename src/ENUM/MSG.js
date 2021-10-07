@@ -36,8 +36,9 @@ const MSG = Object.freeze({
     mais tarde.",
   CREDENCIAL: "As credenciais informadas são inválidas!",
   NAO_EXISTE: "As informações procuradas não existem!",
-  EVENTO_NAO_EXCLUIDO:
-    "O evento nao pode ser excluído pois já possui ingresso(s) vendido(s)!",
+  EVENTO_NAO:
+    "Não é possível alterar/excluir eventos que possuem ingresso(s) \
+    vendido(s)!",
 });
 
 export default MSG;

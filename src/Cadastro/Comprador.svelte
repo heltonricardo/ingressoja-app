@@ -71,7 +71,6 @@
     id="nome"
     label="Nome Completo"
     value={nome}
-    disabled={dados}
     on:input={(event) => (nome = event.target.value)}
     valido={nomeValido}
     mensagemValidacao="Insira um nome válido"

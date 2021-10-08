@@ -27,6 +27,11 @@
   let termoPesquisa = "";
   let idCategoria = null;
 
+  function limpaFiltroPesquisa() {
+    idCategoria = null;
+    termoPesquisa = "";
+  }
+
   function trocaModo(novoModo) {
     modo = novoModo;
     window.scrollTo(0, 0);
@@ -34,27 +39,14 @@
 
   function modoCadastro(e) {
     dados = e.detail;
+    limpaFiltroPesquisa();
     trocaModo(MODO.CADASTRO);
   }
 
   function modoDetalhes(e) {
     id = e.detail;
+    limpaFiltroPesquisa();
     trocaModo(MODO.DETALHES);
-  }
-
-  function modoFinalizacao(e) {
-    evento = e.detail;
-    trocaModo(MODO.FINALIZACAO);
-  }
-
-  function modoNovoAdm(e) {
-    dados = e.detail;
-    trocaModo(MODO.NOVO_ADM);
-  }
-
-  function modoNormal() {
-    id = null;
-    trocaModo(MODO.NORMAL);
   }
 
   function modoEvento(event) {
@@ -62,18 +54,39 @@
     trocaModo(MODO.EVENTO);
   }
 
+  function modoFinalizacao(e) {
+    evento = e.detail;
+    trocaModo(MODO.FINALIZACAO);
+  }
+
+  function modoLogin() {
+    limpaFiltroPesquisa();
+    trocaModo(MODO.LOGIN);
+  }
+
+  function modoMinhaConta() {
+    limpaFiltroPesquisa();
+    trocaModo(MODO.MINHA_CONTA);
+  }
+
+  function modoNormal() {
+    id = null;
+    trocaModo(MODO.NORMAL);
+  }
+
+  function modoNovoAdm(e) {
+    dados = e.detail;
+    trocaModo(MODO.NOVO_ADM);
+  }
+
   function modoPedido(e) {
     idPedido = e.detail;
     trocaModo(MODO.DETALHE_PEDIDO);
   }
-
-  function pesquisar(event) {
-    termoPesquisa = event.detail;
-  }
-
-  function filtrar(event) {
-    idCategoria = event.detail;
-  }
+  
+  const filtrar = (event) => (idCategoria = event.detail);
+  
+  const pesquisar = (event) => (termoPesquisa = event.detail);
 
   const modoAdministradores = () => trocaModo(MODO.ADMINISTRADORES);
 
@@ -81,15 +94,11 @@
 
   const modoCompradores = () => trocaModo(MODO.COMPRADORES);
 
-  const modoLogin = () => trocaModo(MODO.LOGIN);
-
   const modoMeusDados = () => trocaModo(MODO.MEUS_DADOS);
 
   const modoMeusEventos = () => trocaModo(MODO.MEUS_EVENTOS);
 
   const modoMeusPedidos = () => trocaModo(MODO.MEUS_PEDIDOS);
-
-  const modoMinhaConta = () => trocaModo(MODO.MINHA_CONTA);
 
   const modoProdutoras = () => trocaModo(MODO.PRODUTORAS);
 </script>

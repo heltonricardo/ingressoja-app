@@ -37,7 +37,7 @@
 <div class="barra" class:um-item={modo !== MODO.NORMAL}>
   <Titulo on:click={() => dispatch("voltar")} />
   {#if modo === MODO.NORMAL}
-    <Pesquisa on:pesquisar />
+    <Pesquisa on:pesquisar on:filtrar />
     <Opcoes on:cadastro on:entrar on:minhaconta />
   {/if}
 </div>

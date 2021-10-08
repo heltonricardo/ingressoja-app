@@ -25,6 +25,7 @@
   let evento = null;
   let dados = null;
   let termoPesquisa = "";
+  let idCategoria = null;
 
   function trocaModo(novoModo) {
     modo = novoModo;
@@ -70,6 +71,10 @@
     termoPesquisa = event.detail;
   }
 
+  function filtrar(event) {
+    idCategoria = event.detail;
+  }
+
   const modoAdministradores = () => trocaModo(MODO.ADMINISTRADORES);
 
   const modoCategoriasEvento = () => trocaModo(MODO.CATEGORIAS_EVENTO);
@@ -96,10 +101,11 @@
   on:entrar={modoLogin}
   on:minhaconta={modoMinhaConta}
   on:pesquisar={pesquisar}
+  on:filtrar={filtrar}
 />
 
 {#if modo === MODO.NORMAL}
-  <GridEventos {termoPesquisa} on:vermais={modoDetalhes} />
+  <GridEventos {termoPesquisa} {idCategoria} on:vermais={modoDetalhes} />
 {:else if modo === MODO.CADASTRO}
   <Cadastro {dados} on:meusdados={modoMeusDados} on:voltar={modoNormal} />
 {:else if modo === MODO.LOGIN}

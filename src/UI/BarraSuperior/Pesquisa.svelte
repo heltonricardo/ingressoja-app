@@ -1,14 +1,37 @@
 <script>
+  import Swal from "sweetalert2";
   import { createEventDispatcher } from "svelte";
 
   import Icone from "../Icone.svelte";
+  import Aguarde from "../Aguarde.svelte";
+  import { getCategoriasEvento } from "../../Conexao/categoriaEventoConex";
 
   const dispatch = createEventDispatcher();
 
   let termo = "";
+  let categorias;
+  let carregando = false;
 
   function pesquisar() {
     dispatch("pesquisar", termo.trim().toLowerCase());
+  }
+
+  async function abrirCategorias() {
+    carregando = true;
+    categorias = await getCategoriasEvento();
+    const opcoes = categorias.reduce((acc, curr) => {
+      acc[curr.id] = curr.nome;
+      return acc;
+    }, {0: "Todas"});
+    carregando = false;
+    const { value: idCategoria } = await Swal.fire({
+      title: "Selecione uma categoria de evento para filtrar",
+      input: "select",
+      showCancelButton: true,
+      inputOptions: opcoes,
+    });
+
+    if (idCategoria) dispatch("filtrar", Number(idCategoria));
   }
 
   $: if (termo === "") pesquisar();
@@ -44,6 +67,10 @@
   }
 </style>
 
+{#if carregando}
+  <Aguarde />
+{/if}
+
 <table>
   <tr>
     <td>
@@ -61,7 +88,7 @@
   </tr>
   <tr>
     <td id="segunda-linha">
-      <a id="filtro"> Filtrar por categoria </a>
+      <a id="filtro" on:click={abrirCategorias}>Filtrar por categoria</a>
     </td>
   </tr>
 </table>

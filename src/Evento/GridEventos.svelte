@@ -5,6 +5,8 @@
   import { getEventos } from "../Conexao/eventoConex";
 
   export let termoPesquisa = "";
+  export let idCategoria = null;
+
   let eventos = getEventos();
 
   $: if (termoPesquisa !== "") {
@@ -13,6 +15,11 @@
         (eventos = data.filter((e) =>
           e.titulo.toLowerCase().includes(termoPesquisa)
         ))
+    );
+  } else if (idCategoria) {
+    getEventos().then(
+      (data) =>
+        (eventos = data.filter((e) => e.categoriaEvento.id === idCategoria))
     );
   } else eventos = getEventos();
 </script>

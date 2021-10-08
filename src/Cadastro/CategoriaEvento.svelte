@@ -59,7 +59,7 @@
   async function excluir(categoria) {
     Swal.fire({
       title: MSG.CERTEZA,
-      text: MSG.EXCLUIR,
+      text: MSG.CATEGORIA_EXCLUIR,
       icon: "warning",
       showCancelButton: true,
       cancelButtonText: "Cancelar",

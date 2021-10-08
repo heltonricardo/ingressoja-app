@@ -39,6 +39,10 @@ const MSG = Object.freeze({
   EVENTO_NAO:
     "Não é possível alterar/excluir eventos que possuem ingresso(s) \
     vendido(s)!",
+  CATEGORIA_EXCLUIR:
+    "A categoria será excluída. Ela não poderá ser usada como filtro e nenhum \
+    evento poderá ser categorizado à ela. Essa operação não poderá ser \
+    desfeita!",
 });
 
 export default MSG;

@@ -322,7 +322,7 @@
     />
     <Entrada
       id="termino"
-      min={hojeStringISO}
+      min={obj.dto.inicio}
       type="datetime-local"
       valido={terminoValido}
       label="Data e Hora de Término"

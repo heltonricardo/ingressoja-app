@@ -34,15 +34,15 @@
       url: "",
       bairro: "",
       cidade: "",
-      inicio: "",
       numero: "",
       titulo: "",
-      termino: "",
       online: true,
       descricao: "",
       logradouro: "",
       tiposDeIngresso: [],
       qntTipoDeIngresso: 1,
+      inicio: hojeStringISO,
+      termino: hojeStringISO,
       idCategoria: undefined,
     },
     file: null,
@@ -327,8 +327,8 @@
       valido={terminoValido}
       label="Data e Hora de Término"
       value={id ? obj.dto.termino : hojeStringISO}
-      mensagemValidacao="Insira uma data de término válida"
       on:input={(event) => (obj.dto.termino = event.target.value)}
+      mensagemValidacao="A data de término deve ser depois da data de início"
     />
     <Entrada
       id="descricao"
@@ -439,7 +439,10 @@
   <h1>Tipos de Ingressos</h1>
   <div class="campos">
     {#each [...Array(obj.dto.qntTipoDeIngresso).keys()] as i}
-      <TipoDeIngresso bind:tipoDeIngresso={obj.dto.tiposDeIngresso[i]} />
+      <TipoDeIngresso
+        terminoEvento={obj.dto.termino}
+        bind:tipoDeIngresso={obj.dto.tiposDeIngresso[i]}
+      />
     {/each}
   </div>
 

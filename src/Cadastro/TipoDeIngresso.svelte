@@ -1,20 +1,31 @@
 <script>
   import validator from "validator";
+  import { hojeStringISO } from "../utils/manipulaDataHora";
+
+  export let terminoEvento;
 
   export let tipoDeIngresso = {
     nome: "",
     valor: 0.0,
     descricao: "",
-    quantidadeDisponivel: 1,
     tipoValido: false,
+    inicio: hojeStringISO,
+    termino: terminoEvento,
+    quantidadeDisponivel: 1,
   };
+
+  function atualizaTermino() {
+    tipoDeIngresso.termino = tipoDeIngresso.inicio;
+  }
 
   /*************************** VALIDAÇÃO DE CAMPOS ****************************/
 
-  let nomeTocado = false;
-  let descricaoTocada = false;
-  let valorTocado = false;
   let qntTocada = false;
+  let nomeTocado = false;
+  let valorTocado = false;
+  let inicioTocado = false;
+  let terminoTocado = false;
+  let descricaoTocada = false;
 
   // Para evitar o erro de dependência cíclica:
   const validar = (flag) => (tipoDeIngresso.tipoValido = flag);
@@ -29,11 +40,28 @@
   $: valorValido =
     validator.isNumeric(tipoDeIngresso.valor + "") && tipoDeIngresso.valor >= 0;
   $: qntValida = tipoDeIngresso.quantidadeDisponivel > 0;
+  $: inicioValido =
+    validator.isAfter(hojeStringISO) && validator.isBefore(terminoEvento);
+  $: terminoValido =
+    validator.isAfter(tipoDeIngresso.inicio) &&
+    validator.isBefore(terminoEvento);
 
-  $: validar(nomeValido && descricaoValida && valorValido && qntValida);
+  $: validar(
+    nomeValido &&
+      descricaoValida &&
+      valorValido &&
+      qntValida &&
+      inicioValido &&
+      terminoValido
+  );
+
+  $: console.log(tipoDeIngresso.termino);
 </script>
 
 <style>
+  input {
+    color: black;
+  }
   #form-control {
     display: flex;
     flex-direction: column;
@@ -46,6 +74,7 @@
   .item {
     display: flex;
     flex-direction: column;
+    margin-bottom: 1rem;
   }
 
   #inferior {
@@ -127,6 +156,46 @@
       />
       {#if descricaoTocada && !descricaoValida}
         <p class="error-message">Insira uma descrição com até 50 caracteres</p>
+      {/if}
+    </div>
+
+    <div class="item">
+      <label for="qnt">Data de início das vendas</label>
+      <input
+        id="inicio"
+        max={terminoEvento}
+        min={hojeStringISO}
+        type="datetime-local"
+        bind:value={tipoDeIngresso.inicio}
+        on:blur={() => (inicioTocado = true)}
+        class:valid={inicioValido && inicioTocado}
+        class:invalid={!inicioValido && inicioTocado}
+        on:change={atualizaTermino}
+      />
+      {#if inicioTocado && !inicioValido}
+        <p class="error-message">
+          Insira um momento entre agora e o término do evento
+        </p>
+      {/if}
+    </div>
+
+    <div class="item">
+      <label for="valor">Data de término das vendas</label>
+      <input
+        id="valor"
+        max={terminoEvento}
+        type="datetime-local"
+        min={tipoDeIngresso.inicio}
+        bind:value={tipoDeIngresso.termino}
+        on:blur={() => (terminoTocado = true)}
+        class:valid={terminoValido && terminoTocado}
+        class:invalid={!terminoValido && terminoTocado}
+      />
+      {#if terminoTocado && !terminoValido}
+        <p class="error-message">
+          Insira uma data entre o início da venda do ingresso e o término do
+          evento
+        </p>
       {/if}
     </div>
   </div>

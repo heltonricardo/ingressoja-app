@@ -13,16 +13,23 @@
   let carregando = false;
 
   function pesquisar() {
-    dispatch("pesquisar", termo.trim().toLowerCase());
+    carregando = true;
+    setTimeout(() => {
+      carregando = false;
+      dispatch("pesquisar", termo.trim().toLowerCase());
+    }, 1000);
   }
 
   async function abrirCategorias() {
     carregando = true;
     categorias = await getCategoriasEvento();
-    const opcoes = categorias.reduce((acc, curr) => {
-      acc[curr.id] = curr.nome;
-      return acc;
-    }, {0: "Todas"});
+    const opcoes = categorias.reduce(
+      (acc, curr) => {
+        acc[curr.id] = curr.nome;
+        return acc;
+      },
+      { 0: "Todas" }
+    );
     carregando = false;
     const { value: idCategoria } = await Swal.fire({
       title: "Selecione uma categoria de evento para filtrar",
@@ -31,7 +38,13 @@
       inputOptions: opcoes,
     });
 
-    if (idCategoria) dispatch("filtrar", Number(idCategoria));
+    if (idCategoria) {
+      carregando = true;
+      setTimeout(() => {
+        carregando = false;
+        dispatch("filtrar", Number(idCategoria));
+      }, 1000);
+    }
   }
 
   $: if (termo === "") pesquisar();

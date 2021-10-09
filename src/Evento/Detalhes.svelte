@@ -130,6 +130,13 @@
   #nomeFantasia {
     margin: 0.5rem 0;
   }
+
+  #sem-ingressos {
+    align-self: center;
+    margin: 3rem 0;
+    font-size: 20pt;
+    color: red;
+  }
 </style>
 
 {#await eventoCarregado}
@@ -206,15 +213,21 @@
       </p>
     </span>
 
-    <h2 class="titulo" id="escolha">Selecione os ingressos</h2>
+    {#if evento.tiposDeIngresso.length}
+      <h2 class="titulo" id="escolha">Selecione os ingressos</h2>
+    {:else}
+      <h2 id="sem-ingressos">Ingressos não disponíveis</h2>
+    {/if}
 
     {#each evento.tiposDeIngresso as tipoDeIngresso}
       <TipoDeIngresso {tipoDeIngresso} on:calcular={calcular} />
     {/each}
     <div id="rodape">
       <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
-      <span id="total">Total: R$ {valorVirgula(total)}</span>
-      <Botao on:click={comprar} habilitado={quantidade}>Comprar</Botao>
+      {#if evento.tiposDeIngresso.length}
+        <span id="total">Total: R$ {valorVirgula(total)}</span>
+        <Botao on:click={comprar} habilitado={quantidade}>Comprar</Botao>
+      {/if}
     </div>
   </div>
 {/await}

@@ -41,10 +41,11 @@
     validator.isNumeric(tipoDeIngresso.valor + "") && tipoDeIngresso.valor >= 0;
   $: qntValida = tipoDeIngresso.quantidadeDisponivel > 0;
   $: inicioValido =
-    validator.isAfter(hojeStringISO) && validator.isBefore(terminoEvento);
+    validator.isBefore(hojeStringISO, tipoDeIngresso.inicio) &&
+    validator.isBefore(tipoDeIngresso.inicio, terminoEvento);
   $: terminoValido =
-    validator.isAfter(tipoDeIngresso.inicio) &&
-    validator.isBefore(terminoEvento);
+    validator.isBefore(tipoDeIngresso.inicio, tipoDeIngresso.termino) &&
+    validator.isBefore(tipoDeIngresso.termino, terminoEvento);
 
   $: validar(
     nomeValido &&

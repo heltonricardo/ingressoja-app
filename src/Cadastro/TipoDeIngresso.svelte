@@ -55,8 +55,6 @@
       inicioValido &&
       terminoValido
   );
-
-  $: console.log(tipoDeIngresso.termino);
 </script>
 
 <style>
@@ -167,11 +165,11 @@
         max={terminoEvento}
         min={hojeStringISO}
         type="datetime-local"
+        on:change={atualizaTermino}
         bind:value={tipoDeIngresso.inicio}
         on:blur={() => (inicioTocado = true)}
         class:valid={inicioValido && inicioTocado}
         class:invalid={!inicioValido && inicioTocado}
-        on:change={atualizaTermino}
       />
       {#if inicioTocado && !inicioValido}
         <p class="error-message">

@@ -14,10 +14,6 @@
     quantidadeDisponivel: 1,
   };
 
-  function atualizaTermino() {
-    tipoDeIngresso.termino = tipoDeIngresso.inicio;
-  }
-
   /*************************** VALIDAÇÃO DE CAMPOS ****************************/
 
   let qntTocada = false;
@@ -165,7 +161,6 @@
         max={terminoEvento}
         min={hojeStringISO}
         type="datetime-local"
-        on:change={atualizaTermino}
         bind:value={tipoDeIngresso.inicio}
         on:blur={() => (inicioTocado = true)}
         class:valid={inicioValido && inicioTocado}

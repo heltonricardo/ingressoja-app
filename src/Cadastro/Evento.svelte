@@ -64,7 +64,11 @@
       obj.dto.inicio = UTCParaPtBr(r.inicio);
       obj.dto.termino = UTCParaPtBr(r.termino);
       obj.dto.idCategoria = r.categoriaEvento.id;
-      obj.dto.tiposDeIngresso = r.tiposDeIngresso;
+      obj.dto.tiposDeIngresso = r.tiposDeIngresso.map((t) => ({
+        ...t,
+        inicio: UTCParaPtBr(t.inicio),
+        termino: UTCParaPtBr(t.termino),
+      }));
       obj.dto.qntTipoDeIngresso = r.tiposDeIngresso.length;
     });
 

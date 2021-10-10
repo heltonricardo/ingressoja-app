@@ -15,10 +15,12 @@
 
   export let dados = null;
 
-  let nome = dados ? dados.nome : "";
-  let email = dados ? dados.email : "";
+  let tocarCampos = false;
+
   let senha = "";
   let senha2 = "";
+  let nome = dados ? dados.nome : "";
+  let email = dados ? dados.email : "";
 
   $: nomeValido = validator.isLength(nome.trim(), { min: 1, max: 255 });
   $: emailValido = validator.isEmail(email);
@@ -29,6 +31,11 @@
     nomeValido && emailValido && senhaValida && senha2Valida;
 
   async function salvar() {
+    if (!formularioValido) {
+      tocarCampos = true;
+      return;
+    }
+
     const res = dados
       ? await putAdministrador({ nome, usuario: { email, senha } })
       : await postAdministrador({ nome, usuario: { email, senha } });
@@ -89,45 +96,48 @@
     <Entrada
       id="nome"
       value={nome}
-      label="Nome Completo"
-      disabled={dados}
-      on:input={(event) => (nome = event.target.value)}
       valido={nomeValido}
+      tocado={tocarCampos}
+      label="Nome Completo"
       mensagemValidacao="Insira um nome válido"
+      on:input={(event) => (nome = event.target.value)}
     />
     <Entrada
       id="email"
       value={email}
       label="E-mail"
-      on:input={(event) => (email = event.target.value)}
+      tocado={tocarCampos}
       valido={emailValido}
       mensagemValidacao="Insira um e-mail válido"
+      on:input={(event) => (email = event.target.value)}
     />
   </div>
 
   <div id="senha">
     <Entrada
       id="senha1"
-      type="password"
-      label={dados ? "Crie uma nova senha" : "Crie uma senha"}
-      on:input={(event) => (senha = event.target.value)}
-      valido={senhaValida}
-      mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"
       maxlength="50"
+      type="password"
+      tocado={tocarCampos}
+      valido={senhaValida}
+      on:input={(event) => (senha = event.target.value)}
+      label={dados ? "Crie uma nova senha" : "Crie uma senha"}
+      mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"
     />
     <Entrada
       id="senha2"
-      type="password"
-      label="Repita sua senha"
-      on:input={(event) => (senha2 = event.target.value)}
-      valido={senha2Valida}
-      mensagemValidacao="As senhas não coincidem"
       maxlength="50"
+      type="password"
+      tocado={tocarCampos}
+      valido={senha2Valida}
+      label="Repita sua senha"
+      mensagemValidacao="As senhas não coincidem"
+      on:input={(event) => (senha2 = event.target.value)}
     />
   </div>
 
   <div id="botoes">
     <Botao on:click={voltar}>Voltar</Botao>
-    <Botao on:click={salvar} habilitado={formularioValido}>Salvar</Botao>
+    <Botao on:click={salvar} invalido={!formularioValido}>Salvar</Botao>
   </div>
 </div>

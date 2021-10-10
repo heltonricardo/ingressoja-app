@@ -13,9 +13,10 @@
 
   const dispatch = createEventDispatcher();
 
-  let carregando = false;
   export let dados = null;
-  let camposTocados = false;
+  
+  let carregando = false;
+  let tocarCampos = false;
 
   let senha = "";
   let senha2 = "";
@@ -38,7 +39,7 @@
 
   async function salvar() {
     if (!formularioValido) {
-      camposTocados = true;
+      tocarCampos = true;
       return;
     }
 
@@ -77,8 +78,8 @@
     id="nome"
     value={nome}
     valido={nomeValido}
+    tocado={tocarCampos}
     label="Nome Completo"
-    tocado={camposTocados}
     mensagemValidacao="Insira um nome válido"
     on:input={(event) => (nome = event.target.value)}
   />
@@ -88,7 +89,7 @@
     value={cpf}
     disabled={dados}
     valido={cpfValido}
-    tocado={camposTocados}
+    tocado={tocarCampos}
     mensagemValidacao="Insira um CPF válido"
     on:input={(event) => (cpf = event.target.value)}
   />
@@ -96,8 +97,8 @@
     id="email"
     value={email}
     label="E-mail"
+    tocado={tocarCampos}
     valido={emailValido}
-    tocado={camposTocados}
     mensagemValidacao="Insira um e-mail válido"
     on:input={(event) => (email = event.target.value)}
   />
@@ -108,8 +109,8 @@
     id="senha1"
     maxlength="50"
     type="password"
+    tocado={tocarCampos}
     valido={senhaValida}
-    tocado={camposTocados}
     on:input={(event) => (senha = event.target.value)}
     label={dados ? "Crie uma nova senha" : "Crie uma senha"}
     mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"
@@ -118,8 +119,8 @@
     id="senha2"
     maxlength="50"
     type="password"
+    tocado={tocarCampos}
     valido={senha2Valida}
-    tocado={camposTocados}
     label="Repita sua senha"
     mensagemValidacao="As senhas não coincidem"
     on:input={(event) => (senha2 = event.target.value)}

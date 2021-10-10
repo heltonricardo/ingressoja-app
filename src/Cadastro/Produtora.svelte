@@ -16,7 +16,7 @@
   export let dados = null;
 
   let carregando = false;
-  let camposTocados = false;
+  let tocarCampos = false;
 
   let senha = "";
   let senha2 = "";
@@ -60,7 +60,7 @@
   }
   async function salvar() {
     if (!formularioValido) {
-      camposTocados = true;
+      tocarCampos = true;
       return;
     }
 
@@ -111,7 +111,7 @@
     id="razaoSocial"
     value={razaoSocial}
     label="Razão Social"
-    tocado={camposTocados}
+    tocado={tocarCampos}
     valido={razaoSocialValida}
     mensagemValidacao="Insira uma razão social válida"
     on:input={(event) => (razaoSocial = event.target.value)}
@@ -122,15 +122,15 @@
     value={cnpj}
     disabled={dados}
     valido={cnpjValido}
-    tocado={camposTocados}
+    tocado={tocarCampos}
     mensagemValidacao="Insira um CNPJ válido"
     on:input={(event) => (cnpj = event.target.value)}
   />
   <Entrada
     id="nomeFantasia"
+    tocado={tocarCampos}
     value={nomeFantasia}
     label="Nome Fantasia"
-    tocado={camposTocados}
     valido={nomeFantasiaValido}
     mensagemValidacao="Insira um nome fantasia válido"
     on:input={(event) => (nomeFantasia = event.target.value)}
@@ -139,8 +139,8 @@
     id="email"
     value={email}
     label="E-mail"
+    tocado={tocarCampos}
     valido={emailValido}
-    tocado={camposTocados}
     mensagemValidacao="Insira um e-mail válido"
     on:input={(event) => (email = event.target.value)}
   />
@@ -152,8 +152,8 @@
     label="Banco"
     value={banco}
     maxlength="100"
+    tocado={tocarCampos}
     valido={bancoValido}
-    tocado={camposTocados}
     mensagemValidacao="Insira um nome de banco válido"
     on:input={(event) => (banco = event.target.value)}
   />
@@ -162,7 +162,7 @@
     maxlength="50"
     label="Agência"
     value={agencia}
-    tocado={camposTocados}
+    tocado={tocarCampos}
     valido={agenciaValida}
     on:input={(event) => (agencia = event.target.value)}
     mensagemValidacao="Insira um número de agência válido"
@@ -172,8 +172,8 @@
     label="Conta"
     value={conta}
     maxlength="50"
+    tocado={tocarCampos}
     valido={contaValida}
-    tocado={camposTocados}
     on:input={(event) => (conta = event.target.value)}
     mensagemValidacao="Insira um número de conta válido"
   />
@@ -184,8 +184,8 @@
     id="senha1"
     maxlength="50"
     type="password"
+    tocado={tocarCampos}
     valido={senhaValida}
-    tocado={camposTocados}
     on:input={(event) => (senha = event.target.value)}
     label={dados ? "Crie uma nova senha" : "Crie uma senha"}
     mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"
@@ -194,8 +194,8 @@
     id="senha2"
     maxlength="50"
     type="password"
+    tocado={tocarCampos}
     valido={senha2Valida}
-    tocado={camposTocados}
     label="Repita sua senha"
     mensagemValidacao="As senhas não coincidem"
     on:input={(event) => (senha2 = event.target.value)}

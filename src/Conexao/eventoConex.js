@@ -125,6 +125,26 @@ export async function getEventos() {
   return false;
 }
 
+export async function getEventoParaEdicao(id) {
+  let res;
+  try {
+    res = await fetch(`${PATH.EVENTO}/paraEdicao/${id}`);
+  } catch (error) {
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
+    return false;
+  }
+
+  const status = res.status;
+
+  if (status === STATUS.OK) {
+    return await res.json();
+  } //
+  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+    Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
+  }
+  return false;
+}
+
 export async function getEvento(id) {
   let res;
   try {

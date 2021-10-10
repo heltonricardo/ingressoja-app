@@ -3,6 +3,7 @@
   import { hojeStringISO } from "../utils/manipulaDataHora";
 
   export let terminoEvento;
+  export let tocarCampos = false;
 
   export let tipoDeIngresso = {
     nome: "",
@@ -22,6 +23,15 @@
   let inicioTocado = false;
   let terminoTocado = false;
   let descricaoTocada = false;
+
+  $: if (tocarCampos)
+    qntTocada =
+      nomeTocado =
+      valorTocado =
+      inicioTocado =
+      terminoTocado =
+      descricaoTocada =
+        true;
 
   // Para evitar o erro de dependência cíclica:
   const validar = (flag) => (tipoDeIngresso.tipoValido = flag);

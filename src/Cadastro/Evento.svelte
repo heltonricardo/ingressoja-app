@@ -5,6 +5,12 @@
   import { validateBr } from "js-brasil";
   import { createEventDispatcher } from "svelte";
 
+  import {
+    postEvento,
+    getEventoParaEdicao,
+    putEvento,
+  } from "../Conexao/eventoConex";
+
   import MSG from "../ENUM/MSG";
   import ESTADOS from "../ENUM/ESTADOS";
   import Botao from "../UI/Botao.svelte";
@@ -15,7 +21,6 @@
   import TipoDeIngresso from "./TipoDeIngresso.svelte";
   import { getCategoriasEvento } from "../Conexao/categoriaEventoConex";
   import { hojeStringISO, UTCParaPtBr } from "../utils/manipulaDataHora";
-  import { postEvento, getEvento, putEvento } from "../Conexao/eventoConex";
 
   /******************************** DEFINIÇÕES ********************************/
 
@@ -24,6 +29,7 @@
 
   let imagemURL = null;
   let carregando = false;
+  let tocarCampos = false;
   let imagemTocada = false;
   let imagemAWS = Boolean(id);
 
@@ -49,7 +55,7 @@
   };
 
   id &&
-    getEvento(id).then((r) => {
+    getEventoParaEdicao(id).then((r) => {
       imagemURL = r.imagemURL;
       obj.dto.uf = r.uf;
       obj.dto.url = r.url;
@@ -154,6 +160,12 @@
   }
 
   async function salvar() {
+    if (!formularioValido) {
+      tocarCampos = true;
+      imagemTocada = true;
+      return;
+    }
+
     carregando = true;
     obj.dto.cep = validator.whitelist(obj.dto.cep, /\d/g);
     const sucesso = id ? await putEvento(obj, id) : await postEvento(obj);
@@ -168,8 +180,8 @@
       focusCancel: true,
       title: MSG.CERTEZA,
       showCancelButton: true,
-      cancelButtonText: "Cancelar",
       text: MSG.ALTERADO_NAO_SALV,
+      cancelButtonText: "Cancelar",
     }).then((volte) => volte.isConfirmed && dispatch("meuseventos"));
   }
 </script>
@@ -276,6 +288,7 @@
     <Entrada
       id="titulo"
       label="Título"
+      tocado={tocarCampos}
       valido={tituloValido}
       value={obj.dto.titulo}
       mensagemValidacao="Insira um título válido"
@@ -317,6 +330,7 @@
     <Entrada
       id="inicio"
       min={hojeStringISO}
+      tocado={tocarCampos}
       type="datetime-local"
       valido={inicioValido}
       label="Data e Hora de Início"
@@ -327,6 +341,7 @@
     <Entrada
       id="termino"
       min={obj.dto.inicio}
+      tocado={tocarCampos}
       type="datetime-local"
       valido={terminoValido}
       label="Data e Hora de Término"
@@ -338,6 +353,7 @@
       id="descricao"
       maxlength="2000"
       label="Descrição"
+      tocado={tocarCampos}
       controlType="textarea"
       valido={descricaoValida}
       value={obj.dto.descricao}
@@ -375,6 +391,7 @@
         maxlength="1000"
         valido={urlValida}
         value={obj.dto.url}
+        tocado={tocarCampos}
         label="URL do Evento"
         mensagemValidacao="Insira uma URL válida"
         on:input={(event) => (obj.dto.url = event.target.value)}
@@ -386,6 +403,7 @@
         maxlength="8"
         valido={cepValido}
         value={obj.dto.cep}
+        tocado={tocarCampos}
         mensagemValidacao="Insira um CEP válido"
         on:input={(event) => (obj.dto.cep = event.target.value)}
       />
@@ -395,6 +413,7 @@
         maxlength="2"
         valido={ufValida}
         value={obj.dto.uf}
+        tocado={tocarCampos}
         mensagemValidacao="Insira uma UF válida"
         on:input={(event) => (obj.dto.uf = event.target.value)}
       />
@@ -402,6 +421,7 @@
         id="cidade"
         label="Cidade"
         maxlength="50"
+        tocado={tocarCampos}
         valido={cidadeValida}
         value={obj.dto.cidade}
         mensagemValidacao="Insira uma cidade válida"
@@ -411,6 +431,7 @@
         id="bairro"
         label="Bairro"
         maxlength="50"
+        tocado={tocarCampos}
         valido={bairroValido}
         value={obj.dto.bairro}
         mensagemValidacao="Insira um bairro válido"
@@ -420,6 +441,7 @@
         id="logradouro"
         maxlength="100"
         label="Logradouro"
+        tocado={tocarCampos}
         valido={logradouroValido}
         value={obj.dto.logradouro}
         mensagemValidacao="Insira um logradouro válido"
@@ -430,6 +452,7 @@
         type="number"
         label="Número"
         maxlength="10"
+        tocado={tocarCampos}
         valido={numeroValido}
         value={obj.dto.numero}
         mensagemValidacao="Insira um número válido"
@@ -444,6 +467,7 @@
   <div class="campos">
     {#each [...Array(obj.dto.qntTipoDeIngresso).keys()] as i}
       <TipoDeIngresso
+        {tocarCampos}
         terminoEvento={obj.dto.termino}
         bind:tipoDeIngresso={obj.dto.tiposDeIngresso[i]}
       />
@@ -459,6 +483,6 @@
 
   <div id="botoes">
     <Botao on:click={voltar}>Voltar</Botao>
-    <Botao on:click={salvar} habilitado={formularioValido}>Salvar</Botao>
+    <Botao on:click={salvar} invalido={!formularioValido}>Salvar</Botao>
   </div>
 </div>

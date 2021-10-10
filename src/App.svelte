@@ -76,7 +76,7 @@
 
   function modoNovoAdm(e) {
     dados = e.detail;
-    trocaModo(MODO.NOVO_ADM);
+    trocaModo(MODO.ADMINISTRADOR);
   }
 
   function modoPedido(e) {
@@ -150,7 +150,7 @@
   <MeusPedidos on:minhaconta={modoMinhaConta} on:detalhespedido={modoPedido} />
 {:else if modo === MODO.CATEGORIAS_EVENTO}
   <CategoriaEvento on:minhaconta={modoMinhaConta} />
-{:else if modo === MODO.NOVO_ADM}
+{:else if modo === MODO.ADMINISTRADOR}
   <Administrador
     {dados}
     on:minhaconta={modoMinhaConta}

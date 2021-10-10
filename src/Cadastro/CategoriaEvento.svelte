@@ -9,6 +9,7 @@
     postCategoriaEvento,
     deleteCategoriaEvento,
   } from "../Conexao/categoriaEventoConex";
+
   import MSG from "../ENUM/MSG";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
@@ -19,11 +20,18 @@
 
   let nome = "";
   let carregando = false;
+  let tocarCampos = false;
   let categorias = getCategoriasEvento();
 
   $: nomeValido = validator.isLength(nome.trim(), { min: 1, max: 50 });
 
   async function cadastrar() {
+    if (!nomeValido) {
+      tocarCampos = true;
+      return;
+    }
+
+    tocarCampos = false;
     carregando = true;
     nome = nome.trim();
     const sucesso = await postCategoriaEvento({ nome });
@@ -191,15 +199,16 @@
     <div id="nova">
       <Entrada
         id="nome"
-        label="Insira o nome de uma categoria para cadastrar:"
         value={nome}
-        valido={nomeValido}
-        mensagemValidacao="Insira um nome de 1 a 50 caracteres"
-        on:input={(event) => (nome = event.target.value)}
         maxlength="50"
+        valido={nomeValido}
+        tocado={tocarCampos}
+        on:input={(event) => (nome = event.target.value)}
+        label="Insira o nome de uma categoria para cadastrar:"
+        mensagemValidacao="Insira um nome de 1 a 50 caracteres"
       />
       <div id="cadastrar">
-        <Botao on:click={cadastrar} habilitado={nomeValido}
+        <Botao on:click={cadastrar} invalido={!nomeValido}
           >Cadastrar Categoria</Botao
         >
       </div>

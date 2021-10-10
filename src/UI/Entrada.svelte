@@ -11,8 +11,7 @@
   export let maxlength = "255";
   export let min = null;
   export let disabled = false;
-
-  let tocado = false;
+  export let tocado = false;
 </script>
 
 <style>

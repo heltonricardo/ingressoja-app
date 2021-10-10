@@ -7,26 +7,27 @@
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import Entrada from "../UI/Entrada.svelte";
+  import { onlyNumeros } from "../utils/sanitarizador";
   import autenticacao from "../Autenticacao/autenticacao";
   import { postComprador, putComprador } from "../Conexao/compradorConex";
-  import { onlyNumeros } from "../utils/sanitarizador";
 
   const dispatch = createEventDispatcher();
 
-  export let dados = null;
   let carregando = false;
+  export let dados = null;
+  let camposTocados = false;
 
-  let nome = dados ? dados.nome : "";
-  let cpf = dados ? maskBr.cpf(dados.cpf) : "";
-  let email = dados ? dados.email : "";
   let senha = "";
   let senha2 = "";
+  let nome = dados ? dados.nome : "";
+  let email = dados ? dados.email : "";
+  let cpf = dados ? maskBr.cpf(dados.cpf) : "";
 
-  $: nomeValido = validator.isLength(nome.trim(), { min: 1, max: 255 });
   $: cpfValido = validateBr.cpf(cpf);
   $: emailValido = validator.isEmail(email);
   $: senhaValida = validator.isLength(senha, { min: 6, max: 50 });
   $: senha2Valida = validator.equals(senha, senha2) && senhaValida;
+  $: nomeValido = validator.isLength(nome.trim(), { min: 1, max: 255 });
 
   $: formularioValido =
     nomeValido && cpfValido && emailValido && senhaValida && senha2Valida;
@@ -36,6 +37,11 @@
   }
 
   async function salvar() {
+    if (!formularioValido) {
+      camposTocados = true;
+      return;
+    }
+
     carregando = true;
     cpf = onlyNumeros(cpf);
     const obj = { nome, cpf, usuario: { email, senha } };
@@ -69,53 +75,58 @@
 <div id="campos">
   <Entrada
     id="nome"
-    label="Nome Completo"
     value={nome}
-    on:input={(event) => (nome = event.target.value)}
     valido={nomeValido}
+    label="Nome Completo"
+    tocado={camposTocados}
     mensagemValidacao="Insira um nome válido"
+    on:input={(event) => (nome = event.target.value)}
   />
   <Entrada
     id="cpf"
     label="CPF"
     value={cpf}
     disabled={dados}
-    on:input={(event) => (cpf = event.target.value)}
     valido={cpfValido}
+    tocado={camposTocados}
     mensagemValidacao="Insira um CPF válido"
+    on:input={(event) => (cpf = event.target.value)}
   />
   <Entrada
     id="email"
-    label="E-mail"
     value={email}
-    on:input={(event) => (email = event.target.value)}
+    label="E-mail"
     valido={emailValido}
+    tocado={camposTocados}
     mensagemValidacao="Insira um e-mail válido"
+    on:input={(event) => (email = event.target.value)}
   />
 </div>
 
 <div id="senha">
   <Entrada
     id="senha1"
-    type="password"
-    label={dados ? "Crie uma nova senha" : "Crie uma senha"}
-    on:input={(event) => (senha = event.target.value)}
-    valido={senhaValida}
-    mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"
     maxlength="50"
+    type="password"
+    valido={senhaValida}
+    tocado={camposTocados}
+    on:input={(event) => (senha = event.target.value)}
+    label={dados ? "Crie uma nova senha" : "Crie uma senha"}
+    mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"
   />
   <Entrada
     id="senha2"
-    type="password"
-    label="Repita sua senha"
-    on:input={(event) => (senha2 = event.target.value)}
-    valido={senha2Valida}
-    mensagemValidacao="As senhas não coincidem"
     maxlength="50"
+    type="password"
+    valido={senha2Valida}
+    tocado={camposTocados}
+    label="Repita sua senha"
+    mensagemValidacao="As senhas não coincidem"
+    on:input={(event) => (senha2 = event.target.value)}
   />
 </div>
 
 <div id="botoes">
   <Botao on:click={voltar}>Voltar</Botao>
-  <Botao on:click={salvar} habilitado={formularioValido}>Salvar</Botao>
+  <Botao on:click={salvar} invalido={!formularioValido}>Salvar</Botao>
 </div>

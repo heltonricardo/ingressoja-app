@@ -16,16 +16,17 @@
   export let dados = null;
 
   let carregando = false;
+  let camposTocados = false;
 
-  let razaoSocial = dados ? dados.razaoSocial : "";
-  let cnpj = dados ? maskBr.cnpj(dados.cnpj) : "";
-  let nomeFantasia = dados ? dados.nomeFantasia : "";
-  let email = dados ? dados.email : "";
-  let banco = dados ? dados.banco : "";
-  let agencia = dados ? dados.agencia : "";
-  let conta = dados ? dados.conta : "";
   let senha = "";
   let senha2 = "";
+  let banco = dados ? dados.banco : "";
+  let conta = dados ? dados.conta : "";
+  let email = dados ? dados.email : "";
+  let agencia = dados ? dados.agencia : "";
+  let cnpj = dados ? maskBr.cnpj(dados.cnpj) : "";
+  let razaoSocial = dados ? dados.razaoSocial : "";
+  let nomeFantasia = dados ? dados.nomeFantasia : "";
 
   $: razaoSocialValida = validator.isLength(razaoSocial.trim(), {
     min: 1,
@@ -58,6 +59,11 @@
     dados ? dispatch("meusdados") : dispatch("voltar");
   }
   async function salvar() {
+    if (!formularioValido) {
+      camposTocados = true;
+      return;
+    }
+
     carregando = true;
     cnpj = onlyNumeros(cnpj);
     const obj = {
@@ -101,38 +107,42 @@
 
 <div id="corpo">
   <Entrada
-    id="razaoSocial"
-    label="Razão Social"
-    value={razaoSocial}
     disabled={dados}
-    on:input={(event) => (razaoSocial = event.target.value)}
+    id="razaoSocial"
+    value={razaoSocial}
+    label="Razão Social"
+    tocado={camposTocados}
     valido={razaoSocialValida}
     mensagemValidacao="Insira uma razão social válida"
+    on:input={(event) => (razaoSocial = event.target.value)}
   />
   <Entrada
     id="cnpj"
     label="CNPJ"
     value={cnpj}
     disabled={dados}
-    on:input={(event) => (cnpj = event.target.value)}
     valido={cnpjValido}
+    tocado={camposTocados}
     mensagemValidacao="Insira um CNPJ válido"
+    on:input={(event) => (cnpj = event.target.value)}
   />
   <Entrada
     id="nomeFantasia"
-    label="Nome Fantasia"
     value={nomeFantasia}
-    on:input={(event) => (nomeFantasia = event.target.value)}
+    label="Nome Fantasia"
+    tocado={camposTocados}
     valido={nomeFantasiaValido}
     mensagemValidacao="Insira um nome fantasia válido"
+    on:input={(event) => (nomeFantasia = event.target.value)}
   />
   <Entrada
     id="email"
-    label="E-mail"
     value={email}
-    on:input={(event) => (email = event.target.value)}
+    label="E-mail"
     valido={emailValido}
+    tocado={camposTocados}
     mensagemValidacao="Insira um e-mail válido"
+    on:input={(event) => (email = event.target.value)}
   />
 
   <h3 id="subtitulo">Dados bancários:</h3>
@@ -141,53 +151,58 @@
     id="banco"
     label="Banco"
     value={banco}
-    on:input={(event) => (banco = event.target.value)}
-    valido={bancoValido}
-    mensagemValidacao="Insira um nome de banco válido"
     maxlength="100"
+    valido={bancoValido}
+    tocado={camposTocados}
+    mensagemValidacao="Insira um nome de banco válido"
+    on:input={(event) => (banco = event.target.value)}
   />
   <Entrada
     id="agencia"
+    maxlength="50"
     label="Agência"
     value={agencia}
-    on:input={(event) => (agencia = event.target.value)}
+    tocado={camposTocados}
     valido={agenciaValida}
+    on:input={(event) => (agencia = event.target.value)}
     mensagemValidacao="Insira um número de agência válido"
-    maxlength="50"
   />
   <Entrada
     id="conta"
     label="Conta"
     value={conta}
-    on:input={(event) => (conta = event.target.value)}
-    valido={contaValida}
-    mensagemValidacao="Insira um número de conta válido"
     maxlength="50"
+    valido={contaValida}
+    tocado={camposTocados}
+    on:input={(event) => (conta = event.target.value)}
+    mensagemValidacao="Insira um número de conta válido"
   />
 </div>
 
 <div id="senha">
   <Entrada
     id="senha1"
-    type="password"
-    label={dados ? "Crie uma nova senha" : "Crie uma senha"}
-    on:input={(event) => (senha = event.target.value)}
-    valido={senhaValida}
-    mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"
     maxlength="50"
+    type="password"
+    valido={senhaValida}
+    tocado={camposTocados}
+    on:input={(event) => (senha = event.target.value)}
+    label={dados ? "Crie uma nova senha" : "Crie uma senha"}
+    mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"
   />
   <Entrada
     id="senha2"
-    type="password"
-    label="Repita sua senha"
-    on:input={(event) => (senha2 = event.target.value)}
-    valido={senha2Valida}
-    mensagemValidacao="As senhas não coincidem"
     maxlength="50"
+    type="password"
+    valido={senha2Valida}
+    tocado={camposTocados}
+    label="Repita sua senha"
+    mensagemValidacao="As senhas não coincidem"
+    on:input={(event) => (senha2 = event.target.value)}
   />
 </div>
 
 <div id="botoes">
   <Botao on:click={voltar}>Voltar</Botao>
-  <Botao on:click={salvar} habilitado={formularioValido}>Salvar</Botao>
+  <Botao on:click={salvar} invalido={!formularioValido}>Salvar</Botao>
 </div>

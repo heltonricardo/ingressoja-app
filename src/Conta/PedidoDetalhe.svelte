@@ -11,12 +11,6 @@
   const dispatch = createEventDispatcher();
 
   export let id;
-
-  async function carregaPedido() {
-    pedido = await getPedido(id);
-  }
-
-  let pedido = carregaPedido();
 </script>
 
 <style>
@@ -84,8 +78,9 @@
     text-align: center;
   }
 
-  #voltar {
+  #navegacao {
     margin: 3rem 0;
+    display: flex;
   }
 
   #detalhes {
@@ -105,7 +100,7 @@
   }
 </style>
 
-{#await pedido}
+{#await getPedido(id)}
   <Aguarde />
 {:then pedido}
   <div id="corpo">
@@ -164,20 +159,17 @@
             </p>
           {/if}
         </span>
-
         <span id="data-hora-inicio">
           <p>
             <i class="fas fa-clock" />  Início:
           </p>
         </span>
-
         <span id="data-hora-termino">
           <p>
             <i class="fas fa-hand-point-left" />  Término:
           </p>
         </span>
       </div>
-
       <div id="dados">
         <span id="local">
           {#if pedido.evento.online}
@@ -188,8 +180,9 @@
             <p>
               {pedido.evento.logradouro}, {pedido.evento.numero} -
               {pedido.evento.bairro} •
-              {pedido.evento.cidade}-{pedido.evento.uf} •
-              CEP: {maskBr.cep(pedido.evento.cep)}
+              {pedido.evento.cidade}-{pedido.evento.uf} • CEP: {maskBr.cep(
+                pedido.evento.cep
+              )}
             </p>
           {/if}
         </span>
@@ -210,7 +203,10 @@
       </div>
     </div>
 
-    <div id="voltar">
+    <div id="navegacao">
+      <Botao on:click={() => dispatch("meusingressos", pedido)}
+        >Ver ingressos</Botao
+      >
       <Botao on:click={() => dispatch("meuspedidos")}>Voltar</Botao>
     </div>
   </div>

@@ -1,7 +1,9 @@
 <script>
-  import Botao from "../UI/Botao.svelte";
+  import MiniBotao from "../UI/MiniBotao.svelte";
 
   export let dados;
+
+  console.log(dados)
 </script>
 
 <style>
@@ -35,7 +37,7 @@
   <h1>Pedido #{dados.id}</h1>
 
   <div id="navegacao">
-    <button> Imprimir </button>
-    <button> Voltar </button>
+    <MiniBotao>Imprimir</MiniBotao>
+    <MiniBotao>Voltar</MiniBotao>
   </div>
 </div>

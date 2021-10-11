@@ -192,9 +192,9 @@
         }</b> ingresso(s) entre os tipos disponíveis ou crie novos tipos \
         de ingresso!`;
       else
-        msg = `Por favor, remova <b style="font-weight: bold">${
+        msg = `Por favor, adicione <b style="font-weight: bold">${
           totalIngressosAtual() - obj.dto.totalIngressos
-        }</b> ingresso(s)!`;
+        }</b> na quantidade total de ingressos do evento!`;
       Swal.fire({
         title: MSG.OPS,
         icon: "warning",

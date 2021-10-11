@@ -125,6 +125,7 @@
 
   #organizacao {
     font-size: 1.5rem;
+    font-weight: bold;
   }
 
   #nomeFantasia {
@@ -135,6 +136,7 @@
     align-self: center;
     margin: 3rem 0;
     font-size: 20pt;
+    font-weight: bold;
     color: red;
   }
 </style>

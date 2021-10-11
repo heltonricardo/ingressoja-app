@@ -90,6 +90,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    font-weight: bold;
   }
 
   #dados {

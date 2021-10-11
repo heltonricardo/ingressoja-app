@@ -1,20 +1,14 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
-  import { getPedidos } from "../Conexao/compradorConex";
-  import { extrairDataHora } from "../utils/manipulaDataHora";
-  import { valorVirgula } from "../utils/formatador";
-
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
+  import MiniBotao from "../UI/MiniBotao.svelte";
+  import { valorVirgula } from "../utils/formatador";
+  import { getPedidos } from "../Conexao/compradorConex";
+  import { extrairDataHora } from "../utils/manipulaDataHora";
 
   const dispatch = createEventDispatcher();
-
-  async function carregaPedidos() {
-    pedidos = await getPedidos();
-  }
-
-  let pedidos = carregaPedidos();
 </script>
 
 <style>
@@ -77,7 +71,6 @@
   }
 
   #detalhes {
-    display: flex;
     justify-content: center;
   }
 
@@ -88,7 +81,7 @@
 
 <div id="corpo">
   <h1>Meus Pedidos</h1>
-  {#await pedidos}
+  {#await getPedidos()}
     <Aguarde />
   {:then pedidos}
     {#if pedidos.length}
@@ -108,8 +101,8 @@
             <td>R$ {valorVirgula(pedido.valorTotal)}</td>
             <td>{pedido.tituloEvento}</td>
             <td id="detalhes"
-              ><Botao on:click={() => dispatch("detalhespedido", pedido.id)}
-                >Detalhes</Botao
+              ><MiniBotao on:click={() => dispatch("detalhespedido", pedido.id)}
+                >Detalhes</MiniBotao
               ></td
             >
           </tr>
@@ -119,6 +112,7 @@
       Não há pedidos para mostrar
     {/if}
   {/await}
+
   <div id="voltar">
     <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
   </div>

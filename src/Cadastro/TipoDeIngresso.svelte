@@ -225,7 +225,7 @@
       <label for="valor">Valor (R$)</label>
       <input
         id="valor"
-        type="text"
+        type="number"
         bind:value={tipoDeIngresso.valor}
         on:blur={() => (valorTocado = true)}
         class:valid={valorValido && valorTocado}

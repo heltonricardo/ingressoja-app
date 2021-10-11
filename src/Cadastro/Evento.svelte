@@ -149,8 +149,6 @@
     descricaoValida &&
     logradouroValido &&
     totalIngressosValido &&
-    qntMaxGratis() >= qntIngressosGratis() &&
-    obj.dto.totalIngressos === totalIngressosAtual() &&
     obj.dto.tiposDeIngresso.every((t) => t.tipoValido);
 
   /********************************* FUNÇÕES **********************************/
@@ -204,8 +202,6 @@
       });
       return true;
     }
-
-    console.log(qntIngressosGratis(), qntMaxGratis());
 
     if (qntIngressosGratis() > qntMaxGratis()) {
       msg = `A quantidade máxima de ingressos grátis para esse evento é 

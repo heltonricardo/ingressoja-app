@@ -6,9 +6,9 @@
   import { createEventDispatcher } from "svelte";
 
   import {
+    putEvento,
     postEvento,
     getEventoParaEdicao,
-    putEvento,
   } from "../Conexao/eventoConex";
 
   import MSG from "../ENUM/MSG";
@@ -45,6 +45,7 @@
       online: true,
       descricao: "",
       logradouro: "",
+      totalIngressos: 1,
       tiposDeIngresso: [],
       qntTipoDeIngresso: 1,
       inicio: hojeStringISO,
@@ -69,6 +70,7 @@
       obj.dto.logradouro = r.logradouro;
       obj.dto.inicio = UTCParaPtBr(r.inicio);
       obj.dto.termino = UTCParaPtBr(r.termino);
+      obj.dto.totalIngressos = r.totalIngressos;
       obj.dto.idCategoria = r.categoriaEvento.id;
       obj.dto.tiposDeIngresso = r.tiposDeIngresso.map((t) => ({
         ...t,
@@ -79,6 +81,21 @@
     });
 
   /*************************** VALIDAÇÃO DE CAMPOS ****************************/
+
+  function totalIngressosAtual() {
+    return obj.dto.tiposDeIngresso.reduce(
+      (s, t) => s + t.quantidadeDisponivel,
+      0
+    );
+  }
+
+  const qntMaxGratis = () => Math.floor(obj.dto.totalIngressos * 0.1);
+
+  function qntIngressosGratis() {
+    return obj.dto.tiposDeIngresso
+      .filter((t) => !t.valor)
+      .reduce((s, t) => s + t.quantidadeDisponivel, 0);
+  }
 
   $: tituloValido = validator.isLength(obj.dto.titulo.trim(), {
     min: 1,
@@ -116,20 +133,22 @@
     ? true
     : ESTADOS.includes(obj.dto.uf.toLowerCase());
   $: cepValido = obj.dto.online ? true : validateBr.cep(obj.dto.cep);
+  $: totalIngressosValido = obj.dto.totalIngressos > 0;
 
   $: formularioValido =
-    tituloValido &&
-    descricaoValida &&
-    imagemValida &&
-    inicioValido &&
-    terminoValido &&
-    urlValida &&
-    logradouroValido &&
-    numeroValido &&
-    bairroValido &&
-    cidadeValida &&
     ufValida &&
     cepValido &&
+    urlValida &&
+    bairroValido &&
+    cidadeValida &&
+    imagemValida &&
+    inicioValido &&
+    numeroValido &&
+    tituloValido &&
+    terminoValido &&
+    descricaoValida &&
+    logradouroValido &&
+    totalIngressosValido &&
     obj.dto.tiposDeIngresso.every((t) => t.tipoValido);
 
   /********************************* FUNÇÕES **********************************/
@@ -151,13 +170,57 @@
   }
 
   function adicionaIngresso() {
-    obj.dto.qntTipoDeIngresso++;
+    if (obj.dto.totalIngressos > totalIngressosAtual())
+      obj.dto.qntTipoDeIngresso++;
+    else Swal.fire({ title: MSG.OPS, icon: "warning", text: MSG.AUMENTE_QNT });
   }
 
   function removeIngresso() {
     obj.dto.tiposDeIngresso.pop();
     obj.dto.qntTipoDeIngresso--;
   }
+
+  /************************* PROBLEMAS COM INGRESSOS? *************************/
+
+  function problemasComIngressos() {
+    let msg;
+
+    if (obj.dto.totalIngressos != totalIngressosAtual()) {
+      if (obj.dto.totalIngressos > totalIngressosAtual())
+        msg = `Por favor, distribua <b style="font-weight: bold">${
+          obj.dto.totalIngressos - totalIngressosAtual()
+        }</b> ingresso(s) entre os tipos disponíveis ou crie novos tipos \
+        de ingresso!`;
+      else
+        msg = `Por favor, adicione <b style="font-weight: bold">${
+          totalIngressosAtual() - obj.dto.totalIngressos
+        }</b> na quantidade total de ingressos do evento!`;
+      Swal.fire({
+        title: MSG.OPS,
+        icon: "warning",
+        html: ` <p>${MSG.QNT_DIFERENTE}</p><p>${msg}</p>`,
+      });
+      return true;
+    }
+
+    if (qntIngressosGratis() > qntMaxGratis()) {
+      msg = `A quantidade máxima de ingressos grátis para esse evento é 
+      <b style="font-weight: bold">${qntMaxGratis()}</b>. Por favor, remova
+      <b style="font-weight: bold">${
+        qntIngressosGratis() - qntMaxGratis()
+      }</b> ingresso(s) grátis!`;
+      Swal.fire({
+        title: MSG.OPS,
+        icon: "warning",
+        html: ` <p>${MSG.INGRESSOS_GRATIS}</p><p>${msg}</p>`,
+      });
+      return true;
+    }
+
+    return false;
+  }
+
+  /********************************** SALVAR **********************************/
 
   async function salvar() {
     if (!formularioValido) {
@@ -166,6 +229,8 @@
       return;
     }
 
+    if (problemasComIngressos()) return;
+
     carregando = true;
     obj.dto.cep = validator.whitelist(obj.dto.cep, /\d/g);
     const sucesso = id ? await putEvento(obj, id) : await postEvento(obj);
@@ -173,6 +238,8 @@
     if (sucesso) dispatch("meuseventos");
     else obj.dto.cep = maskBr.cep(obj.dto.cep);
   }
+
+  /********************************** VOLTAR **********************************/
 
   function voltar() {
     Swal.fire({
@@ -359,6 +426,17 @@
       value={obj.dto.descricao}
       mensagemValidacao="Insira uma descrição válida"
       on:input={(event) => (obj.dto.descricao = event.target.value)}
+    />
+    <Entrada
+      min="1"
+      type="number"
+      id="totalIngressos"
+      tocado={tocarCampos}
+      valido={totalIngressosValido}
+      value={obj.dto.totalIngressos}
+      label="Quantidade total de ingressos do evento"
+      mensagemValidacao="Insira uma quantidade válida"
+      on:input={(event) => (obj.dto.totalIngressos = event.target.value)}
     />
   </div>
 

@@ -83,9 +83,9 @@
     idPedido = e.detail;
     trocaModo(MODO.DETALHE_PEDIDO);
   }
-  
+
   const filtrar = (event) => (idCategoria = event.detail);
-  
+
   const pesquisar = (event) => (termoPesquisa = event.detail);
 
   const modoAdministradores = () => trocaModo(MODO.ADMINISTRADORES);
@@ -105,12 +105,12 @@
 
 <BarraSuperior
   {modo}
-  on:voltar={modoNormal}
-  on:cadastro={modoCadastro}
-  on:entrar={modoLogin}
-  on:minhaconta={modoMinhaConta}
-  on:pesquisar={pesquisar}
   on:filtrar={filtrar}
+  on:entrar={modoLogin}
+  on:voltar={modoNormal}
+  on:pesquisar={pesquisar}
+  on:cadastro={modoCadastro}
+  on:minhaconta={modoMinhaConta}
 />
 
 {#if modo === MODO.NORMAL}
@@ -122,21 +122,21 @@
 {:else if modo === MODO.DETALHES}
   <Detalhes
     {id}
+    on:entrar={modoLogin}
     on:voltar={modoNormal}
     on:finalizacao={modoFinalizacao}
-    on:entrar={modoLogin}
   />
 {:else if modo === MODO.MINHA_CONTA}
   <MinhaConta
-    on:administradores={modoAdministradores}
-    on:compradores={modoCompradores}
+    on:voltar={modoNormal}
     on:meusdados={modoMeusDados}
+    on:minhaconta={modoMinhaConta}
+    on:produtoras={modoProdutoras}
+    on:compradores={modoCompradores}
     on:meuseventos={modoMeusEventos}
     on:meuspedidos={modoMeusPedidos}
-    on:minhaconta={modoMinhaConta}
     on:novacategoria={modoCategoriasEvento}
-    on:produtoras={modoProdutoras}
-    on:voltar={modoNormal}
+    on:administradores={modoAdministradores}
   />
 {:else if modo === MODO.EVENTO}
   <Evento {id} on:meuseventos={modoMeusEventos} />
@@ -153,24 +153,24 @@
 {:else if modo === MODO.ADMINISTRADOR}
   <Administrador
     {dados}
-    on:minhaconta={modoMinhaConta}
     on:meusdados={modoMeusDados}
+    on:minhaconta={modoMinhaConta}
     on:administradores={modoAdministradores}
   />
 {:else if modo === MODO.DETALHE_PEDIDO}
   <PedidoDetalhe id={idPedido} on:meuspedidos={modoMeusPedidos} />
 {:else if modo === MODO.MEUS_DADOS}
   <MeusDados
-    on:minhaconta={modoMinhaConta}
-    on:cadastro={modoCadastro}
-    on:novoadm={modoNovoAdm}
     on:voltar={modoNormal}
+    on:novoadm={modoNovoAdm}
+    on:cadastro={modoCadastro}
+    on:minhaconta={modoMinhaConta}
   />
 {:else if modo === MODO.MEUS_EVENTOS}
   <MeusEventos
-    on:minhaconta={modoMinhaConta}
-    on:novoevento={modoEvento}
     on:editar={modoEvento}
+    on:novoevento={modoEvento}
+    on:minhaconta={modoMinhaConta}
   />
 {:else if modo === MODO.ADMINISTRADORES}
   <Administradores on:novoadm={modoNovoAdm} on:minhaconta={modoMinhaConta} />

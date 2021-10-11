@@ -43,6 +43,14 @@ const MSG = Object.freeze({
     "A categoria será excluída. Ela não poderá ser usada como filtro e nenhum \
     evento poderá ser categorizado à ela. Essa operação não poderá ser \
     desfeita!",
+  AUMENTE_QNT:
+    "Para adicionar mais tipos de ingresso, aumente a quantidade total de \
+    ingressos do evento",
+  QNT_DIFERENTE: "A quantidade de ingressos não está de acordo!",
+  INGRESSOS_GRATIS:
+    "De acordo com as políticas da plataforma IngressoJá!, a quantidade máxima \
+    de ingressos grátis por evento não pode exceder 10% da quantidade total de \
+    ingressos!",
 });
 
 export default MSG;

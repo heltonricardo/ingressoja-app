@@ -85,6 +85,10 @@
     cursor: pointer;
     font-weight: bolder;
   }
+
+  button:focus {
+    outline: 0;
+  }
 </style>
 
 {#if carregando}

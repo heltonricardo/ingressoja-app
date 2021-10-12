@@ -71,12 +71,23 @@
   }
 
   #segunda-linha {
-    padding-top: 0.5rem;
+    padding-top: 0.3rem;
   }
 
-  #filtro:hover {
+  button {
+    border: none;
+    font-size: 12pt;
+    font-family: "Poppins", sans-serif;
+    background-color: transparent;
+  }
+
+  button:hover {
     cursor: pointer;
     font-weight: bolder;
+  }
+
+  button:focus {
+    outline: 0;
   }
 </style>
 
@@ -101,7 +112,7 @@
   </tr>
   <tr>
     <td id="segunda-linha">
-      <a id="filtro" on:click={abrirCategorias}>Filtrar por categoria</a>
+      <button on:click={abrirCategorias}>Filtrar por categoria</button>
     </td>
   </tr>
 </table>

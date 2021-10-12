@@ -15,6 +15,8 @@ export function extrairDataHora(info) {
 
   const data = `${dia} de ${mes}` + (ano === anoAtual ? "" : ` de ${ano}`);
 
+  const dataCompleta = `${dia} de ${mes} de ${ano}`;
+
   const hora = dataHora.toLocaleTimeString("pt-BR", { hour: "2-digit" });
   const minuto = zeroEsquerda(
     dataHora.toLocaleTimeString("pt-BR", { minute: "2-digit" }),
@@ -22,7 +24,7 @@ export function extrairDataHora(info) {
   );
   const horario = `${hora}h` + (minuto === "00" ? "" : minuto);
 
-  return { dia, mes, ano, anoAtual, data, horario };
+  return { dia, mes, ano, anoAtual, data, horario, dataCompleta };
 }
 
 export function UTCParaPtBr(data) {

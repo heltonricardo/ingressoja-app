@@ -51,6 +51,7 @@ const MSG = Object.freeze({
     "De acordo com as políticas da plataforma IngressoJá!, a quantidade máxima \
     de ingressos grátis por evento não pode exceder 10% da quantidade total de \
     ingressos!",
+    INGRESSO_NAO_PERTENCE: "O ingresso não pertence ao CPF informado!"
 });
 
 export default MSG;

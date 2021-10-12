@@ -12,6 +12,7 @@
   import Compradores from "./Conta/Compradores.svelte";
   import BarraInferior from "./UI/BarraInferior.svelte";
   import GridEventos from "./Evento//GridEventos.svelte";
+  import MeusIngressos from "./Conta/MeusIngressos.svelte";
   import PedidoDetalhe from "./Conta/PedidoDetalhe.svelte";
   import Administrador from "./Cadastro/Administrador.svelte";
   import FinalizaPedido from "./Pedido/FinalizaPedido.svelte";
@@ -19,13 +20,13 @@
   import CategoriaEvento from "./Cadastro/CategoriaEvento.svelte";
   import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
 
-  let modo = MODO.NORMAL;
   let id = null;
-  let idPedido = null;
-  let evento = null;
   let dados = null;
-  let termoPesquisa = "";
+  let evento = null;
+  let idPedido = null;
   let idCategoria = null;
+  let modo = MODO.NORMAL;
+  let termoPesquisa = "";
 
   function limpaFiltroPesquisa() {
     idCategoria = null;
@@ -49,8 +50,8 @@
     trocaModo(MODO.DETALHES);
   }
 
-  function modoEvento(event) {
-    id = event.detail;
+  function modoEvento(e) {
+    id = e.detail;
     trocaModo(MODO.EVENTO);
   }
 
@@ -62,6 +63,11 @@
   function modoLogin() {
     limpaFiltroPesquisa();
     trocaModo(MODO.LOGIN);
+  }
+
+  function modoMeusIngressos(e) {
+    dados = e.detail;
+    trocaModo(MODO.MEUS_INGRESSOS);
   }
 
   function modoMinhaConta() {
@@ -88,30 +94,32 @@
 
   const pesquisar = (event) => (termoPesquisa = event.detail);
 
-  const modoAdministradores = () => trocaModo(MODO.ADMINISTRADORES);
+  const modoMeusDados = () => trocaModo(MODO.MEUS_DADOS);
 
-  const modoCategoriasEvento = () => trocaModo(MODO.CATEGORIAS_EVENTO);
+  const modoProdutoras = () => trocaModo(MODO.PRODUTORAS);
 
   const modoCompradores = () => trocaModo(MODO.COMPRADORES);
-
-  const modoMeusDados = () => trocaModo(MODO.MEUS_DADOS);
 
   const modoMeusEventos = () => trocaModo(MODO.MEUS_EVENTOS);
 
   const modoMeusPedidos = () => trocaModo(MODO.MEUS_PEDIDOS);
 
-  const modoProdutoras = () => trocaModo(MODO.PRODUTORAS);
+  const modoAdministradores = () => trocaModo(MODO.ADMINISTRADORES);
+
+  const modoCategoriasEvento = () => trocaModo(MODO.CATEGORIAS_EVENTO);
 </script>
 
-<BarraSuperior
-  {modo}
-  on:filtrar={filtrar}
-  on:entrar={modoLogin}
-  on:voltar={modoNormal}
-  on:pesquisar={pesquisar}
-  on:cadastro={modoCadastro}
-  on:minhaconta={modoMinhaConta}
-/>
+{#if modo !== MODO.MEUS_INGRESSOS}
+  <BarraSuperior
+    {modo}
+    on:filtrar={filtrar}
+    on:entrar={modoLogin}
+    on:voltar={modoNormal}
+    on:pesquisar={pesquisar}
+    on:cadastro={modoCadastro}
+    on:minhaconta={modoMinhaConta}
+  />
+{/if}
 
 {#if modo === MODO.NORMAL}
   <GridEventos {termoPesquisa} {idCategoria} on:vermais={modoDetalhes} />
@@ -158,7 +166,11 @@
     on:administradores={modoAdministradores}
   />
 {:else if modo === MODO.DETALHE_PEDIDO}
-  <PedidoDetalhe id={idPedido} on:meuspedidos={modoMeusPedidos} />
+  <PedidoDetalhe
+    id={idPedido}
+    on:meuspedidos={modoMeusPedidos}
+    on:meusingressos={modoMeusIngressos}
+  />
 {:else if modo === MODO.MEUS_DADOS}
   <MeusDados
     on:voltar={modoNormal}
@@ -178,6 +190,10 @@
   <Compradores on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.PRODUTORAS}
   <Produtoras on:minhaconta={modoMinhaConta} />
+{:else if modo === MODO.MEUS_INGRESSOS}
+  <MeusIngressos {dados} on:meuspedidos={modoMeusPedidos}/>
 {/if}
 
-<BarraInferior />
+{#if modo !== MODO.MEUS_INGRESSOS}
+  <BarraInferior />
+{/if}

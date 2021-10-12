@@ -14,18 +14,50 @@
 </script>
 
 <style>
-  #conteudo {
-    display: flex;
-    margin: 0.5rem 0;
+  tr,
+  td {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  #segunda-linha {
+    padding-top: 0.3rem;
+  }
+
+  button {
+    border: none;
+    font-size: 12pt;
+    font-family: "Poppins", sans-serif;
+    background-color: transparent;
+  }
+
+  button:hover {
+    cursor: pointer;
+    font-weight: bolder;
   }
 </style>
 
-<div id="conteudo">
-  {#if logado}
-    <Botao on:click={() => dispatch("minhaconta")}>Minha Conta</Botao>
-    <Botao on:click={deslogar}>Sair</Botao>
-  {:else}
-    <Botao on:click={() => dispatch("cadastro")}>Cadastre-se</Botao>
-    <Botao on:click={() => dispatch("entrar")}>Entrar</Botao>
-  {/if}
-</div>
+<table>
+  <tr>
+    {#if logado}
+      <td>
+        <Botao on:click={() => dispatch("minhaconta")}>Minha Conta</Botao>
+      </td>
+      <td>
+        <Botao on:click={deslogar}>Sair</Botao>
+      </td>
+    {:else}
+      <td>
+        <Botao on:click={() => dispatch("cadastro")}>Cadastre-se</Botao>
+      </td>
+      <td>
+        <Botao on:click={() => dispatch("entrar")}>Entrar</Botao>
+      </td>
+    {/if}
+  </tr>
+  <tr>
+    <td colspan="2" id="segunda-linha">
+      <button>Verificar meu ingresso</button>
+    </td>
+  </tr>
+</table>

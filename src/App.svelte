@@ -191,7 +191,7 @@
 {:else if modo === MODO.PRODUTORAS}
   <Produtoras on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.MEUS_INGRESSOS}
-  <MeusIngressos {dados} />
+  <MeusIngressos {dados} on:meuspedidos={modoMeusPedidos}/>
 {/if}
 
 {#if modo !== MODO.MEUS_INGRESSOS}

@@ -1,9 +1,12 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+
+  import Ingresso from "../Conta/Ingresso.svelte";
   import MiniBotao from "../UI/MiniBotao.svelte";
 
-  export let dados;
+  const dispatch = createEventDispatcher();
 
-  console.log(dados)
+  export let dados;
 </script>
 
 <style>
@@ -20,13 +23,6 @@
     border-radius: 5px;
   }
 
-  h1 {
-    font-size: 2rem;
-    align-self: center;
-    margin: 1rem 0;
-    text-align: center;
-  }
-
   #navegacao {
     margin: 3rem 0;
     display: flex;
@@ -34,10 +30,13 @@
 </style>
 
 <div id="corpo">
-  <h1>Pedido #{dados.id}</h1>
+  {#each [...Array(dados.itensPedido.length).keys()] as i (i)}
+    <Ingresso {dados} {i} />
+    <br />
+  {/each}
 
   <div id="navegacao">
-    <MiniBotao>Imprimir</MiniBotao>
-    <MiniBotao>Voltar</MiniBotao>
+    <MiniBotao on:click={window.print}>Imprimir</MiniBotao>
+    <MiniBotao on:click={() => dispatch("meuspedidos")}>Voltar</MiniBotao>
   </div>
 </div>

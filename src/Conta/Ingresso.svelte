@@ -1,16 +1,18 @@
 <script>
+  import { onMount } from "svelte";
   import { maskBr } from "js-brasil";
   import QrCreator from "qr-creator";
-  import { onMount } from "svelte";
+
   import { valorVirgula } from "../utils/formatador";
   import { extrairDataHora } from "../utils/manipulaDataHora";
 
-  let qrcode;
+  let qrElemento;
 
-  export let ingresso;
+  export let dados;
+  export let i;
 
   const qrConfig = {
-    text: `${ingresso.id}`,
+    text: `${dados.itensPedido[i].id}`,
     radius: 0.33,
     ecLevel: "L",
     fill: "#6b2284",
@@ -18,7 +20,7 @@
     size: 128,
   };
 
-  onMount(() => QrCreator.render(qrConfig, qrcode));
+  onMount(() => QrCreator.render(qrConfig, qrElemento));
 </script>
 
 <style>
@@ -28,7 +30,7 @@
     max-width: 360px;
     height: fit-content;
     background-color: var(--roxo0-1);
-    border: 1.5px solid var(--roxo2);
+    border: 3px solid var(--roxo2);
     border-radius: 5px;
     font-size: 14px;
     display: flex;
@@ -69,7 +71,7 @@
     width: 100%;
     border: none;
     margin: 0;
-    border-top: 3px dotted black;
+    border-top: 3px dotted var(--roxo2);
   }
 
   #infos {
@@ -121,19 +123,21 @@
 
 <div id="ingresso">
   <div id="cabecalho">
-    <span id="titulo">{ingresso.titulo}</span>
+    <span id="titulo">{dados.evento.titulo}</span>
     <span id="inicio"
-      >{extrairDataHora(ingresso.inicio).dataCompleta} • {extrairDataHora(
-        ingresso.inicio
-      ).horario} (horário de Brasília)</span
+      >{extrairDataHora(dados.evento.inicio).dataCompleta} • {extrairDataHora(
+        dados.evento.inicio
+      ).horario} (GMT-3)</span
     >
-    {#if ingresso.online}
+    {#if dados.evento.online}
       <span id="online">Evento Online</span>
     {:else}
       <span id="end1"
-        >{ingresso.logradouro}, {ingresso.numero} - {ingresso.bairro}</span
+        >{dados.evento.logradouro}, {dados.evento.numero} - {dados.evento
+          .bairro}</span
       >
-      <span id="end2">{ingresso.cidade}-{ingresso.uf}. CEP: {ingresso.cep}</span
+      <span id="end2"
+        >{dados.evento.cidade}-{dados.evento.uf}. CEP: {dados.evento.cep}</span
       >
     {/if}
     <span id="ingressoja">Distribuição: IngressoJá!</span>
@@ -143,22 +147,24 @@
 
   <div id="infos">
     <span id="individual">Ingresso Individual</span>
-    <span id="nomeIngresso">Tipo: {ingresso.nomeIngresso}</span>
+    <span id="nomeIngresso"
+      >Tipo: {dados.itensPedido[i].tipoDeIngresso.nome}</span
+    >
     <span id="valor"
-      >Preço: R$ {valorVirgula(ingresso.valor)}
+      >Preço: R$ {valorVirgula(dados.itensPedido[i].tipoDeIngresso.valor)}
       <span id="cortesia">
-        {#if !ingresso.valor}
+        {#if !dados.itensPedido[i].tipoDeIngresso.valor}
           Cortesia (venda proibida)
         {/if}
       </span>
     </span>
     <div id="sensivel">
-      <span id="ingressante">{ingresso.ingressante}</span>
-      <span id="cpf">CPF: {maskBr.cpf(ingresso.cpf)}</span>
+      <span id="ingressante">{dados.itensPedido[i].ingressante}</span>
+      <span id="cpf">CPF: {maskBr.cpf(dados.itensPedido[i].cpf)}</span>
       <div id="moldura">
-        <div id="qrcode" bind:this={qrcode} />
+        <div id="qrcode" bind:this={qrElemento} />
       </div>
-      <span id="id">#{ingresso.id}</span>
+      <span id="id">#{dados.itensPedido[i].id}</span>
     </div>
   </div>
 </div>

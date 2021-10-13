@@ -24,13 +24,14 @@
       html: `<style>.hid { display: none }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
         -webkit-appearance: none; margin: 0; }</style>
-        <input id="id" placeholder="Id do ingresso" type="number"
+        <input id="id" placeholder="ID do ingresso" type="number"
         class="swal2-input">
         <input id="cpf" placeholder="CPF do ingressante" class="swal2-input">
         <br /> <br />
-        <span id="erro" style="color: red" class="hid">Insira um Id maior que
+        <span id="erro" style="color: red" class="hid">Insira um ID maior que
           zero e um CPF válido!</span>`,
       focusConfirm: false,
+      showCancelButton: true,
       preConfirm: () => {
         const erro = document.getElementById("erro");
         const idField = document.getElementById("id");

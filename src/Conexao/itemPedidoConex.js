@@ -23,7 +23,7 @@ export async function validarIngresso(obj) {
     return await res.json();
   } //
   else if (status === STATUS.BAD_REQUEST) {
-    Swal.fire(MSG.RUIM, MSG.INGRESSO_NAO_PERTENCE, "error");
+    Swal.fire(MSG.RUIM, MSG.CPF_NAO_INGRESSO, "error");
   }
   return null;
 }

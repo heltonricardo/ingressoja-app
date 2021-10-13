@@ -94,6 +94,8 @@
 
   const pesquisar = (event) => (termoPesquisa = event.detail);
 
+  const modoConferencia = () => trocaModo(MODO.CONFERENCIA);
+
   const modoMeusDados = () => trocaModo(MODO.MEUS_DADOS);
 
   const modoProdutoras = () => trocaModo(MODO.PRODUTORAS);
@@ -141,6 +143,7 @@
     on:minhaconta={modoMinhaConta}
     on:produtoras={modoProdutoras}
     on:compradores={modoCompradores}
+    on:conferencia={modoConferencia}
     on:meuseventos={modoMeusEventos}
     on:meuspedidos={modoMeusPedidos}
     on:novacategoria={modoCategoriasEvento}
@@ -191,7 +194,9 @@
 {:else if modo === MODO.PRODUTORAS}
   <Produtoras on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.MEUS_INGRESSOS}
-  <MeusIngressos {dados} on:meuspedidos={modoMeusPedidos}/>
+  <MeusIngressos {dados} on:meuspedidos={modoMeusPedidos} />
+{:else if modo === MODO.CONFERENCIA}
+  <MeusEventos conferencia={true} on:minhaconta={modoMinhaConta} />
 {/if}
 
 {#if modo !== MODO.MEUS_INGRESSOS}

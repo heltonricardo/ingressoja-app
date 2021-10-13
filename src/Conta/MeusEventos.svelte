@@ -12,6 +12,8 @@
 
   const dispatch = createEventDispatcher();
 
+  export let conferencia = false;
+
   let eventos = getEventos();
 
   async function editar(id) {
@@ -54,6 +56,7 @@
 
   h1 {
     font-size: 3rem;
+    text-align: center;
     align-self: center;
     margin: 1rem 0;
   }
@@ -112,7 +115,11 @@
 </style>
 
 <div id="corpo">
-  <h1>Meus Eventos</h1>
+  {#if conferencia}
+    <h1>Conferência de Ingressos</h1>
+  {:else}
+    <h1>Meus Eventos</h1>
+  {/if}
   {#await eventos}
     <Aguarde />
   {:then eventos}
@@ -133,8 +140,14 @@
             <td>{extrairDataHora(evento.inicio).data}</td>
             <td>{evento.categoriaEvento.nome}</td>
             <td id="detalhes">
-              <MiniBotao on:click={() => editar(evento.id)}>Editar</MiniBotao>
-              <MiniBotao on:click={() => excluir(evento.id)}>Excluir</MiniBotao>
+              {#if conferencia}
+                <MiniBotao>Abrir</MiniBotao>
+              {:else}
+                <MiniBotao on:click={() => editar(evento.id)}>Editar</MiniBotao>
+                <MiniBotao on:click={() => excluir(evento.id)}
+                  >Excluir</MiniBotao
+                >
+              {/if}
             </td>
           </tr>
         {/each}
@@ -143,9 +156,11 @@
       Não há eventos para mostrar
     {/if}
   {/await}
-  <div id="cadastrar">
-    <Botao on:click={() => dispatch("novoevento")}>Cadastrar Evento</Botao>
-  </div>
+  {#if !conferencia}
+    <div id="cadastrar">
+      <Botao on:click={() => dispatch("novoevento")}>Cadastrar Evento</Botao>
+    </div>
+  {/if}
   <div id="voltar">
     <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
   </div>

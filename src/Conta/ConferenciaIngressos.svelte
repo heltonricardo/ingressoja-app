@@ -1,12 +1,13 @@
 <script>
   import Swal from "sweetalert2";
+  import { maskBr } from "js-brasil";
   import { createEventDispatcher } from "svelte";
 
   import MSG from "../ENUM/MSG";
-  import { maskBr } from "js-brasil";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import MiniBotao from "../UI/MiniBotao.svelte";
+  import { valorVirgula } from "../utils/formatador";
   import { getItensVendidos } from "../Conexao/eventoConex";
   import { extrairDataHora } from "../utils/manipulaDataHora";
 
@@ -15,6 +16,38 @@
   export let id;
 
   let dados = getItensVendidos(id);
+
+  function verMais(ingresso) {
+    Swal.fire({
+      html: `<style>.titulo {font-weight: bold}</style>
+        <p class="titulo">Identificador único do ingresso</p>
+        <p>${ingresso.id}</p>
+        <br />
+        <p class="titulo">Nome do(a) portador(a)</p>
+        <p>${ingresso.ingressante}</p>
+        <br />
+        <p class="titulo">CPF</p>
+        <p>${maskBr.cpf(ingresso.cpf)}</p>
+        <br />
+        <p class="titulo">Ingresso já utilizado?</p>
+        <p>${ingresso.utilizado ? "Sim" : "Não"}</p>
+        <br />
+        <p class="titulo">Tipo de ingresso</p>
+        <p>${ingresso.tipoDeIngresso.nome}</p>
+        <br />
+        <p class="titulo">Valor</p>
+        <p>R$ ${valorVirgula(ingresso.tipoDeIngresso.valor)}</p>
+        <br />
+        <p class="titulo">Descrição do ingresso</p>
+        <p>${ingresso.tipoDeIngresso.descricao || "Não possui"}</p>`,
+      showCloseButton: true,
+      showConfirmButton: false,
+    });
+  }
+
+  async function utilizar(ingresso) {
+    
+  }
 </script>
 
 <style>
@@ -93,6 +126,8 @@
   }
 
   #detalhes {
+    display: flex;
+    flex-direction: column;
     align-items: center;
   }
 
@@ -122,14 +157,15 @@
       <tr>
         <td class="titulo">Início:</td>
         <td class="dado"
-          >{extrairDataHora(dados.inicio).data} • {extrairDataHora(dados.inicio)
-            .horario}</td
+          >{extrairDataHora(dados.inicio).dataCompleta} • {extrairDataHora(
+            dados.inicio
+          ).horario}</td
         >
       </tr>
       <tr>
         <td class="titulo">Término:</td>
         <td class="dado"
-          >{extrairDataHora(dados.termino).data} • {extrairDataHora(
+          >{extrairDataHora(dados.termino).dataCompleta} • {extrairDataHora(
             dados.termino
           ).horario}</td
         >
@@ -154,7 +190,10 @@
             <td>{item.utilizado ? "Sim" : "Não"}</td>
             <td>{item.tipoDeIngresso.nome}</td>
             <td id="detalhes">
-              <MiniBotao>Ver mais</MiniBotao>
+              {#if !item.utilizado}
+                <MiniBotao on:click={() => utilizar(item)}>Utilizar</MiniBotao>
+              {/if}
+              <MiniBotao on:click={() => verMais(item)}>Ver mais</MiniBotao>
             </td>
           </tr>
         {/each}

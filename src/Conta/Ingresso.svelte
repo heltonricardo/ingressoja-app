@@ -133,11 +133,11 @@
       <span id="online">Evento Online</span>
     {:else}
       <span id="end1"
-        >{dados.evento.logradouro}, {dados.evento.numero} - {dados.evento
+        >{dados.evento.logradouro}, {dados.evento.numero} • {dados.evento
           .bairro}</span
       >
       <span id="end2"
-        >{dados.evento.cidade}-{dados.evento.uf}. CEP: {dados.evento.cep}</span
+        >{dados.evento.cidade}-{dados.evento.uf} • CEP: {dados.evento.cep}</span
       >
     {/if}
     <span id="ingressoja">Distribuição: IngressoJá!</span>

@@ -39,6 +39,11 @@
     margin: 1rem 0;
   }
 
+  #evento {
+    margin: 2rem;
+    align-self: flex-start;
+  }
+
   #tabela {
     border-collapse: collapse;
     text-align: center;
@@ -77,6 +82,12 @@
     word-break: keep-all;
   }
 
+  .titulo {
+    font-weight: bold;
+    white-space: nowrap;
+    padding: 1rem;
+  }
+
   .utilizado {
     color: red;
   }
@@ -95,9 +106,36 @@
   {#await dados}
     <Aguarde />
   {:then dados}
-    {dados.titulo}
-    {dados.inicio}
-    {dados.totalIngressos}
+    <table id="evento">
+      <tr>
+        <td class="titulo">Evento:</td>
+        <td class="dado">{dados.titulo}</td>
+      </tr>
+      <tr>
+        <td class="titulo">Total de ingressos:</td>
+        <td class="dado">{dados.totalIngressos}</td>
+      </tr>
+      <tr>
+        <td class="titulo">Ingressos vendidos:</td>
+        <td class="dado">{dados.itensPedido.length}</td>
+      </tr>
+      <tr>
+        <td class="titulo">Início:</td>
+        <td class="dado"
+          >{extrairDataHora(dados.inicio).data} • {extrairDataHora(dados.inicio)
+            .horario}</td
+        >
+      </tr>
+      <tr>
+        <td class="titulo">Término:</td>
+        <td class="dado"
+          >{extrairDataHora(dados.termino).data} • {extrairDataHora(
+            dados.termino
+          ).horario}</td
+        >
+      </tr>
+    </table>
+
     {#if dados.itensPedido.length}
       <table id="tabela">
         <tr>

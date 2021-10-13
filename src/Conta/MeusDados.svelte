@@ -109,81 +109,81 @@
         <table>
           <tr>
             <td class="titulo">Tipo:</td>
-            <td class="dado">Comprador</td>
+            <td>Comprador</td>
           </tr>
           <tr>
             <td class="titulo">Id:</td>
-            <td class="dado">{dados.id}</td>
+            <td>{dados.id}</td>
           </tr>
           <tr>
             <td class="titulo">Nome:</td>
-            <td class="dado">{dados.nome}</td>
+            <td>{dados.nome}</td>
           </tr>
           <tr>
             <td class="titulo">E-mail:</td>
-            <td class="dado">{dados.email}</td>
+            <td>{dados.email}</td>
           </tr>
           <tr>
             <td class="titulo">CPF:</td>
-            <td class="dado">{maskBr.cpf(dados.cpf)}</td>
+            <td>{maskBr.cpf(dados.cpf)}</td>
           </tr>
         </table>
       {:else if tipoLogado === TIPOCADASTRO.PRODUTORA}
         <table>
           <tr>
             <td class="titulo">Tipo:</td>
-            <td class="dado">Produtora</td>
+            <td>Produtora</td>
           </tr>
           <tr>
             <td class="titulo">Id:</td>
-            <td class="dado">{dados.id}</td>
+            <td>{dados.id}</td>
           </tr>
           <tr>
             <td class="titulo">Razão social:</td>
-            <td class="dado">{dados.razaoSocial}</td>
+            <td>{dados.razaoSocial}</td>
           </tr>
           <tr>
             <td class="titulo">Nome fantasia:</td>
-            <td class="dado">{dados.nomeFantasia}</td>
+            <td>{dados.nomeFantasia}</td>
           </tr>
           <tr>
             <td class="titulo">CNPJ:</td>
-            <td class="dado">{maskBr.cnpj(dados.cnpj)}</td>
+            <td>{maskBr.cnpj(dados.cnpj)}</td>
           </tr>
           <tr>
             <td class="titulo">E-mail:</td>
-            <td class="dado">{dados.email}</td>
+            <td>{dados.email}</td>
           </tr>
           <tr>
             <td class="titulo">Banco:</td>
-            <td class="dado">{dados.banco}</td>
+            <td>{dados.banco}</td>
           </tr>
           <tr>
             <td class="titulo">Agência:</td>
-            <td class="dado">{dados.agencia}</td>
+            <td>{dados.agencia}</td>
           </tr>
           <tr>
             <td class="titulo">Conta:</td>
-            <td class="dado">{dados.conta}</td>
+            <td>{dados.conta}</td>
           </tr>
         </table>
       {:else if tipoLogado === TIPOCADASTRO.ADMINISTRADOR}
         <table>
           <tr>
             <td class="titulo">Tipo:</td>
-            <td class="dado">Administrador</td>
+            <td>Administrador</td>
           </tr>
           <tr>
             <td class="titulo">Id:</td>
-            <td class="dado">{dados.id}</td>
+            <td>{dados.id}</td>
           </tr>
           <tr>
             <td class="titulo">Nome:</td>
-            <td class="dado">{dados.nome}</td>
+            <td>{dados.nome}</td>
           </tr>
           <tr>
             <td class="titulo">E-mail:</td>
-            <td class="dado">{dados.email}</td>
+            <td>{dados.email}</td>
           </tr>
         </table>
       {/if}

@@ -67,7 +67,7 @@
     width: 100%;
     border-radius: 7px;
     overflow: hidden;
-    word-break: normal;
+    word-break: break-all;
   }
 
   #tabela td,
@@ -117,6 +117,8 @@
 <div id="corpo">
   {#if conferencia}
     <h1>Conferência de Ingressos</h1>
+    <p>Escolha o evento:</p>
+    <br />
   {:else}
     <h1>Meus Eventos</h1>
   {/if}
@@ -132,7 +134,6 @@
           <th>Categoria</th>
           <th>Ações</th>
         </tr>
-
         {#each eventos as evento}
           <tr>
             <td>{evento.id}</td>
@@ -141,7 +142,9 @@
             <td>{evento.categoriaEvento.nome}</td>
             <td id="detalhes">
               {#if conferencia}
-                <MiniBotao>Abrir</MiniBotao>
+                <MiniBotao on:click={() => dispatch("conferencia", evento.id)}
+                  >Abrir</MiniBotao
+                >
               {:else}
                 <MiniBotao on:click={() => editar(evento.id)}>Editar</MiniBotao>
                 <MiniBotao on:click={() => excluir(evento.id)}

@@ -159,6 +159,9 @@ export async function getEvento(id) {
   if (status === STATUS.OK) {
     return await res.json();
   } //
+  else if (status === STATUS.BAD_REQUEST) {
+    Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
+  } //
   else if (status === STATUS.INTERNAL_SERVER_ERROR) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
@@ -220,4 +223,33 @@ export async function podeAlterarEvento(id) {
   }
 
   return null;
+}
+
+export async function getItensVendidos(id) {
+  if (
+    !autenticacao.estaLogado() ||
+    !autenticacao.estaLogadoComTipo(TIPOCADASTRO.PRODUTORA)
+  )
+    return false;
+
+  let res;
+  try {
+    res = await fetch(`${PATH.EVENTO}/${id}/itens-vendidos`);
+  } catch (error) {
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
+    return false;
+  }
+
+  const status = res.status;
+
+  if (status === STATUS.OK) {
+    return await res.json();
+  } //
+  else if (status === STATUS.BAD_REQUEST) {
+    Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
+  } //
+  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+    Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
+  }
+  return false;
 }

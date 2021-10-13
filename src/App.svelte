@@ -19,13 +19,14 @@
   import Administradores from "./Conta/Administradores.svelte";
   import CategoriaEvento from "./Cadastro/CategoriaEvento.svelte";
   import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
+  import ConferenciaIngressos from "./Conta/ConferenciaIngressos.svelte";
 
   let id = null;
   let dados = null;
   let evento = null;
   let idPedido = null;
   let idCategoria = null;
-  let modo = MODO.NORMAL;
+  let modo = MODO.CONFERENCIA;
   let termoPesquisa = "";
 
   function limpaFiltroPesquisa() {
@@ -88,6 +89,11 @@
   function modoPedido(e) {
     idPedido = e.detail;
     trocaModo(MODO.DETALHE_PEDIDO);
+  }
+
+  function modoUtilizacao(e) {
+    id = e.detail;
+    trocaModo(MODO.UTILIZACAO);
   }
 
   const filtrar = (event) => (idCategoria = event.detail);
@@ -196,7 +202,13 @@
 {:else if modo === MODO.MEUS_INGRESSOS}
   <MeusIngressos {dados} on:meuspedidos={modoMeusPedidos} />
 {:else if modo === MODO.CONFERENCIA}
-  <MeusEventos conferencia={true} on:minhaconta={modoMinhaConta} />
+  <MeusEventos
+    on:conferencia={modoUtilizacao}
+    conferencia={true}
+    on:minhaconta={modoMinhaConta}
+  />
+{:else if modo === MODO.UTILIZACAO}
+  <ConferenciaIngressos {id} on:conferencia={modoConferencia} />
 {/if}
 
 {#if modo !== MODO.MEUS_INGRESSOS}

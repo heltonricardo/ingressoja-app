@@ -3,19 +3,27 @@
   import { maskBr } from "js-brasil";
   import { createEventDispatcher } from "svelte";
 
-  import MSG from "../ENUM/MSG";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import MiniBotao from "../UI/MiniBotao.svelte";
   import { valorVirgula } from "../utils/formatador";
   import { getItensVendidos } from "../Conexao/eventoConex";
   import { extrairDataHora } from "../utils/manipulaDataHora";
+  import { utilizarIngresso } from "../Conexao/itemPedidoConex";
 
   const dispatch = createEventDispatcher();
 
   export let id;
 
-  let dados = getItensVendidos(id);
+  let evento = getItensVendidos(id);
+
+  function qntUtilizados(evento) {
+    return evento.itensPedido.filter((i) => i.utilizado).length;
+  }
+
+  function qntNaoUtilizados(evento) {
+    return evento.itensPedido.length - qntUtilizados(evento);
+  }
 
   function verMais(ingresso) {
     Swal.fire({
@@ -46,7 +54,20 @@
   }
 
   async function utilizar(ingresso) {
-    
+    Swal.fire({
+      title: `Utilizar o ingresso #${ingresso.id}?`,
+      icon: "question",
+      showCancelButton: true,
+      cancelButtonText: "Cancelar",
+    })
+      .then((temCerteza) => {
+        if (temCerteza.isConfirmed) {
+          return utilizarIngresso(ingresso.id);
+        }
+      })
+      .then((res) => {
+        if (res) evento = getItensVendidos(id);
+      });
   }
 </script>
 
@@ -138,41 +159,49 @@
 
 <div id="corpo">
   <h1>Conferência de Ingressos</h1>
-  {#await dados}
+  {#await evento}
     <Aguarde />
-  {:then dados}
+  {:then evento}
     <table id="evento">
       <tr>
         <td class="titulo">Evento:</td>
-        <td class="dado">{dados.titulo}</td>
-      </tr>
-      <tr>
-        <td class="titulo">Total de ingressos:</td>
-        <td class="dado">{dados.totalIngressos}</td>
-      </tr>
-      <tr>
-        <td class="titulo">Ingressos vendidos:</td>
-        <td class="dado">{dados.itensPedido.length}</td>
+        <td class="dado">{evento.titulo}</td>
       </tr>
       <tr>
         <td class="titulo">Início:</td>
         <td class="dado"
-          >{extrairDataHora(dados.inicio).dataCompleta} • {extrairDataHora(
-            dados.inicio
+          >{extrairDataHora(evento.inicio).dataCompleta} • {extrairDataHora(
+            evento.inicio
           ).horario}</td
         >
       </tr>
       <tr>
         <td class="titulo">Término:</td>
         <td class="dado"
-          >{extrairDataHora(dados.termino).dataCompleta} • {extrairDataHora(
-            dados.termino
+          >{extrairDataHora(evento.termino).dataCompleta} • {extrairDataHora(
+            evento.termino
           ).horario}</td
         >
       </tr>
+      <tr>
+        <td class="titulo">Total de ingressos:</td>
+        <td class="dado">{evento.totalIngressos}</td>
+      </tr>
+      <tr>
+        <td class="titulo">Ingressos vendidos:</td>
+        <td class="dado">{evento.itensPedido.length}</td>
+      </tr>
+      <tr>
+        <td class="titulo">Ingressos utilizados:</td>
+        <td class="dado">{qntUtilizados(evento)}</td>
+      </tr>
+      <tr>
+        <td class="titulo">Ingressos não utilizados:</td>
+        <td class="dado">{qntNaoUtilizados(evento)}</td>
+      </tr>
     </table>
 
-    {#if dados.itensPedido.length}
+    {#if evento.itensPedido.length}
       <table id="tabela">
         <tr>
           <th>Id</th>
@@ -182,7 +211,7 @@
           <th>Tipo</th>
           <th>Ações</th>
         </tr>
-        {#each dados.itensPedido as item}
+        {#each evento.itensPedido as item}
           <tr class:utilizado={item.utilizado}>
             <td>{item.id}</td>
             <td>{item.ingressante}</td>

@@ -27,3 +27,33 @@ export async function validarIngresso(obj) {
   }
   return null;
 }
+
+export async function utilizarIngresso(id) {
+  let res;
+  try {
+    res = await fetch(`${PATH.ITEM_PEDIDO}/${id}`, { method: "PATCH" });
+  } catch (error) {
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
+    return null;
+  }
+
+  const status = res.status;
+
+  if (status === STATUS.OK) {
+    Swal.fire({
+      timer: 1750,
+      text: MSG.OK,
+      title: MSG.BOM,
+      icon: "success",
+      timerProgressBar: true,
+    });
+    return true;
+  } //
+  else if (status === STATUS.BAD_REQUEST) {
+    Swal.fire(MSG.RUIM, MSG.CPF_NAO_INGRESSO, "error");
+  } //
+  else if (status === STATUS.CONFLICT) {
+    Swal.fire(MSG.OPS, MSG.INGRESSO_UTILIZADO, "error");
+  }
+  return null;
+}

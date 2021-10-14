@@ -53,6 +53,7 @@ const MSG = Object.freeze({
     ingressos!",
   CPF_NAO_INGRESSO:
     "O CPF informado não possue um ingresso com esse ID a ele vinculado!",
+  INGRESSO_UTILIZADO: "Esse ingresso já foi utilizado!",
 });
 
 export default MSG;

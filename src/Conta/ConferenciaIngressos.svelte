@@ -5,8 +5,10 @@
 
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
+  import Entrada from "../UI/Entrada.svelte";
   import MiniBotao from "../UI/MiniBotao.svelte";
   import { valorVirgula } from "../utils/formatador";
+  import { onlyNumeros } from "../utils/sanitarizador";
   import { getItensVendidos } from "../Conexao/eventoConex";
   import { extrairDataHora } from "../utils/manipulaDataHora";
   import { utilizarIngresso } from "../Conexao/itemPedidoConex";
@@ -16,14 +18,26 @@
   export let id;
 
   let evento = getItensVendidos(id);
+  let listaFiltrada;
+  let pesquisa = "";
 
-  function qntUtilizados(evento) {
-    return evento.itensPedido.filter((i) => i.utilizado).length;
+  async function filtro() {
+    const e = await evento;
+    return e.itensPedido.filter(
+      (i) =>
+        i.id.toString().includes(pesquisa) ||
+        i.ingressante.toLowerCase().includes(pesquisa.toLowerCase()) ||
+        i.cpf.includes(onlyNumeros(pesquisa))
+    );
   }
 
-  function qntNaoUtilizados(evento) {
-    return evento.itensPedido.length - qntUtilizados(evento);
-  }
+  $: pesquisa, (listaFiltrada = filtro());
+
+  let qntUtilizados = (evento) =>
+    evento.itensPedido.filter((i) => i.utilizado).length;
+
+  let qntNaoUtilizados = (evento) =>
+    evento.itensPedido.length - qntUtilizados(evento);
 
   function verMais(ingresso) {
     Swal.fire({
@@ -202,30 +216,44 @@
     </table>
 
     {#if evento.itensPedido.length}
+      <Entrada
+        id="pesquisa"
+        validar={false}
+        label="Pesquisa (ID | Nome | CPF)"
+        on:input={(e) => (pesquisa = e.target.value)}
+      />
+      <br />
+
       <table id="tabela">
         <tr>
           <th>Id</th>
-          <th>Portador</th>
+          <th>Portador(a)</th>
           <th>CPF</th>
           <th>Utilizado?</th>
           <th>Tipo</th>
           <th>Ações</th>
         </tr>
-        {#each evento.itensPedido as item}
-          <tr class:utilizado={item.utilizado}>
-            <td>{item.id}</td>
-            <td>{item.ingressante}</td>
-            <td>{maskBr.cpf(item.cpf)}</td>
-            <td>{item.utilizado ? "Sim" : "Não"}</td>
-            <td>{item.tipoDeIngresso.nome}</td>
-            <td id="detalhes">
-              {#if !item.utilizado}
-                <MiniBotao on:click={() => utilizar(item)}>Utilizar</MiniBotao>
-              {/if}
-              <MiniBotao on:click={() => verMais(item)}>Ver mais</MiniBotao>
-            </td>
-          </tr>
-        {/each}
+        {#await listaFiltrada then listaDeItens}
+          {#each listaDeItens as item}
+            <tr class:utilizado={item.utilizado}>
+              <td>{item.id}</td>
+              <td>{item.ingressante}</td>
+              <td>{maskBr.cpf(item.cpf)}</td>
+              <td>{item.utilizado ? "Sim" : "Não"}</td>
+              <td>{item.tipoDeIngresso.nome}</td>
+              <td>
+                <div id="detalhes">
+                  {#if !item.utilizado}
+                    <MiniBotao on:click={() => utilizar(item)}
+                      >Utilizar</MiniBotao
+                    >
+                  {/if}
+                  <MiniBotao on:click={() => verMais(item)}>Ver mais</MiniBotao>
+                </div>
+              </td>
+            </tr>
+          {/each}
+        {/await}
       </table>
     {:else}
       <p>Não existem ingressos vendidos para esse evento</p>

@@ -1,5 +1,5 @@
 function onlyNumeros(str) {
-  return str.replace(/[^\d]/g, "");
+  return str.replace(/[^\d]/g, "") || null;
 }
 
 function onlyLetrasEEspacos(str) {

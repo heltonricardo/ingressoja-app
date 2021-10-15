@@ -93,8 +93,9 @@
 
   function ler(itensPedido) {
     const cod = onlyNumeros(utilizacao);
-    if (parseInt(cod) && ingressoDoEvento(cod, itensPedido)) utilizar(cod);
-    else Swal.fire(MSG.RUIM, MSG.INGRESSO_NAO_PERTENCE, "error");
+    if (parseInt(cod))
+      if (ingressoDoEvento(cod, itensPedido)) utilizar(cod);
+      else Swal.fire(MSG.RUIM, MSG.INGRESSO_NAO_PERTENCE, "error");
   }
 </script>
 

@@ -3,7 +3,9 @@
   import { maskBr } from "js-brasil";
   import { createEventDispatcher } from "svelte";
 
+  import MSG from "../ENUM/MSG";
   import Botao from "../UI/Botao.svelte";
+  import Icone from "../UI/Icone.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import Entrada from "../UI/Entrada.svelte";
   import MiniBotao from "../UI/MiniBotao.svelte";
@@ -17,9 +19,10 @@
 
   export let id;
 
-  let evento = getItensVendidos(id);
   let listaFiltrada;
   let pesquisa = "";
+  let utilizacao = "";
+  let evento = getItensVendidos(id);
 
   async function filtro() {
     const e = await evento;
@@ -67,21 +70,31 @@
     });
   }
 
-  async function utilizar(ingresso) {
+  async function utilizar(idIngresso) {
     Swal.fire({
-      title: `Utilizar o ingresso #${ingresso.id}?`,
+      title: `Utilizar o ingresso #${idIngresso}?`,
       icon: "question",
       showCancelButton: true,
       cancelButtonText: "Cancelar",
     })
       .then((temCerteza) => {
         if (temCerteza.isConfirmed) {
-          return utilizarIngresso(ingresso.id);
+          return utilizarIngresso(idIngresso);
         }
       })
       .then((res) => {
         if (res) evento = getItensVendidos(id);
       });
+  }
+
+  function ingressoDoEvento(id, itens) {
+    return itens.some((i) => i.id == id);
+  }
+
+  function ler(itensPedido) {
+    const cod = onlyNumeros(utilizacao);
+    if (parseInt(cod) && ingressoDoEvento(cod, itensPedido)) utilizar(cod);
+    else Swal.fire(MSG.RUIM, MSG.INGRESSO_NAO_PERTENCE, "error");
   }
 </script>
 
@@ -169,6 +182,19 @@
   #voltar {
     margin: 3rem 0;
   }
+
+  #leitura {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  #barra-pesquisa {
+    width: fit-content;
+    margin-right: 1rem;
+  }
 </style>
 
 <div id="corpo">
@@ -214,16 +240,30 @@
         <td class="dado">{qntNaoUtilizados(evento)}</td>
       </tr>
     </table>
-
     {#if evento.itensPedido.length}
+      <div id="leitura">
+        <div id="barra-pesquisa">
+          <Entrada
+            type="number"
+            id="utilizacao"
+            validar={false}
+            on:input={(e) => (utilizacao = e.target.value)}
+            label="Insira o código para utilizar ou leia o QR Code"
+            on:keypress={(e) =>
+              "NumpadEnter".includes(e.code) && ler(evento.itensPedido)}
+          />
+        </div>
+        <Icone icon="ticket-alt" on:click={() => ler(evento.itensPedido)} />
+        <Icone icon="qrcode" />
+      </div>
       <Entrada
         id="pesquisa"
+        type="search"
         validar={false}
         label="Pesquisa (ID | Nome | CPF)"
         on:input={(e) => (pesquisa = e.target.value)}
       />
       <br />
-
       <table id="tabela">
         <tr>
           <th>Id</th>
@@ -244,7 +284,7 @@
               <td>
                 <div id="detalhes">
                   {#if !item.utilizado}
-                    <MiniBotao on:click={() => utilizar(item)}
+                    <MiniBotao on:click={() => utilizar(item.id)}
                       >Utilizar</MiniBotao
                     >
                   {/if}

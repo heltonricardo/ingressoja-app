@@ -99,11 +99,11 @@
   <tr>
     <td>
       <input
-        on:keypress={(e) => e.code === "Enter" && pesquisar()}
-        bind:value={termo}
         id="entrada"
         type="search"
+        bind:value={termo}
         placeholder="Procure um evento..."
+        on:keypress={(e) => "NumpadEnter".includes(e.code) && pesquisar()}
       />
     </td>
     <td>

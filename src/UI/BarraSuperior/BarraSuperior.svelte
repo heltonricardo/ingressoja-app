@@ -32,6 +32,12 @@
   .um-item {
     justify-content: center;
   }
+
+  @media print {
+    .barra {
+      display: none !important;
+    }
+  }
 </style>
 
 <div class="barra" class:um-item={modo !== MODO.NORMAL}>

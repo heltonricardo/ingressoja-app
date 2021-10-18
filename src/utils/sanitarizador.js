@@ -3,7 +3,7 @@ function onlyNumeros(str) {
 }
 
 function onlyLetrasEEspacos(str) {
-  return str.replace(/[^a-zA-Z\s]/g, "");
+  return str.replace(/[^a-zÀ-ÿ\s]/g, "");
 }
 
 export { onlyNumeros, onlyLetrasEEspacos };

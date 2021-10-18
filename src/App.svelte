@@ -26,7 +26,7 @@
   let evento = null;
   let idPedido = null;
   let idCategoria = null;
-  let modo = MODO.CONFERENCIA;
+  let modo = MODO.NORMAL;
   let termoPesquisa = "";
 
   function limpaFiltroPesquisa() {
@@ -117,17 +117,15 @@
   const modoCategoriasEvento = () => trocaModo(MODO.CATEGORIAS_EVENTO);
 </script>
 
-{#if modo !== MODO.MEUS_INGRESSOS}
-  <BarraSuperior
-    {modo}
-    on:filtrar={filtrar}
-    on:entrar={modoLogin}
-    on:voltar={modoNormal}
-    on:pesquisar={pesquisar}
-    on:cadastro={modoCadastro}
-    on:minhaconta={modoMinhaConta}
-  />
-{/if}
+<BarraSuperior
+  {modo}
+  on:filtrar={filtrar}
+  on:entrar={modoLogin}
+  on:voltar={modoNormal}
+  on:pesquisar={pesquisar}
+  on:cadastro={modoCadastro}
+  on:minhaconta={modoMinhaConta}
+/>
 
 {#if modo === MODO.NORMAL}
   <GridEventos {termoPesquisa} {idCategoria} on:vermais={modoDetalhes} />
@@ -211,6 +209,4 @@
   <ConferenciaIngressos {id} on:conferencia={modoConferencia} />
 {/if}
 
-{#if modo !== MODO.MEUS_INGRESSOS}
-  <BarraInferior />
-{/if}
+<BarraInferior />

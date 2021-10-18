@@ -55,7 +55,7 @@
         title: "O ingresso pertence ao CPF informado!",
         html: `<style>.titulo {font-weight: bold}</style>
               <br />
-              <p class="titulo">Portador do ingresso</p>
+              <p class="titulo">Portador(a) do ingresso</p>
               <p class="dado">${res.ingressante}</p>
               <br />
               <p class="titulo">Evento</p>

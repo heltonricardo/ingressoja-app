@@ -21,15 +21,21 @@
 {#if tipo === TIPOCADASTRO.COMPRADOR}
   <ContaComprador on:meuspedidos on:voltar on:meusdados />
 {:else if tipo === TIPOCADASTRO.PRODUTORA}
-  <ContaProdutora on:meuseventos on:voltar on:meusdados on:carteira />
+  <ContaProdutora
+    on:voltar
+    on:carteira
+    on:meusdados
+    on:conferencia
+    on:meuseventos
+  />
 {:else if tipo === TIPOCADASTRO.ADMINISTRADOR}
   <ContaAdministrador
-    on:administradores
-    on:compradores
-    on:meusdados
-    on:novacategoria
-    on:novoadm
-    on:produtoras
     on:voltar
+    on:novoadm
+    on:meusdados
+    on:produtoras
+    on:compradores
+    on:novacategoria
+    on:administradores
   />
 {/if}

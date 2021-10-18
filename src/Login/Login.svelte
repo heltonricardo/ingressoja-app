@@ -74,7 +74,7 @@
       type="password"
       validar={false}
       on:input={(event) => (senha = event.target.value)}
-      on:keypress={(e) => e.code === "Enter" && entrar()}
+      on:keypress={(e) => "NumpadEnter".includes(e.code) && entrar()}
     />
   </div>
 

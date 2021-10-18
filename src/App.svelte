@@ -19,6 +19,7 @@
   import Administradores from "./Conta/Administradores.svelte";
   import CategoriaEvento from "./Cadastro/CategoriaEvento.svelte";
   import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
+  import ConferenciaIngressos from "./Conta/ConferenciaIngressos.svelte";
 
   let id = null;
   let dados = null;
@@ -90,9 +91,16 @@
     trocaModo(MODO.DETALHE_PEDIDO);
   }
 
+  function modoUtilizacao(e) {
+    id = e.detail;
+    trocaModo(MODO.UTILIZACAO);
+  }
+
   const filtrar = (event) => (idCategoria = event.detail);
 
   const pesquisar = (event) => (termoPesquisa = event.detail);
+
+  const modoConferencia = () => trocaModo(MODO.CONFERENCIA);
 
   const modoMeusDados = () => trocaModo(MODO.MEUS_DADOS);
 
@@ -109,17 +117,15 @@
   const modoCategoriasEvento = () => trocaModo(MODO.CATEGORIAS_EVENTO);
 </script>
 
-{#if modo !== MODO.MEUS_INGRESSOS}
-  <BarraSuperior
-    {modo}
-    on:filtrar={filtrar}
-    on:entrar={modoLogin}
-    on:voltar={modoNormal}
-    on:pesquisar={pesquisar}
-    on:cadastro={modoCadastro}
-    on:minhaconta={modoMinhaConta}
-  />
-{/if}
+<BarraSuperior
+  {modo}
+  on:filtrar={filtrar}
+  on:entrar={modoLogin}
+  on:voltar={modoNormal}
+  on:pesquisar={pesquisar}
+  on:cadastro={modoCadastro}
+  on:minhaconta={modoMinhaConta}
+/>
 
 {#if modo === MODO.NORMAL}
   <GridEventos {termoPesquisa} {idCategoria} on:vermais={modoDetalhes} />
@@ -141,6 +147,7 @@
     on:minhaconta={modoMinhaConta}
     on:produtoras={modoProdutoras}
     on:compradores={modoCompradores}
+    on:conferencia={modoConferencia}
     on:meuseventos={modoMeusEventos}
     on:meuspedidos={modoMeusPedidos}
     on:novacategoria={modoCategoriasEvento}
@@ -191,9 +198,15 @@
 {:else if modo === MODO.PRODUTORAS}
   <Produtoras on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.MEUS_INGRESSOS}
-  <MeusIngressos {dados} on:meuspedidos={modoMeusPedidos}/>
+  <MeusIngressos {dados} on:meuspedidos={modoMeusPedidos} />
+{:else if modo === MODO.CONFERENCIA}
+  <MeusEventos
+    on:conferencia={modoUtilizacao}
+    conferencia={true}
+    on:minhaconta={modoMinhaConta}
+  />
+{:else if modo === MODO.UTILIZACAO}
+  <ConferenciaIngressos {id} on:conferencia={modoConferencia} />
 {/if}
 
-{#if modo !== MODO.MEUS_INGRESSOS}
-  <BarraInferior />
-{/if}
+<BarraInferior />

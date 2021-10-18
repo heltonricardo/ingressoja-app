@@ -52,7 +52,10 @@ const MSG = Object.freeze({
     de ingressos grátis por evento não pode exceder 10% da quantidade total de \
     ingressos!",
   CPF_NAO_INGRESSO:
-    "O CPF informado não possue um ingresso com esse ID a ele vinculado!",
+    "O CPF informado não possui um ingresso com esse ID a ele vinculado!",
+  INGRESSO_UTILIZADO: "Esse ingresso já foi utilizado!",
+  INGRESSO_NAO_PERTENCE:
+    "O ID de ingresso informado não pertence a esse evento!",
 });
 
 export default MSG;

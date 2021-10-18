@@ -478,7 +478,7 @@
       <Entrada
         id="cep"
         label="CEP"
-        maxlength="8"
+        maxlength="9"
         valido={cepValido}
         value={obj.dto.cep}
         tocado={tocarCampos}

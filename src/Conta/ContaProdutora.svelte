@@ -60,6 +60,9 @@
     <Botao on:click={() => dispatch("meusdados")}>Meus Dados</Botao>
     <Botao on:click={() => dispatch("carteira")}>Carteira Digital</Botao>
     <Botao on:click={() => dispatch("meuseventos")}>Meus Eventos</Botao>
+    <Botao on:click={() => dispatch("conferencia")}
+      >Conferência de Ingressos</Botao
+    >
     <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
   </div>
 {/await}

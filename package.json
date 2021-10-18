@@ -22,6 +22,7 @@
     "moment": "^2.29.1",
     "prettier-miscellaneous": "^1.5.3",
     "qr-creator": "^1.0.0",
+    "qr-scanner": "^1.3.0",
     "sirv-cli": "^1.0.0",
     "sweetalert2": "^11.1.7",
     "validator": "^13.6.0"

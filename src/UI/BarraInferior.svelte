@@ -24,6 +24,12 @@
     text-decoration: none;
     color: var(--roxo2);
   }
+
+  @media print {
+    #barra {
+      display: none !important;
+    }
+  }
 </style>
 
 <div id="barra">

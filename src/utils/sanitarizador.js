@@ -1,9 +1,9 @@
 function onlyNumeros(str) {
-  return str.replace(/[^\d]/g, "");
+  return str ? str.replace(/[^\d]/g, "") || null : "";
 }
 
 function onlyLetrasEEspacos(str) {
-  return str.replace(/[^a-zA-Z\s]/g, "");
+  return str.replace(/[^a-zÀ-ÿ\s]/g, "");
 }
 
 export { onlyNumeros, onlyLetrasEEspacos };

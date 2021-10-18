@@ -1,6 +1,8 @@
 <script>
   import Swal from "sweetalert2";
+  import { onMount } from "svelte";
   import { maskBr } from "js-brasil";
+  import QrScanner from "qr-scanner";
   import { createEventDispatcher } from "svelte";
 
   import MSG from "../ENUM/MSG";
@@ -16,11 +18,15 @@
   import { utilizarIngresso } from "../Conexao/itemPedidoConex";
 
   const dispatch = createEventDispatcher();
+  QrScanner.WORKER_PATH = "./qr-scanner-worker.min.js";
 
   export let id;
 
+  let qrScanner;
+  let videoPreview;
   let listaFiltrada;
   let pesquisa = "";
+  let ocultar = false;
   let utilizacao = "";
   let evento = getItensVendidos(id);
 
@@ -97,6 +103,20 @@
       if (ingressoDoEvento(cod, itensPedido)) utilizar(cod);
       else Swal.fire(MSG.RUIM, MSG.INGRESSO_NAO_PERTENCE, "error");
   }
+
+  function qrCode() {
+    qrScanner.start();
+  }
+
+  onMount(() => {
+    evento.then((ev) => {
+      qrScanner = new QrScanner(videoPreview, (result) => {
+        utilizacao = "teste";
+        qrScanner.stop();
+        ler(ev.itensPedido);
+      });
+    });
+  });
 </script>
 
 <style>
@@ -196,6 +216,19 @@
     width: fit-content;
     margin-right: 1rem;
   }
+
+  video {
+    width: 80%;
+    border-radius: 10px;
+  }
+
+  #inverte {
+    text-align: center;
+    -webkit-transform: scaleX(-1);
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    transform: scaleX(-1);
+  }
 </style>
 
 <div id="corpo">
@@ -242,6 +275,11 @@
       </tr>
     </table>
     {#if evento.itensPedido.length}
+      <div id="inverte">
+        <video bind:this={videoPreview}>
+          <track kind="captions" />
+        </video>
+      </div>
       <div id="leitura">
         <div id="barra-pesquisa">
           <Entrada
@@ -255,7 +293,7 @@
           />
         </div>
         <Icone icon="ticket-alt" on:click={() => ler(evento.itensPedido)} />
-        <Icone icon="qrcode" />
+        <Icone icon="qrcode" on:click={qrCode} />
       </div>
       <Entrada
         id="pesquisa"

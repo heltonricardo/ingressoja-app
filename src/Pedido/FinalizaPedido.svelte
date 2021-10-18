@@ -51,12 +51,11 @@
 
     pedido.numeroCartao = onlyNumeros(pedido.numeroCartao);
     pedido.codigoCartao = onlyNumeros(pedido.codigoCartao);
-    pedido.nomeTitular = onlyLetrasEEspacos(pedido.nomeTitular);
     pedido.cpfTitular = onlyNumeros(pedido.cpfTitular);
 
     let itensPedido = ingressos.map((i) => ({
       idTipoDeIngresso: i.id,
-      ingressante: onlyLetrasEEspacos(i.ingressante),
+      ingressante: i.ingressante,
       cpf: onlyNumeros(i.cpf),
     }));
 

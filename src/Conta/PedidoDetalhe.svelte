@@ -116,8 +116,8 @@
 
       <tr>
         <td>#{pedido.id}</td>
-        <td>{extrairDataHora(pedido.dataHora).data}</td>
-        <td colspan="2">{extrairDataHora(pedido.dataHora).horario}</td>
+        <td colspan="2">{extrairDataHora(pedido.dataHora).data}</td>
+        <td>{extrairDataHora(pedido.dataHora).horario}</td>
         <td>R$ {valorVirgula(pedido.valorTotal)}</td>
       </tr>
 

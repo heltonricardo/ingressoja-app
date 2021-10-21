@@ -65,7 +65,8 @@
 
     const res = await postPedido(pedido);
     if (res) {
-      console.log(res);
+      var win = window.open(res.urlPagamento, "_blank");
+      win.focus();
       dispatch("meuspedidos");
     }
     carregando = false;

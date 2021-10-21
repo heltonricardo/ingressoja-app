@@ -32,8 +32,8 @@ export async function postPedido(pedido) {
   const status = res.status;
 
   if (status === STATUS.CREATED) {
-    Swal.fire({
-      timer: 8000,
+    await Swal.fire({
+      timer: 10000,
       icon: "success",
       title: MSG.APROVADO,
       showCloseButton: true,

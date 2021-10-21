@@ -65,6 +65,7 @@
 
     const res = await postPedido(pedido);
     if (res) {
+      console.log(res);
       dispatch("meuspedidos");
     }
     carregando = false;

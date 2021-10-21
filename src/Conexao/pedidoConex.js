@@ -32,18 +32,19 @@ export async function postPedido(pedido) {
   const status = res.status;
 
   if (status === STATUS.CREATED) {
-    await new Promise((resolve) => setTimeout(resolve, 4000));
     Swal.fire({
-      title: MSG.APROVADO,
-      text: MSG.PED_REALIZADO,
+      timer: 8000,
       icon: "success",
-      timer: 5000,
+      title: MSG.APROVADO,
+      showCloseButton: true,
+      text: MSG.MERCADO_PAGO,
       timerProgressBar: true,
+      showConfirmButton: false,
     });
-    return true;
+    return await res.json();
   } //
   else if (status === STATUS.BAD_REQUEST) {
-    Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
+    Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   } //
   else if (status === STATUS.INTERNAL_SERVER_ERROR) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");

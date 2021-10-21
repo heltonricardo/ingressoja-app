@@ -5,7 +5,7 @@ const MSG = Object.freeze({
   OLA: "🤩 Olá!",
   TCHAU: "😉 Até breve!",
   CERTEZA: "🤔 Você tem certeza?",
-  APROVADO: "🎉 Pagamento Aprovado!",
+  APROVADO: "🎉 Pedido Aprovado!",
 
   OK: "Operação realizada com sucesso!",
   CRIADO: "Cadastrado com sucesso!",
@@ -14,7 +14,8 @@ const MSG = Object.freeze({
   EXCLUIDA: "Excluída com sucesso!",
   SAUDACAO: "Nossas boas-vindas!",
   VOLTE_SEMPRE: "Volte sempre!",
-  PED_REALIZADO: "Seu pedido foi realizado com sucesso!",
+  MERCADO_PAGO:
+    "Uma página do Mercado Pago será aberta para efetuação do pagamento...",
 
   AUTENTIQUE_COMPRADOR:
     "Primeiro, autentique-se como comprador ou faça seu cadastro na \

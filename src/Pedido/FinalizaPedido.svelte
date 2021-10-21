@@ -99,8 +99,7 @@
   #botoes {
     margin: 3rem 0;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
   }
 </style>
 
@@ -117,9 +116,9 @@
   {/each}
 
   <div id="botoes">
-    <Botao on:click={concluir} invalido={!formularioValido}
-      >Prosseguir para pagamento</Botao
-    >
     <Botao on:click={voltar}>Cancelar</Botao>
+    <Botao on:click={concluir} invalido={!formularioValido}
+      >Efetuar pedido</Botao
+    >
   </div>
 </div>

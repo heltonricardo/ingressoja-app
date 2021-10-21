@@ -14,6 +14,7 @@
   export let evento;
 
   let carregando = false;
+  let tocarCampos = false;
 
   /************************* CRIAÇÃO DE CADA INGRESSO *************************/
 
@@ -26,6 +27,10 @@
     }
     return tmp;
   });
+
+  /*************************** VALIDAÇÃO DE CAMPOS ****************************/
+
+  $: formularioValido = ingressos.every((i) => i.valido);
 
   /************************** VOLTAR COM CONFIRMAÇÃO **************************/
 
@@ -43,6 +48,11 @@
   /***************************** EFETIVAR PEDIDO ******************************/
 
   async function concluir() {
+    if (!formularioValido) {
+      tocarCampos = true;
+      return;
+    }
+
     carregando = true;
 
     let itensPedido = ingressos.map((i) => ({
@@ -59,10 +69,6 @@
     }
     carregando = false;
   }
-
-  /*************************** VALIDAÇÃO DE CAMPOS ****************************/
-
-  $: formularioValido = ingressos.every((i) => i.valido);
 </script>
 
 <style>
@@ -107,11 +113,11 @@
   <h3 id="subtitulo">Insira os dados de cada ingressante:</h3>
 
   {#each [...Array(ingressos.length).keys()] as x}
-    <CardIngresso bind:ingresso={ingressos[x]} />
+    <CardIngresso {tocarCampos} bind:ingresso={ingressos[x]} />
   {/each}
 
   <div id="botoes">
-    <Botao on:click={concluir} habilitado={formularioValido}
+    <Botao on:click={concluir} invalido={!formularioValido}
       >Prosseguir para pagamento</Botao
     >
     <Botao on:click={voltar}>Cancelar</Botao>

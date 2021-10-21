@@ -5,10 +5,11 @@
   import Entrada from "../UI/Entrada.svelte";
 
   export let ingresso = {
-    ingressante: "",
     cpf: "",
     valido: false,
+    ingressante: "",
   };
+  export let tocarCampos = false;
 
   // Impedir erro de dependência cíclica:
   const validar = (flag) => (ingresso.valido = flag);
@@ -41,16 +42,18 @@
 <div id="corpo">
   <span id="titulo">Ingresso #{ingresso.ordem + 1} • {ingresso.nome}</span>
   <Entrada
-    id={`nome${ingresso.ordem}`}
     label="Nome"
     valido={nomeValido}
+    tocado={tocarCampos}
+    id={`nome${ingresso.ordem}`}
     mensagemValidacao="Insira um nome válido"
     on:input={(event) => (ingresso.ingressante = event.target.value)}
   />
   <Entrada
-    id={`cpf${ingresso.ordem}`}
     label="CPF"
     valido={cpfValido}
+    tocado={tocarCampos}
+    id={`cpf${ingresso.ordem}`}
     mensagemValidacao="Insira um CPF válido"
     on:input={(event) => (ingresso.cpf = event.target.value)}
   />

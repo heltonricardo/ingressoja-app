@@ -30,18 +30,29 @@ export async function postPedido(pedido) {
   }
 
   const status = res.status;
-
   if (status === STATUS.CREATED) {
-    await Swal.fire({
-      timer: 10000,
-      icon: "success",
-      title: MSG.APROVADO,
-      showCloseButton: true,
-      text: MSG.MERCADO_PAGO,
-      timerProgressBar: true,
-      showConfirmButton: false,
-    });
-    return await res.json();
+    const retorno = await res.json();
+    if (retorno.urlPagamento)
+      await Swal.fire({
+        timer: 10000,
+        icon: "success",
+        title: MSG.APROVADO,
+        showCloseButton: true,
+        text: MSG.MERCADO_PAGO,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+    else
+      await Swal.fire({
+        timer: 5000,
+        icon: "success",
+        title: MSG.APROVADO,
+        showCloseButton: true,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        text: MSG.REDIRECIONA_PEDIDOS,
+      });
+    return retorno;
   } //
   else if (status === STATUS.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");

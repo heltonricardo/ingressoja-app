@@ -64,9 +64,18 @@
     let pedido = { itensPedido, idEvento: evento.id };
 
     const res = await postPedido(pedido);
+
     if (res) {
-      var win = window.open(res.urlPagamento, "_blank");
-      win.focus();
+      if (res?.urlPagamento) {
+        var novaJanela = window.open(res.urlPagamento, "_blank");
+        if (novaJanela) novaJanela.focus();
+        else
+          await Swal.fire({
+            title: MSG.OPS,
+            icon: "warning",
+            text: MSG.MERCADO_PAGO,
+          });
+      }
       dispatch("meuspedidos");
     }
     carregando = false;

@@ -14,9 +14,9 @@ const MSG = Object.freeze({
   EXCLUIDA: "Excluída com sucesso!",
   SAUDACAO: "Nossas boas-vindas!",
   VOLTE_SEMPRE: "Volte sempre!",
+
   MERCADO_PAGO:
     "Uma página do Mercado Pago será aberta para efetuação do pagamento...",
-
   AUTENTIQUE_COMPRADOR:
     "Primeiro, autentique-se como comprador ou faça seu cadastro na \
     plataforma!",
@@ -57,6 +57,10 @@ const MSG = Object.freeze({
   INGRESSO_UTILIZADO: "Esse ingresso já foi utilizado!",
   INGRESSO_NAO_PERTENCE:
     "O ID de ingresso informado não pertence a esse evento!",
+  REDIRECIONA_PEDIDOS: "A aplicação será redirecionada para a tela de pedidos.",
+  POP_UP:
+    "Seu bloqueador de pop-up impediu que o boleto fosse aberto. Por favor, \
+    efetue o pagamento através do link na tela do pedido.",
 });
 
 export default MSG;

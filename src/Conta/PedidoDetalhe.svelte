@@ -109,16 +109,24 @@
     <table id="tabela">
       <tr>
         <th>Pedido</th>
-        <th colspan="2">Data do pedido</th>
+        <th>Data do pedido</th>
         <th>Hora do pedido</th>
         <th>Valor total</th>
+        <th>Link pagamento</th>
       </tr>
 
       <tr>
         <td>#{pedido.id}</td>
-        <td colspan="2">{extrairDataHora(pedido.dataHora).data}</td>
+        <td>{extrairDataHora(pedido.dataHora).data}</td>
         <td>{extrairDataHora(pedido.dataHora).horario}</td>
         <td>R$ {valorVirgula(pedido.valorTotal)}</td>
+        <td>
+          {#if pedido.urlPagamento}
+            <a target="_blank" href={pedido.urlPagamento}>Acessar</a>
+          {:else}
+            -
+          {/if}
+        </td>
       </tr>
 
       <tr>

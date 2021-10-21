@@ -38,6 +38,10 @@
     display: flex;
     justify-content: space-between;
   }
+
+  .titulo {
+    font-weight: bold;
+  }
 </style>
 
 <div id="corpo">
@@ -51,7 +55,8 @@
           value={TIPOCADASTRO.COMPRADOR}
           bind:group={tipoCadastro}
         />
-        Quero comprar ingressos!
+        <span class="titulo">Pessoa Física</span>
+        <p>Quero comprar ingressos!</p>
       </label>
       <label>
         <input
@@ -60,7 +65,8 @@
           value={TIPOCADASTRO.PRODUTORA}
           bind:group={tipoCadastro}
         />
-        Quero vender ingressos!
+        <span class="titulo">Pessoa Jurídica</span>
+        <p>Quero vender ingressos!</p>
       </label>
     </div>
   {:else}

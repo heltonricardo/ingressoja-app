@@ -39,15 +39,7 @@
           </tr>
           <tr>
             <td style="font-weight: bold; white-space: nowrap;">Banco:</td>
-            <td  style="padding: 1rem">${produtora.banco}</td>
-          </tr>
-          <tr>
-            <td style="font-weight: bold; white-space: nowrap;">Agência:</td>
-            <td  style="padding: 1rem">${produtora.agencia}</td>
-          </tr>
-          <tr>
-            <td style="font-weight: bold; white-space: nowrap;">Conta:</td>
-            <td  style="padding: 1rem">${produtora.conta}</td>
+            <td  style="padding: 1rem">${produtora.publicToken}</td>
           </tr>
         </table>`,
       showCloseButton: true,

@@ -155,16 +155,8 @@
             <td>{dados.email}</td>
           </tr>
           <tr>
-            <td class="titulo">Banco:</td>
-            <td>{dados.banco}</td>
-          </tr>
-          <tr>
-            <td class="titulo">Agência:</td>
-            <td>{dados.agencia}</td>
-          </tr>
-          <tr>
-            <td class="titulo">Conta:</td>
-            <td>{dados.conta}</td>
+            <td class="titulo">Public Token:</td>
+            <td>{dados.publicToken}</td>
           </tr>
         </table>
       {:else if tipoLogado === TIPOCADASTRO.ADMINISTRADOR}

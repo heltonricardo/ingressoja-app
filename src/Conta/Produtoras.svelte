@@ -37,10 +37,6 @@
             <td style="font-weight: bold; white-space: nowrap;">E-mail:</td>
             <td  style="padding: 1rem">${produtora.email}</td>
           </tr>
-          <tr>
-            <td style="font-weight: bold; white-space: nowrap;">Banco:</td>
-            <td  style="padding: 1rem">${produtora.publicToken}</td>
-          </tr>
         </table>`,
       showCloseButton: true,
       showConfirmButton: false,

@@ -13,7 +13,6 @@
 
   export let evento;
 
-  let pedido = {};
   let carregando = false;
 
   /************************* CRIAÇÃO DE CADA INGRESSO *************************/
@@ -52,7 +51,7 @@
       cpf: onlyNumeros(i.cpf),
     }));
 
-    pedido = { ...pedido, itensPedido, idEvento: evento.id };
+    let pedido = { itensPedido, idEvento: evento.id };
 
     const res = await postPedido(pedido);
     if (res) {

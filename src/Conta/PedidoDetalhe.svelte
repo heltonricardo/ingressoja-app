@@ -4,7 +4,7 @@
 
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
-  import StatusPgto from "../ENUM/StatusPgto";
+  import STATUSPGTO from "../ENUM/STATUSPGTO";
   import { getPedido } from "../Conexao/pedidoConex";
   import { valorVirgula } from "../utils/formatador";
   import { extrairDataHora } from "../utils/manipulaDataHora";
@@ -150,12 +150,12 @@
       <tr>
         <td class="titulo">Status do pagamento:</td>
         <td
-          >{#if pedido.statusPagamento === StatusPgto.APPROVED}
+          >{#if pedido.statusPagamento === STATUSPGTO.APPROVED}
             <span id="pgto-aprovado"> Aprovado </span>
-          {:else if pedido.statusPagamento === StatusPgto.REJECTED}
+          {:else if pedido.statusPagamento === STATUSPGTO.REJECTED}
             <span id="pgto-rejeitado">Rejeitado</span> -
             <a target="_blank" href={pedido.urlPagamento}>Tentar novamente</a>
-          {:else if pedido.statusPagamento === StatusPgto.IN_PROGRESS}
+          {:else if pedido.statusPagamento === STATUSPGTO.IN_PROGRESS}
             <span id="pgto-pendente"> Pendente </span>
           {/if}</td
         >

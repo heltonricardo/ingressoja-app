@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 
 import MSG from "../ENUM/MSG.js";
 import PATH from "../ENUM/PATH.js";
-import STATUS from "../ENUM/STATUS.js";
+import STATUSHTTP from "../ENUM/STATUSHTTP.js";
 import TIPOCADASTRO from "../ENUM/TIPOCADASTRO.js";
 
 import autenticacao from "../Autenticacao/autenticacao.js";
@@ -34,7 +34,7 @@ export async function postEvento(evento) {
 
   const status = res.status;
 
-  if (status === STATUS.CREATED) {
+  if (status === STATUSHTTP.CREATED) {
     Swal.fire({
       title: MSG.BOM,
       text: MSG.CRIADO,
@@ -44,13 +44,13 @@ export async function postEvento(evento) {
     });
     return true;
   } //
-  else if (status === STATUS.CONFLICT) {
+  else if (status === STATUSHTTP.CONFLICT) {
     Swal.fire(MSG.RUIM, MSG.DUPLICADO, "error");
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
   } //
-  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+  else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
@@ -83,7 +83,7 @@ export async function putEvento(evento, idEvento) {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     Swal.fire({
       title: MSG.BOM,
       text: MSG.ALTERADO,
@@ -93,13 +93,13 @@ export async function putEvento(evento, idEvento) {
     });
     return true;
   } //
-  else if (status === STATUS.CONFLICT) {
+  else if (status === STATUSHTTP.CONFLICT) {
     Swal.fire(MSG.RUIM, MSG.DUPLICADO, "error");
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
   } //
-  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+  else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
@@ -116,10 +116,10 @@ export async function getEventos() {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     return await res.json();
   } //
-  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+  else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
@@ -136,10 +136,10 @@ export async function getEventoParaEdicao(id) {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     return await res.json();
   } //
-  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+  else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
@@ -156,13 +156,13 @@ export async function getEvento(id) {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     return await res.json();
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
   } //
-  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+  else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
@@ -185,12 +185,12 @@ export async function deleteEvento(id) {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     Swal.fire(MSG.BOM, MSG.EXCLUIDO, "success");
     return true;
-  } else if (status === STATUS.BAD_REQUEST) {
+  } else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
-  } else if (status === STATUS.CONFLICT) {
+  } else if (status === STATUSHTTP.CONFLICT) {
     Swal.fire(MSG.RUIM, MSG.EVENTO_NAO, "error");
   }
 
@@ -214,11 +214,11 @@ export async function podeAlterarEvento(id) {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     return true;
-  } else if (status === STATUS.BAD_REQUEST) {
+  } else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
-  } else if (status === STATUS.CONFLICT) {
+  } else if (status === STATUSHTTP.CONFLICT) {
     Swal.fire(MSG.RUIM, MSG.EVENTO_NAO, "error");
   }
 
@@ -242,13 +242,13 @@ export async function getItensVendidos(id) {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     return await res.json();
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
   } //
-  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+  else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;

@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 
 import MSG from "../ENUM/MSG.js";
 import PATH from "../ENUM/PATH.js";
-import STATUS from "../ENUM/STATUS.js";
+import STATUSHTTP from "../ENUM/STATUSHTTP.js";
 import TIPOCADASTRO from "../ENUM/TIPOCADASTRO.js";
 
 import autenticacao from "../Autenticacao/autenticacao.js";
@@ -30,7 +30,7 @@ export async function postPedido(pedido) {
   }
 
   const status = res.status;
-  if (status === STATUS.CREATED) {
+  if (status === STATUSHTTP.CREATED) {
     const retorno = await res.json();
     if (retorno.urlPagamento)
       await Swal.fire({
@@ -54,10 +54,10 @@ export async function postPedido(pedido) {
       });
     return retorno;
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   } //
-  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+  else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
@@ -80,11 +80,11 @@ export async function getPedido(id) {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     const pedido = await res.json();
     return pedido;
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
   return null;

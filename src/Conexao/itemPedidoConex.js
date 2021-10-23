@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 
 import MSG from "../ENUM/MSG.js";
 import PATH from "../ENUM/PATH.js";
-import STATUS from "../ENUM/STATUS.js";
+import STATUSHTTP from "../ENUM/STATUSHTTP.js";
 
 export async function validarIngresso(obj) {
   let res;
@@ -19,10 +19,10 @@ export async function validarIngresso(obj) {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     return await res.json();
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.CPF_NAO_INGRESSO, "error");
   }
   return null;
@@ -39,7 +39,7 @@ export async function utilizarIngresso(id) {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     Swal.fire({
       timer: 1750,
       text: MSG.OK,
@@ -49,10 +49,10 @@ export async function utilizarIngresso(id) {
     });
     return true;
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.CPF_NAO_INGRESSO, "error");
   } //
-  else if (status === STATUS.CONFLICT) {
+  else if (status === STATUSHTTP.CONFLICT) {
     Swal.fire(MSG.OPS, MSG.INGRESSO_UTILIZADO, "error");
   }
   return null;

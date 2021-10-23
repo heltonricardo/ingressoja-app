@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 
 import MSG from "../ENUM/MSG";
 import PATH from "../ENUM/PATH";
-import STATUS from "../ENUM/STATUS";
+import STATUSHTTP from "../ENUM/STATUSHTTP";
 
 const ID = "id";
 const TIPO = "tipo";
@@ -46,7 +46,7 @@ const autenticacao = {
 
     const status = res.status;
 
-    if (status === STATUS.OK) {
+    if (status === STATUSHTTP.OK) {
       const jsonResp = await res.json();
       localStorage.clear();
       localStorage.setItem(TIPO, jsonResp.tipo);
@@ -62,10 +62,10 @@ const autenticacao = {
       }
       return true;
     } //
-    else if (status === STATUS.UNAUTHORIZED && exibeMsg) {
+    else if (status === STATUSHTTP.UNAUTHORIZED && exibeMsg) {
       Swal.fire(MSG.RUIM, MSG.CREDENCIAL, "error");
     } //
-    else if (status === STATUS.INTERNAL_SERVER_ERROR && exibeMsg) {
+    else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR && exibeMsg) {
       Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
     }
     return false;

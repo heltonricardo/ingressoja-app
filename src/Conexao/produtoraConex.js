@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 
 import MSG from "../ENUM/MSG.js";
 import PATH from "../ENUM/PATH.js";
-import STATUS from "../ENUM/STATUS.js";
+import STATUSHTTP from "../ENUM/STATUSHTTP.js";
 import TIPOCADASTRO from "../ENUM/TIPOCADASTRO.js";
 import autenticacao from "../Autenticacao/autenticacao.js";
 
@@ -22,7 +22,7 @@ export async function postProdutora(produtora) {
 
   const status = res.status;
 
-  if (status === STATUS.CREATED) {
+  if (status === STATUSHTTP.CREATED) {
     Swal.fire({
       title: MSG.BOM,
       text: MSG.CRIADO,
@@ -32,13 +32,13 @@ export async function postProdutora(produtora) {
     });
     return true;
   } //
-  else if (status === STATUS.CONFLICT) {
+  else if (status === STATUSHTTP.CONFLICT) {
     Swal.fire(MSG.RUIM, MSG.DUPLICADO, "error");
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
   } //
-  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+  else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
@@ -62,11 +62,11 @@ export async function getProdutora() {
   }
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     const produtora = await res.json();
     return produtora;
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
   return null;
@@ -90,10 +90,10 @@ export async function getEventos() {
   }
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     return await res.json();
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
   return null;
@@ -122,7 +122,7 @@ export async function putProdutora(produtora) {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     Swal.fire({
       title: MSG.BOM,
       text: MSG.ALTERADO,
@@ -132,13 +132,13 @@ export async function putProdutora(produtora) {
     });
     return true;
   } //
-  else if (status === STATUS.CONFLICT) {
+  else if (status === STATUSHTTP.CONFLICT) {
     Swal.fire(MSG.RUIM, MSG.DUPLICADO, "error");
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
   } //
-  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+  else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
@@ -163,10 +163,10 @@ export async function deleteProdutora() {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     autenticacao.deslogar();
     return true;
-  } else if (status === STATUS.BAD_REQUEST) {
+  } else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
 

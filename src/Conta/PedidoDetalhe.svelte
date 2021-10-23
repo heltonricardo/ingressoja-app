@@ -4,6 +4,7 @@
 
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
+  import StatusPgto from "../ENUM/StatusPgto";
   import { getPedido } from "../Conexao/pedidoConex";
   import { valorVirgula } from "../utils/formatador";
   import { extrairDataHora } from "../utils/manipulaDataHora";
@@ -35,12 +36,19 @@
     text-align: center;
   }
 
-  h2 {
-    font-size: 1.5rem;
-    margin: 1rem 0;
+  #tabela-pedido {
+    margin: 2rem 0;
+    width: fit-content;
+    word-break: break-all;
   }
 
-  #tabela {
+  .titulo {
+    font-weight: bold;
+    white-space: nowrap;
+    padding: 1rem;
+  }
+
+  #tabela-itens {
     word-break: break-all;
     width: 100%;
     border-collapse: collapse;
@@ -50,26 +58,26 @@
     overflow: hidden;
   }
 
-  #tabela td,
-  #tabela th {
+  #tabela-itens td,
+  #tabela-itens th {
     border: 1px solid #ddd;
     padding: 8px;
     vertical-align: middle;
   }
 
-  #tabela tr:nth-child(even) {
+  #tabela-itens tr:nth-child(even) {
     background-color: #f2f2f2;
   }
 
-  #tabela tr:nth-child(odd) {
+  #tabela-itens tr:nth-child(odd) {
     background-color: var(--branco);
   }
 
-  #tabela tr:hover {
+  #tabela-itens tr:hover {
     background-color: #ddd;
   }
 
-  #tabela th {
+  #tabela-itens th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
@@ -98,41 +106,70 @@
   #dados {
     margin-left: 0.6rem;
   }
+
+  #pgto-aprovado {
+    color: var(--verde3);
+  }
+
+  #pgto-rejeitado {
+    color: var(--vermelho);
+  }
+
+  #pgto-pendente {
+    color: var(--amarelo);
+  }
 </style>
 
 {#await getPedido(id)}
+  <div id="corpo" />
   <Aguarde />
 {:then pedido}
   <div id="corpo">
     <h1>Detalhes de Pedido</h1>
-    <h2>{pedido.evento.titulo}</h2>
-    <table id="tabela">
+    <table id="tabela-pedido">
       <tr>
-        <th>Pedido</th>
-        <th>Data do pedido</th>
-        <th>Hora do pedido</th>
-        <th>Valor total</th>
-        <th>Link pagamento</th>
+        <td class="titulo">Evento:</td>
+        <td>{pedido.evento.titulo}</td>
       </tr>
-
       <tr>
+        <td class="titulo">Id pedido:</td>
         <td>#{pedido.id}</td>
-        <td>{extrairDataHora(pedido.dataHora).data}</td>
-        <td>{extrairDataHora(pedido.dataHora).horario}</td>
-        <td>R$ {valorVirgula(pedido.valorTotal)}</td>
-        <td>
-          {#if pedido.urlPagamento}
-            <a target="_blank" href={pedido.urlPagamento}>Acessar</a>
-          {:else}
-            -
-          {/if}
-        </td>
       </tr>
+      <tr>
+        <td class="titulo">Efetuado em:</td>
+        <td
+          >{extrairDataHora(pedido.dataHora).data} • {extrairDataHora(
+            pedido.dataHora
+          ).horario}</td
+        >
+      </tr>
+      <tr>
+        <td class="titulo">Status do pedido:</td>
+        <td>TODO</td>
+      </tr>
+      <tr>
+        <td class="titulo">Status do pagamento:</td>
+        <td
+          >{#if pedido.statusPagamento === StatusPgto.APPROVED}
+            <span id="pgto-aprovado"> Aprovado </span>
+          {:else if pedido.statusPagamento === StatusPgto.REJECTED}
+            <span id="pgto-rejeitado">Rejeitado</span> -
+            <a target="_blank" href={pedido.urlPagamento}>Tentar novamente</a>
+          {:else if pedido.statusPagamento === StatusPgto.IN_PROGRESS}
+            <span id="pgto-pendente"> Pendente </span>
+          {/if}</td
+        >
+      </tr>
+      <tr>
+        <td class="titulo">Total:</td>
+        <td>R$ {valorVirgula(pedido.valorTotal)}</td>
+      </tr>
+    </table>
 
+    <table id="tabela-itens">
       <tr>
         <th colspan="5">Itens do Pedido</th>
       </tr>
-
       <tr>
         <th>Ingresso</th>
         <th>Nome do ingressante</th>

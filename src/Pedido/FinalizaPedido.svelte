@@ -73,7 +73,7 @@
           await Swal.fire({
             title: MSG.OPS,
             icon: "warning",
-            text: MSG.MERCADO_PAGO,
+            text: MSG.POP_UP,
           });
       }
       dispatch("meuspedidos");

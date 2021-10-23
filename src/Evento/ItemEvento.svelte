@@ -17,7 +17,7 @@
 </script>
 
 <style>
-  #card {
+  .card {
     margin: 1.5rem 1.5rem;
     width: 40%;
     min-width: 28.5rem;
@@ -35,7 +35,7 @@
     transition: 0.2s;
   }
 
-  #card:hover {
+  .card:hover {
     -webkit-transform: scale(1.05);
     -moz-transform: scale(1.05);
     -o-transform: scale(1.05);
@@ -43,7 +43,7 @@
     transition: 0.2s;
   }
 
-  #principal {
+  .principal {
     padding: 0.5rem;
     width: 75%;
     max-width: 75%;
@@ -56,7 +56,7 @@
     min-width: 0;
   }
 
-  #titulo {
+  .titulo {
     display: flex;
     width: 100%;
     height: fit-content;
@@ -70,7 +70,7 @@
     box-sizing: border-box;
   }
 
-  #imagem {
+  .imagem {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
@@ -78,13 +78,13 @@
     display: flex;
   }
 
-  #imagem img {
+  .imagem img {
     width: inherit;
     height: inherit;
     border-radius: 5px;
   }
 
-  #detalhes {
+  .detalhes {
     border-left: 5px dotted;
     width: 25%;
     min-width: 25%;
@@ -95,18 +95,18 @@
     align-items: center;
   }
 
-  #local {
+  .local {
     font-size: 1.25rem;
     text-align: center;
     color: #777;
   }
 
-  #data {
+  .data {
     width: 100%;
     height: fit-content;
   }
 
-  #dia {
+  .dia {
     display: flex;
     align-items: flex-end;
     justify-content: center;
@@ -116,7 +116,7 @@
     color: var(--roxo2);
   }
 
-  #mes {
+  .mes {
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -125,7 +125,7 @@
     margin: 0.3rem 0;
   }
 
-  #ano {
+  .ano {
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -134,19 +134,19 @@
   }
 </style>
 
-<div id="card">
-  <div id="principal">
-    <div id="titulo">
+<div class="card">
+  <div class="principal">
+    <div class="titulo">
       <h1>{inicioTitulo}</h1>
     </div>
 
-    <div id="imagem">
+    <div class="imagem">
       <img src={evento.imagemURL} alt={evento.titulo} />
     </div>
   </div>
 
-  <div id="detalhes">
-    <div id="local">
+  <div class="detalhes">
+    <div class="local">
       {#if evento.url}
         <p>On-line</p>
       {:else}
@@ -154,15 +154,15 @@
       {/if}
     </div>
 
-    <div id="data">
-      <div id="dia">
+    <div class="data">
+      <div class="dia">
         <p>{dia}</p>
       </div>
-      <div id="mes">
+      <div class="mes">
         <p>{mes}</p>
       </div>
       {#if ano !== anoAtual}
-        <div id="ano">
+        <div class="ano">
           <p>{ano}</p>
         </div>
       {/if}

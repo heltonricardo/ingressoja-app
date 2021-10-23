@@ -49,7 +49,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 40%;
     min-width: 30rem;
     margin: 2rem auto;
@@ -62,7 +62,7 @@
     min-height: calc(100vh - 21rem);
   }
 
-  #imagem {
+  .imagem {
     width: 100%;
     height: 25rem;
     border-radius: 5px;
@@ -73,12 +73,12 @@
     font-size: 30pt;
   }
 
-  #categoria {
+  .categoria {
     color: var(--cinza2);
     word-wrap: break-word;
   }
 
-  #detalhes {
+  .detalhes {
     display: flex;
     margin: 3rem 0;
     line-height: 2rem;
@@ -86,54 +86,54 @@
     align-self: flex-end;
   }
 
-  #rotulos {
+  .rotulos {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     font-weight: bold;
   }
 
-  #dados {
+  .dados {
     margin-left: 0.6rem;
   }
 
-  #descricao {
+  .descricao {
     text-align: justify;
     line-height: 2rem;
     margin: 1rem 0;
     word-wrap: break-word;
   }
 
-  #escolha {
+  .escolha {
     margin-top: 3rem;
     align-self: center;
   }
 
-  #rodape {
+  .rodape {
     margin-top: 3rem;
     display: flex;
     align-items: center;
     justify-content: space-around;
   }
 
-  #total {
+  .total {
     font-size: 1.5rem;
   }
 
-  #produtora {
+  .produtora {
     color: var(--verde4);
   }
 
-  #organizacao {
+  .organizacao {
     font-size: 1.5rem;
     font-weight: bold;
   }
 
-  #nomeFantasia {
+  .nomeFantasia {
     margin: 0.5rem 0;
   }
 
-  #sem-ingressos {
+  .sem-ingressos {
     align-self: center;
     margin: 3rem 0;
     font-size: 20pt;
@@ -145,15 +145,15 @@
 {#await eventoCarregado}
   <Aguarde />
 {:then evento}
-  <div id="corpo">
-    <img id="imagem" src={evento.imagemURL} alt={evento.titulo} />
+  <div class="corpo">
+    <img class="imagem" src={evento.imagemURL} alt={evento.titulo} />
 
     <h1 class="titulo">{evento.titulo}</h1>
-    <h4 id="categoria">{evento.categoriaEvento.nome}</h4>
+    <h4 class="categoria">{evento.categoriaEvento.nome}</h4>
 
-    <div id="detalhes">
-      <div id="rotulos">
-        <span id="local">
+    <div class="detalhes">
+      <div class="rotulos">
+        <span class="local">
           {#if !evento.online}
             <p>
               <i class={"fas fa-location-arrow"} />  Local:
@@ -161,21 +161,21 @@
           {/if}
         </span>
 
-        <span id="data-hora-inicio">
+        <span class="data-hora-inicio">
           <p>
             <i class={"fas fa-clock"} />  Início:
           </p>
         </span>
 
-        <span id="data-hora-termino">
+        <span class="data-hora-termino">
           <p>
             <i class="fas fa-hand-point-left" />  Término:
           </p>
         </span>
       </div>
 
-      <div id="dados">
-        <span id="local">
+      <div class="dados">
+        <span class="local">
           {#if evento.online}
             <p>
               Evento On-line 
@@ -189,14 +189,14 @@
           {/if}
         </span>
 
-        <span id="data-hora-inicio">
+        <span class="data-hora-inicio">
           <p>
             {extrairDataHora(evento.inicio).data} •
             {extrairDataHora(evento.inicio).horario}
           </p>
         </span>
 
-        <span id="data-hora-termino">
+        <span class="data-hora-termino">
           <p>
             {extrairDataHora(evento.termino).data} •
             {extrairDataHora(evento.termino).horario}
@@ -205,11 +205,11 @@
       </div>
     </div>
 
-    <span id="descricao">{evento.descricao}</span>
+    <span class="descricao">{evento.descricao}</span>
 
-    <span id="produtora">
-      <p id="organizacao">Organização</p>
-      <p id="nomeFantasia">
+    <span class="produtora">
+      <p class="organizacao">Organização</p>
+      <p class="nomeFantasia">
         {evento.produtora.nomeFantasia}. CNPJ: {maskBr.cnpj(
           evento.produtora.cnpj
         )}
@@ -217,18 +217,18 @@
     </span>
 
     {#if evento.tiposDeIngresso.length}
-      <h2 class="titulo" id="escolha">Selecione os ingressos</h2>
+      <h2 class="titulo escolha">Selecione os ingressos</h2>
     {:else}
-      <h2 id="sem-ingressos">Ingressos não disponíveis</h2>
+      <h2 class="sem-ingressos">Ingressos não disponíveis</h2>
     {/if}
 
     {#each evento.tiposDeIngresso as tipoDeIngresso}
       <TipoDeIngresso {tipoDeIngresso} on:calcular={calcular} />
     {/each}
-    <div id="rodape">
+    <div class="rodape">
       <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
       {#if evento.tiposDeIngresso.length}
-        <span id="total">Total: R$ {valorVirgula(total)}</span>
+        <span class="total">Total: R$ {valorVirgula(total)}</span>
         <Botao on:click={comprar} habilitado={quantidade}>Comprar</Botao>
       {/if}
     </div>

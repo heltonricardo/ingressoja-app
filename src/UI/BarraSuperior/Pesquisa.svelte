@@ -57,7 +57,7 @@
     vertical-align: middle;
   }
 
-  #entrada {
+  .entrada {
     border-radius: 5px;
     height: 3rem;
     width: 23rem;
@@ -70,7 +70,7 @@
     padding-right: 1rem;
   }
 
-  #segunda-linha {
+  .segunda-linha {
     padding-top: 0.3rem;
   }
 
@@ -99,7 +99,7 @@
   <tr>
     <td>
       <input
-        id="entrada"
+        class="entrada"
         type="search"
         bind:value={termo}
         placeholder="Procure um evento..."
@@ -111,7 +111,7 @@
     </td>
   </tr>
   <tr>
-    <td id="segunda-linha">
+    <td class="segunda-linha">
       <button on:click={abrirCategorias}>Filtrar por categoria</button>
     </td>
   </tr>

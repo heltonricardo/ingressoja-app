@@ -83,7 +83,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 35%;
     min-width: 30rem;
     margin: 2rem auto;
@@ -118,15 +118,15 @@
   <Aguarde />
 {/if}
 
-<div id="corpo">
-  <h1 id="titulo">Detalhes de Ingresso</h1>
-  <h3 id="subtitulo">Insira os dados de cada ingressante:</h3>
+<div class="corpo">
+  <h1 class="titulo">Detalhes de Ingresso</h1>
+  <h3 class="subtitulo">Insira os dados de cada ingressante:</h3>
 
   {#each [...Array(ingressos.length).keys()] as x}
     <CardIngresso {tocarCampos} bind:ingresso={ingressos[x]} />
   {/each}
 
-  <div id="botoes">
+  <div class="botoes">
     <Botao on:click={voltar}>Cancelar</Botao>
     <Botao on:click={concluir} invalido={!formularioValido}
       >Efetuar pedido</Botao

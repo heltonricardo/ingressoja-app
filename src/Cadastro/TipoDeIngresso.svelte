@@ -67,7 +67,7 @@
   input {
     color: black;
   }
-  #form-control {
+  .form-control {
     display: flex;
     flex-direction: column;
     padding: 0.5rem 0;
@@ -82,7 +82,7 @@
     margin-bottom: 1rem;
   }
 
-  #inferior {
+  .inferior {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -130,12 +130,12 @@
   }
 </style>
 
-<div id="form-control">
-  <div id="superior">
+<div class="form-control">
+  <div class="superior">
     <div class="item">
       <label for="nome">Nome</label>
       <input
-        id="nome"
+        class="nome"
         type="text"
         maxlength="30"
         bind:value={tipoDeIngresso.nome}
@@ -152,7 +152,7 @@
       <label for="descricao">Descrição</label>
       <input
         type="text"
-        id="descricao"
+        class="descricao"
         maxlength="50"
         bind:value={tipoDeIngresso.descricao}
         on:blur={() => (descricaoTocada = true)}
@@ -167,7 +167,7 @@
     <div class="item">
       <label for="qnt">Data de início das vendas</label>
       <input
-        id="inicio"
+        class="inicio"
         max={terminoEvento}
         min={hojeStringISO}
         type="datetime-local"
@@ -186,7 +186,7 @@
     <div class="item">
       <label for="valor">Data de término das vendas</label>
       <input
-        id="valor"
+        class="valor"
         max={terminoEvento}
         type="datetime-local"
         min={tipoDeIngresso.inicio}
@@ -204,12 +204,12 @@
     </div>
   </div>
 
-  <div id="inferior">
+  <div class="inferior">
     <div class="item">
       <label for="qnt">Quantidade</label>
       <input
         min="1"
-        id="qnt"
+        class="qnt"
         type="number"
         on:blur={() => (qntTocada = true)}
         class:valid={qntValida && qntTocada}
@@ -224,7 +224,7 @@
     <div class="item">
       <label for="valor">Valor (R$)</label>
       <input
-        id="valor"
+        class="valor"
         type="number"
         bind:value={tipoDeIngresso.valor}
         on:blur={() => (valorTocado = true)}

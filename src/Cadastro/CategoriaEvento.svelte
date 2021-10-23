@@ -86,7 +86,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 35%;
     min-width: 30rem;
     margin: 2rem auto;
@@ -106,33 +106,33 @@
     margin: 2rem 0 3rem 0;
   }
 
-  #tabela {
+  .tabela {
     word-break: break-all;
     border-collapse: collapse;
     text-align: center;
     width: 100%;
   }
 
-  #tabela td,
-  #tabela th {
+  .tabela td,
+  .tabela th {
     padding: 8px;
     vertical-align: middle;
     border: 1px solid #ddd;
   }
 
-  #tabela tr:nth-child(even) {
+  .tabela tr:nth-child(even) {
     background-color: #f2f2f2;
   }
 
-  #tabela tr:nth-child(odd) {
+  .tabela tr:nth-child(odd) {
     background-color: var(--branco);
   }
 
-  #tabela tr:hover {
+  .tabela tr:hover {
     background-color: #ddd;
   }
 
-  #tabela th {
+  .tabela th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
@@ -142,21 +142,21 @@
     word-break: keep-all;
   }
 
-  #nova {
+  .nova {
     margin: 2rem 0;
   }
 
-  #cadastrar {
+  .cadastrar {
     display: flex;
     justify-content: flex-end;
   }
 
-  #voltar {
+  .voltar {
     align-self: center;
     margin: 2rem 0;
   }
 
-  #acoes {
+  .acoes {
     display: flex;
     justify-content: center;
   }
@@ -166,13 +166,13 @@
   <Aguarde />
 {/if}
 
-<div id="corpo">
+<div class="corpo">
   <h1>Categorias de Evento</h1>
   {#await categorias}
     <Aguarde />
   {:then categorias}
     {#if categorias.length}
-      <table id="tabela">
+      <table class="tabela">
         <tr>
           <th>Categoria</th>
           <th>Nome</th>
@@ -183,7 +183,7 @@
           <tr>
             <td>#{categoria.id}</td>
             <td>{categoria.nome}</td>
-            <td id="acoes">
+            <td class="acoes">
               <MiniBotao on:click={() => editar(categoria)}>Editar</MiniBotao>
               <MiniBotao on:click={() => excluir(categoria)}>Excluir</MiniBotao>
             </td>
@@ -196,9 +196,9 @@
   {/await}
 
   {#if !carregando}
-    <div id="nova">
+    <div class="nova">
       <Entrada
-        id="nome"
+        class="nome"
         value={nome}
         maxlength="50"
         valido={nomeValido}
@@ -207,7 +207,7 @@
         label="Insira o nome de uma categoria para cadastrar:"
         mensagemValidacao="Insira um nome de 1 a 50 caracteres"
       />
-      <div id="cadastrar">
+      <div class="cadastrar">
         <Botao on:click={cadastrar} invalido={!nomeValido}
           >Cadastrar Categoria</Botao
         >
@@ -215,7 +215,7 @@
     </div>
   {/if}
 
-  <div id="voltar">
+  <div class="voltar">
     <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
   </div>
 </div>

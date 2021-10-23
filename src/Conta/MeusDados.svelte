@@ -62,7 +62,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 30rem;
     min-width: 30rem;
     margin: 2rem auto;
@@ -93,18 +93,18 @@
     padding: 1rem;
   }
 
-  #botoes {
+  .botoes {
     display: flex;
     margin: 2rem 0;
   }
 </style>
 
-<div id="corpo">
+<div class="corpo">
   <h1>Meus Dados</h1>
   {#await carregaDados()}
     <Aguarde />
   {:then dados}
-    <div id="conteudo">
+    <div class="conteudo">
       {#if tipoLogado === TIPOCADASTRO.COMPRADOR}
         <table>
           <tr>
@@ -182,7 +182,7 @@
     </div>
   {/await}
 
-  <div id="botoes">
+  <div class="botoes">
     <Botao on:click={editar}>Editar</Botao>
     {#if tipoLogado !== TIPOCADASTRO.ADMINISTRADOR}
       <Botao on:click={excluir}>Excluir Conta</Botao>

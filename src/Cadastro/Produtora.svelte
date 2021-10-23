@@ -77,13 +77,13 @@
 </script>
 
 <style>
-  #botoes {
+  .botoes {
     margin: 3rem auto;
     display: flex;
     justify-content: center;
   }
 
-  #senha {
+  .senha {
     margin: 3rem 0;
   }
 
@@ -102,10 +102,10 @@
   <Aguarde />
 {/if}
 
-<div id="corpo">
+<div class="corpo">
   <Entrada
     disabled={dados}
-    id="razaoSocial"
+    class="razaoSocial"
     value={razaoSocial}
     label="Razão Social"
     tocado={tocarCampos}
@@ -114,7 +114,7 @@
     on:input={(event) => (razaoSocial = event.target.value)}
   />
   <Entrada
-    id="cnpj"
+    class="cnpj"
     label="CNPJ"
     value={cnpj}
     disabled={dados}
@@ -124,7 +124,7 @@
     on:input={(event) => (cnpj = event.target.value)}
   />
   <Entrada
-    id="nomeFantasia"
+    class="nomeFantasia"
     tocado={tocarCampos}
     value={nomeFantasia}
     label="Nome Fantasia"
@@ -133,7 +133,7 @@
     on:input={(event) => (nomeFantasia = event.target.value)}
   />
   <Entrada
-    id="email"
+    class="email"
     value={email}
     label="E-mail"
     tocado={tocarCampos}
@@ -144,7 +144,7 @@
   <Entrada
     label="PublicToken do Mercado Livre"
     maxlength="100"
-    id="publicToken"
+    class="publicToken"
     value={publicToken}
     tocado={tocarCampos}
     valido={bancoValido}
@@ -158,9 +158,9 @@
   >
 </div>
 
-<div id="senha">
+<div class="senha">
   <Entrada
-    id="senha1"
+    class="senha1"
     maxlength="50"
     type="password"
     tocado={tocarCampos}
@@ -170,7 +170,7 @@
     mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"
   />
   <Entrada
-    id="senha2"
+    class="senha2"
     maxlength="50"
     type="password"
     tocado={tocarCampos}
@@ -181,7 +181,7 @@
   />
 </div>
 
-<div id="botoes">
+<div class="botoes">
   <Botao on:click={voltar}>Voltar</Botao>
   <Botao on:click={salvar} invalido={!formularioValido}>Salvar</Botao>
 </div>

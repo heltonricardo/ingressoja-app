@@ -1,5 +1,5 @@
 <style>
-  #barra {
+  .barra {
     width: 100%;
     height: 10rem;
     text-align: center;
@@ -26,13 +26,13 @@
   }
 
   @media print {
-    #barra {
+    .barra {
       display: none !important;
     }
   }
 </style>
 
-<div id="barra">
+<div class="barra">
   <span
     >© {new Date().getFullYear()}, Plataforma IngressoJá! Todos os direitos
     reservados.</span

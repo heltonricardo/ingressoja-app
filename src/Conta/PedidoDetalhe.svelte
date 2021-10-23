@@ -16,7 +16,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 43%;
     min-width: 30rem;
     margin: 2rem auto;
@@ -37,7 +37,7 @@
     text-align: center;
   }
 
-  #tabela-pedido {
+  .tabela-pedido {
     margin: 2rem 0;
     width: fit-content;
     word-break: break-all;
@@ -49,7 +49,7 @@
     padding: 1rem;
   }
 
-  #tabela-itens {
+  .tabela-itens {
     word-break: break-all;
     width: 100%;
     border-collapse: collapse;
@@ -59,26 +59,26 @@
     overflow: hidden;
   }
 
-  #tabela-itens td,
-  #tabela-itens th {
+  .tabela-itens td,
+  .tabela-itens th {
     border: 1px solid #ddd;
     padding: 8px;
     vertical-align: middle;
   }
 
-  #tabela-itens tr:nth-child(even) {
+  .tabela-itens tr:nth-child(even) {
     background-color: #f2f2f2;
   }
 
-  #tabela-itens tr:nth-child(odd) {
+  .tabela-itens tr:nth-child(odd) {
     background-color: var(--branco);
   }
 
-  #tabela-itens tr:hover {
+  .tabela-itens tr:hover {
     background-color: #ddd;
   }
 
-  #tabela-itens th {
+  .tabela-itens th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
@@ -92,42 +92,42 @@
     margin-bottom: 3rem;
   }
 
-  #detalhes {
+  .detalhes {
     display: flex;
     line-height: 2rem;
     margin: 3rem 0;
   }
 
-  #rotulos {
+  .rotulos {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
   }
 
-  #dados {
+  .dados {
     margin-left: 0.6rem;
   }
 
-  #pgto-aprovado {
+  .pgto-aprovado {
     color: var(--verde3);
   }
 
-  #pgto-rejeitado {
+  .pgto-rejeitado {
     color: var(--vermelho);
   }
 
-  #pgto-pendente {
+  .pgto-pendente {
     color: var(--amarelo);
   }
 </style>
 
 {#await getPedido(id)}
-  <div id="corpo" />
+  <div class="corpo" />
   <Aguarde />
 {:then pedido}
-  <div id="corpo">
+  <div class="corpo">
     <h1>Detalhes de Pedido</h1>
-    <table id="tabela-pedido">
+    <table class="tabela-pedido">
       <tr>
         <td class="titulo">Evento:</td>
         <td>{pedido.evento.titulo}</td>
@@ -152,12 +152,12 @@
         <td class="titulo">Status do pagamento:</td>
         <td
           >{#if pedido.statusPagamento === STATUSPGTO.APPROVED}
-            <span id="pgto-aprovado"> Aprovado </span>
+            <span class="pgto-aprovado"> Aprovado </span>
           {:else if pedido.statusPagamento === STATUSPGTO.REJECTED}
-            <span id="pgto-rejeitado">Rejeitado</span> -
+            <span class="pgto-rejeitado">Rejeitado</span> -
             <a target="_blank" href={pedido.urlPagamento}>Tentar novamente</a>
           {:else if pedido.statusPagamento === STATUSPGTO.IN_PROGRESS}
-            <span id="pgto-pendente"> Pendente </span>
+            <span class="pgto-pendente"> Pendente </span>
           {/if}</td
         >
       </tr>
@@ -173,7 +173,7 @@
       </div>
     {/if}
 
-    <table id="tabela-itens">
+    <table class="tabela-itens">
       <tr>
         <th colspan="5">Itens do Pedido</th>
       </tr>
@@ -196,9 +196,9 @@
       {/each}
     </table>
 
-    <div id="detalhes">
-      <div id="rotulos">
-        <span id="local">
+    <div class="detalhes">
+      <div class="rotulos">
+        <span class="local">
           {#if pedido.evento.online}
             <p>
               <i class="fas fa-mouse-pointer" />   Evento On-line:
@@ -209,19 +209,19 @@
             </p>
           {/if}
         </span>
-        <span id="data-hora-inicio">
+        <span class="data-hora-inicio">
           <p>
             <i class="fas fa-clock" />  Início:
           </p>
         </span>
-        <span id="data-hora-termino">
+        <span class="data-hora-termino">
           <p>
             <i class="fas fa-hand-point-left" />  Término:
           </p>
         </span>
       </div>
-      <div id="dados">
-        <span id="local">
+      <div class="dados">
+        <span class="local">
           {#if pedido.evento.online}
             <p>
               <a target="_blank" href={pedido.evento.url}>Acessar</a>
@@ -237,14 +237,14 @@
           {/if}
         </span>
 
-        <span id="data-hora-inicio">
+        <span class="data-hora-inicio">
           <p>
             {extrairDataHora(pedido.evento.inicio).data} •
             {extrairDataHora(pedido.evento.inicio).horario}
           </p>
         </span>
 
-        <span id="data-hora-termino">
+        <span class="data-hora-termino">
           <p>
             {extrairDataHora(pedido.evento.termino).data} •
             {extrairDataHora(pedido.evento.termino).horario}

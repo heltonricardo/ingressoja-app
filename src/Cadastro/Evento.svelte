@@ -254,7 +254,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 35%;
     min-width: 30rem;
     margin: 2rem auto;
@@ -278,23 +278,23 @@
     margin: 3rem 0 1rem 0;
   }
 
-  #opcoes {
+  .opcoes {
     margin: 3rem 0;
     display: flex;
     justify-content: space-around;
     width: 100%;
   }
 
-  #opcoes label {
+  .opcoes label {
     width: fit-content;
   }
-  #botoes {
+  .botoes {
     margin: 4rem auto;
     display: flex;
     justify-content: center;
   }
 
-  #tipoIngressoControle {
+  .tipoIngressoControle {
     display: flex;
     justify-content: center;
   }
@@ -307,7 +307,7 @@
   }
 
   select,
-  #imagem {
+  .imagem {
     font: inherit;
     align-self: center;
     width: 100%;
@@ -322,7 +322,7 @@
     resize: none;
   }
 
-  #preview {
+  .preview {
     max-height: 20rem;
     max-width: 20rem;
     align-self: center;
@@ -345,7 +345,7 @@
   <Aguarde />
 {/if}
 
-<div id="corpo">
+<div class="corpo">
   {#if id}
     <h1>Editar Evento</h1>
   {:else}
@@ -353,7 +353,7 @@
   {/if}
   <div class="campos">
     <Entrada
-      id="titulo"
+      class="titulo"
       label="Título"
       tocado={tocarCampos}
       valido={tituloValido}
@@ -375,7 +375,7 @@
 
     <label for="imagem">Imagem da capa (máx. 2 MB)</label>
     <img
-      id="preview"
+      class="preview"
       src={imagemAWS
         ? imagemURL
         : obj.file
@@ -385,7 +385,7 @@
     />
     <input
       type="file"
-      id="imagem"
+      class="imagem"
       accept="image/bmp, image/jpeg, image/png"
       on:blur={() => (imagemTocada = true)}
       on:change={trocaImagem}
@@ -395,7 +395,7 @@
     {/if}
 
     <Entrada
-      id="inicio"
+      class="inicio"
       min={hojeStringISO}
       tocado={tocarCampos}
       type="datetime-local"
@@ -406,7 +406,7 @@
       on:input={(event) => (obj.dto.inicio = event.target.value)}
     />
     <Entrada
-      id="termino"
+      class="termino"
       min={obj.dto.inicio}
       tocado={tocarCampos}
       type="datetime-local"
@@ -417,7 +417,7 @@
       mensagemValidacao="A data de término deve ser depois da data de início"
     />
     <Entrada
-      id="descricao"
+      class="descricao"
       maxlength="2000"
       label="Descrição"
       tocado={tocarCampos}
@@ -430,7 +430,7 @@
     <Entrada
       min="1"
       type="number"
-      id="totalIngressos"
+      class="totalIngressos"
       tocado={tocarCampos}
       valido={totalIngressosValido}
       value={obj.dto.totalIngressos}
@@ -440,7 +440,7 @@
     />
   </div>
 
-  <div id="opcoes">
+  <div class="opcoes">
     <label>
       <input
         type="radio"
@@ -465,7 +465,7 @@
   <div class="campos">
     {#if obj.dto.online}
       <Entrada
-        id="url"
+        class="url"
         maxlength="1000"
         valido={urlValida}
         value={obj.dto.url}
@@ -476,7 +476,7 @@
       />
     {:else}
       <Entrada
-        id="cep"
+        class="cep"
         label="CEP"
         maxlength="9"
         valido={cepValido}
@@ -486,7 +486,7 @@
         on:input={(event) => (obj.dto.cep = event.target.value)}
       />
       <Entrada
-        id="uf"
+        class="uf"
         label="UF"
         maxlength="2"
         valido={ufValida}
@@ -496,7 +496,7 @@
         on:input={(event) => (obj.dto.uf = event.target.value)}
       />
       <Entrada
-        id="cidade"
+        class="cidade"
         label="Cidade"
         maxlength="50"
         tocado={tocarCampos}
@@ -506,7 +506,7 @@
         on:input={(event) => (obj.dto.cidade = event.target.value)}
       />
       <Entrada
-        id="bairro"
+        class="bairro"
         label="Bairro"
         maxlength="50"
         tocado={tocarCampos}
@@ -516,7 +516,7 @@
         on:input={(event) => (obj.dto.bairro = event.target.value)}
       />
       <Entrada
-        id="logradouro"
+        class="logradouro"
         maxlength="100"
         label="Logradouro"
         tocado={tocarCampos}
@@ -526,7 +526,7 @@
         on:input={(event) => (obj.dto.logradouro = event.target.value)}
       />
       <Entrada
-        id="numero"
+        class="numero"
         type="number"
         label="Número"
         maxlength="10"
@@ -552,14 +552,14 @@
     {/each}
   </div>
 
-  <div id="tipoIngressoControle">
+  <div class="tipoIngressoControle">
     {#if obj.dto.qntTipoDeIngresso > 1}
       <Icone icon="minus" on:click={removeIngresso} />
     {/if}
     <Icone icon="plus" on:click={adicionaIngresso} />
   </div>
 
-  <div id="botoes">
+  <div class="botoes">
     <Botao on:click={voltar}>Voltar</Botao>
     <Botao on:click={salvar} invalido={!formularioValido}>Salvar</Botao>
   </div>

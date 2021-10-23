@@ -23,7 +23,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 100%;
     margin-top: 2rem;
     border-radius: 20px;
@@ -33,14 +33,14 @@
     flex-direction: column;
   }
 
-  #titulo {
+  .titulo {
     text-align: center;
     font-size: 1.5rem;
   }
 </style>
 
-<div id="corpo">
-  <span id="titulo">Ingresso #{ingresso.ordem + 1} • {ingresso.nome}</span>
+<div class="corpo">
+  <span class="titulo">Ingresso #{ingresso.ordem + 1} • {ingresso.nome}</span>
   <Entrada
     label="Nome"
     valido={nomeValido}

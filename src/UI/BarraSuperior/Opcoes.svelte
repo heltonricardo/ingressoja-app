@@ -24,11 +24,11 @@
       html: `<style>.hid { display: none }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
         -webkit-appearance: none; margin: 0; }</style>
-        <input id="id" placeholder="ID do ingresso" type="number"
+        <input class="id" placeholder="ID do ingresso" type="number"
         class="swal2-input">
-        <input id="cpf" placeholder="CPF do ingressante" class="swal2-input">
+        <input class="cpf" placeholder="CPF do ingressante" class="swal2-input">
         <br /> <br />
-        <span id="erro" style="color: red" class="hid">Insira um ID maior que
+        <span class="erro" style="color: red" class="hid">Insira um ID maior que
           zero e um CPF válido!</span>`,
       focusConfirm: false,
       showCancelButton: true,
@@ -80,7 +80,7 @@
     vertical-align: middle;
   }
 
-  #segunda-linha {
+  .segunda-linha {
     padding-top: 0.3rem;
   }
 
@@ -120,7 +120,7 @@
     {/if}
   </tr>
   <tr>
-    <td colspan="2" id="segunda-linha">
+    <td colspan="2" class="segunda-linha">
       <button on:click={verificar}>Verifique seu ingresso</button>
     </td>
   </tr>

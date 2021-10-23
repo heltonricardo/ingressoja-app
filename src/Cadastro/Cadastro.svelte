@@ -14,7 +14,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 35%;
     min-width: 30rem;
     margin: 2rem auto;
@@ -33,7 +33,7 @@
     margin-bottom: 3rem;
   }
 
-  #opcoes {
+  .opcoes {
     margin-bottom: 3rem;
     display: flex;
     justify-content: space-between;
@@ -44,10 +44,10 @@
   }
 </style>
 
-<div id="corpo">
+<div class="corpo">
   {#if !dados}
     <h1>Faça seu Cadastro</h1>
-    <div id="opcoes">
+    <div class="opcoes">
       <label>
         <input
           name="tipoCadastro"

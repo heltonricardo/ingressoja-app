@@ -24,7 +24,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -32,26 +32,26 @@
     padding: 0.5rem 0;
   }
 
-  #textos {
+  .textos {
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
-  #nome {
+  .nome {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
   }
 
-  #descricao {
+  .descricao {
     color: var(--cinza3);
   }
 
-  #controles {
+  .controles {
     display: flex;
   }
 
-  #controles span {
+  .controles span {
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -62,17 +62,17 @@
   }
 </style>
 
-<div id="corpo">
-  <div id="textos">
-    <div id="nome">
+<div class="corpo">
+  <div class="textos">
+    <div class="nome">
       {tipoDeIngresso.nome} • R$ {valorVirgula(tipoDeIngresso.valor)}
     </div>
-    <div id="descricao">
+    <div class="descricao">
       {tipoDeIngresso.descricao}
     </div>
   </div>
 
-  <div id="controles">
+  <div class="controles">
     <Icone icon="minus" on:click={diminuir} />
     <span>{tipoDeIngresso.quantidade}</span>
     <Icone icon="plus" on:click={aumentar} />

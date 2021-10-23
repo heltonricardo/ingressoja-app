@@ -3,7 +3,7 @@
 </script>
 
 <style>
-  #modal-backdrop {
+  .modal-backdrop {
     position: fixed;
     top: 0;
     left: 0;
@@ -14,7 +14,7 @@
     transition: 0.1s;
   }
 
-  #spinner {
+  .spinner {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -22,8 +22,8 @@
   }
 </style>
 
-<div id="modal-backdrop">
-  <div id="spinner">
+<div class="modal-backdrop">
+  <div class="spinner">
     <Spinner />
   </div>
 </div>

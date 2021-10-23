@@ -5,6 +5,7 @@
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import STATUSPGTO from "../ENUM/STATUSPGTO";
+  import MiniBotao from "../UI/MiniBotao.svelte";
   import { getPedido } from "../Conexao/pedidoConex";
   import { valorVirgula } from "../utils/formatador";
   import { extrairDataHora } from "../utils/manipulaDataHora";
@@ -86,15 +87,15 @@
     text-align: center;
   }
 
-  #navegacao {
-    margin: 3rem 0;
+  .navegacao {
     display: flex;
+    margin-bottom: 3rem;
   }
 
   #detalhes {
     display: flex;
-    margin-top: 3rem;
     line-height: 2rem;
+    margin: 3rem 0;
   }
 
   #rotulos {
@@ -165,6 +166,12 @@
         <td>R$ {valorVirgula(pedido.valorTotal)}</td>
       </tr>
     </table>
+
+    {#if pedido.statusPagamento === STATUSPGTO.APPROVED}
+      <div class="navegacao">
+        <MiniBotao>Solicitar cancelamento</MiniBotao>
+      </div>
+    {/if}
 
     <table id="tabela-itens">
       <tr>
@@ -246,10 +253,12 @@
       </div>
     </div>
 
-    <div id="navegacao">
-      <Botao on:click={() => dispatch("meusingressos", pedido)}
-        >Ver ingressos</Botao
-      >
+    <div class="navegacao">
+      {#if pedido.statusPagamento === STATUSPGTO.APPROVED}
+        <Botao on:click={() => dispatch("meusingressos", pedido)}
+          >Ver ingressos</Botao
+        >
+      {/if}
       <Botao on:click={() => dispatch("meuspedidos")}>Voltar</Botao>
     </div>
   </div>

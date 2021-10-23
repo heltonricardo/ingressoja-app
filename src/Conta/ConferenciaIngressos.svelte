@@ -89,7 +89,10 @@
         }
       })
       .then((res) => {
-        if (res) evento = getItensVendidos(id);
+        if (res) {
+          console.log("sadsda");
+          evento = getItensVendidos(id);
+        }
       });
   }
 
@@ -284,7 +287,7 @@
         <div class="barra-pesquisa">
           <Entrada
             type="number"
-            class="utilizacao"
+            id="utilizacao"
             validar={false}
             on:input={(e) => (utilizacao = e.target.value)}
             label="Insira o código para utilizar ou leia o QR Code"
@@ -296,7 +299,7 @@
         <Icone icon="qrcode" on:click={qrCode} />
       </div>
       <Entrada
-        class="pesquisa"
+        id="pesquisa"
         type="search"
         validar={false}
         label="Pesquisa (ID | Nome | CPF)"

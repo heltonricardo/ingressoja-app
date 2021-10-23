@@ -63,13 +63,13 @@
   <h1>Realize seu login</h1>
   <div class="campos">
     <Entrada
-      class="email"
+      id="email"
       label="E-mail"
       validar={false}
       on:input={(event) => (email = event.target.value)}
     />
     <Entrada
-      class="senha"
+      id="senha"
       label="Senha"
       type="password"
       validar={false}

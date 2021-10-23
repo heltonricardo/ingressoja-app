@@ -104,8 +104,8 @@
 
 <div class="corpo">
   <Entrada
+    id="razaoSocial"
     disabled={dados}
-    class="razaoSocial"
     value={razaoSocial}
     label="Razão Social"
     tocado={tocarCampos}
@@ -114,7 +114,7 @@
     on:input={(event) => (razaoSocial = event.target.value)}
   />
   <Entrada
-    class="cnpj"
+    id="cnpj"
     label="CNPJ"
     value={cnpj}
     disabled={dados}
@@ -124,7 +124,7 @@
     on:input={(event) => (cnpj = event.target.value)}
   />
   <Entrada
-    class="nomeFantasia"
+    id="nomeFantasia"
     tocado={tocarCampos}
     value={nomeFantasia}
     label="Nome Fantasia"
@@ -133,7 +133,7 @@
     on:input={(event) => (nomeFantasia = event.target.value)}
   />
   <Entrada
-    class="email"
+    id="email"
     value={email}
     label="E-mail"
     tocado={tocarCampos}
@@ -142,12 +142,12 @@
     on:input={(event) => (email = event.target.value)}
   />
   <Entrada
-    label="PublicToken do Mercado Livre"
     maxlength="100"
-    class="publicToken"
+    id="publicToken"
     value={publicToken}
     tocado={tocarCampos}
     valido={bancoValido}
+    label="PublicToken do Mercado Livre"
     mensagemValidacao="Insira um public token válido"
     on:input={(event) => (publicToken = event.target.value)}
   />
@@ -160,7 +160,7 @@
 
 <div class="senha">
   <Entrada
-    class="senha1"
+    id="senha1"
     maxlength="50"
     type="password"
     tocado={tocarCampos}
@@ -170,7 +170,7 @@
     mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"
   />
   <Entrada
-    class="senha2"
+    id="senha2"
     maxlength="50"
     type="password"
     tocado={tocarCampos}

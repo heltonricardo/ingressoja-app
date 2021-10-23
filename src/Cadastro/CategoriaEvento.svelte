@@ -198,7 +198,7 @@
   {#if !carregando}
     <div class="nova">
       <Entrada
-        class="nome"
+        id="nome"
         value={nome}
         maxlength="50"
         valido={nomeValido}

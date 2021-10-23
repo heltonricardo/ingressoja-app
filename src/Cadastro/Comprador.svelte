@@ -14,7 +14,7 @@
   const dispatch = createEventDispatcher();
 
   export let dados = null;
-  
+
   let carregando = false;
   let tocarCampos = false;
 
@@ -75,7 +75,7 @@
 
 <div class="campos">
   <Entrada
-    class="nome"
+    id="nome"
     value={nome}
     valido={nomeValido}
     tocado={tocarCampos}
@@ -84,7 +84,7 @@
     on:input={(event) => (nome = event.target.value)}
   />
   <Entrada
-    class="cpf"
+    id="cpf"
     label="CPF"
     value={cpf}
     disabled={dados}
@@ -94,7 +94,7 @@
     on:input={(event) => (cpf = event.target.value)}
   />
   <Entrada
-    class="email"
+    id="email"
     value={email}
     label="E-mail"
     tocado={tocarCampos}
@@ -106,7 +106,7 @@
 
 <div class="senha">
   <Entrada
-    class="senha1"
+    id="senha1"
     maxlength="50"
     type="password"
     tocado={tocarCampos}
@@ -116,7 +116,7 @@
     mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"
   />
   <Entrada
-    class="senha2"
+    id="senha2"
     maxlength="50"
     type="password"
     tocado={tocarCampos}

@@ -353,7 +353,7 @@
   {/if}
   <div class="campos">
     <Entrada
-      class="titulo"
+      id="titulo"
       label="Título"
       tocado={tocarCampos}
       valido={tituloValido}
@@ -395,7 +395,7 @@
     {/if}
 
     <Entrada
-      class="inicio"
+      id="inicio"
       min={hojeStringISO}
       tocado={tocarCampos}
       type="datetime-local"
@@ -406,7 +406,7 @@
       on:input={(event) => (obj.dto.inicio = event.target.value)}
     />
     <Entrada
-      class="termino"
+      id="termino"
       min={obj.dto.inicio}
       tocado={tocarCampos}
       type="datetime-local"
@@ -417,7 +417,7 @@
       mensagemValidacao="A data de término deve ser depois da data de início"
     />
     <Entrada
-      class="descricao"
+      id="descricao"
       maxlength="2000"
       label="Descrição"
       tocado={tocarCampos}
@@ -430,7 +430,7 @@
     <Entrada
       min="1"
       type="number"
-      class="totalIngressos"
+      id="totalIngressos"
       tocado={tocarCampos}
       valido={totalIngressosValido}
       value={obj.dto.totalIngressos}
@@ -465,7 +465,7 @@
   <div class="campos">
     {#if obj.dto.online}
       <Entrada
-        class="url"
+        id="url"
         maxlength="1000"
         valido={urlValida}
         value={obj.dto.url}
@@ -476,7 +476,7 @@
       />
     {:else}
       <Entrada
-        class="cep"
+        id="cep"
         label="CEP"
         maxlength="9"
         valido={cepValido}
@@ -486,7 +486,7 @@
         on:input={(event) => (obj.dto.cep = event.target.value)}
       />
       <Entrada
-        class="uf"
+        id="uf"
         label="UF"
         maxlength="2"
         valido={ufValida}
@@ -496,7 +496,7 @@
         on:input={(event) => (obj.dto.uf = event.target.value)}
       />
       <Entrada
-        class="cidade"
+        id="cidade"
         label="Cidade"
         maxlength="50"
         tocado={tocarCampos}
@@ -506,7 +506,7 @@
         on:input={(event) => (obj.dto.cidade = event.target.value)}
       />
       <Entrada
-        class="bairro"
+        id="bairro"
         label="Bairro"
         maxlength="50"
         tocado={tocarCampos}
@@ -516,7 +516,7 @@
         on:input={(event) => (obj.dto.bairro = event.target.value)}
       />
       <Entrada
-        class="logradouro"
+        id="logradouro"
         maxlength="100"
         label="Logradouro"
         tocado={tocarCampos}
@@ -526,7 +526,7 @@
         on:input={(event) => (obj.dto.logradouro = event.target.value)}
       />
       <Entrada
-        class="numero"
+        id="numero"
         type="number"
         label="Número"
         maxlength="10"

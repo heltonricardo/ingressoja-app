@@ -6,6 +6,7 @@
   import Aguarde from "../UI/Aguarde.svelte";
   import STATUSPGTO from "../ENUM/STATUSPGTO";
   import MiniBotao from "../UI/MiniBotao.svelte";
+  import STATUSPEDIDO from "../ENUM/STATUSPEDIDO";
   import { getPedido } from "../Conexao/pedidoConex";
   import { valorVirgula } from "../utils/formatador";
   import { extrairDataHora } from "../utils/manipulaDataHora";
@@ -13,6 +14,12 @@
   const dispatch = createEventDispatcher();
 
   export let id;
+
+  function definirClassePedido(status) {
+    if (status === STATUSPEDIDO.PROCESSADO) return "texto-azul";
+    if (status === STATUSPEDIDO.AGUARDANDO_PGTO) return "texto-laranja";
+    return "texto-vermelho";
+  }
 </script>
 
 <style>
@@ -108,16 +115,24 @@
     margin-left: 0.6rem;
   }
 
-  .pgto-aprovado {
+  .texto-verde {
     color: var(--verde3);
   }
 
-  .pgto-rejeitado {
+  .texto-vermelho {
     color: var(--vermelho);
   }
 
-  .pgto-pendente {
+  .texto-amarelo {
     color: var(--amarelo);
+  }
+
+  .texto-azul {
+    color: var(--azul);
+  }
+
+  .texto-laranja {
+    color: var(--laranja);
   }
 </style>
 
@@ -146,18 +161,21 @@
       </tr>
       <tr>
         <td class="titulo">Status do pedido:</td>
-        <td>TODO</td>
+        <td class={definirClassePedido(pedido.statusPedido)}
+          >{pedido.statusPedido}</td
+        >
       </tr>
       <tr>
         <td class="titulo">Status do pagamento:</td>
         <td
           >{#if pedido.statusPagamento === STATUSPGTO.APPROVED}
-            <span class="pgto-aprovado"> Aprovado </span>
+            <span class="texto-verde"> Aprovado </span>
           {:else if pedido.statusPagamento === STATUSPGTO.REJECTED}
-            <span class="pgto-rejeitado">Rejeitado</span> -
-            <a target="_blank" href={pedido.urlPagamento}>Tentar novamente</a>
+            <span class="texto-vermelho">Recusado</span>
           {:else if pedido.statusPagamento === STATUSPGTO.IN_PROGRESS}
-            <span class="pgto-pendente"> Pendente </span>
+            <span class="texto-amarelo"> Pendente </span> -
+            <a target="_blank" href={pedido.urlPagamento}>Página de pagamento</a
+            >
           {/if}</td
         >
       </tr>

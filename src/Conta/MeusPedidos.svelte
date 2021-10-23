@@ -71,6 +71,7 @@
   }
 
   #detalhes {
+    display: flex;
     justify-content: center;
   }
 
@@ -87,10 +88,10 @@
     {#if pedidos.length}
       <table id="tabela">
         <tr>
-          <th>Número do pedido</th>
-          <th>Data do pedido</th>
-          <th>Valor do pedido</th>
-          <th>Nome do evento</th>
+          <th>Id</th>
+          <th>Data</th>
+          <th>Valor</th>
+          <th>Evento</th>
           <th>Ações</th>
         </tr>
 
@@ -100,11 +101,14 @@
             <td>{extrairDataHora(pedido.dataHora).data}</td>
             <td>R$ {valorVirgula(pedido.valorTotal)}</td>
             <td>{pedido.tituloEvento}</td>
-            <td id="detalhes"
-              ><MiniBotao on:click={() => dispatch("detalhespedido", pedido.id)}
-                >Detalhes</MiniBotao
-              ></td
-            >
+            <td>
+              <div id="detalhes">
+                <MiniBotao
+                  on:click={() => dispatch("detalhespedido", pedido.id)}
+                  >Detalhes</MiniBotao
+                >
+              </div>
+            </td>
           </tr>
         {/each}
       </table>

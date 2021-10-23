@@ -17,25 +17,25 @@
           style="word-break: break-all; width: 100%; text-align: left;">
           <tr>
             <td style="font-weight: bold; white-space: nowrap;">Id:</td>
-            <td  style="padding: 1rem">${produtora.id}</td>
+            <td style="padding: 1rem">${produtora.id}</td>
           </tr>
           <tr>
             <td style="font-weight: bold; white-space: nowrap;">
               Razão social:</td>
-            <td  style="padding: 1rem">${produtora.razaoSocial}</td>
+            <td style="padding: 1rem">${produtora.razaoSocial}</td>
           </tr>
           <tr>
             <td style="font-weight: bold; white-space: nowrap;">
               Nome fantasia:</td>
-            <td  style="padding: 1rem">${produtora.nomeFantasia}</td>
+            <td style="padding: 1rem">${produtora.nomeFantasia}</td>
           </tr>
           <tr>
             <td style="font-weight: bold; white-space: nowrap;">CNPJ:</td>
-            <td  style="padding: 1rem">${maskBr.cnpj(produtora.cnpj)}</td>
+            <td style="padding: 1rem">${maskBr.cnpj(produtora.cnpj)}</td>
           </tr>
           <tr>
             <td style="font-weight: bold; white-space: nowrap;">E-mail:</td>
-            <td  style="padding: 1rem">${produtora.email}</td>
+            <td style="padding: 1rem">${produtora.email}</td>
           </tr>
         </table>`,
       showCloseButton: true,

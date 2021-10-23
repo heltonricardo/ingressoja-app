@@ -96,18 +96,18 @@
     min-height: calc(100vh - 20rem);
   }
 
-  #titulo {
+  .titulo {
     margin: 2rem 0;
     font-size: 3rem;
     text-align: center;
   }
 
-  #subtitulo {
+  .subtitulo {
     margin: 2rem 0;
     text-align: center;
   }
 
-  #botoes {
+  .botoes {
     margin: 3rem 0;
     display: flex;
     justify-content: center;

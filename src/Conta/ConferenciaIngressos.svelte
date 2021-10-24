@@ -77,7 +77,7 @@
 
   async function utilizar(idIngresso) {
     Swal.fire({
-      title: `Utilizar o ingresso #${idIngresso}?`,
+      title: `Realizar check-in do ingresso #${idIngresso}?`,
       icon: "question",
       showCancelButton: true,
       cancelButtonText: "Cancelar",
@@ -289,7 +289,7 @@
             id="utilizacao"
             validar={false}
             on:input={(e) => (utilizacao = e.target.value)}
-            label="Insira o código para utilizar ou leia o QR Code"
+            label="Insira o id para realizar check-in ou leia o QR Code"
             on:keypress={(e) =>
               "NumpadEnter".includes(e.code) && ler(evento.itensPedido)}
           />
@@ -326,7 +326,7 @@
                 <div class="detalhes">
                   {#if !item.utilizado}
                     <MiniBotao on:click={() => utilizar(item.id)}
-                      >Utilizar</MiniBotao
+                      >Check-in</MiniBotao
                     >
                   {/if}
                   <MiniBotao on:click={() => verMais(item)}>Ver mais</MiniBotao>

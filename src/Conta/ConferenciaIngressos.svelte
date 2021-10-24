@@ -26,7 +26,6 @@
   let videoPreview;
   let listaFiltrada;
   let pesquisa = "";
-  let ocultar = false;
   let utilizacao = "";
   let evento = getItensVendidos(id);
 

@@ -10,21 +10,21 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
-    "rollup": "^2.3.4",
+    "rollup": "^2.58.0",
     "rollup-plugin-css-only": "^3.1.0",
-    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
-    "svelte": "^3.0.0"
+    "svelte": "^3.44.0"
   },
   "dependencies": {
-    "js-brasil": "^2.4.8",
+    "js-brasil": "^2.4.11",
     "moment": "^2.29.1",
     "prettier-miscellaneous": "^1.5.3",
     "qr-creator": "^1.0.0",
     "qr-scanner": "^1.3.0",
-    "sirv-cli": "^1.0.0",
-    "sweetalert2": "^11.1.7",
+    "sirv-cli": "^1.0.14",
+    "sweetalert2": "^11.1.9",
     "validator": "^13.6.0"
   }
 }

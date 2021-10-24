@@ -22,7 +22,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 30rem;
     min-width: 30rem;
     margin: 2rem auto;
@@ -42,14 +42,14 @@
     margin-bottom: 3rem;
   }
 
-  #botoes {
+  .botoes {
     margin: 3rem auto;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  #duplo {
+  .duplo {
     display: flex;
     margin-top: 0.5rem;
   }
@@ -59,9 +59,9 @@
   <Aguarde />
 {/if}
 
-<div id="corpo">
+<div class="corpo">
   <h1>Realize seu login</h1>
-  <div id="campos">
+  <div class="campos">
     <Entrada
       id="email"
       label="E-mail"
@@ -78,9 +78,9 @@
     />
   </div>
 
-  <div id="botoes">
+  <div class="botoes">
     <Botao on:click={entrar}>Entrar</Botao>
-    <div id="duplo">
+    <div class="duplo">
       <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
       <Botao on:click={() => dispatch("cadastro")}>Cadastre-se</Botao>
     </div>

@@ -62,7 +62,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 30rem;
     min-width: 30rem;
     margin: 2rem auto;
@@ -93,18 +93,18 @@
     padding: 1rem;
   }
 
-  #botoes {
+  .botoes {
     display: flex;
     margin: 2rem 0;
   }
 </style>
 
-<div id="corpo">
+<div class="corpo">
   <h1>Meus Dados</h1>
   {#await carregaDados()}
     <Aguarde />
   {:then dados}
-    <div id="conteudo">
+    <div class="conteudo">
       {#if tipoLogado === TIPOCADASTRO.COMPRADOR}
         <table>
           <tr>
@@ -155,16 +155,8 @@
             <td>{dados.email}</td>
           </tr>
           <tr>
-            <td class="titulo">Banco:</td>
-            <td>{dados.banco}</td>
-          </tr>
-          <tr>
-            <td class="titulo">Agência:</td>
-            <td>{dados.agencia}</td>
-          </tr>
-          <tr>
-            <td class="titulo">Conta:</td>
-            <td>{dados.conta}</td>
+            <td class="titulo">Public Token:</td>
+            <td>{dados.publicToken}</td>
           </tr>
         </table>
       {:else if tipoLogado === TIPOCADASTRO.ADMINISTRADOR}
@@ -190,7 +182,7 @@
     </div>
   {/await}
 
-  <div id="botoes">
+  <div class="botoes">
     <Botao on:click={editar}>Editar</Botao>
     {#if tipoLogado !== TIPOCADASTRO.ADMINISTRADOR}
       <Botao on:click={excluir}>Excluir Conta</Botao>

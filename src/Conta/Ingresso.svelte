@@ -24,7 +24,7 @@
 </script>
 
 <style>
-  #ingresso {
+  .ingresso {
     width: 360px;
     min-width: 360px;
     max-width: 360px;
@@ -37,31 +37,31 @@
     flex-direction: column;
   }
 
-  #cabecalho {
+  .cabecalho {
     margin: 15px;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
   }
 
-  #titulo {
+  .titulo {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 4px;
   }
 
-  #inicio,
-  #online,
-  #end2,
-  #cpf {
+  .inicio,
+  .online,
+  .end2,
+  .cpf {
     margin-bottom: 20px;
   }
 
-  #end1 {
+  .end1 {
     margin-bottom: 5px;
   }
 
-  #ingressoja {
+  .ingressoja {
     text-align: end;
     color: var(--roxo2);
     font-weight: bold;
@@ -74,7 +74,7 @@
     border-top: 3px dotted var(--roxo2);
   }
 
-  #infos {
+  .infos {
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -83,88 +83,88 @@
     overflow: hidden;
   }
 
-  #individual {
+  .individual {
     font-style: italic;
     font-weight: bold;
     margin-top: 5px;
     margin-bottom: 10px;
   }
 
-  #nomeIngresso {
+  .nomeIngresso {
     margin-bottom: 10px;
   }
 
-  #valor {
+  .valor {
     margin-bottom: 30px;
   }
 
-  #cortesia {
+  .cortesia {
     color: red;
     font-weight: bold;
   }
 
-  #sensivel {
+  .sensivel {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  #ingressante {
+  .ingressante {
     font-weight: bold;
     margin-bottom: 10px;
   }
 
-  #id {
+  .id {
     margin-top: 10px;
     font-size: 16px;
     font-weight: bold;
   }
 </style>
 
-<div id="ingresso">
-  <div id="cabecalho">
-    <span id="titulo">{dados.evento.titulo}</span>
-    <span id="inicio"
+<div class="ingresso">
+  <div class="cabecalho">
+    <span class="titulo">{dados.evento.titulo}</span>
+    <span class="inicio"
       >{extrairDataHora(dados.evento.inicio).dataCompleta} • {extrairDataHora(
         dados.evento.inicio
       ).horario} (GMT-3)</span
     >
     {#if dados.evento.online}
-      <span id="online">Evento Online</span>
+      <span class="online">Evento Online</span>
     {:else}
-      <span id="end1"
+      <span class="end1"
         >{dados.evento.logradouro}, {dados.evento.numero} • {dados.evento
           .bairro}</span
       >
-      <span id="end2"
+      <span class="end2"
         >{dados.evento.cidade}-{dados.evento.uf} • CEP: {dados.evento.cep}</span
       >
     {/if}
-    <span id="ingressoja">Distribuição: IngressoJá!</span>
+    <span class="ingressoja">Distribuição: IngressoJá!</span>
   </div>
 
   <hr />
 
-  <div id="infos">
-    <span id="individual">Ingresso Individual</span>
-    <span id="nomeIngresso"
+  <div class="infos">
+    <span class="individual">Ingresso Individual</span>
+    <span class="nomeIngresso"
       >Tipo: {dados.itensPedido[i].tipoDeIngresso.nome}</span
     >
-    <span id="valor"
+    <span class="valor"
       >Preço: R$ {valorVirgula(dados.itensPedido[i].tipoDeIngresso.valor)}
-      <span id="cortesia">
+      <span class="cortesia">
         {#if !dados.itensPedido[i].tipoDeIngresso.valor}
           Cortesia (venda proibida)
         {/if}
       </span>
     </span>
-    <div id="sensivel">
-      <span id="ingressante">{dados.itensPedido[i].ingressante}</span>
-      <span id="cpf">CPF: {maskBr.cpf(dados.itensPedido[i].cpf)}</span>
-      <div id="moldura">
-        <div id="qrcode" bind:this={qrElemento} />
+    <div class="sensivel">
+      <span class="ingressante">{dados.itensPedido[i].ingressante}</span>
+      <span class="cpf">CPF: {maskBr.cpf(dados.itensPedido[i].cpf)}</span>
+      <div class="moldura">
+        <div class="qrcode" bind:this={qrElemento} />
       </div>
-      <span id="id">#{dados.itensPedido[i].id}</span>
+      <span class="id">#{dados.itensPedido[i].id}</span>
     </div>
   </div>
 </div>

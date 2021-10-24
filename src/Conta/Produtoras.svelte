@@ -17,37 +17,25 @@
           style="word-break: break-all; width: 100%; text-align: left;">
           <tr>
             <td style="font-weight: bold; white-space: nowrap;">Id:</td>
-            <td  style="padding: 1rem">${produtora.id}</td>
+            <td style="padding: 1rem">${produtora.id}</td>
           </tr>
           <tr>
             <td style="font-weight: bold; white-space: nowrap;">
               Razão social:</td>
-            <td  style="padding: 1rem">${produtora.razaoSocial}</td>
+            <td style="padding: 1rem">${produtora.razaoSocial}</td>
           </tr>
           <tr>
             <td style="font-weight: bold; white-space: nowrap;">
               Nome fantasia:</td>
-            <td  style="padding: 1rem">${produtora.nomeFantasia}</td>
+            <td style="padding: 1rem">${produtora.nomeFantasia}</td>
           </tr>
           <tr>
             <td style="font-weight: bold; white-space: nowrap;">CNPJ:</td>
-            <td  style="padding: 1rem">${maskBr.cnpj(produtora.cnpj)}</td>
+            <td style="padding: 1rem">${maskBr.cnpj(produtora.cnpj)}</td>
           </tr>
           <tr>
             <td style="font-weight: bold; white-space: nowrap;">E-mail:</td>
-            <td  style="padding: 1rem">${produtora.email}</td>
-          </tr>
-          <tr>
-            <td style="font-weight: bold; white-space: nowrap;">Banco:</td>
-            <td  style="padding: 1rem">${produtora.banco}</td>
-          </tr>
-          <tr>
-            <td style="font-weight: bold; white-space: nowrap;">Agência:</td>
-            <td  style="padding: 1rem">${produtora.agencia}</td>
-          </tr>
-          <tr>
-            <td style="font-weight: bold; white-space: nowrap;">Conta:</td>
-            <td  style="padding: 1rem">${produtora.conta}</td>
+            <td style="padding: 1rem">${produtora.email}</td>
           </tr>
         </table>`,
       showCloseButton: true,
@@ -57,7 +45,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 40%;
     min-width: 30rem;
     margin: 2rem auto;
@@ -77,7 +65,7 @@
     margin: 1rem 0;
   }
 
-  #tabela {
+  .tabela {
     border-collapse: collapse;
     text-align: center;
     width: 100%;
@@ -86,26 +74,26 @@
     word-break: break-all;
   }
 
-  #tabela td,
-  #tabela th {
+  .tabela td,
+  .tabela th {
     border: 1px solid #ddd;
     padding: 8px;
     vertical-align: middle;
   }
 
-  #tabela tr:nth-child(even) {
+  .tabela tr:nth-child(even) {
     background-color: #f2f2f2;
   }
 
-  #tabela tr:nth-child(odd) {
+  .tabela tr:nth-child(odd) {
     background-color: var(--branco);
   }
 
-  #tabela tr:hover {
+  .tabela tr:hover {
     background-color: #ddd;
   }
 
-  #tabela th {
+  .tabela th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
@@ -115,23 +103,23 @@
     word-break: keep-all;
   }
 
-  #detalhes {
+  .detalhes {
     display: flex;
     justify-content: center;
   }
 
-  #voltar {
+  .voltar {
     margin: 3rem 0;
   }
 </style>
 
-<div id="corpo">
+<div class="corpo">
   <h1>Produtoras</h1>
   {#await getProdutoras()}
     <Aguarde />
   {:then produtoras}
     {#if produtoras.length}
-      <table id="tabela">
+      <table class="tabela">
         <tr>
           <th>Id</th>
           <th>Razão Social</th>
@@ -144,7 +132,7 @@
             <td>{produtora.id}</td>
             <td>{produtora.razaoSocial}</td>
             <td>{maskBr.cnpj(produtora.cnpj)}</td>
-            <td id="detalhes">
+            <td class="detalhes">
               <MiniBotao on:click={() => detalhes(produtora)}
                 >Detalhes</MiniBotao
               >
@@ -156,7 +144,7 @@
       Não há produtoras para mostrar
     {/if}
   {/await}
-  <div id="voltar">
+  <div class="voltar">
     <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
   </div>
 </div>

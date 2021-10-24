@@ -40,7 +40,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 40%;
     min-width: 30rem;
     margin: 2rem auto;
@@ -61,7 +61,7 @@
     margin: 1rem 0;
   }
 
-  #tabela {
+  .tabela {
     border-collapse: collapse;
     text-align: center;
     width: 100%;
@@ -70,26 +70,26 @@
     word-break: break-all;
   }
 
-  #tabela td,
-  #tabela th {
+  .tabela td,
+  .tabela th {
     border: 1px solid #ddd;
     padding: 8px;
     vertical-align: middle;
   }
 
-  #tabela tr:nth-child(even) {
+  .tabela tr:nth-child(even) {
     background-color: #f2f2f2;
   }
 
-  #tabela tr:nth-child(odd) {
+  .tabela tr:nth-child(odd) {
     background-color: var(--branco);
   }
 
-  #tabela tr:hover {
+  .tabela tr:hover {
     background-color: #ddd;
   }
 
-  #tabela th {
+  .tabela th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
@@ -99,22 +99,22 @@
     word-break: keep-all;
   }
 
-  #detalhes {
+  .detalhes {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  #cadastrar {
+  .cadastrar {
     margin: 2rem 0 0 0;
   }
 
-  #voltar {
+  .voltar {
     margin: 3rem 0;
   }
 </style>
 
-<div id="corpo">
+<div class="corpo">
   {#if conferencia}
     <h1>Conferência de Ingressos</h1>
     <p>Escolha o evento:</p>
@@ -126,7 +126,7 @@
     <Aguarde />
   {:then eventos}
     {#if eventos.length}
-      <table id="tabela">
+      <table class="tabela">
         <tr>
           <th>Id</th>
           <th>Título</th>
@@ -140,7 +140,7 @@
             <td>{evento.titulo}</td>
             <td>{extrairDataHora(evento.inicio).data}</td>
             <td>{evento.categoriaEvento.nome}</td>
-            <td id="detalhes">
+            <td class="detalhes">
               {#if conferencia}
                 <MiniBotao on:click={() => dispatch("conferencia", evento.id)}
                   >Abrir</MiniBotao
@@ -160,11 +160,11 @@
     {/if}
   {/await}
   {#if !conferencia}
-    <div id="cadastrar">
+    <div class="cadastrar">
       <Botao on:click={() => dispatch("novoevento")}>Cadastrar Evento</Botao>
     </div>
   {/if}
-  <div id="voltar">
+  <div class="voltar">
     <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
   </div>
 </div>

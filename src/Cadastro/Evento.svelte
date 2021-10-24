@@ -254,7 +254,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 35%;
     min-width: 30rem;
     margin: 2rem auto;
@@ -278,23 +278,23 @@
     margin: 3rem 0 1rem 0;
   }
 
-  #opcoes {
+  .opcoes {
     margin: 3rem 0;
     display: flex;
     justify-content: space-around;
     width: 100%;
   }
 
-  #opcoes label {
+  .opcoes label {
     width: fit-content;
   }
-  #botoes {
+  .botoes {
     margin: 4rem auto;
     display: flex;
     justify-content: center;
   }
 
-  #tipoIngressoControle {
+  .tipoIngressoControle {
     display: flex;
     justify-content: center;
   }
@@ -307,7 +307,7 @@
   }
 
   select,
-  #imagem {
+  .imagem {
     font: inherit;
     align-self: center;
     width: 100%;
@@ -322,7 +322,7 @@
     resize: none;
   }
 
-  #preview {
+  .preview {
     max-height: 20rem;
     max-width: 20rem;
     align-self: center;
@@ -345,7 +345,7 @@
   <Aguarde />
 {/if}
 
-<div id="corpo">
+<div class="corpo">
   {#if id}
     <h1>Editar Evento</h1>
   {:else}
@@ -375,7 +375,7 @@
 
     <label for="imagem">Imagem da capa (máx. 2 MB)</label>
     <img
-      id="preview"
+      class="preview"
       src={imagemAWS
         ? imagemURL
         : obj.file
@@ -385,7 +385,7 @@
     />
     <input
       type="file"
-      id="imagem"
+      class="imagem"
       accept="image/bmp, image/jpeg, image/png"
       on:blur={() => (imagemTocada = true)}
       on:change={trocaImagem}
@@ -440,7 +440,7 @@
     />
   </div>
 
-  <div id="opcoes">
+  <div class="opcoes">
     <label>
       <input
         type="radio"
@@ -552,14 +552,14 @@
     {/each}
   </div>
 
-  <div id="tipoIngressoControle">
+  <div class="tipoIngressoControle">
     {#if obj.dto.qntTipoDeIngresso > 1}
       <Icone icon="minus" on:click={removeIngresso} />
     {/if}
     <Icone icon="plus" on:click={adicionaIngresso} />
   </div>
 
-  <div id="botoes">
+  <div class="botoes">
     <Botao on:click={voltar}>Voltar</Botao>
     <Botao on:click={salvar} invalido={!formularioValido}>Salvar</Botao>
   </div>

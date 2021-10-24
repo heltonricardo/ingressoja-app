@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 
 import MSG from "../ENUM/MSG.js";
 import PATH from "../ENUM/PATH.js";
-import STATUS from "../ENUM/STATUS.js";
+import STATUSHTTP from "../ENUM/STATUSHTTP.js";
 import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
 
 import autenticacao from "../Autenticacao/autenticacao";
@@ -28,7 +28,7 @@ export async function postAdministrador(administrador) {
 
   const status = res.status;
 
-  if (status === STATUS.CREATED) {
+  if (status === STATUSHTTP.CREATED) {
     Swal.fire({
       title: MSG.BOM,
       text: MSG.CRIADO,
@@ -38,13 +38,13 @@ export async function postAdministrador(administrador) {
     });
     return true;
   } //
-  else if (status === STATUS.CONFLICT) {
+  else if (status === STATUSHTTP.CONFLICT) {
     Swal.fire(MSG.RUIM, MSG.DUPLICADO, "error");
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
   } //
-  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+  else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
@@ -69,11 +69,11 @@ export async function getAdministrador() {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     const administrador = await res.json();
     return administrador;
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
   return null;
@@ -96,10 +96,10 @@ export async function getAdministradores() {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     return await res.json();
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
   return null;
@@ -122,10 +122,10 @@ export async function getCompradores() {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     return await res.json();
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
   return null;
@@ -148,10 +148,10 @@ export async function getProdutoras() {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     return await res.json();
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
   return null;
@@ -174,10 +174,10 @@ export async function deleteAdministrador(id) {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     Swal.fire(MSG.BOM, MSG.OK, "success");
     return true;
-  } else if (status === STATUS.BAD_REQUEST) {
+  } else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
 
@@ -207,7 +207,7 @@ export async function putAdministrador(administrador) {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     Swal.fire({
       title: MSG.BOM,
       text: MSG.ALTERADO,
@@ -217,13 +217,13 @@ export async function putAdministrador(administrador) {
     });
     return true;
   } //
-  else if (status === STATUS.CONFLICT) {
+  else if (status === STATUSHTTP.CONFLICT) {
     Swal.fire(MSG.RUIM, MSG.DUPLICADO, "error");
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
   } //
-  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+  else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;

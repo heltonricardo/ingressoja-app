@@ -14,7 +14,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 35%;
     min-width: 30rem;
     margin: 2rem auto;
@@ -33,17 +33,21 @@
     margin-bottom: 3rem;
   }
 
-  #opcoes {
+  .opcoes {
     margin-bottom: 3rem;
     display: flex;
     justify-content: space-between;
   }
+
+  .titulo {
+    font-weight: bold;
+  }
 </style>
 
-<div id="corpo">
+<div class="corpo">
   {#if !dados}
     <h1>Faça seu Cadastro</h1>
-    <div id="opcoes">
+    <div class="opcoes">
       <label>
         <input
           name="tipoCadastro"
@@ -51,7 +55,8 @@
           value={TIPOCADASTRO.COMPRADOR}
           bind:group={tipoCadastro}
         />
-        Quero comprar ingressos!
+        <span class="titulo">Pessoa Física</span>
+        <p>Quero comprar ingressos!</p>
       </label>
       <label>
         <input
@@ -60,7 +65,8 @@
           value={TIPOCADASTRO.PRODUTORA}
           bind:group={tipoCadastro}
         />
-        Quero vender ingressos!
+        <span class="titulo">Pessoa Jurídica</span>
+        <p>Quero vender ingressos!</p>
       </label>
     </div>
   {:else}

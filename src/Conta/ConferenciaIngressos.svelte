@@ -26,7 +26,6 @@
   let videoPreview;
   let listaFiltrada;
   let pesquisa = "";
-  let ocultar = false;
   let utilizacao = "";
   let evento = getItensVendidos(id);
 
@@ -78,7 +77,7 @@
 
   async function utilizar(idIngresso) {
     Swal.fire({
-      title: `Utilizar o ingresso #${idIngresso}?`,
+      title: `Realizar check-in do ingresso #${idIngresso}?`,
       icon: "question",
       showCancelButton: true,
       cancelButtonText: "Cancelar",
@@ -89,7 +88,10 @@
         }
       })
       .then((res) => {
-        if (res) evento = getItensVendidos(id);
+        if (res) {
+          console.log("sadsda");
+          evento = getItensVendidos(id);
+        }
       });
   }
 
@@ -120,7 +122,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 40%;
     min-width: 30rem;
     margin: 2rem auto;
@@ -141,12 +143,12 @@
     margin: 1rem 0;
   }
 
-  #evento {
+  .evento {
     margin: 2rem;
     align-self: flex-start;
   }
 
-  #tabela {
+  .tabela {
     border-collapse: collapse;
     text-align: center;
     width: 100%;
@@ -155,26 +157,26 @@
     word-break: break-all;
   }
 
-  #tabela td,
-  #tabela th {
+  .tabela td,
+  .tabela th {
     border: 1px solid #ddd;
     padding: 8px;
     vertical-align: middle;
   }
 
-  #tabela tr:nth-child(even) {
+  .tabela tr:nth-child(even) {
     background-color: #f2f2f2;
   }
 
-  #tabela tr:nth-child(odd) {
+  .tabela tr:nth-child(odd) {
     background-color: var(--branco);
   }
 
-  #tabela tr:hover {
+  .tabela tr:hover {
     background-color: #ddd;
   }
 
-  #tabela th {
+  .tabela th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
@@ -194,17 +196,17 @@
     color: red;
   }
 
-  #detalhes {
+  .detalhes {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  #voltar {
+  .voltar {
     margin: 3rem 0;
   }
 
-  #leitura {
+  .leitura {
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -212,7 +214,7 @@
     margin-bottom: 1rem;
   }
 
-  #barra-pesquisa {
+  .barra-pesquisa {
     width: fit-content;
     margin-right: 1rem;
   }
@@ -222,7 +224,7 @@
     border-radius: 10px;
   }
 
-  #inverte {
+  .inverte {
     text-align: center;
     -webkit-transform: scaleX(-1);
     -moz-transform: scaleX(-1);
@@ -231,12 +233,12 @@
   }
 </style>
 
-<div id="corpo">
+<div class="corpo">
   <h1>Conferência de Ingressos</h1>
   {#await evento}
     <Aguarde />
   {:then evento}
-    <table id="evento">
+    <table class="evento">
       <tr>
         <td class="titulo">Evento:</td>
         <td class="dado">{evento.titulo}</td>
@@ -275,19 +277,19 @@
       </tr>
     </table>
     {#if evento.itensPedido.length}
-      <div id="inverte">
+      <div class="inverte">
         <video bind:this={videoPreview}>
           <track kind="captions" />
         </video>
       </div>
-      <div id="leitura">
-        <div id="barra-pesquisa">
+      <div class="leitura">
+        <div class="barra-pesquisa">
           <Entrada
             type="number"
             id="utilizacao"
             validar={false}
             on:input={(e) => (utilizacao = e.target.value)}
-            label="Insira o código para utilizar ou leia o QR Code"
+            label="Insira o id para realizar check-in ou leia o QR Code"
             on:keypress={(e) =>
               "NumpadEnter".includes(e.code) && ler(evento.itensPedido)}
           />
@@ -303,7 +305,7 @@
         on:input={(e) => (pesquisa = e.target.value)}
       />
       <br />
-      <table id="tabela">
+      <table class="tabela">
         <tr>
           <th>Id</th>
           <th>Portador(a)</th>
@@ -321,10 +323,10 @@
               <td>{item.utilizado ? "Sim" : "Não"}</td>
               <td>{item.tipoDeIngresso.nome}</td>
               <td>
-                <div id="detalhes">
+                <div class="detalhes">
                   {#if !item.utilizado}
                     <MiniBotao on:click={() => utilizar(item.id)}
-                      >Utilizar</MiniBotao
+                      >Check-in</MiniBotao
                     >
                   {/if}
                   <MiniBotao on:click={() => verMais(item)}>Ver mais</MiniBotao>
@@ -338,7 +340,7 @@
       <p>Não existem ingressos vendidos para esse evento</p>
     {/if}
   {/await}
-  <div id="voltar">
+  <div class="voltar">
     <Botao on:click={() => dispatch("conferencia")}>Voltar</Botao>
   </div>
 </div>

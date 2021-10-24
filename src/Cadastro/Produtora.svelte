@@ -20,11 +20,9 @@
 
   let senha = "";
   let senha2 = "";
-  let banco = dados ? dados.banco : "";
-  let conta = dados ? dados.conta : "";
   let email = dados ? dados.email : "";
-  let agencia = dados ? dados.agencia : "";
   let cnpj = dados ? maskBr.cnpj(dados.cnpj) : "";
+  let publicToken = dados ? dados.publicToken : "";
   let razaoSocial = dados ? dados.razaoSocial : "";
   let nomeFantasia = dados ? dados.nomeFantasia : "";
 
@@ -38,9 +36,7 @@
     max: 255,
   });
   $: emailValido = validator.isEmail(email);
-  $: bancoValido = validator.isLength(banco, { min: 1, max: 100 });
-  $: agenciaValida = validator.isLength(agencia, { min: 1, max: 50 });
-  $: contaValida = validator.isLength(conta, { min: 1, max: 50 });
+  $: bancoValido = validator.isLength(publicToken, { min: 1, max: 50 });
   $: senhaValida = validator.isLength(senha, { min: 6, max: 50 });
   $: senha2Valida = validator.equals(senha, senha2) && senhaValida;
 
@@ -50,8 +46,6 @@
     nomeFantasiaValido &&
     emailValido &&
     bancoValido &&
-    agenciaValida &&
-    contaValida &&
     senhaValida &&
     senha2Valida;
 
@@ -70,9 +64,7 @@
       razaoSocial,
       cnpj,
       nomeFantasia,
-      banco,
-      agencia,
-      conta,
+      publicToken,
       usuario: { email, senha },
     };
     const res = dados ? await putProdutora(obj) : await postProdutora(obj);
@@ -85,19 +77,24 @@
 </script>
 
 <style>
-  #botoes {
+  .botoes {
     margin: 3rem auto;
     display: flex;
     justify-content: center;
   }
 
-  #senha {
+  .senha {
     margin: 3rem 0;
   }
 
-  #subtitulo {
-    margin: 4rem 0 2rem 0;
-    text-align: center;
+  a {
+    font-size: 12pt;
+    color: var(--verde4);
+    text-decoration: none;
+  }
+
+  a:hover {
+    font-weight: bolder;
   }
 </style>
 
@@ -105,10 +102,10 @@
   <Aguarde />
 {/if}
 
-<div id="corpo">
+<div class="corpo">
   <Entrada
-    disabled={dados}
     id="razaoSocial"
+    disabled={dados}
     value={razaoSocial}
     label="Razão Social"
     tocado={tocarCampos}
@@ -144,42 +141,24 @@
     mensagemValidacao="Insira um e-mail válido"
     on:input={(event) => (email = event.target.value)}
   />
-
-  <h3 id="subtitulo">Dados bancários:</h3>
-
   <Entrada
-    id="banco"
-    label="Banco"
-    value={banco}
     maxlength="100"
+    id="publicToken"
+    value={publicToken}
     tocado={tocarCampos}
     valido={bancoValido}
-    mensagemValidacao="Insira um nome de banco válido"
-    on:input={(event) => (banco = event.target.value)}
+    label="PublicToken do Mercado Livre"
+    mensagemValidacao="Insira um public token válido"
+    on:input={(event) => (publicToken = event.target.value)}
   />
-  <Entrada
-    id="agencia"
-    maxlength="50"
-    label="Agência"
-    value={agencia}
-    tocado={tocarCampos}
-    valido={agenciaValida}
-    on:input={(event) => (agencia = event.target.value)}
-    mensagemValidacao="Insira um número de agência válido"
-  />
-  <Entrada
-    id="conta"
-    label="Conta"
-    value={conta}
-    maxlength="50"
-    tocado={tocarCampos}
-    valido={contaValida}
-    on:input={(event) => (conta = event.target.value)}
-    mensagemValidacao="Insira um número de conta válido"
-  />
+  <a
+    target="_blank"
+    href="https://ajuda.getcommerce.com.br/article/276-integracao-mercado-pago"
+    >O que é public token?</a
+  >
 </div>
 
-<div id="senha">
+<div class="senha">
   <Entrada
     id="senha1"
     maxlength="50"
@@ -202,7 +181,7 @@
   />
 </div>
 
-<div id="botoes">
+<div class="botoes">
   <Botao on:click={voltar}>Voltar</Botao>
   <Botao on:click={salvar} invalido={!formularioValido}>Salvar</Botao>
 </div>

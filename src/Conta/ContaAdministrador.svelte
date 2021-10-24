@@ -17,7 +17,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 40%;
     min-width: 30rem;
     margin: 2rem auto;
@@ -37,13 +37,13 @@
     width: 100%;
   }
 
-  #corpo h1 {
+  .corpo h1 {
     font-size: 3rem;
     margin-bottom: 2rem;
     align-items: center;
   }
 
-  #corpo p {
+  .corpo p {
     font-size: 1.5rem;
     margin-bottom: 2rem;
   }
@@ -52,7 +52,7 @@
 {#await dadosCarregados}
   <Aguarde />
 {:then administrador}
-  <div id="corpo">
+  <div class="corpo">
     <h1>Minha Conta</h1>
     <p>
       Olá, {administrador.nome.split(" ")[0]}! Selecione uma opção abaixo:

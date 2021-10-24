@@ -55,7 +55,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 30%;
     min-width: 30rem;
     margin: 2rem auto;
@@ -74,25 +74,25 @@
     margin-bottom: 2rem;
   }
 
-  #senha {
+  .senha {
     margin: 2rem 0;
   }
 
-  #botoes {
+  .botoes {
     margin: 2rem auto;
     display: flex;
     justify-content: center;
   }
 </style>
 
-<div id="corpo">
+<div class="corpo">
   {#if dados}
     <h1>Editar Administrador</h1>
   {:else}
     <h1>Novo Administrador</h1>
   {/if}
 
-  <div id="campos">
+  <div class="campos">
     <Entrada
       id="nome"
       value={nome}
@@ -113,7 +113,7 @@
     />
   </div>
 
-  <div id="senha">
+  <div class="senha">
     <Entrada
       id="senha1"
       maxlength="50"
@@ -136,7 +136,7 @@
     />
   </div>
 
-  <div id="botoes">
+  <div class="botoes">
     <Botao on:click={voltar}>Voltar</Botao>
     <Botao on:click={salvar} invalido={!formularioValido}>Salvar</Botao>
   </div>

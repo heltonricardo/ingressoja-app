@@ -14,7 +14,7 @@
   const dispatch = createEventDispatcher();
 
   export let dados = null;
-  
+
   let carregando = false;
   let tocarCampos = false;
 
@@ -58,13 +58,13 @@
 </script>
 
 <style>
-  #botoes {
+  .botoes {
     margin: 3rem auto;
     display: flex;
     justify-content: center;
   }
 
-  #senha {
+  .senha {
     margin: 3rem 0;
   }
 </style>
@@ -73,7 +73,7 @@
   <Aguarde />
 {/if}
 
-<div id="campos">
+<div class="campos">
   <Entrada
     id="nome"
     value={nome}
@@ -104,7 +104,7 @@
   />
 </div>
 
-<div id="senha">
+<div class="senha">
   <Entrada
     id="senha1"
     maxlength="50"
@@ -127,7 +127,7 @@
   />
 </div>
 
-<div id="botoes">
+<div class="botoes">
   <Botao on:click={voltar}>Voltar</Botao>
   <Botao on:click={salvar} invalido={!formularioValido}>Salvar</Botao>
 </div>

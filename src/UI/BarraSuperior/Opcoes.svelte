@@ -80,7 +80,7 @@
     vertical-align: middle;
   }
 
-  #segunda-linha {
+  .segunda-linha {
     padding-top: 0.3rem;
   }
 
@@ -120,7 +120,7 @@
     {/if}
   </tr>
   <tr>
-    <td colspan="2" id="segunda-linha">
+    <td colspan="2" class="segunda-linha">
       <button on:click={verificar}>Verifique seu ingresso</button>
     </td>
   </tr>

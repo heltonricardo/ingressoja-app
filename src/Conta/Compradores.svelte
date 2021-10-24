@@ -39,7 +39,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 40%;
     min-width: 30rem;
     margin: 2rem auto;
@@ -59,7 +59,7 @@
     margin: 1rem 0;
   }
 
-  #tabela {
+  .tabela {
     border-collapse: collapse;
     text-align: center;
     width: 100%;
@@ -68,26 +68,26 @@
     word-break: break-all;
   }
 
-  #tabela td,
-  #tabela th {
+  .tabela td,
+  .tabela th {
     border: 1px solid #ddd;
     padding: 8px;
     vertical-align: middle;
   }
 
-  #tabela tr:nth-child(even) {
+  .tabela tr:nth-child(even) {
     background-color: #f2f2f2;
   }
 
-  #tabela tr:nth-child(odd) {
+  .tabela tr:nth-child(odd) {
     background-color: var(--branco);
   }
 
-  #tabela tr:hover {
+  .tabela tr:hover {
     background-color: #ddd;
   }
 
-  #tabela th {
+  .tabela th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
@@ -97,23 +97,23 @@
     word-break: keep-all;
   }
 
-  #detalhes {
+  .detalhes {
     display: flex;
     justify-content: center;
   }
 
-  #voltar {
+  .voltar {
     margin: 3rem 0;
   }
 </style>
 
-<div id="corpo">
+<div class="corpo">
   <h1>Compradores</h1>
   {#await getCompradores()}
     <Aguarde />
   {:then compradores}
     {#if compradores.length}
-      <table id="tabela">
+      <table class="tabela">
         <tr>
           <th>Id</th>
           <th>Nome</th>
@@ -126,7 +126,7 @@
             <td>{comprador.id}</td>
             <td>{comprador.nome}</td>
             <td>{maskBr.cpf(comprador.cpf)}</td>
-            <td id="detalhes">
+            <td class="detalhes">
               <MiniBotao on:click={() => detalhes(comprador)}
                 >Detalhes</MiniBotao
               >
@@ -138,7 +138,7 @@
       Não há compradores para mostrar
     {/if}
   {/await}
-  <div id="voltar">
+  <div class="voltar">
     <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
   </div>
 </div>

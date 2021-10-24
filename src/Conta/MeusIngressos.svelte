@@ -10,7 +10,7 @@
 </script>
 
 <style>
-  #corpo {
+  .corpo {
     width: 43%;
     min-width: 30rem;
     margin: 2rem auto;
@@ -30,26 +30,26 @@
     margin: 1rem 0 2rem 0;
   }
 
-  #navegacao {
+  .navegacao {
     margin: 3rem 0;
     display: flex;
   }
 
   @media print {
-    #navegacao, h1 {
+    .navegacao, h1 {
       display: none !important;
     }
   }
 </style>
 
-<div id="corpo">
+<div class="corpo">
   <h1>Ingressos do Evento</h1>
   {#each [...Array(dados.itensPedido.length).keys()] as i (i)}
     <Ingresso {dados} {i} />
     <br />
   {/each}
 
-  <div id="navegacao">
+  <div class="navegacao">
     <Botao on:click={window.print}>Imprimir</Botao>
     <Botao on:click={() => dispatch("meuspedidos")}>Voltar</Botao>
   </div>

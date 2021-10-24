@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 
 import MSG from "../ENUM/MSG.js";
 import PATH from "../ENUM/PATH.js";
-import STATUS from "../ENUM/STATUS.js";
+import STATUSHTTP from "../ENUM/STATUSHTTP.js";
 import TIPOCADASTRO from "../ENUM/TIPOCADASTRO.js";
 
 import autenticacao from "../Autenticacao/autenticacao.js";
@@ -28,7 +28,7 @@ export async function postCategoriaEvento(categoriaEvento) {
 
   const status = res.status;
 
-  if (status === STATUS.CREATED) {
+  if (status === STATUSHTTP.CREATED) {
     Swal.fire({
       title: MSG.BOM,
       text: MSG.CRIADO,
@@ -38,13 +38,13 @@ export async function postCategoriaEvento(categoriaEvento) {
     });
     return true;
   } //
-  else if (status === STATUS.CONFLICT) {
+  else if (status === STATUSHTTP.CONFLICT) {
     Swal.fire(MSG.RUIM, MSG.DUPLICADO, "error");
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
   } //
-  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+  else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
@@ -71,7 +71,7 @@ export async function putCategoriaEvento(categoriaEvento, id) {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     Swal.fire({
       title: MSG.BOM,
       text: MSG.ALTERADO,
@@ -81,13 +81,13 @@ export async function putCategoriaEvento(categoriaEvento, id) {
     });
     return true;
   } //
-  else if (status === STATUS.CONFLICT) {
+  else if (status === STATUSHTTP.CONFLICT) {
     Swal.fire(MSG.RUIM, MSG.DUPLICADO, "error");
   } //
-  else if (status === STATUS.BAD_REQUEST) {
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
   } //
-  else if (status === STATUS.INTERNAL_SERVER_ERROR) {
+  else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
     Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
   }
   return false;
@@ -105,7 +105,7 @@ export async function getCategoriasEvento() {
 
   const status = resposta.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     const categoriasEvento = await resposta.json();
     return categoriasEvento;
   }
@@ -130,7 +130,7 @@ export async function deleteCategoriaEvento(id) {
 
   const status = res.status;
 
-  if (status === STATUS.OK) {
+  if (status === STATUSHTTP.OK) {
     Swal.fire({
       title: MSG.BOM,
       text: MSG.EXCLUIDA,
@@ -142,7 +142,7 @@ export async function deleteCategoriaEvento(id) {
       timerProgressBar: true,
     });
     return true;
-  } else if (status === STATUS.BAD_REQUEST) {
+  } else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
 

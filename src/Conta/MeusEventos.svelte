@@ -2,18 +2,24 @@
   import Swal from "sweetalert2";
   import { createEventDispatcher } from "svelte";
 
+  import {
+    deleteEvento,
+    podeAlterarEvento,
+    pausarRetomarVenda,
+  } from "../Conexao/eventoConex";
+
   import MSG from "../ENUM/MSG";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import MiniBotao from "../UI/MiniBotao.svelte";
   import { getEventos } from "../Conexao/produtoraConex";
   import { extrairDataHora } from "../utils/manipulaDataHora";
-  import { deleteEvento, podeAlterarEvento } from "../Conexao/eventoConex";
 
   const dispatch = createEventDispatcher();
 
   export let conferencia = false;
 
+  let carregando = false;
   let eventos = getEventos();
 
   async function editar(id) {
@@ -36,6 +42,31 @@
             if (ok) eventos = getEventos();
           })
       );
+  }
+
+  async function pausarRetomarVendaIngressos(id, flag) {
+    const confirma = flag
+      ? await Swal.fire({
+          icon: "question",
+          focusCancel: true,
+          title: MSG.CERTEZA,
+          text: MSG.PAUSAR_VENDA,
+          showCancelButton: true,
+          cancelButtonText: "Cancelar",
+        })
+      : await Swal.fire({
+          icon: "question",
+          focusCancel: true,
+          title: MSG.CERTEZA,
+          showCancelButton: true,
+          text: MSG.RETOMAR_VENDA,
+          cancelButtonText: "Cancelar",
+        });
+    if (confirma.isConfirmed) {
+      carregando = true;
+      (await pausarRetomarVenda(id, flag)) && (eventos = getEventos());
+      carregando = false;
+    }
   }
 </script>
 
@@ -112,7 +143,15 @@
   .voltar {
     margin: 3rem 0;
   }
+
+  .dupla {
+    display: flex;
+  }
 </style>
+
+{#if carregando}
+  <Aguarde />
+{/if}
 
 <div class="corpo">
   {#if conferencia}
@@ -131,7 +170,6 @@
           <th>Id</th>
           <th>Título</th>
           <th>Data de início</th>
-          <th>Categoria</th>
           <th>Ações</th>
         </tr>
         {#each eventos as evento}
@@ -139,17 +177,33 @@
             <td>{evento.id}</td>
             <td>{evento.titulo}</td>
             <td>{extrairDataHora(evento.inicio).data}</td>
-            <td>{evento.categoriaEvento.nome}</td>
             <td class="detalhes">
               {#if conferencia}
                 <MiniBotao on:click={() => dispatch("conferencia", evento.id)}
                   >Abrir</MiniBotao
                 >
               {:else}
-                <MiniBotao on:click={() => editar(evento.id)}>Editar</MiniBotao>
-                <MiniBotao on:click={() => excluir(evento.id)}
-                  >Excluir</MiniBotao
-                >
+                <div class="dupla">
+                  <MiniBotao on:click={() => editar(evento.id)}
+                    >Editar</MiniBotao
+                  >
+                  <MiniBotao on:click={() => excluir(evento.id)}
+                    >Excluir</MiniBotao
+                  >
+                </div>
+                {#if evento.vendaPausada}
+                  <MiniBotao
+                    on:click={() =>
+                      pausarRetomarVendaIngressos(evento.id, false)}
+                    >Retomar vendas</MiniBotao
+                  >
+                {:else}
+                  <MiniBotao
+                    on:click={() =>
+                      pausarRetomarVendaIngressos(evento.id, true)}
+                    >Pausar vendas</MiniBotao
+                  >
+                {/if}
               {/if}
             </td>
           </tr>

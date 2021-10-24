@@ -72,6 +72,12 @@ const MSG = Object.freeze({
   NAO_CANCELA:
     "Infelizmente o prazo para essa solicitação já foi encerrado ou, pelo \
     menos, um ingresso desse pedido já foi utilizado.",
+  PAUSAR_VENDA:
+    "A venda de ingressos, para esse evento, ficará suspensa até que seja \
+    retomada manualmente.",
+  RETOMAR_VENDA:
+    "A venda de ingressos será retomada. Todos os tipos de ingressos \
+      disponíveis desse evento serão disponibilizados ao público.",
 });
 
 export default MSG;

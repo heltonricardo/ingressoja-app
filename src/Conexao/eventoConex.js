@@ -253,3 +253,40 @@ export async function getItensVendidos(id) {
   }
   return false;
 }
+
+export async function pausarRetomarVenda(id, flag) {
+  if (
+    !autenticacao.estaLogado() ||
+    autenticacao.tipoLogado() !== TIPOCADASTRO.PRODUTORA
+  )
+    return null;
+
+  let res;
+  console.log(`${PATH.EVENTO}/${id}/pausar-venda/${flag}`);
+  try {
+    res = await fetch(`${PATH.EVENTO}/${id}/pausar-venda/${flag}`, {
+      method: "PATCH",
+    });
+  } catch (error) {
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
+    return null;
+  }
+
+  const status = res.status;
+
+  if (status === STATUSHTTP.OK) {
+    Swal.fire({
+      timer: 3000,
+      text: MSG.OK,
+      title: MSG.BOM,
+      icon: "success",
+      timerProgressBar: true,
+    });
+    return true;
+  } else if (status === STATUSHTTP.BAD_REQUEST) {
+    Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
+  } else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
+    Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
+  }
+  return null;
+}

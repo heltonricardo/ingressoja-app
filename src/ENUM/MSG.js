@@ -1,11 +1,12 @@
 const MSG = Object.freeze({
+  OLA: "🤩 Olá!",
   BOM: "😄 Legal!",
   OPS: "😅 Ops...",
   RUIM: "😭 Poxa!",
-  OLA: "🤩 Olá!",
+  ATENCAO: "🙌🏻 Atenção!",
   TCHAU: "😉 Até breve!",
-  CERTEZA: "🤔 Você tem certeza?",
   APROVADO: "🎉 Pedido Aprovado!",
+  CERTEZA: "🤔 Você tem certeza?",
 
   OK: "Operação realizada com sucesso!",
   CRIADO: "Cadastrado com sucesso!",
@@ -61,6 +62,16 @@ const MSG = Object.freeze({
   POP_UP:
     "Seu bloqueador de pop-up impediu que o boleto fosse aberto. Por favor, \
     efetue o pagamento através do link na tela do pedido.",
+  CANCELAMENTO:
+    "Para solicitar o cancelamento, o pedido deve ter sido feito nos últimos \
+    sete dias. Além disso, nenhum dos ingressos do pedido deve ter sido \
+    utilizado. Essa operação não poderá ser desfeita!",
+  DEVOLUCAO:
+    "Cancelamento efetuado com sucesso. Para mais informações, verifique o \
+    e-mail informado durante o pagamento junto ao Mercado Pago.",
+  NAO_CANCELA:
+    "Infelizmente o prazo para essa solicitação já foi encerrado ou, pelo \
+    menos, um ingresso desse pedido já foi utilizado.",
 });
 
 export default MSG;

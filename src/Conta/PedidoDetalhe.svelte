@@ -1,24 +1,47 @@
 <script>
+  import Swal from "sweetalert2";
   import { maskBr } from "js-brasil";
   import { createEventDispatcher } from "svelte";
 
+  import MSG from "../ENUM/MSG";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import STATUSPGTO from "../ENUM/STATUSPGTO";
   import MiniBotao from "../UI/MiniBotao.svelte";
   import STATUSPEDIDO from "../ENUM/STATUSPEDIDO";
-  import { getPedido } from "../Conexao/pedidoConex";
   import { valorVirgula } from "../utils/formatador";
   import { extrairDataHora } from "../utils/manipulaDataHora";
+  import { cancelarPedido, getPedido } from "../Conexao/pedidoConex";
 
   const dispatch = createEventDispatcher();
 
   export let id;
 
+  let carregando = false;
+  let pedido = getPedido(id);
+
   function definirClassePedido(status) {
     if (status === STATUSPEDIDO.PROCESSADO) return "texto-azul";
     if (status === STATUSPEDIDO.AGUARDANDO_PGTO) return "texto-laranja";
     return "texto-vermelho";
+  }
+
+  async function solicitarCanc() {
+    const confirma = await Swal.fire({
+      icon: "warning",
+      focusCancel: true,
+      title: MSG.ATENCAO,
+      showCancelButton: true,
+      text: MSG.CANCELAMENTO,
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "Concordo. Solicitar cancelamento.",
+    });
+
+    if (confirma.isConfirmed) {
+      carregando = true;
+      if (await cancelarPedido(id)) pedido = getPedido(id);
+      carregando = false;
+    }
   }
 </script>
 
@@ -136,7 +159,11 @@
   }
 </style>
 
-{#await getPedido(id)}
+{#if carregando}
+  <Aguarde />
+{/if}
+
+{#await pedido}
   <div class="corpo" />
   <Aguarde />
 {:then pedido}
@@ -168,11 +195,13 @@
       <tr>
         <td class="titulo">Status do pagamento:</td>
         <td
-          >{#if pedido.statusPagamento === STATUSPGTO.APPROVED}
+          >{#if pedido.statusPagamento === STATUSPGTO.APROVADO}
             <span class="texto-verde"> Aprovado </span>
-          {:else if pedido.statusPagamento === STATUSPGTO.REJECTED}
+          {:else if pedido.statusPagamento === STATUSPGTO.RECUSADO}
             <span class="texto-vermelho">Recusado</span>
-          {:else if pedido.statusPagamento === STATUSPGTO.IN_PROGRESS}
+          {:else if pedido.statusPagamento === STATUSPGTO.REEMBOLSADO}
+            <span class="texto-azul">Reembolsado</span>
+          {:else if pedido.statusPagamento === STATUSPGTO.PENDENTE}
             <span class="texto-amarelo"> Pendente </span> -
             <a target="_blank" href={pedido.urlPagamento}>Página de pagamento</a
             >
@@ -185,9 +214,9 @@
       </tr>
     </table>
 
-    {#if pedido.statusPagamento === STATUSPGTO.APPROVED}
+    {#if pedido.statusPagamento === STATUSPGTO.APROVADO}
       <div class="navegacao">
-        <MiniBotao>Solicitar cancelamento</MiniBotao>
+        <MiniBotao on:click={solicitarCanc}>Solicitar cancelamento</MiniBotao>
       </div>
     {/if}
 
@@ -272,7 +301,7 @@
     </div>
 
     <div class="navegacao">
-      {#if pedido.statusPagamento === STATUSPGTO.APPROVED}
+      {#if pedido.statusPagamento === STATUSPGTO.APROVADO}
         <Botao on:click={() => dispatch("meusingressos", pedido)}
           >Ver ingressos</Botao
         >

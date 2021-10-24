@@ -89,3 +89,40 @@ export async function getPedido(id) {
   }
   return null;
 }
+
+export async function cancelarPedido(id) {
+  if (
+    !autenticacao.estaLogado() ||
+    !autenticacao.estaLogadoComTipo(TIPOCADASTRO.COMPRADOR)
+  ) {
+    return false;
+  }
+
+  let res;
+  try {
+    res = await fetch(`${PATH.PEDIDO}/${id}/cancelar`, { method: "PUT" });
+  } catch (error) {
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
+    return false;
+  }
+
+  const status = res.status;
+  if (status === STATUSHTTP.OK) {
+    Swal.fire({
+      title: MSG.BOM,
+      icon: "success",
+      text: MSG.DEVOLUCAO,
+    });
+    return true;
+  } //
+  else if (status === STATUSHTTP.CONFLICT) {
+    Swal.fire(MSG.RUIM, MSG.NAO_CANCELA, "error");
+  } //
+  else if (status === STATUSHTTP.BAD_REQUEST) {
+    Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
+  } //
+  else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
+    Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
+  }
+  return false;
+}

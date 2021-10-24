@@ -23,7 +23,7 @@
   let eventos = getEventos();
 
   async function editar(id) {
-    if (await podeAlterarEvento(id)) dispatch("editar", id);
+    (await podeAlterarEvento(id)) && dispatch("editar", id);
   }
 
   async function excluir(id) {
@@ -45,7 +45,7 @@
   }
 
   async function pausarRetomarVendaIngressos(id, flag) {
-    const confirma = flag
+    const realizarOperacao = flag
       ? await Swal.fire({
           icon: "question",
           focusCancel: true,
@@ -62,7 +62,7 @@
           text: MSG.RETOMAR_VENDA,
           cancelButtonText: "Cancelar",
         });
-    if (confirma.isConfirmed) {
+    if (realizarOperacao.isConfirmed) {
       carregando = true;
       (await pausarRetomarVenda(id, flag)) && (eventos = getEventos());
       carregando = false;
@@ -169,7 +169,7 @@
         <tr>
           <th>Id</th>
           <th>Título</th>
-          <th>Data de início</th>
+          <th>Data do evento</th>
           <th>Ações</th>
         </tr>
         {#each eventos as evento}

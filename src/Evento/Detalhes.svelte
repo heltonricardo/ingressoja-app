@@ -216,7 +216,7 @@
       </p>
     </span>
 
-    {#if evento.tiposDeIngresso.length}
+    {#if !evento.vendaPausada && evento.tiposDeIngresso.length}
       <h2 class="titulo escolha">Selecione os ingressos</h2>
     {:else}
       <h2 class="sem-ingressos">Ingressos não disponíveis</h2>

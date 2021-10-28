@@ -61,7 +61,8 @@
     <Botao on:click={() => dispatch("cadastroeventos")}
       >Cadastro de Eventos</Botao
     >
-    <Botao on:click={() => dispatch("cadastroeventos")}>Gerenciar Eventos</Botao
+    <Botao on:click={() => dispatch("cadastroeventos")}
+      >Gerência de Eventos</Botao
     >
     <Botao on:click={() => dispatch("conferencia")}
       >Conferência de Ingressos</Botao

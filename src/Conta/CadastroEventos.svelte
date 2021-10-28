@@ -2,22 +2,16 @@
   import Swal from "sweetalert2";
   import { createEventDispatcher } from "svelte";
 
-  import {
-    deleteEvento,
-    podeAlterarEvento,
-    pausarRetomarVenda,
-  } from "../Conexao/eventoConex";
-
+  
   import MSG from "../ENUM/MSG";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import MiniBotao from "../UI/MiniBotao.svelte";
   import { getEventos } from "../Conexao/produtoraConex";
   import { extrairDataHora } from "../utils/manipulaDataHora";
+  import { deleteEvento, podeAlterarEvento } from "../Conexao/eventoConex";
 
   const dispatch = createEventDispatcher();
-
-  export let conferencia = false;
 
   let carregando = false;
   let eventos = getEventos();
@@ -42,31 +36,6 @@
             if (ok) eventos = getEventos();
           })
       );
-  }
-
-  async function pausarRetomarVendaIngressos(id, flag) {
-    const realizarOperacao = flag
-      ? await Swal.fire({
-          icon: "question",
-          focusCancel: true,
-          title: MSG.CERTEZA,
-          text: MSG.PAUSAR_VENDA,
-          showCancelButton: true,
-          cancelButtonText: "Cancelar",
-        })
-      : await Swal.fire({
-          icon: "question",
-          focusCancel: true,
-          title: MSG.CERTEZA,
-          showCancelButton: true,
-          text: MSG.RETOMAR_VENDA,
-          cancelButtonText: "Cancelar",
-        });
-    if (realizarOperacao.isConfirmed) {
-      carregando = true;
-      (await pausarRetomarVenda(id, flag)) && (eventos = getEventos());
-      carregando = false;
-    }
   }
 </script>
 
@@ -143,10 +112,6 @@
   .voltar {
     margin: 3rem 0;
   }
-
-  .dupla {
-    display: flex;
-  }
 </style>
 
 {#if carregando}
@@ -154,13 +119,8 @@
 {/if}
 
 <div class="corpo">
-  {#if conferencia}
-    <h1>Conferência de Ingressos</h1>
-    <p>Escolha o evento:</p>
-    <br />
-  {:else}
-    <h1>Cadastro de Eventos</h1>
-  {/if}
+  <h1>Cadastro de Eventos</h1>
+
   {#await eventos}
     <Aguarde />
   {:then eventos}
@@ -178,34 +138,8 @@
             <td>{evento.titulo}</td>
             <td>{extrairDataHora(evento.inicio).data}</td>
             <td class="detalhes">
-              {#if conferencia}
-                <MiniBotao on:click={() => dispatch("conferencia", evento.id)}
-                  >Abrir</MiniBotao
-                >
-              {:else}
-                <MiniBotao>Despesas</MiniBotao>
-                <div class="dupla">
-                  <MiniBotao on:click={() => editar(evento.id)}
-                    >Editar</MiniBotao
-                  >
-                  <MiniBotao on:click={() => excluir(evento.id)}
-                    >Excluir</MiniBotao
-                  >
-                </div>
-                {#if evento.vendaPausada}
-                  <MiniBotao
-                    on:click={() =>
-                      pausarRetomarVendaIngressos(evento.id, false)}
-                    >Retomar vendas</MiniBotao
-                  >
-                {:else}
-                  <MiniBotao
-                    on:click={() =>
-                      pausarRetomarVendaIngressos(evento.id, true)}
-                    >Pausar vendas</MiniBotao
-                  >
-                {/if}
-              {/if}
+              <MiniBotao on:click={() => editar(evento.id)}>Editar</MiniBotao>
+              <MiniBotao on:click={() => excluir(evento.id)}>Excluir</MiniBotao>
             </td>
           </tr>
         {/each}
@@ -214,11 +148,11 @@
       Não há eventos para mostrar
     {/if}
   {/await}
-  {#if !conferencia}
-    <div class="cadastrar">
-      <Botao on:click={() => dispatch("novoevento")}>Cadastrar Evento</Botao>
-    </div>
-  {/if}
+
+  <div class="cadastrar">
+    <Botao on:click={() => dispatch("novoevento")}>Cadastrar Evento</Botao>
+  </div>
+
   <div class="voltar">
     <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
   </div>

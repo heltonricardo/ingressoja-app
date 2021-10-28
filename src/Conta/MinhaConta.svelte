@@ -27,6 +27,7 @@
     on:meusdados
     on:conferencia
     on:cadastroeventos
+    on:gerenciaeventos
   />
 {:else if tipo === TIPOCADASTRO.ADMINISTRADOR}
   <ContaAdministrador

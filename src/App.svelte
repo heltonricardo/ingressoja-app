@@ -17,6 +17,7 @@
   import FinalizaPedido from "./Pedido/FinalizaPedido.svelte";
   import Administradores from "./Conta/Administradores.svelte";
   import CadastroEventos from "./Conta/CadastroEventos.svelte";
+  import GerenciaEventos from "./Conta/GerenciaEventos.svelte";
   import CategoriaEvento from "./Cadastro/CategoriaEvento.svelte";
   import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
   import ConferenciaIngressos from "./Conta/ConferenciaIngressos.svelte";
@@ -26,7 +27,7 @@
   let evento = null;
   let idPedido = null;
   let idCategoria = null;
-  let modo = MODO.MEUS_EVENTOS;
+  let modo = MODO.CADASTRO_EVENTOS;
   let termoPesquisa = "";
 
   function limpaFiltroPesquisa() {
@@ -101,18 +102,20 @@
   const pesquisar = (event) => (termoPesquisa = event.detail);
 
   const modoMeusDados = () => trocaModo(MODO.MEUS_DADOS);
-  
+
   const modoProdutoras = () => trocaModo(MODO.PRODUTORAS);
-  
+
   const modoCompradores = () => trocaModo(MODO.COMPRADORES);
-  
+
   const modoConferencia = () => trocaModo(MODO.CONFERENCIA);
-  
+
   const modoMeusPedidos = () => trocaModo(MODO.MEUS_PEDIDOS);
-  
-  const modoCadastroEventos = () => trocaModo(MODO.MEUS_EVENTOS);
-  
+
   const modoAdministradores = () => trocaModo(MODO.ADMINISTRADORES);
+
+  const modoCadastroEventos = () => trocaModo(MODO.CADASTRO_EVENTOS);
+
+  const modoGerenciaEventos = () => trocaModo(MODO.GERENCIA_EVENTOS);
 
   const modoCategoriasEvento = () => trocaModo(MODO.CATEGORIAS_EVENTO);
 </script>
@@ -152,6 +155,7 @@
     on:novacategoria={modoCategoriasEvento}
     on:administradores={modoAdministradores}
     on:cadastroeventos={modoCadastroEventos}
+    on:gerenciaeventos={modoGerenciaEventos}
   />
 {:else if modo === MODO.EVENTO}
   <Evento {id} on:cadastroeventos={modoCadastroEventos} />
@@ -185,7 +189,7 @@
     on:cadastro={modoCadastro}
     on:minhaconta={modoMinhaConta}
   />
-{:else if modo === MODO.MEUS_EVENTOS}
+{:else if modo === MODO.CADASTRO_EVENTOS}
   <CadastroEventos
     on:editar={modoEvento}
     on:novoevento={modoEvento}
@@ -200,13 +204,15 @@
 {:else if modo === MODO.MEUS_INGRESSOS}
   <MeusIngressos {dados} on:meuspedidos={modoMeusPedidos} />
 {:else if modo === MODO.CONFERENCIA}
-  <CadastroEventos
-    on:conferencia={modoUtilizacao}
+  <GerenciaEventos
     conferencia={true}
+    on:conferencia={modoUtilizacao}
     on:minhaconta={modoMinhaConta}
   />
 {:else if modo === MODO.UTILIZACAO}
   <ConferenciaIngressos {id} on:conferencia={modoConferencia} />
+{:else if modo === MODO.GERENCIA_EVENTOS}
+  <GerenciaEventos on:minhaconta={modoMinhaConta} />
 {/if}
 
 <BarraInferior />

@@ -235,7 +235,7 @@
     obj.dto.cep = validator.whitelist(obj.dto.cep, /\d/g);
     const sucesso = id ? await putEvento(obj, id) : await postEvento(obj);
     carregando = false;
-    if (sucesso) dispatch("meuseventos");
+    if (sucesso) dispatch("cadastroeventos");
     else obj.dto.cep = maskBr.cep(obj.dto.cep);
   }
 
@@ -249,7 +249,7 @@
       showCancelButton: true,
       text: MSG.ALTERADO_NAO_SALV,
       cancelButtonText: "Cancelar",
-    }).then((volte) => volte.isConfirmed && dispatch("meuseventos"));
+    }).then((volte) => volte.isConfirmed && dispatch("cadastroeventos"));
   }
 </script>
 

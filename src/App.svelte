@@ -7,7 +7,6 @@
   import Cadastro from "./Cadastro/Cadastro.svelte";
   import MinhaConta from "./Conta/MinhaConta.svelte";
   import Produtoras from "./Conta/Produtoras.svelte";
-  import MeusEventos from "./Conta/MeusEventos.svelte";
   import MeusPedidos from "./Conta/MeusPedidos.svelte";
   import Compradores from "./Conta/Compradores.svelte";
   import BarraInferior from "./UI/BarraInferior.svelte";
@@ -17,6 +16,7 @@
   import Administrador from "./Cadastro/Administrador.svelte";
   import FinalizaPedido from "./Pedido/FinalizaPedido.svelte";
   import Administradores from "./Conta/Administradores.svelte";
+  import CadastroEventos from "./Conta/CadastroEventos.svelte";
   import CategoriaEvento from "./Cadastro/CategoriaEvento.svelte";
   import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
   import ConferenciaIngressos from "./Conta/ConferenciaIngressos.svelte";
@@ -26,7 +26,7 @@
   let evento = null;
   let idPedido = null;
   let idCategoria = null;
-  let modo = MODO.NORMAL;
+  let modo = MODO.MEUS_EVENTOS;
   let termoPesquisa = "";
 
   function limpaFiltroPesquisa() {
@@ -100,18 +100,18 @@
 
   const pesquisar = (event) => (termoPesquisa = event.detail);
 
-  const modoConferencia = () => trocaModo(MODO.CONFERENCIA);
-
   const modoMeusDados = () => trocaModo(MODO.MEUS_DADOS);
-
+  
   const modoProdutoras = () => trocaModo(MODO.PRODUTORAS);
-
+  
   const modoCompradores = () => trocaModo(MODO.COMPRADORES);
-
-  const modoMeusEventos = () => trocaModo(MODO.MEUS_EVENTOS);
-
+  
+  const modoConferencia = () => trocaModo(MODO.CONFERENCIA);
+  
   const modoMeusPedidos = () => trocaModo(MODO.MEUS_PEDIDOS);
-
+  
+  const modoCadastroEventos = () => trocaModo(MODO.MEUS_EVENTOS);
+  
   const modoAdministradores = () => trocaModo(MODO.ADMINISTRADORES);
 
   const modoCategoriasEvento = () => trocaModo(MODO.CATEGORIAS_EVENTO);
@@ -148,13 +148,13 @@
     on:produtoras={modoProdutoras}
     on:compradores={modoCompradores}
     on:conferencia={modoConferencia}
-    on:meuseventos={modoMeusEventos}
     on:meuspedidos={modoMeusPedidos}
     on:novacategoria={modoCategoriasEvento}
     on:administradores={modoAdministradores}
+    on:cadastroeventos={modoCadastroEventos}
   />
 {:else if modo === MODO.EVENTO}
-  <Evento {id} on:meuseventos={modoMeusEventos} />
+  <Evento {id} on:cadastroeventos={modoCadastroEventos} />
 {:else if modo === MODO.FINALIZACAO}
   <FinalizaPedido
     {evento}
@@ -186,7 +186,7 @@
     on:minhaconta={modoMinhaConta}
   />
 {:else if modo === MODO.MEUS_EVENTOS}
-  <MeusEventos
+  <CadastroEventos
     on:editar={modoEvento}
     on:novoevento={modoEvento}
     on:minhaconta={modoMinhaConta}
@@ -200,7 +200,7 @@
 {:else if modo === MODO.MEUS_INGRESSOS}
   <MeusIngressos {dados} on:meuspedidos={modoMeusPedidos} />
 {:else if modo === MODO.CONFERENCIA}
-  <MeusEventos
+  <CadastroEventos
     on:conferencia={modoUtilizacao}
     conferencia={true}
     on:minhaconta={modoMinhaConta}

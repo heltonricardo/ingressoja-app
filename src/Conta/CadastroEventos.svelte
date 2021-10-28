@@ -159,7 +159,7 @@
     <p>Escolha o evento:</p>
     <br />
   {:else}
-    <h1>Meus Eventos</h1>
+    <h1>Cadastro de Eventos</h1>
   {/if}
   {#await eventos}
     <Aguarde />
@@ -183,6 +183,7 @@
                   >Abrir</MiniBotao
                 >
               {:else}
+                <MiniBotao>Despesas</MiniBotao>
                 <div class="dupla">
                   <MiniBotao on:click={() => editar(evento.id)}
                     >Editar</MiniBotao

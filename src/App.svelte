@@ -21,13 +21,14 @@
   import CategoriaEvento from "./Cadastro/CategoriaEvento.svelte";
   import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
   import ConferenciaIngressos from "./Conta/ConferenciaIngressos.svelte";
+  import Despesas from "./Conta/Despesas.svelte";
 
   let id = null;
   let dados = null;
   let evento = null;
   let idPedido = null;
   let idCategoria = null;
-  let modo = MODO.CADASTRO_EVENTOS;
+  let modo = MODO.DESPESAS;
   let termoPesquisa = "";
 
   function limpaFiltroPesquisa() {
@@ -44,6 +45,11 @@
     dados = e.detail;
     limpaFiltroPesquisa();
     trocaModo(MODO.CADASTRO);
+  }
+
+  function modoDespesas(e) {
+    id = e.detail;
+    trocaModo(MODO.DESPESAS);
   }
 
   function modoDetalhes(e) {
@@ -212,7 +218,9 @@
 {:else if modo === MODO.UTILIZACAO}
   <ConferenciaIngressos {id} on:conferencia={modoConferencia} />
 {:else if modo === MODO.GERENCIA_EVENTOS}
-  <GerenciaEventos on:minhaconta={modoMinhaConta} />
+  <GerenciaEventos on:despesas={modoDespesas} on:minhaconta={modoMinhaConta} />
+{:else if modo === MODO.DESPESAS}
+  <Despesas on:minhaconta={modoMinhaConta} />
 {/if}
 
 <BarraInferior />

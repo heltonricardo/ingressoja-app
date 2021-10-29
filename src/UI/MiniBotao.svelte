@@ -1,5 +1,6 @@
 <script>
   export let habilitado = true;
+  export let invalido = false;
 </script>
 
 <style>
@@ -33,7 +34,8 @@
     transition: 0.2s;
   }
 
-  button:disabled {
+  .invalido,
+  .invalido:hover {
     color: var(--roxo2);
     background-color: var(--cinza1);
     transition: 0.2s;
@@ -41,6 +43,6 @@
   }
 </style>
 
-<button on:click disabled={!habilitado}>
+<button on:click class:invalido disabled={!habilitado}>
   <slot />
 </button>

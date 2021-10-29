@@ -1,11 +1,11 @@
 <script>
   import { createEventDispatcher, onMount } from "svelte";
-  import autenticacao from "../Autenticacao/autenticacao";
-  import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
-  import ContaAdministrador from "./ContaAdministrador.svelte";
 
+  import TIPOCADASTRO from "../ENUM/TIPOCADASTRO";
   import ContaComprador from "./ContaComprador.svelte";
   import ContaProdutora from "./ContaProdutora.svelte";
+  import autenticacao from "../Autenticacao/autenticacao";
+  import ContaAdministrador from "./ContaAdministrador.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -26,7 +26,8 @@
     on:carteira
     on:meusdados
     on:conferencia
-    on:meuseventos
+    on:cadastroeventos
+    on:gerenciaeventos
   />
 {:else if tipo === TIPOCADASTRO.ADMINISTRADOR}
   <ContaAdministrador

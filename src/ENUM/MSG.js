@@ -78,6 +78,9 @@ const MSG = Object.freeze({
   RETOMAR_VENDA:
     "A venda de ingressos será retomada. Todos os tipos de ingressos \
       disponíveis desse evento serão disponibilizados ao público.",
+  EXCLUIR_DESPESA:
+    "Esse lançamento de despesa será excluído. Essa operação não poderá ser \
+    desfeita!",
 });
 
 export default MSG;

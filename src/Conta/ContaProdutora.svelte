@@ -6,14 +6,6 @@
   import { getProdutora } from "../Conexao/produtoraConex";
 
   const dispatch = createEventDispatcher();
-
-  async function carregaDados() {
-    const res = await getProdutora();
-    if (!res) dispatch("voltar");
-    return res;
-  }
-
-  let dadosCarregados = carregaDados();
 </script>
 
 <style>
@@ -49,7 +41,7 @@
   }
 </style>
 
-{#await dadosCarregados}
+{#await getProdutora()}
   <Aguarde />
 {:then produtora}
   <div class="corpo">
@@ -58,7 +50,12 @@
       Olá, {produtora.nomeFantasia.split(" ")[0]}! Selecione uma opção abaixo:
     </p>
     <Botao on:click={() => dispatch("meusdados")}>Meus Dados</Botao>
-    <Botao on:click={() => dispatch("meuseventos")}>Meus Eventos</Botao>
+    <Botao on:click={() => dispatch("cadastroeventos")}
+      >Cadastro de Eventos</Botao
+    >
+    <Botao on:click={() => dispatch("gerenciaeventos")}
+      >Gerência de Eventos</Botao
+    >
     <Botao on:click={() => dispatch("conferencia")}
       >Conferência de Ingressos</Botao
     >

@@ -28,7 +28,7 @@
   let evento = null;
   let idPedido = null;
   let idCategoria = null;
-  let modo = MODO.GERENCIA_EVENTOS;
+  let modo = MODO.NORMAL;
   let termoPesquisa = "";
 
   function limpaFiltroPesquisa() {

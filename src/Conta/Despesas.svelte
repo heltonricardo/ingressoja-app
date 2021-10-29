@@ -3,19 +3,13 @@
   import validator from "validator";
   import { createEventDispatcher } from "svelte";
 
-  import {
-    getDespesas,
-    deleteEvento,
-    podeAlterarEvento,
-    postDespesa,
-  } from "../Conexao/eventoConex";
-
   import MSG from "../ENUM/MSG";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import MiniBotao from "../UI/MiniBotao.svelte";
   import { valorVirgula } from "../utils/formatador";
-  import { getEventos } from "../Conexao/produtoraConex";
+  import { deleteDespesa } from "../Conexao/despesaConex";
+  import { getDespesas, postDespesa } from "../Conexao/eventoConex";
 
   const dispatch = createEventDispatcher();
 
@@ -58,32 +52,20 @@
     carregando = false;
   }
 
-  /********************************** EDITAR **********************************/
-
-  async function editar(id) {
-    id = -1;
-    dispatch("editar", id);
-  }
-
   /********************************* EXCLUIR **********************************/
 
   async function excluir(id) {
-    id = -1;
-    if (await podeAlterarEvento(id))
-      Swal.fire({
-        title: MSG.CERTEZA,
-        text: MSG.EXCLUIR_EVENTO,
-        icon: "warning",
-        showCancelButton: true,
-        cancelButtonText: "Cancelar",
-        focusCancel: true,
-      }).then(
-        (temCerteza) =>
-          temCerteza.isConfirmed &&
-          deleteEvento(id).then((ok) => {
-            if (ok) evento = getEventos();
-          })
-      );
+    const opcao = await Swal.fire({
+      icon: "warning",
+      focusCancel: true,
+      title: MSG.CERTEZA,
+      showCancelButton: true,
+      text: MSG.EXCLUIR_DESPESA,
+      cancelButtonText: "Cancelar",
+    });
+
+    if (opcao.isConfirmed)
+      (await deleteDespesa(id)) && (evento = getDespesas(idEvento));
   }
 </script>
 
@@ -247,8 +229,6 @@
             <td>R$ {valorVirgula(despesa.valor)}</td>
             <td>
               <div class="detalhes">
-                <MiniBotao on:click={() => editar(despesa.id)}>Editar</MiniBotao
-                >
                 <MiniBotao on:click={() => excluir(despesa.id)}
                   >Excluir</MiniBotao
                 >

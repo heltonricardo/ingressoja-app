@@ -1,17 +1,21 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+
   export let id;
   export let label;
-  export let value = "";
   export let rows = 13;
-  export let valido = true;
+  export let min = null;
+  export let value = "";
   export let type = "text";
+  export let valido = true;
+  export let tocado = false;
+  export let validar = true;
+  export let disabled = false;
+  export let maxlength = "255";
   export let controlType = null;
   export let mensagemValidacao = "";
-  export let validar = true;
-  export let maxlength = "255";
-  export let min = null;
-  export let disabled = false;
-  export let tocado = false;
+
+  const dispatch = createEventDispatcher();
 </script>
 
 <style>
@@ -75,29 +79,32 @@
   <label for={id}>{label}</label>
   {#if controlType === "textarea"}
     <textarea
-    {id}
-    {rows}
-    {value}
-    {maxlength}
-    on:input
-    on:keypress
-    on:blur={() => (tocado = true)}
-    class:valid={validar && valido && tocado}
-    class:invalid={validar && !valido && tocado}
+      {id}
+      {rows}
+      {value}
+      {maxlength}
+      on:input
+      on:keypress
+      on:blur={() => (tocado = true)}
+      class:valid={validar && valido && tocado}
+      class:invalid={validar && !valido && tocado}
     />
   {:else}
     <input
-    {id}
-    {min}
-    {type}
-    {value}
-    {disabled}
-    {maxlength}
-    on:input
-    on:keypress
-    on:blur={() => (tocado = true)}
-    class:valid={validar && valido && tocado}
-    class:invalid={validar && !valido && tocado}
+      {id}
+      {min}
+      {type}
+      {value}
+      on:input
+      {disabled}
+      {maxlength}
+      on:keypress
+      class:valid={validar && valido && tocado}
+      class:invalid={validar && !valido && tocado}
+      on:blur={() => {
+        tocado = true;
+        dispatch("saiu");
+      }}
     />
   {/if}
   {#if tocado && !valido && mensagemValidacao}

@@ -317,7 +317,7 @@ export async function postDespesa(idEvento, despesa) {
       title: MSG.BOM,
       text: MSG.CRIADO,
       icon: "success",
-      timer:2000,
+      timer: 2000,
       timerProgressBar: true,
     });
     return true;
@@ -359,3 +359,8 @@ export async function getDespesas(id) {
   }
   return false;
 }
+
+export const getAutoEndereco = async (cep) =>
+  await fetch(`${PATH.CONSULTA_CEP}/${cep}/json/`)
+    .then((r) => r.json())
+    .catch(() => null);

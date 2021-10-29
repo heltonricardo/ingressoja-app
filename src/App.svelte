@@ -28,7 +28,7 @@
   let evento = null;
   let idPedido = null;
   let idCategoria = null;
-  let modo = MODO.DESPESAS;
+  let modo = MODO.GERENCIA_EVENTOS;
   let termoPesquisa = "";
 
   function limpaFiltroPesquisa() {
@@ -220,7 +220,7 @@
 {:else if modo === MODO.GERENCIA_EVENTOS}
   <GerenciaEventos on:despesas={modoDespesas} on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.DESPESAS}
-  <Despesas idEvento={1} on:minhaconta={modoMinhaConta} />
+  <Despesas idEvento={id} on:gerenciaeventos={modoGerenciaEventos} />
 {/if}
 
 <BarraInferior />

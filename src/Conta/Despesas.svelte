@@ -307,6 +307,6 @@
     </table>
   {/await}
   <div class="voltar">
-    <Botao on:click={() => dispatch("minhaconta")}>Voltar</Botao>
+    <Botao on:click={() => dispatch("gerenciaeventos")}>Voltar</Botao>
   </div>
 </div>

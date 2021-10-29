@@ -220,7 +220,7 @@
 {:else if modo === MODO.GERENCIA_EVENTOS}
   <GerenciaEventos on:despesas={modoDespesas} on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.DESPESAS}
-  <Despesas on:minhaconta={modoMinhaConta} />
+  <Despesas idEvento={1} on:minhaconta={modoMinhaConta} />
 {/if}
 
 <BarraInferior />

@@ -34,7 +34,8 @@
     transition: 0.2s;
   }
 
-  .invalido, .invalido:hover {
+  .invalido,
+  .invalido:hover {
     color: var(--roxo2);
     background-color: var(--cinza1);
     transition: 0.2s;

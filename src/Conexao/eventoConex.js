@@ -290,3 +290,72 @@ export async function pausarRetomarVenda(id, flag) {
   }
   return null;
 }
+
+export async function postDespesa(idEvento, despesa) {
+  if (
+    !autenticacao.estaLogado() ||
+    !autenticacao.estaLogadoComTipo(TIPOCADASTRO.PRODUTORA)
+  )
+    return false;
+
+  let res;
+  try {
+    res = await fetch(`${PATH.EVENTO}/${idEvento}/despesas`, {
+      method: "POST",
+      body: JSON.stringify(despesa),
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
+    return null;
+  }
+
+  const status = res.status;
+
+  if (status === STATUSHTTP.CREATED) {
+    Swal.fire({
+      title: MSG.BOM,
+      text: MSG.CRIADO,
+      icon: "success",
+      timer:2000,
+      timerProgressBar: true,
+    });
+    return true;
+  } //
+  else if (status === STATUSHTTP.BAD_REQUEST) {
+    Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
+  } //
+  else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
+    Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
+  }
+  return false;
+}
+
+export async function getDespesas(id) {
+  if (
+    !autenticacao.estaLogado() ||
+    !autenticacao.estaLogadoComTipo(TIPOCADASTRO.PRODUTORA)
+  )
+    return false;
+
+  let res;
+  try {
+    res = await fetch(`${PATH.EVENTO}/${id}/despesas`);
+  } catch (error) {
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
+    return false;
+  }
+
+  const status = res.status;
+
+  if (status === STATUSHTTP.OK) {
+    return await res.json();
+  } //
+  else if (status === STATUSHTTP.BAD_REQUEST) {
+    Swal.fire(MSG.RUIM, MSG.INCORRETO, "error");
+  } //
+  else if (status === STATUSHTTP.INTERNAL_SERVER_ERROR) {
+    Swal.fire(MSG.RUIM, MSG.SERVERROR, "error");
+  }
+  return false;
+}

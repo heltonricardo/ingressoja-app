@@ -11,6 +11,7 @@ const PATH = Object.freeze({
   PEDIDO: API + "/pedido",
   ITEM_PEDIDO: API + "/item-pedido",
   DESPESA: API + "/despesa",
+  CONSULTA_CEP: "https://viacep.com.br/ws",
 });
 
 export default PATH;

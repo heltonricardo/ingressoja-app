@@ -2,6 +2,7 @@
   import MODO from "./ENUM/MODO";
   import Login from "./Login/Login.svelte";
   import Evento from "./Cadastro/Evento.svelte";
+  import Despesas from "./Conta/Despesas.svelte";
   import Detalhes from "./Evento/Detalhes.svelte";
   import MeusDados from "./Conta/MeusDados.svelte";
   import Cadastro from "./Cadastro/Cadastro.svelte";
@@ -21,7 +22,6 @@
   import CategoriaEvento from "./Cadastro/CategoriaEvento.svelte";
   import BarraSuperior from "./UI/BarraSuperior/BarraSuperior.svelte";
   import ConferenciaIngressos from "./Conta/ConferenciaIngressos.svelte";
-  import Despesas from "./Conta/Despesas.svelte";
 
   let id = null;
   let dados = null;

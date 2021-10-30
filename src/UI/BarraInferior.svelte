@@ -9,25 +9,33 @@
       <p>
         IngressoJá - Plataforma on-line para compra e venda de ingressos - é um
         projeto elaborado e desenvolvido por
-        <a class="bold" href="https://github.com/heltonricardo"> Helton Ricardo
-        </a>, aluno do curso Análise e Desenvolvimento de Sistemas do IFSP-CJO
-        no ano de 2021.
+        <a class="bold" href="https://github.com/heltonricardo" target="_blank">
+        Helton Ricardo </a>, aluno do curso Análise e Desenvolvimento de
+        Sistemas do IFSP Campus Campos do Jordão no ano de 2021.
       </p>
       <br />
-      <p><span class="bold">Autor: </span>
-        <span class="italic">
-          Deixo aqui minha homenagem e meus sinceros agradecimentos aos meus
-          colegas e amigos:
-          <a class="bold" href="https://github.com/gsantosdev">
-          Gustavo Santos</a>, pelas diversas contribuições para com minhas
-          dúvidas em Java e requisitos desse projeto; e
-          <a class="bold" href="https://github.com/andreglatz"> André Glatz</a>,
-          o qual posso dizer que, literalmente, me salvou diversas vezes
-          com JavaScript, a qualquer horário, até mesmo nos fins de semana.
-          Ambos foram essenciais para o desenvolvimento desse projeto e para meu
-          progresso pessoal e profissional. Obrigado, pessoal!
-        </span>
-      </p>`,
+      <div style="text-align: justify">
+        <p style="padding-right: 0.1rem"><span class="bold">Autor: </span>
+          <span class="italic">
+            Deixo aqui minha homenagem e meus sinceros agradecimentos a minha
+            namorada <a class="bold" href="https://github.com/wendiramos"
+            target="_blank">Wendi Ramos</a>, pelo apoio emocional que me
+            proporcionou e pelas horas que passou testando cada uma das 
+            funcionalidades desse projeto; E aos meus colegas e amigos: 
+            <a class="bold" href="https://github.com/gsantosdev"
+            target="_blank"> Gustavo Santos</a>, pelas diversas contribuições
+            para com minhas dúvidas em Java e requisitos do IngressoJá!, e <a
+            class="bold" href="https://github.com/andreglatz" target="_blank">
+            André Glatz</a>, o qual posso dizer que, literalmente, me salvou
+            diversas vezes com suas habilidades e conhecimentos em JavaScript.
+            Todos vocês foram essenciais para o desenvolvimento desse projeto e
+            para meu progresso pessoal e profissional.
+          </span>
+        </p>
+        <p style="text-align: center">
+          <span class="bold italic">Obrigado, gente!</span>
+        </p>
+      </div>`,
       confirmButtonText: "Fechar",
     });
   }

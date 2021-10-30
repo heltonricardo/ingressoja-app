@@ -8,6 +8,7 @@
   import {
     putEvento,
     postEvento,
+    getAutoEndereco,
     getEventoParaEdicao,
   } from "../Conexao/eventoConex";
 
@@ -18,6 +19,7 @@
   import Aguarde from "../UI/Aguarde.svelte";
   import Entrada from "../UI/Entrada.svelte";
   import { imagemIsValida } from "../utils/validador";
+  import { onlyNumeros } from "../utils/sanitarizador";
   import TipoDeIngresso from "./TipoDeIngresso.svelte";
   import { getCategoriasEvento } from "../Conexao/categoriaEventoConex";
   import { hojeStringISO, UTCParaPtBr } from "../utils/manipulaDataHora";
@@ -237,6 +239,21 @@
     carregando = false;
     if (sucesso) dispatch("cadastroeventos");
     else obj.dto.cep = maskBr.cep(obj.dto.cep);
+  }
+
+  /************************** PREENCHER INFORMAÇÕES ***************************/
+
+  async function preencherInfo() {
+    carregando = true;
+    const cep = onlyNumeros(obj.dto.cep);
+    const endereco = await getAutoEndereco(cep);
+    if (endereco) {
+      obj.dto.uf = endereco.uf;
+      obj.dto.bairro = endereco.bairro;
+      obj.dto.cidade = endereco.localidade;
+      obj.dto.logradouro = endereco.logradouro;
+    }
+    carregando = false;
   }
 
   /********************************** VOLTAR **********************************/
@@ -482,6 +499,7 @@
         valido={cepValido}
         value={obj.dto.cep}
         tocado={tocarCampos}
+        on:saiu={() => preencherInfo()}
         mensagemValidacao="Insira um CEP válido"
         on:input={(event) => (obj.dto.cep = event.target.value)}
       />

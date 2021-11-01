@@ -166,16 +166,22 @@
     obj.dto.url = "";
   }
 
+  /******************************* TROCA IMAGEM *******************************/
+
   function trocaImagem(event) {
     imagemAWS = false;
     obj.file = event.target.files[0];
   }
+
+  /**************************** ADICIONAR INGRESSO ****************************/
 
   function adicionaIngresso() {
     if (obj.dto.totalIngressos > totalIngressosAtual())
       obj.dto.qntTipoDeIngresso++;
     else Swal.fire({ title: MSG.OPS, icon: "warning", text: MSG.AUMENTE_QNT });
   }
+
+  /***************************** REMOVE INGRESSO ******************************/
 
   function removeIngresso() {
     obj.dto.tiposDeIngresso.pop();

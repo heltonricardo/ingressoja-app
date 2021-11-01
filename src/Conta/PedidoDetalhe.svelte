@@ -192,22 +192,25 @@
           >{pedido.statusPedido}</td
         >
       </tr>
-      <tr>
-        <td class="titulo">Status do pagamento:</td>
-        <td
-          >{#if pedido.statusPagamento === STATUSPGTO.APROVADO}
-            <span class="texto-verde"> Aprovado </span>
-          {:else if pedido.statusPagamento === STATUSPGTO.RECUSADO}
-            <span class="texto-vermelho">Recusado</span>
-          {:else if pedido.statusPagamento === STATUSPGTO.REEMBOLSADO}
-            <span class="texto-azul">Reembolsado</span>
-          {:else if pedido.statusPagamento === STATUSPGTO.PENDENTE}
-            <span class="texto-amarelo"> Pendente </span> -
-            <a target="_blank" href={pedido.urlPagamento}>Página de pagamento</a
-            >
-          {/if}</td
-        >
-      </tr>
+      {#if pedido.statusPagamento !== STATUSPGTO.NAO_SE_APLICA}
+        <tr>
+          <td class="titulo">Status do pagamento:</td>
+          <td
+            >{#if pedido.statusPagamento === STATUSPGTO.APROVADO}
+              <span class="texto-verde"> Aprovado </span>
+            {:else if pedido.statusPagamento === STATUSPGTO.RECUSADO}
+              <span class="texto-vermelho">Recusado</span>
+            {:else if pedido.statusPagamento === STATUSPGTO.REEMBOLSADO}
+              <span class="texto-azul">Reembolsado</span>
+            {:else if pedido.statusPagamento === STATUSPGTO.PENDENTE}
+              <span class="texto-amarelo"> Pendente </span> -
+              <a target="_blank" href={pedido.urlPagamento}
+                >Página de pagamento</a
+              >
+            {/if}</td
+          >
+        </tr>
+      {/if}
       <tr>
         <td class="titulo">Total:</td>
         <td>R$ {valorVirgula(pedido.valorTotal)}</td>
@@ -301,7 +304,7 @@
     </div>
 
     <div class="navegacao">
-      {#if pedido.statusPagamento === STATUSPGTO.APROVADO}
+      {#if pedido.statusPedido === STATUSPEDIDO.PROCESSADO}
         <Botao on:click={() => dispatch("meusingressos", pedido)}
           >Ver ingressos</Botao
         >

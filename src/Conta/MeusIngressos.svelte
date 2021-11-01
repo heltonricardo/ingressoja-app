@@ -50,7 +50,7 @@
   {/each}
 
   <div class="navegacao">
-    <Botao on:click={window.print}>Imprimir</Botao>
+    <Botao on:click={() => window.print()}>Imprimir</Botao>
     <Botao on:click={() => dispatch("meuspedidos")}>Voltar</Botao>
   </div>
 </div>

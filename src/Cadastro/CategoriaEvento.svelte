@@ -5,9 +5,10 @@
 
   import {
     putCategoriaEvento,
-    getCategoriasEvento,
     postCategoriaEvento,
     deleteCategoriaEvento,
+    reativarCategoriaEvento,
+    getCategoriasEventoAdmin,
   } from "../Conexao/categoriaEventoConex";
 
   import MSG from "../ENUM/MSG";
@@ -21,7 +22,7 @@
   let nome = "";
   let carregando = false;
   let tocarCampos = false;
-  let categorias = getCategoriasEvento();
+  let categorias = getCategoriasEventoAdmin();
 
   $: nomeValido = validator.isLength(nome.trim(), { min: 1, max: 50 });
 
@@ -30,13 +31,12 @@
       tocarCampos = true;
       return;
     }
-
     tocarCampos = false;
     carregando = true;
     nome = nome.trim();
     const sucesso = await postCategoriaEvento({ nome });
     if (sucesso) {
-      categorias = await getCategoriasEvento();
+      categorias = getCategoriasEventoAdmin();
       nome = "";
     }
     carregando = false;
@@ -60,7 +60,7 @@
       carregando = true;
       res = await putCategoriaEvento({ nome: novoNome }, categoria.id);
     }
-    if (res) categorias = getCategoriasEvento();
+    if (res) categorias = getCategoriasEventoAdmin();
     carregando = false;
   }
 
@@ -77,7 +77,27 @@
         if (temCerteza.isConfirmed) {
           carregando = true;
           deleteCategoriaEvento(categoria.id).then((res) => {
-            if (res) categorias = getCategoriasEvento();
+            if (res) categorias = getCategoriasEventoAdmin();
+          });
+        }
+      })
+      .then(() => (carregando = false));
+  }
+
+  async function reativar(categoria) {
+    Swal.fire({
+      icon: "warning",
+      focusCancel: true,
+      title: MSG.CERTEZA,
+      showCancelButton: true,
+      text: MSG.CATEGORIA_REATIVAR,
+      cancelButtonText: "Cancelar",
+    })
+      .then((temCerteza) => {
+        if (temCerteza.isConfirmed) {
+          carregando = true;
+          reativarCategoriaEvento(categoria.id).then((res) => {
+            if (res) categorias = getCategoriasEventoAdmin();
           });
         }
       })
@@ -160,6 +180,10 @@
     display: flex;
     justify-content: center;
   }
+
+  .inativada {
+    color: red;
+  }
 </style>
 
 {#if carregando}
@@ -174,18 +198,32 @@
     {#if categorias.length}
       <table class="tabela">
         <tr>
-          <th>Categoria</th>
+          <th>Id</th>
           <th>Nome</th>
+          <th>Ativa?</th>
           <th>Ações</th>
         </tr>
 
         {#each categorias as categoria}
-          <tr>
-            <td>#{categoria.id}</td>
+          <tr class:inativada={!categoria.ativo}>
+            <td>{categoria.id}</td>
             <td>{categoria.nome}</td>
-            <td class="acoes">
-              <MiniBotao on:click={() => editar(categoria)}>Editar</MiniBotao>
-              <MiniBotao on:click={() => excluir(categoria)}>Excluir</MiniBotao>
+            <td>{categoria.ativo ? "Sim" : "Não"}</td>
+            <td>
+              <div class="acoes">
+                {#if categoria.ativo}
+                  <MiniBotao on:click={() => editar(categoria)}
+                    >Editar</MiniBotao
+                  >
+                  <MiniBotao on:click={() => excluir(categoria)}
+                    >Inativar</MiniBotao
+                  >
+                {:else}
+                  <MiniBotao on:click={() => reativar(categoria)}
+                    >Reativar</MiniBotao
+                  >
+                {/if}
+              </div>
             </td>
           </tr>
         {/each}

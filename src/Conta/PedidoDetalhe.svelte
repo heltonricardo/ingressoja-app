@@ -87,6 +87,7 @@
     word-break: break-all;
     border-radius: 7px;
     overflow: hidden;
+    margin: 1rem 0 3rem 0;
   }
 
   .tabela-itens td,
@@ -121,11 +122,11 @@
     display: flex;
     margin-bottom: 3rem;
   }
-
+  
   .detalhes {
     display: flex;
     line-height: 2rem;
-    margin: 3rem 0;
+    margin-bottom: 3rem;
   }
 
   .rotulos {
@@ -246,62 +247,64 @@
       {/each}
     </table>
 
-    <div class="detalhes">
-      <div class="rotulos">
-        <span class="local">
-          {#if pedido.evento.online}
+    {#if pedido.statusPedido === STATUSPEDIDO.PROCESSADO}
+      <div class="detalhes">
+        <div class="rotulos">
+          <span class="local">
+            {#if pedido.evento.online}
+              <p>
+                <i class="fas fa-mouse-pointer" />   Evento On-line:
+              </p>
+            {:else}
+              <p>
+                <i class="fas fa-location-arrow" />  Local:
+              </p>
+            {/if}
+          </span>
+          <span class="data-hora-inicio">
             <p>
-              <i class="fas fa-mouse-pointer" />   Evento On-line:
+              <i class="fas fa-clock" />  Início:
             </p>
-          {:else}
+          </span>
+          <span class="data-hora-termino">
             <p>
-              <i class="fas fa-location-arrow" />  Local:
+              <i class="fas fa-hand-point-left" />  Término:
             </p>
-          {/if}
-        </span>
-        <span class="data-hora-inicio">
-          <p>
-            <i class="fas fa-clock" />  Início:
-          </p>
-        </span>
-        <span class="data-hora-termino">
-          <p>
-            <i class="fas fa-hand-point-left" />  Término:
-          </p>
-        </span>
-      </div>
-      <div class="dados">
-        <span class="local">
-          {#if pedido.evento.online}
-            <p>
-              <a target="_blank" href={pedido.evento.url}>Acessar</a>
-            </p>
-          {:else}
-            <p>
-              {pedido.evento.logradouro}, {pedido.evento.numero} -
-              {pedido.evento.bairro} •
-              {pedido.evento.cidade}-{pedido.evento.uf} • CEP: {maskBr.cep(
-                pedido.evento.cep
-              )}
-            </p>
-          {/if}
-        </span>
+          </span>
+        </div>
+        <div class="dados">
+          <span class="local">
+            {#if pedido.evento.online}
+              <p>
+                <a target="_blank" href={pedido.evento.url}>Acessar</a>
+              </p>
+            {:else}
+              <p>
+                {pedido.evento.logradouro}, {pedido.evento.numero} -
+                {pedido.evento.bairro} •
+                {pedido.evento.cidade}-{pedido.evento.uf} • CEP: {maskBr.cep(
+                  pedido.evento.cep
+                )}
+              </p>
+            {/if}
+          </span>
 
-        <span class="data-hora-inicio">
-          <p>
-            {extrairDataHora(pedido.evento.inicio).data} •
-            {extrairDataHora(pedido.evento.inicio).horario}
-          </p>
-        </span>
+          <span class="data-hora-inicio">
+            <p>
+              {extrairDataHora(pedido.evento.inicio).data} •
+              {extrairDataHora(pedido.evento.inicio).horario}
+            </p>
+          </span>
 
-        <span class="data-hora-termino">
-          <p>
-            {extrairDataHora(pedido.evento.termino).data} •
-            {extrairDataHora(pedido.evento.termino).horario}
-          </p>
-        </span>
+          <span class="data-hora-termino">
+            <p>
+              {extrairDataHora(pedido.evento.termino).data} •
+              {extrairDataHora(pedido.evento.termino).horario}
+            </p>
+          </span>
+        </div>
       </div>
-    </div>
+    {/if}
 
     <div class="navegacao">
       {#if pedido.statusPedido === STATUSPEDIDO.PROCESSADO}

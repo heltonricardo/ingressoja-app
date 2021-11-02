@@ -42,9 +42,11 @@ const MSG = Object.freeze({
     "Não é possível alterar/excluir eventos que possuem ingresso(s) \
     vendido(s)!",
   CATEGORIA_EXCLUIR:
-    "A categoria será excluída. Ela não poderá ser usada como filtro e nenhum \
-    evento poderá ser categorizado à ela. Essa operação não poderá ser \
-    desfeita!",
+    "A categoria será inativada. Ela não poderá ser usada como filtro e nenhum \
+    evento poderá ser categorizado nela!",
+  CATEGORIA_REATIVAR:
+    "A categoria será reativada. Ela poderá ser usada como filtro e os evento \
+    poderão ser categorizados nela!",
   AUMENTE_QNT:
     "Para adicionar mais tipos de ingresso, aumente a quantidade total de \
     ingressos do evento",

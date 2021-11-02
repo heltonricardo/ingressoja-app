@@ -113,6 +113,26 @@ export async function getCategoriasEvento() {
   return null;
 }
 
+export async function getCategoriasEventoAdmin() {
+  let resposta;
+
+  try {
+    resposta = await fetch(`${PATH.CATEGORIA_EVENTO}/admin`);
+  } catch (error) {
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
+    return null;
+  }
+
+  const status = resposta.status;
+
+  if (status === STATUSHTTP.OK) {
+    const categoriasEvento = await resposta.json();
+    return categoriasEvento;
+  }
+
+  return null;
+}
+
 export async function deleteCategoriaEvento(id) {
   if (
     !autenticacao.estaLogado() ||
@@ -135,10 +155,40 @@ export async function deleteCategoriaEvento(id) {
       title: MSG.BOM,
       text: MSG.EXCLUIDA,
       icon: "success",
-      showCancelButton: true,
-      cancelButtonText: "Cancelar",
-      focusCancel: true,
-      timer: 5000,
+      timer: 2000,
+      timerProgressBar: true,
+    });
+    return true;
+  } else if (status === STATUSHTTP.BAD_REQUEST) {
+    Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
+  }
+
+  return null;
+}
+
+export async function reativarCategoriaEvento(id) {
+  if (
+    !autenticacao.estaLogado() ||
+    autenticacao.tipoLogado() !== TIPOCADASTRO.ADMINISTRADOR
+  )
+    return null;
+
+  let res;
+  try {
+    res = await fetch(`${PATH.CATEGORIA_EVENTO}/${id}`, { method: "PATCH" });
+  } catch (error) {
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
+    return null;
+  }
+
+  const status = res.status;
+
+  if (status === STATUSHTTP.OK) {
+    Swal.fire({
+      title: MSG.BOM,
+      text: MSG.OK,
+      icon: "success",
+      timer: 2000,
       timerProgressBar: true,
     });
     return true;

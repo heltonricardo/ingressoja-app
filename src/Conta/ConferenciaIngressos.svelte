@@ -22,6 +22,7 @@
 
   export let id;
 
+  let yScroll;
   let qrScanner;
   let videoPreview;
   let listaFiltrada;
@@ -76,23 +77,22 @@
   }
 
   async function utilizar(idIngresso) {
-    Swal.fire({
+    const opcao = await Swal.fire({
       title: `Realizar check-in do ingresso #${idIngresso}?`,
       icon: "question",
       showCancelButton: true,
       cancelButtonText: "Cancelar",
-    })
-      .then((temCerteza) => {
-        if (temCerteza.isConfirmed) {
-          return utilizarIngresso(idIngresso);
-        }
-      })
-      .then((res) => {
-        if (res) {
-          console.log("sadsda");
-          evento = getItensVendidos(id);
-        }
-      });
+    });
+    if (opcao.isConfirmed) {
+      const sucesso = await utilizarIngresso(idIngresso);
+      if (sucesso) {
+        const yPosition = yScroll;
+        evento = getItensVendidos(id);
+        pesquisa = "";
+        listaFiltrada = filtro();
+        listaFiltrada.then(() => window.scrollTo(0, yPosition));
+      }
+    }
   }
 
   function ingressoDoEvento(id, itens) {
@@ -236,6 +236,7 @@
   }
 </style>
 
+<svelte:window bind:scrollY={yScroll} />
 <div class="corpo">
   <h1>Conferência de Ingressos</h1>
   {#await evento}

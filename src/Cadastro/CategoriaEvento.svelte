@@ -36,7 +36,7 @@
     nome = nome.trim();
     const sucesso = await postCategoriaEvento({ nome });
     if (sucesso) {
-      categorias = await getCategoriasEvento();
+      categorias = getCategoriasEvento();
       nome = "";
     }
     carregando = false;

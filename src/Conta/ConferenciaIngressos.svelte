@@ -145,7 +145,6 @@
 
   .evento {
     margin: 2rem;
-    align-self: flex-start;
   }
 
   .tabela {
@@ -230,6 +229,10 @@
     -moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);
     transform: scaleX(-1);
+  }
+
+  .nowrap {
+    white-space: nowrap;
   }
 </style>
 
@@ -317,7 +320,7 @@
         {#await listaFiltrada then listaDeItens}
           {#each listaDeItens as item}
             <tr class:utilizado={item.utilizado}>
-              <td>{item.id}</td>
+              <td class="nowrap">{item.id}</td>
               <td>{item.ingressante}</td>
               <td>{maskBr.cpf(item.cpf)}</td>
               <td>{item.utilizado ? "Sim" : "Não"}</td>

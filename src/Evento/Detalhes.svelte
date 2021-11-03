@@ -216,10 +216,12 @@
       </p>
     </span>
 
-    {#if !evento.vendaPausada && evento.tiposDeIngresso.length}
+    {#if evento.tiposDeIngresso.length}
       <h2 class="titulo escolha">Selecione os ingressos</h2>
+    {:else if evento.ingressosEsgotados}
+      <h2 class="sem-ingressos">Ingressos esgotados 🤦🏻‍♂️</h2>
     {:else}
-      <h2 class="sem-ingressos">Ingressos não disponíveis</h2>
+      <h2 class="sem-ingressos">Vendas em breve 👀</h2>
     {/if}
 
     {#each evento.tiposDeIngresso as tipoDeIngresso}

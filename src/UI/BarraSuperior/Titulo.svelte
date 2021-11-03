@@ -1,7 +1,7 @@
 <style>
   .content {
     display: flex;
-    height: inherit;
+    height: 5rem;
     align-items: center;
     text-decoration: none;
     color: var(--roxo2);
@@ -20,7 +20,7 @@
   }
   
   .logo {
-    width: 5rem;
+    width: 3.5rem;
     margin-right: 1rem;
     -webkit-filter: drop-shadow(1px 1px 1px #222);
     filter: drop-shadow(1px 1px 1px #222);

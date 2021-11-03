@@ -36,7 +36,7 @@
     max: 255,
   });
   $: emailValido = validator.isEmail(email);
-  $: bancoValido = validator.isLength(publicToken, { min: 1, max: 50 });
+  $: bancoValido = validator.isLength(publicToken, { min: 41, max: 41 });
   $: senhaValida = validator.isLength(senha, { min: 6, max: 50 });
   $: senha2Valida = validator.equals(senha, senha2) && senhaValida;
 

@@ -166,7 +166,11 @@ export async function deleteProdutora() {
   if (status === STATUSHTTP.OK) {
     autenticacao.deslogar();
     return true;
-  } else if (status === STATUSHTTP.BAD_REQUEST) {
+  } //
+  else if (status === STATUSHTTP.CONFLICT) {
+    Swal.fire(MSG.RUIM, MSG.POSSUI_EVENTOS, "error");
+  } //
+  else if (status === STATUSHTTP.BAD_REQUEST) {
     Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
   }
 

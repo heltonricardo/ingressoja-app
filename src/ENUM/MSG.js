@@ -83,6 +83,9 @@ const MSG = Object.freeze({
   EXCLUIR_DESPESA:
     "Esse lançamento de despesa será excluído. Essa operação não poderá ser \
     desfeita!",
+  POSSUI_EVENTOS:
+    "Não foi possível concluir a exclusão pois existe um ou mais eventos não \
+    finalizados e vinculados a esse cadastro!",
 });
 
 export default MSG;

@@ -238,7 +238,7 @@
 
 <svelte:window bind:scrollY={yScroll} />
 <div class="corpo">
-  <h1>Conferência de Ingressos</h1>
+  <h1>Check-in de Ingressos</h1>
   {#await evento}
     <Aguarde />
   {:then evento}

@@ -57,7 +57,7 @@
       >Gerência de Eventos</Botao
     >
     <Botao on:click={() => dispatch("conferencia")}
-      >Conferência de Ingressos</Botao
+      >Check-in de Ingressos</Botao
     >
     <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
   </div>

@@ -45,7 +45,7 @@
 
   function voltar() {
     if (dados) dispatch("meusdados");
-    else dispatch("minhaconta");
+    else dispatch("administradores");
   }
 
   onMount(() => {
@@ -135,6 +135,12 @@
       on:input={(event) => (senha2 = event.target.value)}
     />
   </div>
+
+  {#if dados}
+  <div class="botoes">
+    <Botao>Editar access token</Botao>
+  </div>
+{/if}
 
   <div class="botoes">
     <Botao on:click={voltar}>Voltar</Botao>

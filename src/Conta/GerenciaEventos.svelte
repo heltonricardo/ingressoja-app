@@ -125,7 +125,7 @@
 
 <div class="corpo">
   {#if conferencia}
-    <h1>Conferência de Ingressos</h1>
+    <h1>Check-in de Ingressos</h1>
     <p>Escolha o evento:</p>
     <br />
   {:else}

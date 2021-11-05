@@ -179,7 +179,6 @@
   <Administrador
     {dados}
     on:meusdados={modoMeusDados}
-    on:minhaconta={modoMinhaConta}
     on:administradores={modoAdministradores}
   />
 {:else if modo === MODO.DETALHE_PEDIDO}

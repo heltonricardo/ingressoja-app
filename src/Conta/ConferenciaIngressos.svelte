@@ -99,11 +99,12 @@
     return itens.some((i) => i.id == id);
   }
 
-  function ler(itensPedido) {
+  async function ler(itensPedido, qr = false) {
     const cod = onlyNumeros(utilizacao);
     if (parseInt(cod))
-      if (ingressoDoEvento(cod, itensPedido)) utilizar(cod);
-      else Swal.fire(MSG.RUIM, MSG.INGRESSO_NAO_PERTENCE, "error");
+      if (ingressoDoEvento(cod, itensPedido)) await utilizar(cod);
+      else await Swal.fire(MSG.RUIM, MSG.INGRESSO_NAO_PERTENCE, "error");
+    qr && qrScanner.start();
   }
 
   function qrCode() {
@@ -113,9 +114,9 @@
   onMount(() => {
     evento.then((ev) => {
       qrScanner = new QrScanner(videoPreview, (result) => {
-        utilizacao = "teste";
+        utilizacao = result;
         qrScanner.stop();
-        ler(ev.itensPedido);
+        ler(ev.itensPedido, true);
       });
     });
   });
@@ -292,6 +293,7 @@
             type="number"
             id="utilizacao"
             validar={false}
+            value={utilizacao}
             on:input={(e) => (utilizacao = e.target.value)}
             label="Insira o id para realizar check-in ou leia o QR Code"
             on:keypress={(e) =>

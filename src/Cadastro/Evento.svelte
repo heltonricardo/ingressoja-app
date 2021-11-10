@@ -134,7 +134,9 @@
   $: ufValida = obj.dto.online
     ? true
     : ESTADOS.includes(obj.dto.uf.toLowerCase());
-  $: cepValido = obj.dto.online ? true : validateBr.cep(obj.dto.cep);
+  $: cepValido = obj.dto.online
+    ? true
+    : validateBr.cep(onlyNumeros(obj.dto.cep));
   $: totalIngressosValido = obj.dto.totalIngressos > 0;
 
   $: formularioValido =
@@ -254,10 +256,10 @@
     const cep = onlyNumeros(obj.dto.cep);
     const endereco = await getAutoEndereco(cep);
     if (endereco) {
-      obj.dto.uf = endereco.uf;
-      obj.dto.bairro = endereco.bairro;
-      obj.dto.cidade = endereco.localidade;
-      obj.dto.logradouro = endereco.logradouro;
+      obj.dto.uf = endereco.uf || "";
+      obj.dto.bairro = endereco.bairro || "";
+      obj.dto.cidade = endereco.localidade || "";
+      obj.dto.logradouro = endereco.logradouro || "";
     }
     carregando = false;
   }
@@ -501,7 +503,7 @@
       <Entrada
         id="cep"
         label="CEP"
-        maxlength="9"
+        maxlength="20"
         valido={cepValido}
         value={obj.dto.cep}
         tocado={tocarCampos}

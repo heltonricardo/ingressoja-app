@@ -24,8 +24,8 @@
   let email = dados ? dados.email : "";
   let cpf = dados ? maskBr.cpf(dados.cpf) : "";
 
-  $: cpfValido = validateBr.cpf(cpf);
   $: emailValido = validator.isEmail(email);
+  $: cpfValido = validateBr.cpf(onlyNumeros(cpf));
   $: senhaValida = validator.isLength(senha, { min: 6, max: 50 });
   $: senha2Valida = validator.equals(senha, senha2) && senhaValida;
   $: nomeValido = validator.isLength(nome.trim(), { min: 1, max: 255 });

@@ -3,6 +3,7 @@
   import { validateBr } from "js-brasil";
 
   import Entrada from "../UI/Entrada.svelte";
+  import { onlyNumeros } from "../utils/sanitarizador";
 
   export let ingresso = {
     cpf: "",
@@ -18,7 +19,7 @@
     min: 1,
     max: 255,
   });
-  $: cpfValido = validateBr.cpf(ingresso.cpf || "");
+  $: cpfValido = validateBr.cpf(onlyNumeros(ingresso.cpf) || "");
   $: validar(nomeValido && cpfValido);
 </script>
 

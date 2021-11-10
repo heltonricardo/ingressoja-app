@@ -30,7 +30,7 @@
     min: 1,
     max: 255,
   });
-  $: cnpjValido = validateBr.cnpj(cnpj);
+  $: cnpjValido = validateBr.cnpj(onlyNumeros(cnpj));
   $: nomeFantasiaValido = validator.isLength(nomeFantasia.trim(), {
     min: 1,
     max: 255,
@@ -147,7 +147,7 @@
     value={publicToken}
     tocado={tocarCampos}
     valido={bancoValido}
-    label="PublicToken do Mercado Livre"
+    label="Public Token no Mercado Pago"
     mensagemValidacao="Insira um public token válido"
     on:input={(event) => (publicToken = event.target.value)}
   />

@@ -36,7 +36,8 @@
   }
 
   @media print {
-    .navegacao, h1 {
+    .navegacao,
+    h1 {
       display: none !important;
     }
   }
@@ -51,6 +52,6 @@
 
   <div class="navegacao">
     <Botao on:click={() => window.print()}>Imprimir</Botao>
-    <Botao on:click={() => dispatch("meuspedidos")}>Voltar</Botao>
+    <Botao on:click={() => dispatch("detalhespedido", dados.id)}>Voltar</Botao>
   </div>
 </div>

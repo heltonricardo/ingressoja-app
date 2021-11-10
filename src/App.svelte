@@ -207,7 +207,7 @@
 {:else if modo === MODO.PRODUTORAS}
   <Produtoras on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.MEUS_INGRESSOS}
-  <MeusIngressos {dados} on:meuspedidos={modoMeusPedidos} />
+  <MeusIngressos {dados} on:detalhespedido={modoPedido} />
 {:else if modo === MODO.CONFERENCIA}
   <GerenciaEventos
     conferencia={true}

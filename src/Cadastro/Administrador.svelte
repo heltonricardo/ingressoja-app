@@ -135,13 +135,6 @@
       on:input={(event) => (senha2 = event.target.value)}
     />
   </div>
-
-  {#if dados}
-  <div class="botoes">
-    <Botao>Editar access token</Botao>
-  </div>
-{/if}
-
   <div class="botoes">
     <Botao on:click={voltar}>Voltar</Botao>
     <Botao on:click={salvar} invalido={!formularioValido}>Salvar</Botao>

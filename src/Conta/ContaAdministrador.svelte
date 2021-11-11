@@ -1,24 +1,14 @@
 <script>
-  import autenticacao from "../Autenticacao/autenticacao";
-  import { getAdministrador } from "../Conexao/administradorConex";
   import { createEventDispatcher } from "svelte";
+
   import Botao from "../UI/Botao.svelte";
-  import Aguarde from "../UI/Aguarde.svelte";
 
   const dispatch = createEventDispatcher();
-
-  async function carregaDados() {
-    const res = await getAdministrador();
-    if (!res) dispatch("voltar");
-    return res;
-  }
-
-  let dadosCarregados = carregaDados();
 </script>
 
 <style>
   .corpo {
-    width: 40%;
+    width: 30rem;
     min-width: 30rem;
     margin: 2rem auto;
     min-height: calc(100vh - 21rem);
@@ -49,21 +39,13 @@
   }
 </style>
 
-{#await dadosCarregados}
-  <Aguarde />
-{:then administrador}
-  <div class="corpo">
-    <h1>Minha Conta</h1>
-    <p>
-      Olá, {administrador.nome.split(" ")[0]}! Selecione uma opção abaixo:
-    </p>
-    <Botao on:click={() => dispatch("meusdados")}>Meus Dados</Botao>
-    <Botao on:click={() => dispatch("administradores")}>Administradores</Botao>
-    <Botao on:click={() => dispatch("compradores")}>Compradores</Botao>
-    <Botao on:click={() => dispatch("produtoras")}>Produtoras</Botao>
-    <Botao on:click={() => dispatch("novacategoria")}
-      >Categorias de Evento</Botao
-    >
-    <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
-  </div>
-{/await}
+<div class="corpo">
+  <h1>Minha Conta</h1>
+  <p>Selecione uma das opções abaixo:</p>
+  <Botao on:click={() => dispatch("meusdados")}>Meus Dados</Botao>
+  <Botao on:click={() => dispatch("administradores")}>Administradores</Botao>
+  <Botao on:click={() => dispatch("compradores")}>Compradores</Botao>
+  <Botao on:click={() => dispatch("produtoras")}>Produtoras</Botao>
+  <Botao on:click={() => dispatch("novacategoria")}>Categorias de Evento</Botao>
+  <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
+</div>

@@ -1,9 +1,9 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
-  import { getComprador } from "../Conexao/compradorConex";
-  import Aguarde from "../UI/Aguarde.svelte";
   import Botao from "../UI/Botao.svelte";
+  import Aguarde from "../UI/Aguarde.svelte";
+  import { getComprador } from "../Conexao/compradorConex";
 
   const dispatch = createEventDispatcher();
 
@@ -18,7 +18,7 @@
 
 <style>
   .corpo {
-    width: 40%;
+    width: 30rem;
     min-width: 30rem;
     margin: 2rem auto;
     min-height: calc(100vh - 21rem);
@@ -54,9 +54,7 @@
 {:then comprador}
   <div class="corpo">
     <h1>Minha Conta</h1>
-    <p>
-      Olá, {comprador.nome.split(" ")[0]}! Selecione uma opção abaixo:
-    </p>
+    <p>Selecione uma das opções abaixo:</p>
     <Botao on:click={() => dispatch("meusdados")}>Meus Dados</Botao>
     <Botao on:click={() => dispatch("meuspedidos")}>Meus Pedidos</Botao>
     <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>

@@ -6,10 +6,10 @@
   import { valorVirgula } from "../utils/formatador";
   import { extrairDataHora } from "../utils/manipulaDataHora";
 
-  let qrElemento;
-
   export let dados;
   export let i;
+
+  let qrElemento;
 
   const qrConfig = {
     text: `${dados.itensPedido[i].id}`,

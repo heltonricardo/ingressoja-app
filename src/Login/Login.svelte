@@ -1,9 +1,11 @@
 <script>
+  import validator from "validator";
   import { createEventDispatcher } from "svelte";
-  import autenticacao from "../Autenticacao/autenticacao";
+
   import Botao from "../UI/Botao.svelte";
-  import Entrada from "../UI/Entrada.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
+  import Entrada from "../UI/Entrada.svelte";
+  import autenticacao from "../Autenticacao/autenticacao";
 
   const dispatch = createEventDispatcher();
 
@@ -11,8 +13,22 @@
 
   let email = "";
   let senha = "";
+  let tocarCampos = false;
+
+  /*************************** VALIDAÇÃO DE CAMPOS ****************************/
+
+  $: emailValido = validator.isEmail(email);
+  $: senhaValida = validator.isLength(senha, { min: 6, max: 50 });
+  $: formularioValido = emailValido && senhaValida;
+
+  /********************************** ENTRAR **********************************/
 
   async function entrar() {
+    if (!formularioValido) {
+      tocarCampos = true;
+      return;
+    }
+
     carregando = true;
     const login = await autenticacao.logar({ email, senha }, true);
     carregando = false;
@@ -65,21 +81,26 @@
     <Entrada
       id="email"
       label="E-mail"
-      validar={false}
+      tocado={tocarCampos}
+      valido={emailValido}
+      mensagemValidacao="Insira um e-mail válido"
       on:input={(event) => (email = event.target.value)}
     />
     <Entrada
       id="senha"
       label="Senha"
+      maxlength="50"
       type="password"
-      validar={false}
+      tocado={tocarCampos}
+      valido={senhaValida}
       on:input={(event) => (senha = event.target.value)}
       on:keypress={(e) => "NumpadEnter".includes(e.code) && entrar()}
+      mensagemValidacao="A senha deve conter, pelo menos, 6 caracteres"
     />
   </div>
 
   <div class="botoes">
-    <Botao on:click={entrar}>Entrar</Botao>
+    <Botao on:click={entrar} invalido={!formularioValido}>Entrar</Botao>
     <div class="duplo">
       <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
       <Botao on:click={() => dispatch("cadastro")}>Cadastre-se</Botao>

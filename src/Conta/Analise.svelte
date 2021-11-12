@@ -1,10 +1,10 @@
 <script>
   import { maskBr } from "js-brasil";
   import { createEventDispatcher, onMount } from "svelte";
-  import Chart from "chart.js/auto"
 
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
+  import Grafico from "../UI/Grafico.svelte";
   import ANALISEGERAL from "../ENUM/ANALISEGERAL";
   import { valorVirgula } from "../utils/formatador";
   import { getAnalise } from "../Conexao/produtoraConex";
@@ -12,7 +12,6 @@
   const dispatch = createEventDispatcher();
   const geral = getAnalise();
 
-  let g1;
   let carregando = false;
   let tipoRelatorio = "geral";
   let ordem = ANALISEGERAL.TITULO;
@@ -26,29 +25,6 @@
   function somar(eventos, campo) {
     return eventos.reduce((acc, curr) => acc + curr[campo], 0);
   }
-
-  onMount(() => {
-
-    var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-var yValues = [55, 49, 44, 24, 15];
-var barColors = ["red", "green","blue","orange","brown"];
-    new Chart("g1", {
-  type: "pie",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValues
-    }]
-  },
-  options: {
-    title: {
-      display: true,
-      text: "World Wide Wine Production"
-    }
-  }
-});
-  });
 </script>
 
 <style>
@@ -159,6 +135,10 @@ var barColors = ["red", "green","blue","orange","brown"];
     display: flex;
   }
 
+  .graficos {
+    width: 100%;
+  }
+
   @media print {
     .corpo {
       width: 100%;
@@ -267,9 +247,12 @@ var barColors = ["red", "green","blue","orange","brown"];
         </tr>
       </table>
 
-      <div class="graficos">
-        <canvas class="grafico" id="g1" bind:this={g1} />
-      </div>
+      <Grafico
+        titulo="Quantidade de ingressos vendidos por evento"
+        dados={geral.eventos}
+        legenda={ANALISEGERAL.TITULO}
+        valor={ANALISEGERAL.INGRESSOS_VENDIDOS}
+      />
     {/await}
   {/if}
 

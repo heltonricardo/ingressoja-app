@@ -1,6 +1,7 @@
 <script>
   import MODO from "./ENUM/MODO";
   import Login from "./Login/Login.svelte";
+  import Analise from "./Conta/Analise.svelte";
   import Evento from "./Cadastro/Evento.svelte";
   import Despesas from "./Conta/Despesas.svelte";
   import Detalhes from "./Evento/Detalhes.svelte";
@@ -28,7 +29,7 @@
   let evento = null;
   let idPedido = null;
   let idCategoria = null;
-  let modo = MODO.NORMAL;
+  let modo = MODO.ANALISES;
   let termoPesquisa = "";
 
   function limpaFiltroPesquisa() {
@@ -107,6 +108,8 @@
 
   const pesquisar = (event) => (termoPesquisa = event.detail);
 
+  const modoAnalise = () => trocaModo(MODO.ANALISES);
+
   const modoMeusDados = () => trocaModo(MODO.MEUS_DADOS);
 
   const modoProdutoras = () => trocaModo(MODO.PRODUTORAS);
@@ -152,6 +155,7 @@
 {:else if modo === MODO.MINHA_CONTA}
   <MinhaConta
     on:voltar={modoNormal}
+    on:analises={modoAnalise}
     on:meusdados={modoMeusDados}
     on:minhaconta={modoMinhaConta}
     on:produtoras={modoProdutoras}
@@ -220,6 +224,8 @@
   <GerenciaEventos on:despesas={modoDespesas} on:minhaconta={modoMinhaConta} />
 {:else if modo === MODO.DESPESAS}
   <Despesas idEvento={id} on:gerenciaeventos={modoGerenciaEventos} />
+{:else if modo === MODO.ANALISES}
+  <Analise on:minhaconta={modoMinhaConta} />
 {/if}
 
 <BarraInferior />

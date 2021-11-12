@@ -1,19 +1,14 @@
 <script>
   import Swal from "sweetalert2";
   import { createEventDispatcher } from "svelte";
-
-  import {
-    deleteEvento,
-    podeAlterarEvento,
-    pausarRetomarVenda,
-  } from "../Conexao/eventoConex";
-
+  
   import MSG from "../ENUM/MSG";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import MiniBotao from "../UI/MiniBotao.svelte";
   import { getEventos } from "../Conexao/produtoraConex";
   import { extrairDataHora } from "../utils/manipulaDataHora";
+  import { pausarRetomarVenda } from "../Conexao/eventoConex";
 
   const dispatch = createEventDispatcher();
 

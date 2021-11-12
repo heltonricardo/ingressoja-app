@@ -25,6 +25,10 @@
   function somar(eventos, campo) {
     return eventos.reduce((acc, curr) => acc + curr[campo], 0);
   }
+
+  function autorizarGraficos(eventos) {
+    return eventos.some((e) => e[ANALISEGERAL.INGRESSOS_VENDIDOS]);
+  }
 </script>
 
 <style>
@@ -135,10 +139,6 @@
     display: flex;
   }
 
-  .graficos {
-    width: 100%;
-  }
-
   @media print {
     .corpo {
       width: 100%;
@@ -247,12 +247,22 @@
         </tr>
       </table>
 
-      <Grafico
-        titulo="Quantidade de ingressos vendidos por evento"
-        dados={geral.eventos}
-        legenda={ANALISEGERAL.TITULO}
-        valor={ANALISEGERAL.INGRESSOS_VENDIDOS}
-      />
+      {#if autorizarGraficos(geral.eventos)}
+        <div class="graficos">
+          <Grafico
+            titulo="Quantidade de ingressos vendidos por evento"
+            dados={geral.eventos}
+            legenda={ANALISEGERAL.TITULO}
+            valor={ANALISEGERAL.INGRESSOS_VENDIDOS}
+          />
+          <Grafico
+            titulo="Receita líquida por evento"
+            dados={geral.eventos}
+            legenda={ANALISEGERAL.TITULO}
+            valor={ANALISEGERAL.RECEITA_LIQUIDA}
+          />
+        </div>
+      {/if}
     {/await}
   {/if}
 

@@ -1,6 +1,6 @@
 <script>
   import { maskBr } from "js-brasil";
-  import { createEventDispatcher, onMount } from "svelte";
+  import { createEventDispatcher } from "svelte";
 
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
@@ -16,11 +16,10 @@
   let tipoRelatorio = "geral";
   let ordem = ANALISEGERAL.TITULO;
 
-  function classificar(eventos) {
-    return eventos.sort((e1, e2) =>
+  $: classificar = (eventos) =>
+    eventos.sort((e1, e2) =>
       e1[ordem] < e2[ordem] ? -1 : e1[ordem] > e2[ordem] ? 1 : 0
     );
-  }
 
   function somar(eventos, campo) {
     return eventos.reduce((acc, curr) => acc + curr[campo], 0);
@@ -222,10 +221,24 @@
       <table class="tabela">
         <tr>
           <th>Evento</th>
-          <th>Ingressos colocados a venda</th>
-          <th>Porcentagem de ingressos vendidos</th>
-          <th>Ingressos vendidos</th>
-          <th>Receita líquida</th>
+          <th>
+            <p>Ingressos</p>
+            <p>colocados</p>
+            <p>a venda</p>
+          </th>
+          <th>
+            <p>Porcentagem</p>
+            <p>de ingressos</p>
+            <p>vendidos</p>
+          </th>
+          <th>
+            <p>Ingressos</p>
+            <p>vendidos</p>
+          </th>
+          <th>
+            <p>Receita</p>
+            <p>líquida</p>
+          </th>
         </tr>
         {#each classificar(geral.eventos) as evento}
           <tr>

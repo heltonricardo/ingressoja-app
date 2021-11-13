@@ -319,7 +319,7 @@
           <select id="selecao" bind:value={ordemTabDespesas}>
             <option value={TABDESPESAS.TITULO}>Título</option>
             <option value={TABDESPESAS.RECEITA_LIQUIDA}
-              >Ingressos colocados a venda</option
+              >Receita líquida</option
             >
           </select>
         </p>

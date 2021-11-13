@@ -12,7 +12,7 @@
   let limitarAltura = true;
   let grafico;
   let tamanho = dados?.length | 0;
-  let tipoGrafico = TIPOGRAFICO.PIE;
+  let tipoGrafico = TIPOGRAFICO.DOUGHNUT;
 
   let cores = [...Array(tamanho)].map(
     () =>
@@ -30,9 +30,7 @@
     },
   };
 
-  onMount(() => {
-    grafico = new Chart(canvas, graficoConfig);
-  });
+  onMount(() => (grafico = new Chart(canvas, graficoConfig)));
 
   function trocarGrafico() {
     if (tipoGrafico === TIPOGRAFICO.BARRAS) {
@@ -40,20 +38,16 @@
       graficoConfig = {
         ...graficoConfig,
         type: tipoGrafico,
-        options: {
-          indexAxis: "y",
-          legend: { display: false },
-        },
+        options: { indexAxis: "y", plugins: { legend: { display: false } } },
       };
     } else {
       limitarAltura = true;
       graficoConfig = {
         ...graficoConfig,
         type: tipoGrafico,
-        options: {},
+        options: null,
       };
     }
-
     grafico.destroy();
     grafico = new Chart(canvas, graficoConfig);
   }
@@ -65,7 +59,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 4rem 0;
   }
 
   h3 {
@@ -80,6 +73,12 @@
 
   .alturaMax {
     max-height: 30rem;
+  }
+
+  @media print {
+    .tipo {
+      display: none !important;
+    }
   }
 </style>
 

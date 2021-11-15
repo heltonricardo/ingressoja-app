@@ -67,6 +67,15 @@
     if (opcao.isConfirmed)
       (await deleteDespesa(id)) && (evento = getDespesas(idEvento));
   }
+
+  function detalhar() {
+    Swal.fire({
+      title: "💰 Taxa de serviços IngressoJá!",
+      text: `Esse valor refere-se à taxa fixa de 10% cobrada pela Plataforma
+      IngressoJá! sobre cada pedido processado de um evento.`,
+      icon: "info",
+    });
+  }
 </script>
 
 <style>
@@ -229,9 +238,13 @@
             <td>R$ {valorVirgula(despesa.valor)}</td>
             <td>
               <div class="detalhes">
-                <MiniBotao on:click={() => excluir(despesa.id)}
-                  >Excluir</MiniBotao
-                >
+                {#if despesa.descricao !== "Taxa de serviços IngressoJá!"}
+                  <MiniBotao on:click={() => excluir(despesa.id)}
+                    >Excluir</MiniBotao
+                  >
+                {:else}
+                  <MiniBotao on:click={detalhar}>Detalhes</MiniBotao>
+                {/if}
               </div>
             </td>
           </tr>

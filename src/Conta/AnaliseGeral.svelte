@@ -7,8 +7,10 @@
 
   export let dados;
 
-  let ordemTabIngresso = TABINGRESSOS.TITULO;
   let ordemTabDespesas = TABDESPESAS.TITULO;
+  let ordemTabIngresso = TABINGRESSOS.TITULO;
+  let graficoDespesas = TABDESPESAS.RECEITA_BRUTA;
+  let graficoIngressos = TABINGRESSOS.INGRESSOS_VENDIDOS;
 
   $: classificarTabIngressos = (eventos) =>
     eventos.sort((e1, e2) =>
@@ -182,14 +184,10 @@
   {#if autorizarGraficos(dados.eventos)}
     <div>
       <p>
-        <label class="label-selecao" for="selecao">Gerar gráfico de:</label>
-        <select id="selecao" bind:value={ordemTabIngresso}>
-          <option value={TABINGRESSOS.TITULO}>Nome do Evento</option>
+        <label class="label-selecao" for="selecao">Gráfico para:</label>
+        <select id="selecao" bind:value={graficoIngressos}>
           <option value={TABINGRESSOS.TOTAL_INGRESSOS}
             >Ingressos colocados a venda</option
-          >
-          <option value={TABINGRESSOS.PORCENTAGEM_VENDIDA}
-            >Porcentagem de ingressos vendidos</option
           >
           <option value={TABINGRESSOS.INGRESSOS_VENDIDOS}
             >Ingressos vendidos</option
@@ -197,12 +195,19 @@
         </select>
       </p>
     </div>
-    <Grafico
-      titulo="Quantidade de ingressos vendidos por evento"
-      dados={dados.eventos}
-      legenda={TABINGRESSOS.TITULO}
-      valor={TABINGRESSOS.INGRESSOS_VENDIDOS}
-    />
+    {#if graficoIngressos === TABINGRESSOS.TOTAL_INGRESSOS}
+      <Grafico
+        dados={dados.eventos}
+        legenda={TABINGRESSOS.TITULO}
+        valor={TABINGRESSOS.TOTAL_INGRESSOS}
+      />
+    {:else if graficoIngressos === TABINGRESSOS.INGRESSOS_VENDIDOS}
+      <Grafico
+        dados={dados.eventos}
+        legenda={TABINGRESSOS.TITULO}
+        valor={TABINGRESSOS.INGRESSOS_VENDIDOS}
+      />
+    {/if}
   {/if}
 
   <h2 class="titulo-tabela">Despesas e Receitas</h2>
@@ -256,11 +261,36 @@
   <div class="espacamento" />
 
   {#if autorizarGraficos(dados.eventos)}
-    <Grafico
-      titulo="Receita bruta por evento"
-      dados={dados.eventos}
-      legenda={TABDESPESAS.TITULO}
-      valor={TABDESPESAS.RECEITA_BRUTA}
-    />
+    <div>
+      <p>
+        <label class="label-selecao" for="selecao">Gráfico para:</label>
+        <select id="selecao" bind:value={graficoDespesas}>
+          <option value={TABDESPESAS.RECEITA_BRUTA}>Receita Bruta</option>
+          <option value={TABDESPESAS.TOTAL_DESPESAS}>Despesas</option>
+          <option value={TABDESPESAS.RECEITA_LIQUIDA}>Receita Líquida</option>
+        </select>
+      </p>
+    </div>
+
+    {#if graficoDespesas === TABDESPESAS.RECEITA_BRUTA}
+      <Grafico
+        dados={dados.eventos}
+        legenda={TABDESPESAS.TITULO}
+        valor={TABDESPESAS.RECEITA_BRUTA}
+      />
+    {:else if graficoDespesas === TABDESPESAS.TOTAL_DESPESAS}
+      <Grafico
+        dados={dados.eventos}
+        legenda={TABDESPESAS.TITULO}
+        valor={TABDESPESAS.TOTAL_DESPESAS}
+      />
+    {:else if graficoDespesas === TABDESPESAS.RECEITA_LIQUIDA}
+      <Grafico
+        somenteBarras={true}
+        dados={dados.eventos}
+        legenda={TABDESPESAS.TITULO}
+        valor={TABDESPESAS.RECEITA_LIQUIDA}
+      />
+    {/if}
   {/if}
 {/await}

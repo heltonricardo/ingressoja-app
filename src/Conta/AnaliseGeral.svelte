@@ -41,27 +41,26 @@
 
 <style>
   .titulo-tabela {
-    font-size: 1.8rem;
-    margin-top: 4rem;
-    margin-bottom: 0.5rem;
+    font-size: 3rem;
+    text-align: center;
+    align-self: center;
+    margin: 5rem 0 1rem 0;
   }
 
-  .classificacao {
-    align-self: flex-end;
-    margin-top: 0.5rem;
-  }
-
-  .label-selecao {
-    display: block;
-    margin-bottom: 0.5rem;
+  .minha-selecao {
+    display: flex;
+    align-items: center;
     width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .grafico {
+    width: fit-content;
+    margin: 4rem auto 2rem;
   }
 
   select {
     font: inherit;
-    align-self: center;
-    width: 100%;
-    margin-bottom: 2rem;
     border: none;
     outline: none;
     border-bottom: 2px solid #ccc;
@@ -70,6 +69,7 @@
     padding: 0.15rem 0;
     transition: border-color 0.1s ease-out;
     resize: none;
+    margin-left: 0.5rem;
   }
 
   select:focus {
@@ -115,12 +115,8 @@
     word-break: keep-all;
   }
 
-  .espacamento {
-    height: 1rem;
-  }
-
   @media print {
-    .classificacao {
+    .nao-imprimir {
       display: none !important;
     }
   }
@@ -130,6 +126,20 @@
   <Aguarde />
 {:then dados}
   <h2 class="titulo-tabela">Ingressos</h2>
+  <div class="minha-selecao nao-imprimir">
+    <label for="selecao1">Ordenar por:</label>
+    <select id="selecao1" bind:value={ordemTabIngresso}>
+      <option value={TABINGRESSOS.TITULO}>Nome do Evento</option>
+      <option value={TABINGRESSOS.TOTAL_INGRESSOS}
+        >Ingressos colocados a venda</option
+      >
+      <option value={TABINGRESSOS.PORCENTAGEM_VENDIDA}
+        >Porcentagem de ingressos vendidos</option
+      >
+      <option value={TABINGRESSOS.INGRESSOS_VENDIDOS}>Ingressos vendidos</option
+      >
+    </select>
+  </div>
   <table class="tabela">
     <tr>
       <th>Nome do evento</th>
@@ -161,39 +171,18 @@
       <th>{somar(dados.eventos, TABINGRESSOS.INGRESSOS_VENDIDOS)}</th>
     </tr>
   </table>
-  <div class="classificacao">
-    <p>
-      <label class="label-selecao" for="selecao">Ordenar por:</label>
-      <select id="selecao" bind:value={ordemTabIngresso}>
-        <option value={TABINGRESSOS.TITULO}>Nome do Evento</option>
+
+  {#if autorizarGraficos(dados.eventos)}
+    <div class="minha-selecao grafico">
+      <label for="selecao2">Gráfico para:</label>
+      <select id="selecao2" bind:value={graficoIngressos}>
         <option value={TABINGRESSOS.TOTAL_INGRESSOS}
           >Ingressos colocados a venda</option
-        >
-        <option value={TABINGRESSOS.PORCENTAGEM_VENDIDA}
-          >Porcentagem de ingressos vendidos</option
         >
         <option value={TABINGRESSOS.INGRESSOS_VENDIDOS}
           >Ingressos vendidos</option
         >
       </select>
-    </p>
-  </div>
-
-  <div class="espacamento" />
-
-  {#if autorizarGraficos(dados.eventos)}
-    <div>
-      <p>
-        <label class="label-selecao" for="selecao">Gráfico para:</label>
-        <select id="selecao" bind:value={graficoIngressos}>
-          <option value={TABINGRESSOS.TOTAL_INGRESSOS}
-            >Ingressos colocados a venda</option
-          >
-          <option value={TABINGRESSOS.INGRESSOS_VENDIDOS}
-            >Ingressos vendidos</option
-          >
-        </select>
-      </p>
     </div>
     {#if graficoIngressos === TABINGRESSOS.TOTAL_INGRESSOS}
       <Grafico
@@ -210,7 +199,16 @@
     {/if}
   {/if}
 
-  <h2 class="titulo-tabela">Despesas e Receitas</h2>
+  <h2 class="titulo-tabela">Receitas e Despesas</h2>
+  <div class="minha-selecao nao-imprimir">
+    <label for="selecao3">Ordenar por:</label>
+    <select id="selecao3" bind:value={ordemTabDespesas}>
+      <option value={TABDESPESAS.TITULO}>Título</option>
+      <option value={TABDESPESAS.RECEITA_BRUTA}>Receita bruta</option>
+      <option value={TABDESPESAS.TOTAL_DESPESAS}>Despesas</option>
+      <option value={TABDESPESAS.RECEITA_LIQUIDA}>Receita líquida</option>
+    </select>
+  </div>
   <table class="tabela">
     <tr>
       <th>Nome do evento</th>
@@ -233,7 +231,7 @@
       </tr>
     {/each}
     <tr>
-      <th>Total:</th>
+      <th>Totais:</th>
       <th>R$ {valorVirgula(somar(dados.eventos, TABDESPESAS.RECEITA_BRUTA))}</th
       >
       <th
@@ -246,30 +244,15 @@
       >
     </tr>
   </table>
-  <div class="classificacao">
-    <p>
-      <label class="label-selecao" for="selecao">Ordenar por:</label>
-      <select id="selecao" bind:value={ordemTabDespesas}>
-        <option value={TABDESPESAS.TITULO}>Título</option>
-        <option value={TABDESPESAS.RECEITA_BRUTA}>Receita bruta</option>
-        <option value={TABDESPESAS.TOTAL_DESPESAS}>Despesas</option>
-        <option value={TABDESPESAS.RECEITA_LIQUIDA}>Receita líquida</option>
-      </select>
-    </p>
-  </div>
-
-  <div class="espacamento" />
 
   {#if autorizarGraficos(dados.eventos)}
-    <div>
-      <p>
-        <label class="label-selecao" for="selecao">Gráfico para:</label>
-        <select id="selecao" bind:value={graficoDespesas}>
-          <option value={TABDESPESAS.RECEITA_BRUTA}>Receita Bruta</option>
-          <option value={TABDESPESAS.TOTAL_DESPESAS}>Despesas</option>
-          <option value={TABDESPESAS.RECEITA_LIQUIDA}>Receita Líquida</option>
-        </select>
-      </p>
+    <div class="minha-selecao grafico">
+      <label for="selecao4">Gráfico para:</label>
+      <select id="selecao4" bind:value={graficoDespesas}>
+        <option value={TABDESPESAS.RECEITA_BRUTA}>Receita Bruta</option>
+        <option value={TABDESPESAS.TOTAL_DESPESAS}>Despesas</option>
+        <option value={TABDESPESAS.RECEITA_LIQUIDA}>Receita Líquida</option>
+      </select>
     </div>
 
     {#if graficoDespesas === TABDESPESAS.RECEITA_BRUTA}

@@ -85,6 +85,12 @@
     color: var(--cinza3);
   }
 
+  select {
+    border: var(--cinza3) 1px dashed;
+    color: var(--cinza3);
+    outline: none;
+  }
+
   .alturaMax {
     max-height: 30rem;
   }

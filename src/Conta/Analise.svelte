@@ -5,12 +5,13 @@
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
   import AnaliseGeral from "./AnaliseGeral.svelte";
+  import AnaliseEvento from "./AnaliseEvento.svelte";
   import { getAnalise } from "../Conexao/produtoraConex";
 
   const geral = getAnalise();
   const dispatch = createEventDispatcher();
 
-  let tipoRelatorio = "geral";
+  let tipoRelatorio = "porEvento";
 </script>
 
 <style>
@@ -74,41 +75,43 @@
 
   {#await geral}
     <Aguarde />
-  {:then produtora}
+  {:then dados}
     <table class="dados-produtora">
       <tr>
         <td class="titulo">Produtora:</td>
-        <td>{produtora.razaoSocial}</td>
+        <td>{dados.razaoSocial}</td>
       </tr>
       <tr>
         <td class="titulo">CNPJ:</td>
-        <td>{maskBr.cnpj(produtora.cnpj)}</td>
+        <td>{maskBr.cnpj(dados.cnpj)}</td>
       </tr>
     </table>
+
+    <div class="opcoes">
+      <label>
+        <input
+          type="radio"
+          value="geral"
+          name="tipoCadastro"
+          bind:group={tipoRelatorio}
+        />Visualização Geral</label
+      >
+      <label>
+        <input
+          type="radio"
+          value="porEvento"
+          name="tipoRelatorio"
+          bind:group={tipoRelatorio}
+        />Visualização por Evento</label
+      >
+    </div>
+
+    {#if tipoRelatorio === "geral"}
+      <AnaliseGeral {dados} />
+    {:else if tipoRelatorio === "porEvento"}
+      <AnaliseEvento {dados} />
+    {/if}
   {/await}
-
-  <div class="opcoes">
-    <label>
-      <input
-        type="radio"
-        value="geral"
-        name="tipoCadastro"
-        bind:group={tipoRelatorio}
-      />Visualização Geral</label
-    >
-    <label>
-      <input
-        type="radio"
-        value="porEvento"
-        name="tipoRelatorio"
-        bind:group={tipoRelatorio}
-      />Visualização por Evento</label
-    >
-  </div>
-
-  {#if tipoRelatorio === "geral"}
-    <AnaliseGeral dados={geral} />
-  {/if}
 
   <div class="navegacao">
     <Botao on:click={() => window.print()}>Imprimir</Botao>

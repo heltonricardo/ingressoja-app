@@ -19,6 +19,7 @@
     box-sizing: border-box;
     padding: 1rem;
     border-radius: 5px;
+    justify-content: center;
   }
 
   p {

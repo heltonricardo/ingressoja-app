@@ -142,7 +142,7 @@
     <th>
       <p>Ingressos</p>
       <p>colocados</p>
-      <p>a venda</p>
+      <p>à venda</p>
     </th>
     <th>
       <p>Porcentagem</p>

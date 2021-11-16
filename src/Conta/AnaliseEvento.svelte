@@ -4,14 +4,16 @@
   import TABDESPESAS from "../ENUM/TABDESPESAS";
   import TABINGRESSOS from "../ENUM/TABINGRESSOS";
   import { valorVirgula } from "../utils/formatador";
+  import { tick } from "svelte";
 
   export let dados;
 
+  let graficoUp = true;
   let idEvento = dados.eventos[0].id;
   let ordemTabDespesas = TABDESPESAS.TITULO;
-  let ordemTabIngresso = TABINGRESSOS.TITULO;
+  let ordemTabIngresso = TABINGRESSOS.TI_NOME;
   let graficoDespesas = TABDESPESAS.RECEITA_BRUTA;
-  let graficoIngressos = TABINGRESSOS.INGRESSOS_VENDIDOS;
+  let graficoIngressos = TABINGRESSOS.TI_QUANTIDADE_VENDIDA;
 
   $: evento = dados.eventos.find((e) => e.id === idEvento);
 
@@ -37,8 +39,13 @@
     return eventos.reduce((acc, curr) => acc + curr[campo], 0);
   }
 
-  function autorizarGraficos(eventos) {
-    return eventos.some((e) => e[TABINGRESSOS.INGRESSOS_VENDIDOS]);
+  const autorizarGraficos = (evento) =>
+    evento.tiposDeIngresso.some((e) => e[TABINGRESSOS.TI_QUANTIDADE_VENDIDA]);
+
+  async function graficosUpdate() {
+    graficoUp = false;
+    await tick();
+    graficoUp = true;
   }
 </script>
 
@@ -110,6 +117,7 @@
     border-radius: 7px;
     overflow: hidden;
     word-break: break-all;
+    overflow: hidden;
   }
 
   .tabela td,
@@ -153,7 +161,7 @@
 {:then dados}
   <div class="selecao-evento">
     <label for="selecao" class="nao-imprimir">Selecione o evento:</label>
-    <select id="selecao" bind:value={idEvento}>
+    <select id="selecao" bind:value={idEvento} on:change={graficosUpdate}>
       {#each dados.eventos as eventoOpcao}
         <option value={eventoOpcao.id}>{eventoOpcao.titulo}</option>
       {/each}
@@ -164,25 +172,21 @@
   <div class="minha-selecao nao-imprimir">
     <label for="selecao1">Ordenar por:</label>
     <select class="margem-esquerda" id="selecao1" bind:value={ordemTabIngresso}>
-      <option value={TABINGRESSOS.TITULO}>Nome do Evento</option>
-      <option value={TABINGRESSOS.TOTAL_INGRESSOS}
-        >Ingressos colocados a venda</option
-      >
-      <option value={TABINGRESSOS.PORCENTAGEM_VENDIDA}
+      <option value={TABINGRESSOS.TI_NOME}>Nome</option>
+      <option value={TABINGRESSOS.TI_PORCENTAGEM_VENDIDA}
         >Porcentagem de ingressos vendidos</option
       >
-      <option value={TABINGRESSOS.INGRESSOS_VENDIDOS}>Ingressos vendidos</option
+      <option value={TABINGRESSOS.TI_QUANTIDADE_TOTAL}
+        >Ingressos colocados à venda</option
+      >
+      <option value={TABINGRESSOS.TI_QUANTIDADE_VENDIDA}
+        >Ingressos vendidos</option
       >
     </select>
   </div>
   <table class="tabela">
     <tr>
-      <th>Nome do evento</th>
-      <th>
-        <p>Ingressos</p>
-        <p>colocados</p>
-        <p>a venda</p>
-      </th>
+      <th>Nome</th>
       <th>
         <p>Porcentagem</p>
         <p>de ingressos</p>
@@ -190,55 +194,56 @@
       </th>
       <th>
         <p>Ingressos</p>
+        <p>colocados</p>
+        <p>à venda</p>
+      </th>
+      <th>
+        <p>Ingressos</p>
         <p>vendidos</p>
       </th>
     </tr>
-    {#each classificarTabIngressos(dados.eventos) as evento}
+    {#each classificarTabIngressos(evento.tiposDeIngresso) as tipoIngresso}
       <tr>
-        <td>{evento.titulo}</td>
-        <td>{evento.totalIngressos}</td>
-        <td>{evento.porcentagemIngressosVendidos}%</td>
-        <td>{evento.qntIngressosVendidos}</td>
+        <td>{tipoIngresso[TABINGRESSOS.TI_NOME]}</td>
+        <td>{tipoIngresso[TABINGRESSOS.TI_PORCENTAGEM_VENDIDA]}%</td>
+        <td>{tipoIngresso[TABINGRESSOS.TI_QUANTIDADE_TOTAL]}</td>
+        <td>{tipoIngresso[TABINGRESSOS.TI_QUANTIDADE_VENDIDA]}</td>
       </tr>
     {/each}
     <tr>
-      <th colspan="3">Total:</th>
-      <th>{somar(dados.eventos, TABINGRESSOS.INGRESSOS_VENDIDOS)}</th>
+      <th colspan="2">Totais:</th>
+      <th>{somar(evento.tiposDeIngresso, TABINGRESSOS.TI_QUANTIDADE_TOTAL)}</th>
+      <th
+        >{somar(evento.tiposDeIngresso, TABINGRESSOS.TI_QUANTIDADE_VENDIDA)}</th
+      >
     </tr>
   </table>
 
-  {#if autorizarGraficos(dados.eventos)}
+  {#if autorizarGraficos(evento) && graficoUp}
     <div class="minha-selecao grafico">
       <label for="selecao2">Gráfico para:</label>
       <select
-        class="margem-esquerda"
         id="selecao2"
+        class="margem-esquerda"
+        on:change={graficosUpdate}
         bind:value={graficoIngressos}
       >
-        <option value={TABINGRESSOS.TOTAL_INGRESSOS}
-          >Ingressos colocados a venda</option
+        <option value={TABINGRESSOS.TI_QUANTIDADE_TOTAL}
+          >Ingressos colocados à venda</option
         >
-        <option value={TABINGRESSOS.INGRESSOS_VENDIDOS}
+        <option value={TABINGRESSOS.TI_QUANTIDADE_VENDIDA}
           >Ingressos vendidos</option
         >
       </select>
     </div>
-    {#if graficoIngressos === TABINGRESSOS.TOTAL_INGRESSOS}
-      <Grafico
-        dados={dados.eventos}
-        legenda={TABINGRESSOS.TITULO}
-        valor={TABINGRESSOS.TOTAL_INGRESSOS}
-      />
-    {:else if graficoIngressos === TABINGRESSOS.INGRESSOS_VENDIDOS}
-      <Grafico
-        dados={dados.eventos}
-        legenda={TABINGRESSOS.TITULO}
-        valor={TABINGRESSOS.INGRESSOS_VENDIDOS}
-      />
-    {/if}
+    <Grafico
+      valor={graficoIngressos}
+      dados={evento.tiposDeIngresso}
+      legenda={TABINGRESSOS.TI_NOME}
+    />
   {/if}
 
-  <h2 class="titulo-tabela">Receitas e Despesas</h2>
+  <h2 class="titulo-tabela">Receitas</h2>
   <div class="minha-selecao nao-imprimir">
     <label for="selecao3">Ordenar por:</label>
     <select class="margem-esquerda" id="selecao3" bind:value={ordemTabDespesas}>
@@ -284,39 +289,33 @@
     </tr>
   </table>
 
-  {#if autorizarGraficos(dados.eventos)}
-    <div class="minha-selecao grafico">
-      <label for="selecao4">Gráfico para:</label>
-      <select
-        class="margem-esquerda"
-        id="selecao4"
-        bind:value={graficoDespesas}
-      >
-        <option value={TABDESPESAS.RECEITA_BRUTA}>Receita Bruta</option>
-        <option value={TABDESPESAS.TOTAL_DESPESAS}>Despesas</option>
-        <option value={TABDESPESAS.RECEITA_LIQUIDA}>Receita Líquida</option>
-      </select>
-    </div>
+  <div class="minha-selecao grafico">
+    <label for="selecao4">Gráfico para:</label>
+    <select class="margem-esquerda" id="selecao4" bind:value={graficoDespesas}>
+      <option value={TABDESPESAS.RECEITA_BRUTA}>Receita Bruta</option>
+      <option value={TABDESPESAS.TOTAL_DESPESAS}>Despesas</option>
+      <option value={TABDESPESAS.RECEITA_LIQUIDA}>Receita Líquida</option>
+    </select>
+  </div>
 
-    {#if graficoDespesas === TABDESPESAS.RECEITA_BRUTA}
-      <Grafico
-        dados={dados.eventos}
-        legenda={TABDESPESAS.TITULO}
-        valor={TABDESPESAS.RECEITA_BRUTA}
-      />
-    {:else if graficoDespesas === TABDESPESAS.TOTAL_DESPESAS}
-      <Grafico
-        dados={dados.eventos}
-        legenda={TABDESPESAS.TITULO}
-        valor={TABDESPESAS.TOTAL_DESPESAS}
-      />
-    {:else if graficoDespesas === TABDESPESAS.RECEITA_LIQUIDA}
-      <Grafico
-        somenteBarras={true}
-        dados={dados.eventos}
-        legenda={TABDESPESAS.TITULO}
-        valor={TABDESPESAS.RECEITA_LIQUIDA}
-      />
-    {/if}
+  {#if graficoDespesas === TABDESPESAS.RECEITA_BRUTA}
+    <Grafico
+      dados={dados.eventos}
+      legenda={TABDESPESAS.TITULO}
+      valor={TABDESPESAS.RECEITA_BRUTA}
+    />
+  {:else if graficoDespesas === TABDESPESAS.TOTAL_DESPESAS}
+    <Grafico
+      dados={dados.eventos}
+      legenda={TABDESPESAS.TITULO}
+      valor={TABDESPESAS.TOTAL_DESPESAS}
+    />
+  {:else if graficoDespesas === TABDESPESAS.RECEITA_LIQUIDA}
+    <Grafico
+      somenteBarras={true}
+      dados={dados.eventos}
+      legenda={TABDESPESAS.TITULO}
+      valor={TABDESPESAS.RECEITA_LIQUIDA}
+    />
   {/if}
 {/await}

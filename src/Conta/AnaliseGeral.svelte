@@ -1,5 +1,4 @@
 <script>
-  import Aguarde from "../UI/Aguarde.svelte";
   import Grafico from "../UI/Grafico.svelte";
   import TABDESPESAS from "../ENUM/TABDESPESAS";
   import TABINGRESSOS from "../ENUM/TABINGRESSOS";
@@ -12,28 +11,22 @@
   let graficoDespesas = TABDESPESAS.RECEITA_BRUTA;
   let graficoIngressos = TABINGRESSOS.INGRESSOS_VENDIDOS;
 
-  $: classificarTabIngressos = (eventos) =>
-    eventos.sort((e1, e2) =>
-      e1[ordemTabIngresso] < e2[ordemTabIngresso]
-        ? -1
-        : e1[ordemTabIngresso] > e2[ordemTabIngresso]
-        ? 1
-        : 0
-    );
+  /******************************* CLASSIFICAR ********************************/
 
-  $: classificarTabDespesas = (eventos) =>
-    eventos.sort((e1, e2) =>
-      e1[ordemTabDespesas] < e2[ordemTabDespesas]
-        ? -1
-        : e1[ordemTabDespesas] > e2[ordemTabDespesas]
-        ? 1
-        : 0
+  function classificar(eventos, campo) {
+    return eventos.sort((e1, e2) =>
+      e1[campo] < e2[campo] ? -1 : e1[campo] > e2[campo] ? 1 : 0
     );
+  }
+
+  /********************************** SOMAR ***********************************/
 
   function somar(eventos, campo) {
     return eventos.reduce((acc, curr) => acc + curr[campo], 0);
   }
 
+  /*************************** AUTORIZAR GRÁFICOS? ****************************/
+  
   function autorizarGraficos(eventos) {
     return eventos.some((e) => e[TABINGRESSOS.INGRESSOS_VENDIDOS]);
   }
@@ -154,7 +147,7 @@
       <p>vendidos</p>
     </th>
   </tr>
-  {#each classificarTabIngressos(dados.eventos) as evento}
+  {#each classificar(dados.eventos, ordemTabIngresso) as evento}
     <tr>
       <td>{evento.titulo}</td>
       <td>{evento.totalIngressos}</td>
@@ -170,7 +163,7 @@
 
 {#if autorizarGraficos(dados.eventos)}
   <div class="minha-selecao grafico">
-    <label for="selecao2">Gráfico para:</label>
+    <label for="selecao2">Gráfico de:</label>
     <select id="selecao2" bind:value={graficoIngressos}>
       <option value={TABINGRESSOS.TOTAL_INGRESSOS}
         >Ingressos colocados a venda (un.)</option
@@ -218,7 +211,7 @@
       <p>líquida</p>
     </th>
   </tr>
-  {#each classificarTabDespesas(dados.eventos) as evento}
+  {#each classificar(dados.eventos, ordemTabDespesas) as evento}
     <tr>
       <td>{evento.titulo}</td>
       <td>R$ {valorVirgula(evento.receitaBruta)}</td>
@@ -237,7 +230,7 @@
 
 {#if autorizarGraficos(dados.eventos)}
   <div class="minha-selecao grafico">
-    <label for="selecao4">Gráfico para:</label>
+    <label for="selecao4">Gráfico de:</label>
     <select id="selecao4" bind:value={graficoDespesas}>
       <option value={TABDESPESAS.RECEITA_BRUTA}>Receita Bruta (R$)</option>
       <option value={TABDESPESAS.TOTAL_DESPESAS}>Despesas (R$)</option>

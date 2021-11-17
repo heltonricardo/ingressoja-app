@@ -29,7 +29,7 @@
   let evento = null;
   let idPedido = null;
   let idCategoria = null;
-  let modo = MODO.NORMAL;
+  let modo = MODO.ANALISES;
   let termoPesquisa = "";
 
   function limpaFiltroPesquisa() {

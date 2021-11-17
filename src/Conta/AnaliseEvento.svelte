@@ -10,12 +10,15 @@
 
   let graficoUp = true;
   let idEvento = dados.eventos[0].id;
+  let ordTabDespesas = TABDESPESAS.VALOR;
   let ordTabReceitas = TABINGRESSOS.TI_RECEITA_GERADA;
   let graficoReceitas = TABINGRESSOS.TI_RECEITA_GERADA;
   let ordTabIngressos = TABINGRESSOS.TI_QUANTIDADE_VENDIDA;
   let graficoIngressos = TABINGRESSOS.TI_QUANTIDADE_VENDIDA;
 
   $: evento = dados.eventos.find((e) => e.id === idEvento);
+
+  $: autorizarGraficos = evento.qntIngressosVendidos;
 
   /******************************* CLASSIFICAR ********************************/
 
@@ -29,14 +32,6 @@
 
   function somar(eventos, campo) {
     return eventos.reduce((acc, curr) => acc + curr[campo], 0);
-  }
-
-  /*************************** AUTORIZAR GRÁFICOS? ****************************/
-
-  function autorizarGraficos(evento) {
-    return evento.tiposDeIngresso.some(
-      (e) => e[TABINGRESSOS.TI_QUANTIDADE_VENDIDA]
-    );
   }
 
   /***************************** GRÁFICOS UPDATE ******************************/
@@ -165,6 +160,9 @@
 </div>
 
 <h2 class="titulo-tabela">Quantidade Vendida</h2>
+
+<!-- *********************************************************************** -->
+
 <div class="minha-selecao nao-imprimir">
   <label for="selecao1">Ordenar por:</label>
   <select class="margem-esquerda" id="selecao1" bind:value={ordTabIngressos}>
@@ -212,8 +210,7 @@
     <th>{somar(evento.tiposDeIngresso, TABINGRESSOS.TI_QUANTIDADE_VENDIDA)}</th>
   </tr>
 </table>
-
-{#if autorizarGraficos(evento) && graficoUp}
+{#if autorizarGraficos && graficoUp}
   <div class="minha-selecao grafico">
     <label for="selecao2">Gráfico de:</label>
     <select
@@ -236,6 +233,8 @@
     legenda={TABINGRESSOS.TI_NOME}
   />
 {/if}
+
+<!-- *********************************************************************** -->
 
 <h2 class="titulo-tabela">Receita Gerada</h2>
 <div class="minha-selecao nao-imprimir">
@@ -274,8 +273,7 @@
     >
   </tr>
 </table>
-
-{#if autorizarGraficos(evento) && graficoUp}
+{#if autorizarGraficos && graficoUp}
   <div class="minha-selecao grafico">
     <label for="selecao4">Gráfico de:</label>
     <select
@@ -293,5 +291,42 @@
     valor={graficoReceitas}
     legenda={TABINGRESSOS.TI_NOME}
     dados={evento.tiposDeIngresso}
+  />
+{/if}
+
+<!-- *********************************************************************** -->
+
+<h2 class="titulo-tabela">Despesas</h2>
+<div class="minha-selecao nao-imprimir">
+  <label for="selecao3">Ordenar por:</label>
+  <select class="margem-esquerda" id="selecao3" bind:value={ordTabDespesas}>
+    <option value={TABDESPESAS.DESCRICAO}>Descrição</option>
+    <option value={TABDESPESAS.VALOR}>Valor</option>
+  </select>
+</div>
+<table class="tabela">
+  <tr>
+    <th>Descrição</th>
+    <th> Valor </th>
+  </tr>
+  {#each classificar(evento.despesas, ordTabDespesas) as despesa}
+    <tr>
+      <td>{despesa.descricao}</td>
+      <td>R$ {valorVirgula(despesa[TABDESPESAS.VALOR])}</td>
+    </tr>
+  {/each}
+  <tr>
+    <th>Total:</th>
+    <th>R$ {valorVirgula(somar(evento.tiposDeIngresso, TABDESPESAS.VALOR))}</th>
+  </tr>
+</table>
+{#if autorizarGraficos && graficoUp}
+  <div class="minha-selecao grafico">
+    <p>Gráfico de: Valor (R$)</p>
+  </div>
+  <Grafico
+    dados={evento.despesas}
+    valor={TABDESPESAS.VALOR}
+    legenda={TABDESPESAS.DESCRICAO}
   />
 {/if}

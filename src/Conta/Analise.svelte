@@ -94,7 +94,7 @@
           value="geral"
           name="tipoCadastro"
           bind:group={tipoRelatorio}
-        />Visualização Geral</label
+        />Visualização geral</label
       >
       <label>
         <input
@@ -102,7 +102,7 @@
           value="porEvento"
           name="tipoRelatorio"
           bind:group={tipoRelatorio}
-        />Visualização por Evento</label
+        />Visualização por evento</label
       >
     </div>
 

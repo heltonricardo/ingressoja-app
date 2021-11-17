@@ -7,8 +7,13 @@ export function zeroEsquerda(num, qnt) {
 }
 
 export function valorVirgula(num) {
-  return num.toLocaleString('pt-BR', {
+  return num.toLocaleString("pt-BR", {
     minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 2,
   });
+}
+
+export function porcento3(num) {
+  if (Number.isInteger(num)) return num;
+  return num.toFixed(3).replace(".", ",");
 }

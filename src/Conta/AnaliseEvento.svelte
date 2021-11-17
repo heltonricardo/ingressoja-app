@@ -4,14 +4,14 @@
   import Grafico from "../UI/Grafico.svelte";
   import TABDESPESAS from "../ENUM/TABDESPESAS";
   import TABINGRESSOS from "../ENUM/TABINGRESSOS";
-  import { valorVirgula } from "../utils/formatador";
+  import { porcento3, valorVirgula } from "../utils/formatador";
 
   export let dados;
 
   let graficoUp = true;
   let idEvento = dados.eventos[0].id;
-  let ordTabReceitas = TABDESPESAS.TITULO;
-  let graficoReceitas = TABDESPESAS.RECEITA_BRUTA;
+  let ordTabReceitas = TABINGRESSOS.TI_RECEITA_GERADA;
+  let graficoReceitas = TABINGRESSOS.TI_RECEITA_GERADA;
   let ordTabIngressos = TABINGRESSOS.TI_QUANTIDADE_VENDIDA;
   let graficoIngressos = TABINGRESSOS.TI_QUANTIDADE_VENDIDA;
 
@@ -164,7 +164,7 @@
   </select>
 </div>
 
-<h2 class="titulo-tabela">Tipos de Ingressos</h2>
+<h2 class="titulo-tabela">Quantidade Vendida</h2>
 <div class="minha-selecao nao-imprimir">
   <label for="selecao1">Ordenar por:</label>
   <select class="margem-esquerda" id="selecao1" bind:value={ordTabIngressos}>
@@ -201,7 +201,7 @@
   {#each classificar(evento.tiposDeIngresso, ordTabIngressos) as tipoIngresso}
     <tr>
       <td>{tipoIngresso[TABINGRESSOS.TI_NOME]}</td>
-      <td>{tipoIngresso[TABINGRESSOS.TI_PORCENTAGEM_VENDIDA]}%</td>
+      <td>{porcento3(tipoIngresso[TABINGRESSOS.TI_PORCENTAGEM_VENDIDA])}%</td>
       <td>{tipoIngresso[TABINGRESSOS.TI_QUANTIDADE_TOTAL]}</td>
       <td>{tipoIngresso[TABINGRESSOS.TI_QUANTIDADE_VENDIDA]}</td>
     </tr>
@@ -223,10 +223,10 @@
       bind:value={graficoIngressos}
     >
       <option value={TABINGRESSOS.TI_QUANTIDADE_TOTAL}
-        >Ingressos colocados à venda</option
+        >Ingressos colocados à venda (un.)</option
       >
       <option value={TABINGRESSOS.TI_QUANTIDADE_VENDIDA}
-        >Ingressos vendidos</option
+        >Ingressos vendidos (un.)</option
       >
     </select>
   </div>
@@ -237,72 +237,61 @@
   />
 {/if}
 
-<h2 class="titulo-tabela">Receitas</h2>
+<h2 class="titulo-tabela">Receita Gerada</h2>
 <div class="minha-selecao nao-imprimir">
   <label for="selecao3">Ordenar por:</label>
   <select class="margem-esquerda" id="selecao3" bind:value={ordTabReceitas}>
-    <option value={TABDESPESAS.TITULO}>Título</option>
-    <option value={TABDESPESAS.RECEITA_BRUTA}>Receita bruta</option>
-    <option value={TABDESPESAS.TOTAL_DESPESAS}>Despesas</option>
-    <option value={TABDESPESAS.RECEITA_LIQUIDA}>Receita líquida</option>
+    <option value={TABINGRESSOS.TI_NOME}>Nome</option>
+    <option value={TABINGRESSOS.TI_VALOR}>Valor unitário</option>
+    <option value={TABINGRESSOS.TI_RECEITA_GERADA}>Receita gerada</option>
   </select>
 </div>
 <table class="tabela">
   <tr>
-    <th>Nome do evento</th>
+    <th>Nome</th>
     <th>
-      <p>Receita</p>
-      <p>bruta</p>
+      <p>Valor</p>
+      <p>Unitário</p>
     </th>
-    <th>Despesas</th>
     <th>
       <p>Receita</p>
-      <p>líquida</p>
+      <p>gerada</p>
     </th>
   </tr>
-  {#each classificar(dados.eventos, ordTabReceitas) as evento}
+  {#each classificar(evento.tiposDeIngresso, ordTabReceitas) as tipoDeIngresso}
     <tr>
-      <td>{evento.titulo}</td>
-      <td>R$ {valorVirgula(evento.receitaBruta)}</td>
-      <td>R$ {valorVirgula(evento.totalDespesas)}</td>
-      <td>R$ {valorVirgula(evento.receitaLiquida)}</td>
+      <td>{tipoDeIngresso.nome}</td>
+      <td>R$ {valorVirgula(tipoDeIngresso[TABINGRESSOS.TI_VALOR])}</td>
+      <td>R$ {valorVirgula(tipoDeIngresso[TABINGRESSOS.TI_RECEITA_GERADA])}</td>
     </tr>
   {/each}
   <tr>
-    <th>Totais:</th>
-    <th>R$ {valorVirgula(somar(dados.eventos, TABDESPESAS.RECEITA_BRUTA))}</th>
-    <th>R$ {valorVirgula(somar(dados.eventos, TABDESPESAS.TOTAL_DESPESAS))}</th>
-    <th>R$ {valorVirgula(somar(dados.eventos, TABDESPESAS.RECEITA_LIQUIDA))}</th
+    <th colspan="2">Total:</th>
+    <th
+      >R$ {valorVirgula(
+        somar(evento.tiposDeIngresso, TABINGRESSOS.TI_RECEITA_GERADA)
+      )}</th
     >
   </tr>
 </table>
 
-<div class="minha-selecao grafico">
-  <label for="selecao4">Gráfico de:</label>
-  <select class="margem-esquerda" id="selecao4" bind:value={graficoReceitas}>
-    <option value={TABDESPESAS.RECEITA_BRUTA}>Receita Bruta</option>
-    <option value={TABDESPESAS.TOTAL_DESPESAS}>Despesas</option>
-    <option value={TABDESPESAS.RECEITA_LIQUIDA}>Receita Líquida</option>
-  </select>
-</div>
-
-{#if graficoReceitas === TABDESPESAS.RECEITA_BRUTA}
+{#if autorizarGraficos(evento) && graficoUp}
+  <div class="minha-selecao grafico">
+    <label for="selecao4">Gráfico de:</label>
+    <select
+      id="selecao4"
+      class="margem-esquerda"
+      on:change={graficosUpdate}
+      bind:value={graficoReceitas}
+    >
+      <option value={TABINGRESSOS.TI_VALOR}>Valor unitário (R$)</option>
+      <option value={TABINGRESSOS.TI_RECEITA_GERADA}>Receita gerada (R$)</option
+      >
+    </select>
+  </div>
   <Grafico
-    dados={dados.eventos}
-    legenda={TABDESPESAS.TITULO}
-    valor={TABDESPESAS.RECEITA_BRUTA}
-  />
-{:else if graficoReceitas === TABDESPESAS.TOTAL_DESPESAS}
-  <Grafico
-    dados={dados.eventos}
-    legenda={TABDESPESAS.TITULO}
-    valor={TABDESPESAS.TOTAL_DESPESAS}
-  />
-{:else if graficoReceitas === TABDESPESAS.RECEITA_LIQUIDA}
-  <Grafico
-    somenteBarras={true}
-    dados={dados.eventos}
-    legenda={TABDESPESAS.TITULO}
-    valor={TABDESPESAS.RECEITA_LIQUIDA}
+    valor={graficoReceitas}
+    legenda={TABINGRESSOS.TI_NOME}
+    dados={evento.tiposDeIngresso}
   />
 {/if}

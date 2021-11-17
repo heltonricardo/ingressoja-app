@@ -1,11 +1,14 @@
 <script>
+  import { tick } from "svelte";
+
   import Grafico from "../UI/Grafico.svelte";
   import TABDESPESAS from "../ENUM/TABDESPESAS";
   import TABINGRESSOS from "../ENUM/TABINGRESSOS";
-  import { valorVirgula } from "../utils/formatador";
+  import { valorVirgula, porcento3 } from "../utils/formatador";
 
   export let dados;
 
+  let graficoUp = true;
   let ordemTabDespesas = TABDESPESAS.TITULO;
   let ordemTabIngresso = TABINGRESSOS.TITULO;
   let graficoDespesas = TABDESPESAS.RECEITA_BRUTA;
@@ -26,9 +29,17 @@
   }
 
   /*************************** AUTORIZAR GRÁFICOS? ****************************/
-  
+
   function autorizarGraficos(eventos) {
     return eventos.some((e) => e[TABINGRESSOS.INGRESSOS_VENDIDOS]);
+  }
+
+  /***************************** GRÁFICOS UPDATE ******************************/
+
+  async function graficosUpdate() {
+    graficoUp = false;
+    await tick();
+    graficoUp = true;
   }
 </script>
 
@@ -151,7 +162,7 @@
     <tr>
       <td>{evento.titulo}</td>
       <td>{evento.totalIngressos}</td>
-      <td>{evento.porcentagemIngressosVendidos}%</td>
+      <td>{porcento3(evento.porcentagemIngressosVendidos)}%</td>
       <td>{evento.qntIngressosVendidos}</td>
     </tr>
   {/each}
@@ -161,10 +172,14 @@
   </tr>
 </table>
 
-{#if autorizarGraficos(dados.eventos)}
+{#if autorizarGraficos(dados.eventos) && graficoUp}
   <div class="minha-selecao grafico">
     <label for="selecao2">Gráfico de:</label>
-    <select id="selecao2" bind:value={graficoIngressos}>
+    <select
+      id="selecao2"
+      on:change={graficosUpdate}
+      bind:value={graficoIngressos}
+    >
       <option value={TABINGRESSOS.TOTAL_INGRESSOS}
         >Ingressos colocados a venda (un.)</option
       >
@@ -173,19 +188,11 @@
       >
     </select>
   </div>
-  {#if graficoIngressos === TABINGRESSOS.TOTAL_INGRESSOS}
-    <Grafico
-      dados={dados.eventos}
-      legenda={TABINGRESSOS.TITULO}
-      valor={TABINGRESSOS.TOTAL_INGRESSOS}
-    />
-  {:else if graficoIngressos === TABINGRESSOS.INGRESSOS_VENDIDOS}
-    <Grafico
-      dados={dados.eventos}
-      legenda={TABINGRESSOS.TITULO}
-      valor={TABINGRESSOS.INGRESSOS_VENDIDOS}
-    />
-  {/if}
+  <Grafico
+    dados={dados.eventos}
+    valor={graficoIngressos}
+    legenda={TABINGRESSOS.TITULO}
+  />
 {/if}
 
 <h2 class="titulo-tabela">Receitas e Despesas</h2>
@@ -228,34 +235,23 @@
   </tr>
 </table>
 
-{#if autorizarGraficos(dados.eventos)}
+{#if autorizarGraficos(dados.eventos) && graficoUp}
   <div class="minha-selecao grafico">
     <label for="selecao4">Gráfico de:</label>
-    <select id="selecao4" bind:value={graficoDespesas}>
+    <select
+      id="selecao4"
+      on:change={graficosUpdate}
+      bind:value={graficoDespesas}
+    >
       <option value={TABDESPESAS.RECEITA_BRUTA}>Receita Bruta (R$)</option>
       <option value={TABDESPESAS.TOTAL_DESPESAS}>Despesas (R$)</option>
       <option value={TABDESPESAS.RECEITA_LIQUIDA}>Receita Líquida (R$)</option>
     </select>
   </div>
-
-  {#if graficoDespesas === TABDESPESAS.RECEITA_BRUTA}
-    <Grafico
-      dados={dados.eventos}
-      legenda={TABDESPESAS.TITULO}
-      valor={TABDESPESAS.RECEITA_BRUTA}
-    />
-  {:else if graficoDespesas === TABDESPESAS.TOTAL_DESPESAS}
-    <Grafico
-      dados={dados.eventos}
-      legenda={TABDESPESAS.TITULO}
-      valor={TABDESPESAS.TOTAL_DESPESAS}
-    />
-  {:else if graficoDespesas === TABDESPESAS.RECEITA_LIQUIDA}
-    <Grafico
-      somenteBarras={true}
-      dados={dados.eventos}
-      legenda={TABDESPESAS.TITULO}
-      valor={TABDESPESAS.RECEITA_LIQUIDA}
-    />
-  {/if}
+  <Grafico
+    dados={dados.eventos}
+    valor={graficoDespesas}
+    legenda={TABDESPESAS.TITULO}
+    somenteBarras={graficoDespesas === TABDESPESAS.RECEITA_LIQUIDA}
+  />
 {/if}

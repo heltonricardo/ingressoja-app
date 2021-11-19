@@ -23,6 +23,7 @@
 {:else if tipo === TIPOCADASTRO.PRODUTORA}
   <ContaProdutora
     on:voltar
+    on:analises
     on:carteira
     on:meusdados
     on:conferencia

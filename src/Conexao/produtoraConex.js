@@ -176,3 +176,31 @@ export async function deleteProdutora() {
 
   return null;
 }
+
+export async function getAnalise() {
+  if (
+    !autenticacao.estaLogado() ||
+    autenticacao.tipoLogado() !== TIPOCADASTRO.PRODUTORA
+  )
+    return null;
+
+  const id = autenticacao.idLogado();
+
+  let res;
+  try {
+    res = await fetch(`${PATH.PRODUTORA}/${id}/analise`);
+  } catch (error) {
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
+    return null;
+  }
+  const status = res.status;
+
+  if (status === STATUSHTTP.OK) {
+    const produtora = await res.json();
+    return produtora;
+  } //
+  else if (status === STATUSHTTP.BAD_REQUEST) {
+    Swal.fire(MSG.RUIM, MSG.NAO_EXISTE, "error");
+  }
+  return null;
+}

@@ -90,6 +90,13 @@
 </style>
 
 <div class="barra">
+  <span>
+    <button>
+      <a target="_blank" href="./manual_do_usuario_ingressoja.pdf"
+        >Manual do Usuário</a
+      >
+    </button>
+  </span>
   <span
     >© {new Date().getFullYear()}, Plataforma IngressoJá! Todos os direitos
     reservados.</span

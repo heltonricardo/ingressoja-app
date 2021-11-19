@@ -1,30 +1,21 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
-  import { getComprador } from "../Conexao/compradorConex";
-  import Aguarde from "../UI/Aguarde.svelte";
   import Botao from "../UI/Botao.svelte";
 
   const dispatch = createEventDispatcher();
-
-  async function carregaDados() {
-    const res = await getComprador();
-    if (!res) dispatch("voltar");
-    return res;
-  }
-
-  let dadosCarregados = carregaDados();
 </script>
 
 <style>
   .corpo {
-    width: 40%;
+    width: 30rem;
     min-width: 30rem;
     margin: 2rem auto;
     min-height: calc(100vh - 21rem);
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     background-color: var(--branco);
     box-sizing: border-box;
     padding: 1rem;
@@ -49,16 +40,10 @@
   }
 </style>
 
-{#await dadosCarregados}
-  <Aguarde />
-{:then comprador}
-  <div class="corpo">
-    <h1>Minha Conta</h1>
-    <p>
-      Olá, {comprador.nome.split(" ")[0]}! Selecione uma opção abaixo:
-    </p>
-    <Botao on:click={() => dispatch("meusdados")}>Meus Dados</Botao>
-    <Botao on:click={() => dispatch("meuspedidos")}>Meus Pedidos</Botao>
-    <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
-  </div>
-{/await}
+<div class="corpo">
+  <h1>Minha Conta</h1>
+  <p>Selecione uma das opções abaixo:</p>
+  <Botao on:click={() => dispatch("meusdados")}>Meus Dados</Botao>
+  <Botao on:click={() => dispatch("meuspedidos")}>Meus Pedidos</Botao>
+  <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
+</div>

@@ -11,7 +11,7 @@
   const geral = getAnalise();
   const dispatch = createEventDispatcher();
 
-  let tipoRelatorio = "porEvento";
+  let tipoRelatorio = "geral";
 </script>
 
 <style>

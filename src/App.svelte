@@ -12,6 +12,7 @@
   import MeusPedidos from "./Conta/MeusPedidos.svelte";
   import Compradores from "./Conta/Compradores.svelte";
   import BarraInferior from "./UI/BarraInferior.svelte";
+  import AnaliseAdmin from "./Conta/AnaliseAdmin.svelte";
   import GridEventos from "./Evento//GridEventos.svelte";
   import MeusIngressos from "./Conta/MeusIngressos.svelte";
   import PedidoDetalhe from "./Conta/PedidoDetalhe.svelte";
@@ -29,7 +30,7 @@
   let evento = null;
   let idPedido = null;
   let idCategoria = null;
-  let modo = MODO.NORMAL;
+  let modo = MODO.ANALISE_ADMIN;
   let termoPesquisa = "";
 
   function limpaFiltroPesquisa() {
@@ -109,17 +110,19 @@
   const pesquisar = (event) => (termoPesquisa = event.detail);
 
   const modoAnalise = () => trocaModo(MODO.ANALISES);
-
+  
   const modoMeusDados = () => trocaModo(MODO.MEUS_DADOS);
-
+  
   const modoProdutoras = () => trocaModo(MODO.PRODUTORAS);
-
+  
   const modoCompradores = () => trocaModo(MODO.COMPRADORES);
-
+  
   const modoConferencia = () => trocaModo(MODO.CONFERENCIA);
-
+  
   const modoMeusPedidos = () => trocaModo(MODO.MEUS_PEDIDOS);
 
+  const modoAnaliseAdmin = () => trocaModo(MODO.ANALISE_ADMIN);
+  
   const modoAdministradores = () => trocaModo(MODO.ADMINISTRADORES);
 
   const modoCadastroEventos = () => trocaModo(MODO.CADASTRO_EVENTOS);
@@ -159,6 +162,7 @@
     on:meusdados={modoMeusDados}
     on:minhaconta={modoMinhaConta}
     on:produtoras={modoProdutoras}
+    on:analiseadm={modoAnaliseAdmin}
     on:compradores={modoCompradores}
     on:conferencia={modoConferencia}
     on:meuspedidos={modoMeusPedidos}
@@ -226,6 +230,8 @@
   <Despesas idEvento={id} on:gerenciaeventos={modoGerenciaEventos} />
 {:else if modo === MODO.ANALISES}
   <Analise on:minhaconta={modoMinhaConta} />
+{:else if modo === MODO.ANALISE_ADMIN}
+  <AnaliseAdmin on:minhaconta={modoMinhaConta} />
 {/if}
 
 <BarraInferior />

@@ -21,6 +21,7 @@ const MODO = Object.freeze({
   GERENCIA_EVENTOS: 20,
   DESPESAS: 21,
   ANALISES: 22,
+  ANALISE_ADMIN: 23,
 });
 
 export default MODO;

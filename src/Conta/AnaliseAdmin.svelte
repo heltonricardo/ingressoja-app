@@ -2,13 +2,10 @@
   import { createEventDispatcher } from "svelte";
 
   import Botao from "../UI/Botao.svelte";
-  import Aguarde from "../UI/Aguarde.svelte";
-  import AnaliseEvento from "./AnaliseEvento.svelte";
   import AnaliseAdminGeral from "./AnaliseAdminGeral.svelte";
-  import { getAnaliseProdutoras } from "../Conexao/administradorConex";
+  import AnaliseAdminProdutora from "./AnaliseAdminProdutora.svelte";
 
   const dispatch = createEventDispatcher();
-  const produtoras = getAnaliseProdutoras();
 
   let tipoRelatorio = "geral";
 </script>
@@ -81,15 +78,11 @@
     >
   </div>
 
-  {#await produtoras}
-    <Aguarde />
-  {:then dados}
-    {#if tipoRelatorio === "geral"}
-      <AnaliseAdminGeral {dados} />
-    {:else if tipoRelatorio === "porProdutora"}
-      <AnaliseEvento {dados} />
-    {/if}
-  {/await}
+  {#if tipoRelatorio === "geral"}
+    <AnaliseAdminGeral />
+  {:else if tipoRelatorio === "porProdutora"}
+    <AnaliseAdminProdutora />
+  {/if}
 
   <div class="navegacao">
     <Botao on:click={() => window.print()}>Imprimir</Botao>

@@ -2,33 +2,28 @@
   import { maskBr } from "js-brasil";
 
   import Aguarde from "../UI/Aguarde.svelte";
-  import Grafico from "../UI/Grafico.svelte";
-  import TABPRODUTORA from "../ENUM/TABPRODUTORA";
+  import MiniBotao from "../UI/MiniBotao.svelte";
   import { valorVirgula } from "../utils/formatador";
-  import { getAnaliseProdutoras } from "../Conexao/administradorConex";
+  import { getPedidosPagina } from "../Conexao/pedidoConex";
+  import { extrairDataHora } from "../utils/manipulaDataHora";
 
-  const dados = getAnaliseProdutoras();
+  let pagina = 0;
+  let dados = getPedidosPagina(pagina);
 
-  let ordemTabProdutoras = TABPRODUTORA.RAZAO;
-
-  /******************************* CLASSIFICAR ********************************/
-
-  function classificar(obj, campo) {
-    return obj.sort((a, b) =>
-      a[campo] < b[campo] ? -1 : a[campo] > b[campo] ? 1 : 0
-    );
+  function paginaAnterior() {
+    dados = getPedidosPagina(--pagina);
   }
 
-  /********************************** SOMAR ***********************************/
-
-  function somar(obj, campo) {
-    return obj.reduce((acc, curr) => acc + curr[campo], 0);
+  function proxPagina() {
+    dados = getPedidosPagina(++pagina);
   }
 
-  /*************************** AUTORIZAR GRÁFICOS? ****************************/
+  function isPrimeiraPagina() {
+    return pagina === 0;
+  }
 
-  function autorizarGraficos(obj) {
-    return obj.some((o) => o[TABPRODUTORA.TOTAL_VENDAS]);
+  function isUltimaPagina(ultima) {
+    return pagina === ultima;
   }
 </script>
 
@@ -38,36 +33,6 @@
     text-align: center;
     align-self: center;
     margin: 5rem 0 1rem 0;
-  }
-
-  .minha-selecao {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 1rem;
-  }
-
-  .grafico {
-    width: fit-content;
-    margin: 4rem auto 2rem;
-  }
-
-  select {
-    font: inherit;
-    border: none;
-    outline: none;
-    border-bottom: 2px solid #ccc;
-    border-radius: 3px 3px 0 0;
-    background: var(--cinza0-5);
-    padding: 0.15rem 0;
-    transition: border-color 0.1s ease-out;
-    resize: none;
-    margin-left: 0.5rem;
-  }
-
-  select:focus {
-    border-color: var(--roxo1);
-    outline: none;
   }
 
   .tabela {
@@ -108,60 +73,52 @@
     word-break: keep-all;
   }
 
-  @media print {
-    .nao-imprimir {
-      display: none !important;
-    }
+  .paginacao {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+
+  .controles {
+    display: flex;
+    margin-top: 1rem;
   }
 </style>
 
 {#await dados}
   <Aguarde />
 {:then dados}
-  <h2 class="titulo-tabela">Produtoras</h2>
-  <div class="minha-selecao nao-imprimir">
-    <label for="selecao1">Ordenar por:</label>
-    <select id="selecao1" bind:value={ordemTabProdutoras}>
-      <option value={TABPRODUTORA.RAZAO}>Razão Social</option>
-      <option value={TABPRODUTORA.TOTAL_VENDAS}>Total de vendas</option>
-    </select>
-  </div>
+  <h2 class="titulo-tabela">Pedidos</h2>
   <table class="tabela">
     <tr>
-      <th>Razão Social</th>
-      <th>CNPJ</th>
-      <th>
-        <p>Vendas</p>
-        <p>totais</p>
-      </th>
-      <th>
-        <p>Taxas</p>
-        <p>totais</p>
-      </th>
+      <th>Id</th>
+      <th>CPF</th>
+      <th>Data</th>
+      <th>Valor</th>
+      <th>Taxa da Plataforma</th>
     </tr>
-    {#each classificar(dados, ordemTabProdutoras) as produtora}
+    {#each dados.pedidos as pedido (pedido.id)}
       <tr>
-        <td>{produtora[TABPRODUTORA.RAZAO]}</td>
-        <td>{maskBr.cnpj(produtora[TABPRODUTORA.CNPJ])}</td>
-        <td>R$ {valorVirgula(produtora[TABPRODUTORA.TOTAL_VENDAS])}</td>
-        <td>R$ {valorVirgula(produtora[TABPRODUTORA.TOTAL_TAXAS])}</td>
+        <td>{pedido.id}</td>
+        <td>{maskBr.cpf(pedido.cpf)}</td>
+        <td>{extrairDataHora(pedido.dataHora).dataCompletaBarras}</td>
+        <td>R$ {valorVirgula(pedido.valorTotal)}</td>
+        <td>R$ {valorVirgula(pedido.taxaPlataforma)}</td>
       </tr>
     {/each}
-    <tr>
-      <th colspan="2">Total:</th>
-      <th>RS {valorVirgula(somar(dados, TABPRODUTORA.TOTAL_VENDAS))}</th>
-      <th>RS {valorVirgula(somar(dados, TABPRODUTORA.TOTAL_TAXAS))}</th>
-    </tr>
   </table>
-
-  {#if autorizarGraficos(dados)}
-    <div class="minha-selecao grafico">
-      <label for="selecao2">Gráfico de: Vendas totais (R$)</label>
-    </div>
-    <Grafico
-      {dados}
-      legenda={TABPRODUTORA.RAZAO}
-      valor={TABPRODUTORA.TOTAL_VENDAS}
-    />
-  {/if}
+  <p class="paginacao">
+    Exibindo página {pagina + 1} de {dados.ultimaPagina + 1}
+  </p>
+  <div class="controles">
+    <MiniBotao
+      on:click={paginaAnterior}
+      habilitado={!isPrimeiraPagina()}
+      invalido={isPrimeiraPagina()}>← Página anterior</MiniBotao
+    >
+    <MiniBotao
+      on:click={proxPagina}
+      habilitado={!isUltimaPagina(dados.ultimaPagina)}
+      invalido={isUltimaPagina(dados.ultimaPagina)}>Próxima página →</MiniBotao
+    >
+  </div>
 {/await}

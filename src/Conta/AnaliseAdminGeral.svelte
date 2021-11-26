@@ -8,14 +8,20 @@
   import { extrairDataHora } from "../utils/manipulaDataHora";
 
   let pagina = 0;
-  let dados = getPedidosPagina(pagina);
+  let fonte = "todos";
+
+  $: dados = fonte === "todos" ? getPedidosPagina(pagina) : null;
+
+  function acessarPagina(num) {
+    dados = getPedidosPagina(num);
+  }
 
   function paginaAnterior() {
-    dados = getPedidosPagina(--pagina);
+    acessarPagina(--pagina);
   }
 
   function proxPagina() {
-    dados = getPedidosPagina(++pagina);
+    acessarPagina(++pagina);
   }
 
   function isPrimeiraPagina() {
@@ -33,6 +39,31 @@
     text-align: center;
     align-self: center;
     margin: 5rem 0 1rem 0;
+  }
+
+  .minha-selecao {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  select {
+    font: inherit;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #ccc;
+    border-radius: 3px 3px 0 0;
+    background: var(--cinza0-5);
+    padding: 0.15rem 0;
+    transition: border-color 0.1s ease-out;
+    resize: none;
+    margin-left: 0.5rem;
+  }
+
+  select:focus {
+    border-color: var(--roxo1);
+    outline: none;
   }
 
   .tabela {
@@ -88,37 +119,52 @@
   <Aguarde />
 {:then dados}
   <h2 class="titulo-tabela">Pedidos</h2>
-  <table class="tabela">
-    <tr>
-      <th>Id</th>
-      <th>CPF</th>
-      <th>Data</th>
-      <th>Valor</th>
-      <th>Taxa da Plataforma</th>
-    </tr>
-    {#each dados.pedidos as pedido (pedido.id)}
-      <tr>
-        <td>{pedido.id}</td>
-        <td>{maskBr.cpf(pedido.cpf)}</td>
-        <td>{extrairDataHora(pedido.dataHora).dataCompletaBarras}</td>
-        <td>R$ {valorVirgula(pedido.valorTotal)}</td>
-        <td>R$ {valorVirgula(pedido.taxaPlataforma)}</td>
-      </tr>
-    {/each}
-  </table>
-  <p class="paginacao">
-    Exibindo página {pagina + 1} de {dados.ultimaPagina + 1}
-  </p>
-  <div class="controles">
-    <MiniBotao
-      on:click={paginaAnterior}
-      habilitado={!isPrimeiraPagina()}
-      invalido={isPrimeiraPagina()}>← Página anterior</MiniBotao
-    >
-    <MiniBotao
-      on:click={proxPagina}
-      habilitado={!isUltimaPagina(dados.ultimaPagina)}
-      invalido={isUltimaPagina(dados.ultimaPagina)}>Próxima página →</MiniBotao
-    >
+  <div class="minha-selecao nao-imprimir">
+    <label for="selecao1">Modo:</label>
+    <select id="selecao1" bind:value={fonte}>
+      <option value="todos">Exibir todos</option>
+      <option value="filtrar">Filtrar por data</option>
+    </select>
   </div>
+  {#if dados.pedidos.length}
+    <table class="tabela">
+      <tr>
+        <th>Id</th>
+        <th>CPF</th>
+        <th>Data</th>
+        <th>Valor</th>
+        <th>
+          <p>Taxa da</p>
+          <p>Plataforma</p>
+        </th>
+      </tr>
+      {#each dados.pedidos as pedido (pedido.id)}
+        <tr>
+          <td>{pedido.id}</td>
+          <td>{maskBr.cpf(pedido.cpf)}</td>
+          <td>{extrairDataHora(pedido.dataHora).dataCompletaBarras}</td>
+          <td>R$ {valorVirgula(pedido.valorTotal)}</td>
+          <td>R$ {valorVirgula(pedido.taxaPlataforma)}</td>
+        </tr>
+      {/each}
+    </table>
+    <p class="paginacao">
+      Exibindo página {pagina + 1} de {dados.ultimaPagina + 1}
+    </p>
+    {#if fonte === "todos"}
+      <div class="controles">
+        <MiniBotao
+          on:click={paginaAnterior}
+          habilitado={!isPrimeiraPagina()}
+          invalido={isPrimeiraPagina()}>← Página anterior</MiniBotao
+        >
+        <MiniBotao
+          on:click={proxPagina}
+          habilitado={!isUltimaPagina(dados.ultimaPagina)}
+          invalido={isUltimaPagina(dados.ultimaPagina)}
+          >Próxima página →</MiniBotao
+        >
+      </div>
+    {/if}
+  {/if}
 {/await}

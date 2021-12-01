@@ -1,16 +1,26 @@
 <script>
   import { maskBr } from "js-brasil";
 
+  import {
+    extrairDataHora,
+    hojeDataStringISO,
+  } from "../utils/manipulaDataHora";
+
   import Aguarde from "../UI/Aguarde.svelte";
+  import Entrada from "../UI/Entrada.svelte";
   import MiniBotao from "../UI/MiniBotao.svelte";
   import { valorVirgula } from "../utils/formatador";
-  import { getPedidosPagina } from "../Conexao/pedidoConex";
-  import { extrairDataHora } from "../utils/manipulaDataHora";
+  import { getPedidosPagina, getPedidosPorData } from "../Conexao/pedidoConex";
 
   let pagina = 0;
-  let fonte = "todos";
+  let fonte = "filtrar";
+  let final = hojeDataStringISO;
+  let inicial = hojeDataStringISO;
 
-  $: dados = fonte === "todos" ? getPedidosPagina(pagina) : null;
+  $: dados =
+    fonte === "todos"
+      ? getPedidosPagina(pagina)
+      : getPedidosPorData(inicial, final);
 
   function acessarPagina(num) {
     dados = getPedidosPagina(num);
@@ -30,6 +40,10 @@
 
   function isUltimaPagina(ultima) {
     return pagina === ultima;
+  }
+
+  function filtrarPorData() {
+    dados = getPedidosPorData(inicial, final);
   }
 </script>
 
@@ -113,6 +127,18 @@
     display: flex;
     margin-top: 1rem;
   }
+
+  .data-filtros {
+    display: flex;
+    align-items: flex-end;
+    align-self: flex-start;
+    margin-top: -1rem;
+    margin-bottom: 2rem;
+  }
+
+  .espacamento {
+    width: 2rem;
+  }
 </style>
 
 {#await dados}
@@ -126,6 +152,28 @@
       <option value="filtrar">Filtrar por data</option>
     </select>
   </div>
+
+  {#if fonte === "filtrar"}
+    <div class="data-filtros">
+      <Entrada
+        type="date"
+        id="inicial"
+        value={inicial}
+        label="Data inicial"
+        on:input={(e) => (inicial = e.target.value)}
+      />
+      <div class="espacamento" />
+      <Entrada
+        id="final"
+        type="date"
+        value={final}
+        label="Data final"
+        on:input={(e) => (final = e.target.value)}
+      />
+      <MiniBotao>tes</MiniBotao>
+    </div>
+  {/if}
+
   {#if dados.pedidos.length}
     <table class="tabela">
       <tr>
@@ -148,10 +196,11 @@
         </tr>
       {/each}
     </table>
-    <p class="paginacao">
-      Exibindo página {pagina + 1} de {dados.ultimaPagina + 1}
-    </p>
+
     {#if fonte === "todos"}
+      <p class="paginacao">
+        Exibindo página {pagina + 1} de {dados.ultimaPagina + 1}
+      </p>
       <div class="controles">
         <MiniBotao
           on:click={paginaAnterior}
@@ -166,5 +215,7 @@
         >
       </div>
     {/if}
+  {:else}
+    <span>Não existem pedidos para serem mostrados</span>
   {/if}
 {/await}

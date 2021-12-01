@@ -46,3 +46,5 @@ export function UTCParaPtBr(data) {
 }
 
 export const hojeStringISO = moment().format().substring(0, 16);
+
+export const hojeDataStringISO = moment().format().substring(0, 10);

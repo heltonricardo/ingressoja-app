@@ -149,3 +149,26 @@ export async function getPedidosPagina(pagina) {
   } //
   return null;
 }
+
+export async function getPedidosPorData(inicial, final) {
+  if (
+    !autenticacao.estaLogado() ||
+    autenticacao.tipoLogado() !== TIPOCADASTRO.ADMINISTRADOR
+  )
+    return null;
+
+  let res;
+  try {
+    res = await fetch(`${PATH.PEDIDO}/filtrar/${inicial}/${final}`);
+  } catch (error) {
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
+    return null;
+  }
+
+  const status = res.status;
+
+  if (status === STATUSHTTP.OK) {
+    return await res.json();
+  } //
+  return null;
+}

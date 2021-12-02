@@ -35,6 +35,7 @@
     on:voltar
     on:novoadm
     on:meusdados
+    on:analiseadm
     on:produtoras
     on:compradores
     on:novacategoria

@@ -228,3 +228,26 @@ export async function putAdministrador(administrador) {
   }
   return false;
 }
+
+export async function getAnaliseProdutoras() {
+  if (
+    !autenticacao.estaLogado() ||
+    autenticacao.tipoLogado() !== TIPOCADASTRO.ADMINISTRADOR
+  )
+    return null;
+
+  let res;
+  try {
+    res = await fetch(`${PATH.PRODUTORA}/analise-admin`);
+  } catch (error) {
+    Swal.fire(MSG.RUIM, MSG.CONEXAO, "error");
+    return null;
+  }
+  const status = res.status;
+
+  if (status === STATUSHTTP.OK) {
+    return await res.json();
+  }
+
+  return null;
+}

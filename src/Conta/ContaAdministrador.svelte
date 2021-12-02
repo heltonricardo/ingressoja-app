@@ -48,5 +48,6 @@
   <Botao on:click={() => dispatch("compradores")}>Compradores</Botao>
   <Botao on:click={() => dispatch("produtoras")}>Produtoras</Botao>
   <Botao on:click={() => dispatch("novacategoria")}>Categorias de Evento</Botao>
+  <Botao on:click={() => dispatch("analiseadm")}>Relatórios e Análises</Botao>
   <Botao on:click={() => dispatch("voltar")}>Voltar</Botao>
 </div>

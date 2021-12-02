@@ -96,6 +96,7 @@
       {type}
       {value}
       on:input
+      on:change
       {disabled}
       {maxlength}
       on:keypress

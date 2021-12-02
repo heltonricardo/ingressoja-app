@@ -9,6 +9,7 @@ export function extrairDataHora(info) {
 
   const dia = dataHora.toLocaleString("pt-BR", { day: "2-digit" });
   const mes = capitalizar(dataHora.toLocaleString("pt-BR", { month: "long" }));
+  const mesNumero = dataHora.toLocaleString("pt-BR", { month: "2-digit" });
   const ano = dataHora.toLocaleString("pt-BR", { year: "numeric" });
 
   const anoAtual = new Date().toLocaleString("pt-BR", { year: "numeric" });
@@ -17,6 +18,8 @@ export function extrairDataHora(info) {
 
   const dataCompleta = `${dia} de ${mes} de ${ano}`;
 
+  const dataCompletaBarras = `${dia}/${mesNumero}/${ano}`;
+
   const hora = dataHora.toLocaleTimeString("pt-BR", { hour: "2-digit" });
   const minuto = zeroEsquerda(
     dataHora.toLocaleTimeString("pt-BR", { minute: "2-digit" }),
@@ -24,7 +27,16 @@ export function extrairDataHora(info) {
   );
   const horario = `${hora}h` + (minuto === "00" ? "" : minuto);
 
-  return { dia, mes, ano, anoAtual, data, horario, dataCompleta };
+  return {
+    dia,
+    mes,
+    ano,
+    anoAtual,
+    data,
+    horario,
+    dataCompleta,
+    dataCompletaBarras,
+  };
 }
 
 export function UTCParaPtBr(data) {
@@ -34,3 +46,5 @@ export function UTCParaPtBr(data) {
 }
 
 export const hojeStringISO = moment().format().substring(0, 16);
+
+export const hojeDataStringISO = moment().format().substring(0, 10);

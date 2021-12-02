@@ -130,7 +130,7 @@
 <div class="minha-selecao nao-imprimir">
   <label for="selecao1">Ordenar por:</label>
   <select id="selecao1" bind:value={ordemTabIngresso}>
-    <option value={TABINGRESSOS.TITULO}>Nome do Evento</option>
+    <option value={TABINGRESSOS.TITULO}>Nome do evento</option>
     <option value={TABINGRESSOS.TOTAL_INGRESSOS}
       >Ingressos colocados a venda</option
     >

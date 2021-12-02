@@ -12,15 +12,24 @@
   import { valorVirgula } from "../utils/formatador";
   import { getPedidosPagina, getPedidosPorData } from "../Conexao/pedidoConex";
 
+  let dados;
   let pagina = 0;
-  let fonte = "filtrar";
+  let fonte = "todos";
+  let atualizado = true;
   let final = hojeDataStringISO;
   let inicial = hojeDataStringISO;
 
-  $: dados =
-    fonte === "todos"
+  const isFonteTodos = () => fonte === "todos";
+  const isFonteFiltrar = () => fonte === "filtrar";
+  $: isFonteFiltrarEAtualizado = isFonteFiltrar() && atualizado;
+
+  function trocaModo() {
+    dados = isFonteTodos()
       ? getPedidosPagina(pagina)
       : getPedidosPorData(inicial, final);
+  }
+
+  trocaModo();
 
   function acessarPagina(num) {
     dados = getPedidosPagina(num);
@@ -44,6 +53,7 @@
 
   function filtrarPorData() {
     dados = getPedidosPorData(inicial, final);
+    atualizado = true;
   }
 </script>
 
@@ -137,7 +147,11 @@
   }
 
   .espacamento {
-    width: 2rem;
+    width: 1rem;
+  }
+
+  .botao-filtro {
+    margin-bottom: 0.4rem;
   }
 </style>
 
@@ -147,34 +161,42 @@
   <h2 class="titulo-tabela">Pedidos</h2>
   <div class="minha-selecao nao-imprimir">
     <label for="selecao1">Modo:</label>
-    <select id="selecao1" bind:value={fonte}>
+    <select id="selecao1" bind:value={fonte} on:change={trocaModo}>
       <option value="todos">Exibir todos</option>
       <option value="filtrar">Filtrar por data</option>
     </select>
   </div>
 
-  {#if fonte === "filtrar"}
+  {#if isFonteFiltrar()}
     <div class="data-filtros">
       <Entrada
         type="date"
         id="inicial"
+        validar={false}
         value={inicial}
         label="Data inicial"
+        on:change={() => (atualizado = false)}
         on:input={(e) => (inicial = e.target.value)}
       />
       <div class="espacamento" />
       <Entrada
         id="final"
         type="date"
+        min={inicial}
         value={final}
+        validar={false}
         label="Data final"
+        on:change={() => (atualizado = false)}
         on:input={(e) => (final = e.target.value)}
       />
-      <MiniBotao>tes</MiniBotao>
+      <div class="espacamento" />
+      <div class="botao-filtro">
+        <MiniBotao> <i class="fas fa-search" /> </MiniBotao>
+      </div>
     </div>
   {/if}
 
-  {#if dados.pedidos.length}
+  {#if dados.pedidos.length && (isFonteTodos() || isFonteFiltrarEAtualizado)}
     <table class="tabela">
       <tr>
         <th>Id</th>
@@ -197,7 +219,7 @@
       {/each}
     </table>
 
-    {#if fonte === "todos"}
+    {#if isFonteTodos()}
       <p class="paginacao">
         Exibindo página {pagina + 1} de {dados.ultimaPagina + 1}
       </p>
@@ -209,12 +231,14 @@
         >
         <MiniBotao
           on:click={proxPagina}
-          habilitado={!isUltimaPagina(dados.ultimaPagina)}
           invalido={isUltimaPagina(dados.ultimaPagina)}
+          habilitado={!isUltimaPagina(dados.ultimaPagina)}
           >Próxima página →</MiniBotao
         >
       </div>
     {/if}
+  {:else if isFonteFiltrar() && !atualizado}
+    <span>Clique no botão de pesquisa para prosseguir</span>
   {:else}
     <span>Não existem pedidos para serem mostrados</span>
   {/if}

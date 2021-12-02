@@ -153,6 +153,12 @@
   .botao-filtro {
     margin-bottom: 0.4rem;
   }
+
+  @media print {
+    .nao-imprimir {
+      display: none !important;
+    }
+  }
 </style>
 
 {#await dados}
@@ -175,6 +181,7 @@
         validar={false}
         value={inicial}
         label="Data inicial"
+        max={hojeDataStringISO}
         on:change={() => (atualizado = false)}
         on:input={(e) => (inicial = e.target.value)}
       />
@@ -186,12 +193,16 @@
         value={final}
         validar={false}
         label="Data final"
+        max={hojeDataStringISO}
         on:change={() => (atualizado = false)}
         on:input={(e) => (final = e.target.value)}
       />
       <div class="espacamento" />
-      <div class="botao-filtro">
-        <MiniBotao> <i class="fas fa-search" /> </MiniBotao>
+      <div class="botao-filtro nao-imprimir">
+        <MiniBotao on:click={filtrarPorData}
+          >&nbsp;
+          <i class="fas fa-search" />&nbsp;
+        </MiniBotao>
       </div>
     </div>
   {/if}

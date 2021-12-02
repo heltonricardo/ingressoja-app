@@ -4,6 +4,7 @@
   export let id;
   export let label;
   export let rows = 13;
+  export let max = null;
   export let min = null;
   export let value = "";
   export let type = "text";
@@ -92,6 +93,7 @@
   {:else}
     <input
       {id}
+      {max}
       {min}
       {type}
       {value}

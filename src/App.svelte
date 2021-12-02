@@ -30,7 +30,7 @@
   let evento = null;
   let idPedido = null;
   let idCategoria = null;
-  let modo = MODO.ANALISE_ADMIN;
+  let modo = MODO.NORMAL;
   let termoPesquisa = "";
 
   function limpaFiltroPesquisa() {

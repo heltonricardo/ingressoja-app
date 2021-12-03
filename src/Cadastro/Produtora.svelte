@@ -20,6 +20,7 @@
 
   let senha = "";
   let senha2 = "";
+  let aceitouTermos = false;
   let email = dados ? dados.email : "";
   let cnpj = dados ? maskBr.cnpj(dados.cnpj) : "";
   let publicToken = dados ? dados.publicToken : "";
@@ -47,7 +48,8 @@
     emailValido &&
     bancoValido &&
     senhaValida &&
-    senha2Valida;
+    senha2Valida &&
+    aceitouTermos;
 
   function voltar() {
     dados ? dispatch("meusdados") : dispatch("voltar");
@@ -95,6 +97,33 @@
 
   a:hover {
     font-weight: bolder;
+  }
+
+  .termos {
+    text-align: center;
+    width: 100%;
+  }
+
+  .link-termos {
+    border: none;
+    font-size: 12pt;
+    font-family: "Poppins", sans-serif;
+    background-color: transparent;
+    text-decoration: underline;
+    color: #0000ee;
+  }
+
+  .link-termos:hover {
+    cursor: pointer;
+  }
+
+  .link-termos:focus {
+    outline: 0;
+  }
+
+  .error-message {
+    color: red;
+    margin: 0.25rem 0;
   }
 </style>
 
@@ -179,6 +208,20 @@
     mensagemValidacao="As senhas não coincidem"
     on:input={(event) => (senha2 = event.target.value)}
   />
+</div>
+
+<div class="termos">
+  <label for="aceite-termos">
+    <input type="checkbox" id="aceite-termos" bind:checked={aceitouTermos} />
+    Li e concordo com os<button class="link-termos"
+      >Termos de Uso da Plataforma IngressoJá!</button
+    ></label
+  >
+  {#if !aceitouTermos && tocarCampos}
+    <p class="error-message">
+      Para concluir seu cadastro, é necessário concordar com os termos de uso
+    </p>
+  {/if}
 </div>
 
 <div class="botoes">

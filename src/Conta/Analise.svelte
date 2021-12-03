@@ -87,29 +87,33 @@
       </tr>
     </table>
 
-    <div class="opcoes">
-      <label>
-        <input
-          type="radio"
-          value="geral"
-          name="tipoCadastro"
-          bind:group={tipoRelatorio}
-        />Visualização geral</label
-      >
-      <label>
-        <input
-          type="radio"
-          value="porEvento"
-          name="tipoRelatorio"
-          bind:group={tipoRelatorio}
-        />Visualização por evento</label
-      >
-    </div>
+    {#if dados.eventos.length}
+      <div class="opcoes">
+        <label>
+          <input
+            type="radio"
+            value="geral"
+            name="tipoCadastro"
+            bind:group={tipoRelatorio}
+          />Visualização geral</label
+        >
+        <label>
+          <input
+            type="radio"
+            value="porEvento"
+            name="tipoRelatorio"
+            bind:group={tipoRelatorio}
+          />Visualização por evento</label
+        >
+      </div>
 
-    {#if tipoRelatorio === "geral"}
-      <AnaliseGeral {dados} />
-    {:else if tipoRelatorio === "porEvento"}
-      <AnaliseEvento {dados} />
+      {#if tipoRelatorio === "geral"}
+        <AnaliseGeral {dados} />
+      {:else if tipoRelatorio === "porEvento"}
+        <AnaliseEvento {dados} />
+      {/if}
+    {:else}
+      <p>Ainda não existem eventos cadastrados em sua conta.</p>
     {/if}
   {/await}
 

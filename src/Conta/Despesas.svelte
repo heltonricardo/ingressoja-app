@@ -80,7 +80,7 @@
 
 <style>
   .corpo {
-    width: 40%;
+    max-width: 50rem;
     min-width: 30rem;
     margin: 2rem auto;
     min-height: calc(100vh - 21rem);

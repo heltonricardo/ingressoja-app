@@ -8,6 +8,7 @@
   import Aguarde from "../UI/Aguarde.svelte";
   import Entrada from "../UI/Entrada.svelte";
   import { onlyNumeros } from "../utils/sanitarizador";
+  import TermosUso from "../TermosUso/TermosUso.svelte";
   import autenticacao from "../Autenticacao/autenticacao";
   import { postComprador, putComprador } from "../Conexao/compradorConex";
 
@@ -17,6 +18,7 @@
 
   let carregando = false;
   let tocarCampos = false;
+  let mostrarTermos = false;
 
   let senha = "";
   let senha2 = "";
@@ -163,7 +165,9 @@
 <div class="termos">
   <label for="aceite-termos">
     <input type="checkbox" id="aceite-termos" bind:checked={aceitouTermos} />
-    Li e concordo com os<button class="link-termos"
+    Li e concordo com os<button
+      class="link-termos"
+      on:click={() => (mostrarTermos = true)}
       >Termos de Uso da Plataforma IngressoJá!</button
     ></label
   >
@@ -178,3 +182,7 @@
   <Botao on:click={voltar}>Voltar</Botao>
   <Botao on:click={salvar} invalido={!formularioValido}>Salvar</Botao>
 </div>
+
+{#if mostrarTermos}
+  <TermosUso on:fechar={() => (mostrarTermos = false)} />
+{/if}

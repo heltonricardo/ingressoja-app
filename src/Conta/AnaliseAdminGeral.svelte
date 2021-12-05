@@ -52,6 +52,7 @@
   }
 
   function filtrarPorData() {
+    (!inicial || !final) && (inicial = final = hojeDataStringISO);
     dados = getPedidosPorData(inicial, final);
     atualizado = true;
   }

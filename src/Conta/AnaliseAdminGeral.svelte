@@ -21,7 +21,7 @@
 
   const isFonteTodos = () => fonte === "todos";
   const isFonteFiltrar = () => fonte === "filtrar";
-  $: isFonteFiltrarEAtualizado = isFonteFiltrar() && atualizado;
+  const temPedido = (dados) => dados.pedidos.length;
 
   function trocaModo() {
     dados = isFonteTodos()
@@ -207,7 +207,7 @@
     </div>
   {/if}
 
-  {#if dados.pedidos.length && (isFonteTodos() || isFonteFiltrarEAtualizado)}
+  {#if temPedido(dados) && (isFonteTodos() || (isFonteFiltrar() && atualizado))}
     <table class="tabela">
       <tr>
         <th>Id</th>

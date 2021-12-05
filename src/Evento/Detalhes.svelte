@@ -137,7 +137,7 @@
     align-self: center;
     margin: 3rem 0;
     font-size: 20pt;
-    font-weight: bold;
+    font-weight: 500;
     color: red;
   }
 </style>

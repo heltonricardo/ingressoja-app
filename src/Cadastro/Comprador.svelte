@@ -39,7 +39,7 @@
     emailValido &&
     senhaValida &&
     senha2Valida &&
-    aceitouTermos;
+    (aceitouTermos || dados);
 
   function voltar() {
     dados ? dispatch("meusdados") : dispatch("voltar");
@@ -108,6 +108,10 @@
   <Aguarde />
 {/if}
 
+{#if mostrarTermos}
+  <TermosUso on:fechar={() => (mostrarTermos = false)} />
+{/if}
+
 <div class="campos">
   <Entrada
     id="nome"
@@ -162,27 +166,25 @@
   />
 </div>
 
-<div class="termos">
-  <label for="aceite-termos">
-    <input type="checkbox" id="aceite-termos" bind:checked={aceitouTermos} />
-    Li e concordo com os<button
-      class="link-termos"
-      on:click={() => (mostrarTermos = true)}
-      >Termos de Uso da Plataforma IngressoJá!</button
-    ></label
-  >
-  {#if !aceitouTermos && tocarCampos}
-    <p class="error-message">
-      Para concluir seu cadastro, é necessário concordar com os termos de uso
-    </p>
-  {/if}
-</div>
+{#if !dados}
+  <div class="termos">
+    <label for="aceite-termos">
+      <input type="checkbox" id="aceite-termos" bind:checked={aceitouTermos} />
+      Li e concordo com os<button
+        class="link-termos"
+        on:click={() => (mostrarTermos = true)}
+        >Termos de Uso da Plataforma IngressoJá!</button
+      ></label
+    >
+    {#if !aceitouTermos && tocarCampos}
+      <p class="error-message">
+        Para concluir seu cadastro, é necessário concordar com os termos de uso
+      </p>
+    {/if}
+  </div>
+{/if}
 
 <div class="botoes">
   <Botao on:click={voltar}>Voltar</Botao>
   <Botao on:click={salvar} invalido={!formularioValido}>Salvar</Botao>
 </div>
-
-{#if mostrarTermos}
-  <TermosUso on:fechar={() => (mostrarTermos = false)} />
-{/if}

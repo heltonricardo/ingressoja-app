@@ -166,7 +166,7 @@
 <div class="minha-selecao nao-imprimir">
   <label for="selecao1">Ordenar por:</label>
   <select class="margem-esquerda" id="selecao1" bind:value={ordTabIngressos}>
-    <option value={TABINGRESSOS.TI_NOME}>Nome</option>
+    <option value={TABINGRESSOS.TI_NOME}>Nome do tipo de ingresso</option>
     <option value={TABINGRESSOS.TI_PORCENTAGEM_VENDIDA}
       >Porcentagem de ingressos vendidos</option
     >
@@ -180,7 +180,7 @@
 </div>
 <table class="tabela">
   <tr>
-    <th>Nome</th>
+    <th>Nome do tipo de ingresso</th>
     <th>
       <p>Porcentagem</p>
       <p>de ingressos</p>
@@ -240,14 +240,14 @@
 <div class="minha-selecao nao-imprimir">
   <label for="selecao3">Ordenar por:</label>
   <select class="margem-esquerda" id="selecao3" bind:value={ordTabReceitas}>
-    <option value={TABINGRESSOS.TI_NOME}>Nome</option>
+    <option value={TABINGRESSOS.TI_NOME}>Nome do tipo de ingresso</option>
     <option value={TABINGRESSOS.TI_VALOR}>Valor unitário</option>
     <option value={TABINGRESSOS.TI_RECEITA_GERADA}>Receita gerada</option>
   </select>
 </div>
 <table class="tabela">
   <tr>
-    <th>Nome</th>
+    <th>Nome do tipo de ingresso</th>
     <th>
       <p>Valor</p>
       <p>Unitário</p>

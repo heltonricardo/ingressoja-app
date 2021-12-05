@@ -243,9 +243,9 @@
       on:change={graficosUpdate}
       bind:value={graficoDespesas}
     >
-      <option value={TABDESPESAS.RECEITA_BRUTA}>Receita Bruta (R$)</option>
+      <option value={TABDESPESAS.RECEITA_BRUTA}>Receita bruta (R$)</option>
       <option value={TABDESPESAS.TOTAL_DESPESAS}>Despesas (R$)</option>
-      <option value={TABDESPESAS.RECEITA_LIQUIDA}>Receita Líquida (R$)</option>
+      <option value={TABDESPESAS.RECEITA_LIQUIDA}>Receita líquida (R$)</option>
     </select>
   </div>
   <Grafico

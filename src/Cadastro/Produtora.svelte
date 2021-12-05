@@ -8,6 +8,7 @@
   import Aguarde from "../UI/Aguarde.svelte";
   import Entrada from "../UI/Entrada.svelte";
   import { onlyNumeros } from "../utils/sanitarizador";
+  import TermosUso from "../TermosUso/TermosUso.svelte";
   import autenticacao from "../Autenticacao/autenticacao";
   import { postProdutora, putProdutora } from "../Conexao/produtoraConex";
 
@@ -17,9 +18,11 @@
 
   let carregando = false;
   let tocarCampos = false;
+  let mostrarTermos = false;
 
   let senha = "";
   let senha2 = "";
+  let aceitouTermos = false;
   let email = dados ? dados.email : "";
   let cnpj = dados ? maskBr.cnpj(dados.cnpj) : "";
   let publicToken = dados ? dados.publicToken : "";
@@ -38,16 +41,17 @@
   $: emailValido = validator.isEmail(email);
   $: senhaValida = validator.isLength(senha, { min: 6, max: 50 });
   $: senha2Valida = validator.equals(senha, senha2) && senhaValida;
-  $: bancoValido = validator.isLength(publicToken, { min: 41, max: 41 });
+  $: publicTokenValido = validator.isLength(publicToken, { min: 41, max: 41 });
 
   $: formularioValido =
     razaoSocialValida &&
     cnpjValido &&
     nomeFantasiaValido &&
     emailValido &&
-    bancoValido &&
+    publicTokenValido &&
     senhaValida &&
-    senha2Valida;
+    senha2Valida &&
+    (aceitouTermos || dados);
 
   function voltar() {
     dados ? dispatch("meusdados") : dispatch("voltar");
@@ -96,10 +100,41 @@
   a:hover {
     font-weight: bolder;
   }
+
+  .termos {
+    text-align: center;
+    width: 100%;
+  }
+
+  .link-termos {
+    border: none;
+    font-size: 12pt;
+    font-family: "Poppins", sans-serif;
+    background-color: transparent;
+    text-decoration: underline;
+    color: #0000ee;
+  }
+
+  .link-termos:hover {
+    cursor: pointer;
+  }
+
+  .link-termos:focus {
+    outline: 0;
+  }
+
+  .error-message {
+    color: red;
+    margin: 0.25rem 0;
+  }
 </style>
 
 {#if carregando}
   <Aguarde />
+{/if}
+
+{#if mostrarTermos}
+  <TermosUso on:fechar={() => (mostrarTermos = false)} />
 {/if}
 
 <div class="corpo">
@@ -142,11 +177,11 @@
     on:input={(event) => (email = event.target.value)}
   />
   <Entrada
-    maxlength="100"
+    maxlength="41"
     id="publicToken"
     value={publicToken}
     tocado={tocarCampos}
-    valido={bancoValido}
+    valido={publicTokenValido}
     label="Public Token no Mercado Pago"
     mensagemValidacao="Insira um public token válido"
     on:input={(event) => (publicToken = event.target.value)}
@@ -180,6 +215,24 @@
     on:input={(event) => (senha2 = event.target.value)}
   />
 </div>
+
+{#if !dados}
+  <div class="termos">
+    <label for="aceite-termos">
+      <input type="checkbox" id="aceite-termos" bind:checked={aceitouTermos} />
+      Li e concordo com os<button
+        class="link-termos"
+        on:click={() => (mostrarTermos = true)}
+        >Termos de Uso da Plataforma IngressoJá!</button
+      ></label
+    >
+    {#if !aceitouTermos && tocarCampos}
+      <p class="error-message">
+        Para concluir seu cadastro, é necessário concordar com os termos de uso
+      </p>
+    {/if}
+  </div>
+{/if}
 
 <div class="botoes">
   <Botao on:click={voltar}>Voltar</Botao>

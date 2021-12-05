@@ -8,6 +8,7 @@
   import Aguarde from "../UI/Aguarde.svelte";
   import Entrada from "../UI/Entrada.svelte";
   import { onlyNumeros } from "../utils/sanitarizador";
+  import TermosUso from "../TermosUso/TermosUso.svelte";
   import autenticacao from "../Autenticacao/autenticacao";
   import { postComprador, putComprador } from "../Conexao/compradorConex";
 
@@ -17,9 +18,11 @@
 
   let carregando = false;
   let tocarCampos = false;
+  let mostrarTermos = false;
 
   let senha = "";
   let senha2 = "";
+  let aceitouTermos = false;
   let nome = dados ? dados.nome : "";
   let email = dados ? dados.email : "";
   let cpf = dados ? maskBr.cpf(dados.cpf) : "";
@@ -31,7 +34,12 @@
   $: nomeValido = validator.isLength(nome.trim(), { min: 1, max: 255 });
 
   $: formularioValido =
-    nomeValido && cpfValido && emailValido && senhaValida && senha2Valida;
+    nomeValido &&
+    cpfValido &&
+    emailValido &&
+    senhaValida &&
+    senha2Valida &&
+    (aceitouTermos || dados);
 
   function voltar() {
     dados ? dispatch("meusdados") : dispatch("voltar");
@@ -67,10 +75,41 @@
   .senha {
     margin: 3rem 0;
   }
+
+  .termos {
+    text-align: center;
+    width: 100%;
+  }
+
+  .link-termos {
+    border: none;
+    font-size: 12pt;
+    font-family: "Poppins", sans-serif;
+    background-color: transparent;
+    text-decoration: underline;
+    color: #0000ee;
+  }
+
+  .link-termos:hover {
+    cursor: pointer;
+  }
+
+  .link-termos:focus {
+    outline: 0;
+  }
+
+  .error-message {
+    color: red;
+    margin: 0.25rem 0;
+  }
 </style>
 
 {#if carregando}
   <Aguarde />
+{/if}
+
+{#if mostrarTermos}
+  <TermosUso on:fechar={() => (mostrarTermos = false)} />
 {/if}
 
 <div class="campos">
@@ -126,6 +165,24 @@
     on:input={(event) => (senha2 = event.target.value)}
   />
 </div>
+
+{#if !dados}
+  <div class="termos">
+    <label for="aceite-termos">
+      <input type="checkbox" id="aceite-termos" bind:checked={aceitouTermos} />
+      Li e concordo com os<button
+        class="link-termos"
+        on:click={() => (mostrarTermos = true)}
+        >Termos de Uso da Plataforma IngressoJá!</button
+      ></label
+    >
+    {#if !aceitouTermos && tocarCampos}
+      <p class="error-message">
+        Para concluir seu cadastro, é necessário concordar com os termos de uso
+      </p>
+    {/if}
+  </div>
+{/if}
 
 <div class="botoes">
   <Botao on:click={voltar}>Voltar</Botao>

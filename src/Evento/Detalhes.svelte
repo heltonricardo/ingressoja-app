@@ -50,7 +50,7 @@
 
 <style>
   .corpo {
-    width: 40%;
+    max-width: 50rem;
     min-width: 30rem;
     margin: 2rem auto;
     display: flex;
@@ -137,7 +137,7 @@
     align-self: center;
     margin: 3rem 0;
     font-size: 20pt;
-    font-weight: bold;
+    font-weight: 500;
     color: red;
   }
 </style>

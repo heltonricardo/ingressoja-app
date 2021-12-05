@@ -107,7 +107,7 @@
 
 <style>
   .corpo {
-    width: 35%;
+    max-width: 40rem;
     min-width: 30rem;
     margin: 2rem auto;
     display: flex;

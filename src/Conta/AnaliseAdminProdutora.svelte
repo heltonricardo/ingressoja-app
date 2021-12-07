@@ -109,8 +109,9 @@
   }
 
   .legenda {
-    margin-top: 0.5rem;
+    color: #777;
     text-align: left;
+    margin-top: 0.5rem;
     align-self: flex-start;
   }
 
@@ -159,16 +160,16 @@
       <th>RS {valorVirgula(somar(dados, TABPRODUTORA.TOTAL_TAXAS))}</th>
     </tr>
   </table>
-  <p class="legenda">* Mostrando apenas produtoras que possuem vendas</p>
+  <p class="legenda">* São mostradas apenas as produtoras que possuem vendas</p>
 
   {#if autorizarGraficos(dados)}
     <div class="minha-selecao grafico">
       <label for="selecao2">Gráfico de: Vendas totais (R$)</label>
     </div>
     <Grafico
-      {dados}
       legenda={TABPRODUTORA.RAZAO}
       valor={TABPRODUTORA.TOTAL_VENDAS}
+      dados={dados.filter((d) => d.totalVendas)}
     />
   {/if}
 {/await}

@@ -14,9 +14,9 @@
   /******************************* CLASSIFICAR ********************************/
 
   function classificar(obj, campo) {
-    return obj.sort((a, b) =>
-      a[campo] < b[campo] ? -1 : a[campo] > b[campo] ? 1 : 0
-    );
+    return obj
+      .filter((o) => o.totalVendas)
+      .sort((a, b) => (a[campo] < b[campo] ? -1 : a[campo] > b[campo] ? 1 : 0));
   }
 
   /********************************** SOMAR ***********************************/
@@ -108,6 +108,12 @@
     word-break: keep-all;
   }
 
+  .legenda {
+    margin-top: 0.5rem;
+    text-align: left;
+    align-self: flex-start;
+  }
+
   @media print {
     .nao-imprimir {
       display: none !important;
@@ -118,7 +124,7 @@
 {#await dados}
   <Aguarde />
 {:then dados}
-  <h2 class="titulo-tabela">Produtoras</h2>
+  <h2 class="titulo-tabela">Produtoras*</h2>
   <div class="minha-selecao nao-imprimir">
     <label for="selecao1">Ordenar por:</label>
     <select id="selecao1" bind:value={ordemTabProdutoras}>
@@ -153,6 +159,7 @@
       <th>RS {valorVirgula(somar(dados, TABPRODUTORA.TOTAL_TAXAS))}</th>
     </tr>
   </table>
+  <p class="legenda">* Mostrando apenas produtoras que possuem vendas</p>
 
   {#if autorizarGraficos(dados)}
     <div class="minha-selecao grafico">

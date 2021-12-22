@@ -2,7 +2,6 @@
   import Swal from "sweetalert2";
   import { createEventDispatcher } from "svelte";
 
-  
   import MSG from "../ENUM/MSG";
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
@@ -67,7 +66,6 @@
     width: 100%;
     border-radius: 7px;
     overflow: hidden;
-    word-break: break-all;
   }
 
   .tabela td,
@@ -111,6 +109,12 @@
 
   .voltar {
     margin: 3rem 0;
+  }
+
+  @media screen and (max-width: 50rem) {
+    .tabela {
+      word-break: break-all;
+    }
   }
 </style>
 

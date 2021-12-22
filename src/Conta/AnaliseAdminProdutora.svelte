@@ -76,7 +76,6 @@
     width: 100%;
     border-radius: 7px;
     overflow: hidden;
-    word-break: break-all;
   }
 
   .tabela td,
@@ -120,12 +119,18 @@
       display: none !important;
     }
   }
+
+  @media screen and (max-width: 50rem) {
+    .tabela {
+      word-break: break-all;
+    }
+  }
 </style>
 
 {#await dados}
   <Aguarde />
 {:then dados}
-  <h2 class="titulo-tabela">Produtoras*</h2>
+  <h2 class="titulo-tabela">Produtoras</h2>
   <div class="minha-selecao nao-imprimir">
     <label for="selecao1">Ordenar por:</label>
     <select id="selecao1" bind:value={ordemTabProdutoras}>

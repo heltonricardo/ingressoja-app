@@ -220,7 +220,7 @@
 
     {#if pedido.statusPagamento === STATUSPGTO.APROVADO}
       <div class="navegacao">
-        <MiniBotao on:click={solicitarCanc}>Cancelar pedido</MiniBotao>
+        <MiniBotao on:click={solicitarCanc}>Solicitar cancelamento</MiniBotao>
       </div>
     {/if}
 

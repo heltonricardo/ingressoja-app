@@ -5,10 +5,27 @@
 
   import Botao from "../UI/Botao.svelte";
   import Aguarde from "../UI/Aguarde.svelte";
+  import Entrada from "../UI/Entrada.svelte";
   import MiniBotao from "../UI/MiniBotao.svelte";
+  import { onlyNumeros } from "../utils/sanitarizador";
   import { getProdutoras } from "../Conexao/administradorConex";
 
   const dispatch = createEventDispatcher();
+
+  let listaFiltrada;
+  let pesquisa = "";
+  const produtoras = getProdutoras();
+
+  async function filtro() {
+    return (await produtoras).filter(
+      (c) =>
+        c.id.toString().includes(pesquisa) ||
+        c.razaoSocial.toLowerCase().includes(pesquisa.toLowerCase()) ||
+        c.cnpj.includes(onlyNumeros(pesquisa))
+    );
+  }
+
+  $: pesquisa, (listaFiltrada = filtro());
 
   function detalhes(produtora) {
     Swal.fire({
@@ -65,6 +82,13 @@
     margin: 1rem 0;
   }
 
+  .entrada {
+    align-self: flex-start;
+    width: 20rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
   .tabela {
     border-collapse: collapse;
     text-align: center;
@@ -115,10 +139,20 @@
 
 <div class="corpo">
   <h1>Produtoras</h1>
-  {#await getProdutoras()}
+  <div class="entrada">
+    <Entrada
+      id="pesquisa"
+      type="search"
+      validar={false}
+      label="Pesquisa (ID | Razão Social | CNPJ)"
+      on:input={(e) => (pesquisa = e.target.value)}
+    />
+  </div>
+  
+  {#await listaFiltrada}
     <Aguarde />
-  {:then produtoras}
-    {#if produtoras.length}
+  {:then listaCompradores}
+    {#if listaCompradores.length}
       <table class="tabela">
         <tr>
           <th>Id</th>
@@ -127,7 +161,7 @@
           <th>Ações</th>
         </tr>
 
-        {#each produtoras as produtora}
+        {#each listaCompradores as produtora}
           <tr>
             <td>{produtora.id}</td>
             <td>{produtora.razaoSocial}</td>

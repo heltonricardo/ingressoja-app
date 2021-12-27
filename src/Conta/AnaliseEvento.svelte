@@ -110,7 +110,6 @@
     width: 100%;
     border-radius: 7px;
     overflow: hidden;
-    word-break: break-all;
     overflow: hidden;
   }
 
@@ -146,6 +145,12 @@
   @media print {
     .nao-imprimir {
       display: none !important;
+    }
+  }
+
+  @media screen and (max-width: 50rem) {
+    .tabela {
+      word-break: break-all;
     }
   }
 </style>

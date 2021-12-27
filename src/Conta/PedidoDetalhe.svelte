@@ -80,11 +80,9 @@
   }
 
   .tabela-itens {
-    word-break: break-all;
     width: 100%;
     border-collapse: collapse;
     text-align: center;
-    word-break: break-all;
     border-radius: 7px;
     overflow: hidden;
     margin: 1rem 0 3rem 0;
@@ -122,7 +120,7 @@
     display: flex;
     margin-bottom: 3rem;
   }
-  
+
   .detalhes {
     display: flex;
     line-height: 2rem;
@@ -157,6 +155,12 @@
 
   .texto-laranja {
     color: var(--laranja);
+  }
+
+  @media screen and (max-width: 50rem) {
+    .tabela-itens {
+      word-break: break-all;
+    }
   }
 </style>
 

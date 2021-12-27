@@ -154,7 +154,6 @@
     width: 100%;
     border-radius: 7px;
     overflow: hidden;
-    word-break: break-all;
   }
 
   .tabela td,
@@ -234,6 +233,12 @@
 
   .nowrap {
     white-space: nowrap;
+  }
+
+  @media screen and (max-width: 50rem) {
+    .tabela {
+      word-break: break-all;
+    }
   }
 </style>
 
